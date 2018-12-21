@@ -1,0 +1,21 @@
+{
+    "env": {
+        "test": {
+            "presets": [
+                ["@babel/env", {
+                    "targets": {
+                        "node": 8
+                    }
+                }]
+            ]
+        },
+        "development": {
+            "presets": [
+                "vue"
+            ]
+        }
+    },
+    "plugins": [
+        "@babel/plugin-proposal-export-default-from"
+    ]
+}
