@@ -15,7 +15,8 @@ function removeExistingErrors(state, errors) {
     });
 }
 
-function createTooltipContainer(cm) {
+/*
+function offset(cm) {
     let container = document.querySelector('.CodeMirror-lint-tooltip-container');
 
     if(container) {
@@ -31,6 +32,7 @@ function createTooltipContainer(cm) {
 
     return container;
 }
+*/
 
 function createTooltip(html, cm) {
     const div = document.createElement('div');
@@ -121,8 +123,8 @@ function onCursorActivity(cm) {
         cm.lintErrorTooltip = createTooltip(message, cm);
         cm.addWidget({ ch, line }, cm.lintErrorTooltip, true);
 
-        const bounds = cm.lintErrorTooltip.getBoundingClientRect();
-        const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
+        // const bounds = cm.lintErrorTooltip.getBoundingClientRect();
+        // const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
     }
 }
 

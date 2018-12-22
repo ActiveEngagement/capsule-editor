@@ -23,4 +23,4 @@ export {
     EditorToolbar,
     EditorToolbarMenuItem,
     LintState
-}
+};

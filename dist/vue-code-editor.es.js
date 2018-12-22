@@ -13336,6 +13336,25 @@ function removeExistingErrors(state, errors) {
     error.close && error.close.clear();
   });
 }
+/*
+function offset(cm) {
+    let container = document.querySelector('.CodeMirror-lint-tooltip-container');
+
+    if(container) {
+        return container;
+    }
+
+    container = document.createElement('div');
+    container.className = 'CodeMirror-lint-tooltip-container CodeMirror-sizer';
+    container.style.marginLeft = document.querySelector('.CodeMirror-sizer').style.marginLeft;
+    container.style.borderRightWidth = document.querySelector('.CodeMirror-sizer').style.borderRightWidth;
+
+    cm.getWrapperElement().parentNode.insertBefore(container, cm.getWrapperElement().nextSibling);
+
+    return container;
+}
+*/
+
 
 function createTooltip(html, cm) {
   const div = document.createElement('div');
@@ -13411,9 +13430,8 @@ function onCursorActivity(cm) {
     cm.addWidget({
       ch,
       line
-    }, cm.lintErrorTooltip, true);
-    const bounds = cm.lintErrorTooltip.getBoundingClientRect();
-    const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
+    }, cm.lintErrorTooltip, true); // const bounds = cm.lintErrorTooltip.getBoundingClientRect();
+    // const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
   }
 }
 
