@@ -5,7 +5,7 @@
             <badge v-if="errors && errors.length" :label="errors.length" variant="danger" class="position-absolute" pill />
         </btn-activity>
         <div class="editor-toolbar-title">
-            <input :value="title" type="text" @input="$emit('update:title', $event.target.value)"/>
+            <input type="text" placeholder="Untitled Document" :value="title" @input="$emit('update:title', $event.target.value)"/>
         </div>
         <btn-dropdown size="sm" variant="light" align="right" class="editor-toolbar-actions ml-auto">
             <icon icon="cog" slot="label"/>
@@ -13,6 +13,7 @@
             <editor-toolbar-menu-item label="Open" :hotkeys="['ctrl', 'O']" @click.prevent="$emit('open')" />
             <editor-toolbar-menu-item label="Save" :hotkeys="['ctrl', 'S']" @click.prevent="$emit('save')" />
             <editor-toolbar-menu-item label="Save As..." :hotkeys="['shift', 'ctrl', 'S']" @click.prevent="$emit('save-as')" />
+            <editor-toolbar-menu-item label="Close" :hotkeys="['ctrl', 'Q']" @click.prevent="$emit('close')" />
             <template v-if="errors && errors.length">
                 <dropdown-menu-divider/>
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
@@ -63,7 +64,7 @@ export default {
 
         title: {
             type: String,
-            default: 'Untitled Document'
+            default: null
         }
 
     },

@@ -8,12 +8,13 @@
             @lint="onClickLint"
             @new="onClickNew"
             @open="onClickOpen"
+            @close="onClickClose"
             @save="onClickSave"
             @save-as="onClickSaveAs"
             @export-errors="onExportErrors" />
 
         <div class="editor-field-container">
-            <editor-field ref="editor" v-model="value" v-bind="options" />
+            <editor-field ref="editor" v-model="value" v-bind="options" @input="$emit('intput', value)" />
             <input ref="file" type="file" class="d-none" @input="onFileSelected"/>
         </div>
     </div>
@@ -35,6 +36,14 @@ export default {
         EditorToolbar
     },
 
+    props: {
+
+        errors: Array,
+
+        contents: String
+
+    },
+
     computed: {
 
         options() {
@@ -52,17 +61,21 @@ export default {
                     'Ctrl-N': this.onClickNew,
                     'Ctrl-O': this.onClickOpen,
                     'Ctrl-S': this.onClickSave,
+                    'Ctrl-Q': this.onClickClose,
                     'Shift-Ctrl-S': this.onClickSaveAs,
                     'Ctrl-J': 'toMatchingTag',
                     'Ctrl-Space': 'autocomplete',
                     'Ctrl-V': () => {
                         this.$refs.toolbar.$refs.lint.$el.click();
-                    },
+                    }
+                    /*,
                     'Ctrl-Q': cm => {
                         cm.foldCode(cm.getCursor());
                     }
+                    */
                 },
                 lint: {
+                    errors: this.errors,
                     url: 'lint',
                     data: cm => {
                         return {
@@ -110,7 +123,7 @@ export default {
         },
 
         onClickNew() {
-            this.filename = 'Untitled Document';
+            this.filename = null;
             this.$refs.editor.cm.setValue(this.value = '');
             this.$refs.editor.cm.focus();
         },
@@ -150,6 +163,10 @@ export default {
             this.$refs.file.click();
         },
 
+        onClickClose() {
+            this.$emit('close');
+        },
+
         onClickLint(event) {
             this.$refs.editor.cm.lint();
         }
@@ -158,10 +175,10 @@ export default {
 
     data() {
         return {
-            value: '',
+            value: this.contents,
             isLinting: false,
             currentErrors: [],
-            filename: null || 'Untitled Document'
+            filename: null
         };
     },
 
@@ -170,8 +187,8 @@ export default {
             this.$refs.editor.cm.focus();
             this.$refs.editor.cm.setSize('100%', `calc(100% - ${this.$el.querySelector('.editor-toolbar').clientHeight}px)`);
 
-            if(this.$refs.editor.cm.getValue()) {
-                this.$refs.editor.cm.lint.click();
+            if(this.$refs.editor.cm.getValue() && !this.errors.length) {
+                this.$refs.editor.cm.lint();
             }
         });
     }

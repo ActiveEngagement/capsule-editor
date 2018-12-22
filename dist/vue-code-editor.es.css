@@ -2637,69 +2637,6 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=EditorField.vue.map */
-.editor-toolbar.bg-dark {
-  background-color: #282a36 !important;
-}
-.editor-toolbar.fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-.editor-toolbar .btn {
-  position: relative;
-}
-.editor-toolbar .btn .badge {
-    top: 0;
-    right: 0;
-    z-index: 1;
-    transform: translate(50%, -25%);
-}
-.editor-toolbar .btn.has-error > svg {
-    color: #dc3545;
-}
-.editor-toolbar .editor-toolbar-title {
-  color: white;
-  font-size: 1em;
-  width: auto;
-  background: transparent;
-  text-align: center;
-  margin: 0 auto;
-  display: flex;
-  flex-grow: 1;
-}
-.editor-toolbar .editor-toolbar-title input {
-    border: 0;
-    margin: 0;
-    color: white;
-    outline: none;
-    background: transparent;
-    text-align: center;
-    flex-grow: 1;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item {
-  display: flex;
-  align-items: center;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item span {
-    margin-right: 1.5em;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item code {
-    font-size: 8px;
-    margin-left: auto;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item kbd {
-    background: #3c3c3c;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item kbd:not(:last-child) {
-      margin-right: .25em;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item svg {
-    width: 9px;
-}
-
-/*# sourceMappingURL=EditorToolbar.vue.map */
 .edit-toolbar {
   position: fixed;
   top: 0;
@@ -2781,51 +2718,70 @@ a.dropdown-item {
       width: 9px;
 }
 
-/*# sourceMappingURL=EditorToolbarMenuItem.vue.map *//*
-
-    Name:       yeti
-    Author:     Michael Kaminsky (http://github.com/mkaminsky11)
-
-    Original yeti color scheme by Jesse Weed (https://github.com/jesseweed/yeti-syntax)
-
-*/
-
-
-.cm-s-yeti.CodeMirror {
-  background-color: #ECEAE8 !important;
-  color: #d1c9c0 !important;
-  border: none;
+/*# sourceMappingURL=EditorToolbarMenuItem.vue.map */
+.editor-toolbar.bg-dark {
+  background-color: #282a36 !important;
+}
+.editor-toolbar.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.editor-toolbar .btn {
+  position: relative;
+}
+.editor-toolbar .btn .badge {
+    top: 0;
+    right: 0;
+    z-index: 1;
+    transform: translate(50%, -25%);
+}
+.editor-toolbar .btn.has-error > svg {
+    color: #dc3545;
+}
+.editor-toolbar .editor-toolbar-title {
+  color: white;
+  font-size: 1em;
+  width: auto;
+  background: transparent;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+}
+.editor-toolbar .editor-toolbar-title input {
+    border: 0;
+    margin: 0;
+    color: white;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    flex-grow: 1;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item {
+  display: flex;
+  align-items: center;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item span {
+    margin-right: 1.5em;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item code {
+    font-size: 8px;
+    margin-left: auto;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item kbd {
+    background: #3c3c3c;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item kbd:not(:last-child) {
+      margin-right: .25em;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item svg {
+    width: 9px;
 }
 
-.cm-s-yeti .CodeMirror-gutters {
-  color: #adaba6;
-  background-color: #E5E1DB;
-  border: none;
-}
-.cm-s-yeti .CodeMirror-cursor { border-left: solid thin #d1c9c0; }
-.cm-s-yeti .CodeMirror-linenumber { color: #adaba6; }
-.cm-s-yeti.CodeMirror-focused div.CodeMirror-selected { background: #DCD8D2; }
-.cm-s-yeti .CodeMirror-line::selection, .cm-s-yeti .CodeMirror-line > span::selection, .cm-s-yeti .CodeMirror-line > span > span::selection { background: #DCD8D2; }
-.cm-s-yeti .CodeMirror-line::-moz-selection, .cm-s-yeti .CodeMirror-line > span::-moz-selection, .cm-s-yeti .CodeMirror-line > span > span::-moz-selection { background: #DCD8D2; }
-.cm-s-yeti span.cm-comment { color: #d4c8be; }
-.cm-s-yeti span.cm-string, .cm-s-yeti span.cm-string-2 { color: #96c0d8; }
-.cm-s-yeti span.cm-number { color: #a074c4; }
-.cm-s-yeti span.cm-variable { color: #55b5db; }
-.cm-s-yeti span.cm-variable-2 { color: #a074c4; }
-.cm-s-yeti span.cm-def { color: #55b5db; }
-.cm-s-yeti span.cm-operator { color: #9fb96e; }
-.cm-s-yeti span.cm-keyword { color: #9fb96e; }
-.cm-s-yeti span.cm-atom { color: #a074c4; }
-.cm-s-yeti span.cm-meta { color: #96c0d8; }
-.cm-s-yeti span.cm-tag { color: #96c0d8; }
-.cm-s-yeti span.cm-attribute { color: #9fb96e; }
-.cm-s-yeti span.cm-qualifier { color: #96c0d8; }
-.cm-s-yeti span.cm-property { color: #a074c4; }
-.cm-s-yeti span.cm-builtin { color: #a074c4; }
-.cm-s-yeti span.cm-variable-3, .cm-s-yeti span.cm-type { color: #96c0d8; }
-.cm-s-yeti .CodeMirror-activeline-background { background: #E7E4E0; }
-.cm-s-yeti .CodeMirror-matchingbracket { text-decoration: underline; }
-/*
+/*# sourceMappingURL=EditorToolbar.vue.map *//*
 
     Name:       material
     Author:     Michael Kaminsky (http://github.com/mkaminsky11)
@@ -2918,6 +2874,50 @@ a.dropdown-item {
 
 .cm-s-dracula .CodeMirror-activeline-background { background: rgba(255,255,255,0.1); }
 .cm-s-dracula .CodeMirror-matchingbracket { text-decoration: underline; color: white !important; }
+/*
+
+    Name:       yeti
+    Author:     Michael Kaminsky (http://github.com/mkaminsky11)
+
+    Original yeti color scheme by Jesse Weed (https://github.com/jesseweed/yeti-syntax)
+
+*/
+
+
+.cm-s-yeti.CodeMirror {
+  background-color: #ECEAE8 !important;
+  color: #d1c9c0 !important;
+  border: none;
+}
+
+.cm-s-yeti .CodeMirror-gutters {
+  color: #adaba6;
+  background-color: #E5E1DB;
+  border: none;
+}
+.cm-s-yeti .CodeMirror-cursor { border-left: solid thin #d1c9c0; }
+.cm-s-yeti .CodeMirror-linenumber { color: #adaba6; }
+.cm-s-yeti.CodeMirror-focused div.CodeMirror-selected { background: #DCD8D2; }
+.cm-s-yeti .CodeMirror-line::selection, .cm-s-yeti .CodeMirror-line > span::selection, .cm-s-yeti .CodeMirror-line > span > span::selection { background: #DCD8D2; }
+.cm-s-yeti .CodeMirror-line::-moz-selection, .cm-s-yeti .CodeMirror-line > span::-moz-selection, .cm-s-yeti .CodeMirror-line > span > span::-moz-selection { background: #DCD8D2; }
+.cm-s-yeti span.cm-comment { color: #d4c8be; }
+.cm-s-yeti span.cm-string, .cm-s-yeti span.cm-string-2 { color: #96c0d8; }
+.cm-s-yeti span.cm-number { color: #a074c4; }
+.cm-s-yeti span.cm-variable { color: #55b5db; }
+.cm-s-yeti span.cm-variable-2 { color: #a074c4; }
+.cm-s-yeti span.cm-def { color: #55b5db; }
+.cm-s-yeti span.cm-operator { color: #9fb96e; }
+.cm-s-yeti span.cm-keyword { color: #9fb96e; }
+.cm-s-yeti span.cm-atom { color: #a074c4; }
+.cm-s-yeti span.cm-meta { color: #96c0d8; }
+.cm-s-yeti span.cm-tag { color: #96c0d8; }
+.cm-s-yeti span.cm-attribute { color: #9fb96e; }
+.cm-s-yeti span.cm-qualifier { color: #96c0d8; }
+.cm-s-yeti span.cm-property { color: #a074c4; }
+.cm-s-yeti span.cm-builtin { color: #a074c4; }
+.cm-s-yeti span.cm-variable-3, .cm-s-yeti span.cm-type { color: #96c0d8; }
+.cm-s-yeti .CodeMirror-activeline-background { background: #E7E4E0; }
+.cm-s-yeti .CodeMirror-matchingbracket { text-decoration: underline; }
 /* BASICS */
 
 .CodeMirror {
@@ -3321,6 +3321,11 @@ li.CodeMirror-hint-active {
   color: white;
 }
 
+.modal .modal-backdrop + .modal-dialog {
+  z-index: 1050;
+}
+
+/*# sourceMappingURL=Modal.vue.map */
 a.dropdown-item {
   cursor: pointer;
 }
@@ -3734,24 +3739,6 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=BtnActivity.vue.map */
-.form-group, .form-group .form-group-inner {
-  position: relative;
-}
-.form-group .activity-indicator {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translate(-1rem, -50%);
-  transition: all .25s ease-in;
-}
-
-/*# sourceMappingURL=FormGroup.vue.map */
-/*# sourceMappingURL=ActivityIndicator.vue.map */
-.navigation-error {
-  color: #dc3545;
-}
-
-/*# sourceMappingURL=NavigationError.vue.map */
 @media (max-width: 575.98px) {
 .btn-xs-block {
     width: 100%;
@@ -3807,89 +3794,24 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=Btn.vue.map */
-.activity-indicator-dots > div {
-  border-radius: 100%;
-  display: inline-block;
-  background-color: #212529;
-  width: 0.6rem;
-  height: 0.6rem;
-  animation: activity-indicator-dots 1.4s infinite ease-in-out both;
+.form-group, .form-group .form-group-inner {
+  position: relative;
 }
-.activity-indicator-dots > div:not(:last-child) {
-  margin-right: 0.198rem;
-}
-.activity-indicator-dots.activity-indicator-xs > div {
-  width: 0.3rem;
-  height: 0.3rem;
-}
-.activity-indicator-dots.activity-indicator-sm > div {
-  width: 0.45rem;
-  height: 0.45rem;
-}
-.activity-indicator-dots.activity-indicator-md > div {
-  width: 0.6rem;
-  height: 0.6rem;
-}
-.activity-indicator-dots.activity-indicator-lg > div {
-  width: 0.9rem;
-  height: 0.9rem;
-}
-.activity-indicator-dots.activity-indicator-xl > div {
-  width: 1.2rem;
-  height: 1.2rem;
-}
-.activity-indicator-dots > div:nth-child(1) {
-  animation-delay: 0s;
-}
-.activity-indicator-dots > div:nth-child(2) {
-  animation-delay: 0.16s;
-}
-.activity-indicator-dots > div:nth-child(3) {
-  animation-delay: 0.32s;
-}
-.activity-indicator-dots > div:nth-child(4) {
-  animation-delay: 0.48s;
-}
-.activity-indicator-dots > div:nth-child(5) {
-  animation-delay: 0.64s;
-}
-.activity-indicator-dots > div:nth-child(6) {
-  animation-delay: 0.8s;
-}
-.activity-indicator-dots > div:nth-child(7) {
-  animation-delay: 0.96s;
-}
-.activity-indicator-dots > div:nth-child(8) {
-  animation-delay: 1.12s;
-}
-.activity-indicator-dots > div:nth-child(9) {
-  animation-delay: 1.28s;
-}
-.activity-indicator-dots > div:nth-child(10) {
-  animation-delay: 1.44s;
-}
-.activity-indicator-dots > div:nth-child(11) {
-  animation-delay: 1.6s;
-}
-.activity-indicator-dots > div:nth-child(12) {
-  animation-delay: 1.76s;
-}
-.activity-indicator-dots > div:nth-child(13) {
-  animation-delay: 1.92s;
-}
-@keyframes activity-indicator-dots {
-0%, 80%, 100% {
-    transform: scale(0);
-}
-40% {
-    transform: scale(1);
-}
-}
-.btn-activity-indicator-dots:not(.btn-warning) .activity-indicator-dots > div {
-  background: white;
+.form-group .activity-indicator {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-1rem, -50%);
+  transition: all .25s ease-in;
 }
 
-/*# sourceMappingURL=Dots.vue.map */
+/*# sourceMappingURL=FormGroup.vue.map */
+/*# sourceMappingURL=ActivityIndicator.vue.map */
+.navigation-error {
+  color: #dc3545;
+}
+
+/*# sourceMappingURL=NavigationError.vue.map */
 .activity-indicator-spinner {
   position: relative;
   width: 2.25rem;
@@ -4569,8 +4491,86 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=Spinner.vue.map */
-.modal .modal-backdrop + .modal-dialog {
-  z-index: 1050;
+.activity-indicator-dots > div {
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #212529;
+  width: 0.6rem;
+  height: 0.6rem;
+  animation: activity-indicator-dots 1.4s infinite ease-in-out both;
+}
+.activity-indicator-dots > div:not(:last-child) {
+  margin-right: 0.198rem;
+}
+.activity-indicator-dots.activity-indicator-xs > div {
+  width: 0.3rem;
+  height: 0.3rem;
+}
+.activity-indicator-dots.activity-indicator-sm > div {
+  width: 0.45rem;
+  height: 0.45rem;
+}
+.activity-indicator-dots.activity-indicator-md > div {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+.activity-indicator-dots.activity-indicator-lg > div {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.activity-indicator-dots.activity-indicator-xl > div {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.activity-indicator-dots > div:nth-child(1) {
+  animation-delay: 0s;
+}
+.activity-indicator-dots > div:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.activity-indicator-dots > div:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.activity-indicator-dots > div:nth-child(4) {
+  animation-delay: 0.48s;
+}
+.activity-indicator-dots > div:nth-child(5) {
+  animation-delay: 0.64s;
+}
+.activity-indicator-dots > div:nth-child(6) {
+  animation-delay: 0.8s;
+}
+.activity-indicator-dots > div:nth-child(7) {
+  animation-delay: 0.96s;
+}
+.activity-indicator-dots > div:nth-child(8) {
+  animation-delay: 1.12s;
+}
+.activity-indicator-dots > div:nth-child(9) {
+  animation-delay: 1.28s;
+}
+.activity-indicator-dots > div:nth-child(10) {
+  animation-delay: 1.44s;
+}
+.activity-indicator-dots > div:nth-child(11) {
+  animation-delay: 1.6s;
+}
+.activity-indicator-dots > div:nth-child(12) {
+  animation-delay: 1.76s;
+}
+.activity-indicator-dots > div:nth-child(13) {
+  animation-delay: 1.92s;
+}
+@keyframes activity-indicator-dots {
+0%, 80%, 100% {
+    transform: scale(0);
+}
+40% {
+    transform: scale(1);
+}
+}
+.btn-activity-indicator-dots:not(.btn-warning) .activity-indicator-dots > div {
+  background: white;
 }
 
-/*# sourceMappingURL=Modal.vue.map */
+/*# sourceMappingURL=Dots.vue.map */

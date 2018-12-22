@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { isArray } from 'vue-interface/src/Helpers/Functions';
+
 const GUTTER_ID = 'CodeMirror-lint-errors';
 
 export default class LintState {
@@ -63,7 +65,7 @@ export default class LintState {
                     ? this.callback('transformResponseError', error)
                     : (error.response.data.errors || error.response.data);
 
-                if(typeof errors === 'array') {
+                if(isArray(errors)) {
                     this.errors = errors;
                 }
 

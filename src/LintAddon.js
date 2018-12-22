@@ -2,6 +2,7 @@ import CodeMirror from 'codemirror';
 import LintState from './LintState';
 import fontawesome from '@fortawesome/fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { isArray } from 'vue-interface/src/Helpers/Functions';
 
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
 
@@ -14,7 +15,7 @@ function removeExistingErrors(state, errors) {
     });
 }
 
-function createTooltipContainer() {
+function createTooltipContainer(cm) {
     let container = document.querySelector('.CodeMirror-lint-tooltip-container');
 
     if(container) {
@@ -26,20 +27,16 @@ function createTooltipContainer() {
     container.style.marginLeft = document.querySelector('.CodeMirror-sizer').style.marginLeft;
     container.style.borderRightWidth = document.querySelector('.CodeMirror-sizer').style.borderRightWidth;
 
-    document.documentElement.appendChild(container);
+    cm.getWrapperElement().parentNode.insertBefore(container, cm.getWrapperElement().nextSibling);
 
     return container;
 }
 
-function createTooltip(html) {
+function createTooltip(html, cm) {
     const div = document.createElement('div');
 
     div.className = 'CodeMirror-lint-tooltip';
     div.innerHTML = html;
-
-    createTooltipContainer().appendChild(div);
-
-    div.style.transform = `translateY(calc(-${div.clientHeight}px + 1.5em))`;
 
     return div;
 }
@@ -53,6 +50,50 @@ function createIcon(error) {
     icon.error = error;
 
     return icon;
+}
+
+function addErrors(state) {
+    const range = state.lint.cm.getViewport();
+
+    if(isArray(state.lint.errors)) {
+        state.lint.errors.forEach(error => {
+            state.lint.cm.setGutterMarker(error.line - 1, state.lint.id, createIcon(error));
+
+            error.match = CodeMirror.findMatchingTag(state.lint.cm, {
+                line: error.line - 1,
+                ch: error.column
+            }, range);
+
+            if(error.match) {
+                if(error.match.open) {
+                    error.open = state.lint.cm.markText(error.match.open.from, error.match.open.to, {
+                        className: 'CodeMirror-lint-error-underline'
+                    });
+                }
+
+                if(error.match.close) {
+                    error.close = state.lint.cm.markText(error.match.close.from, error.match.close.to, {
+                        className: UNDERLINE_CLASS
+                    });
+                }
+            }
+        });
+
+        if(state.lint.errors.length && state.lint.errors[0].match) {
+            state.lint.cm.scrollIntoView(
+                state.lint.errors[0].match.open ||
+                state.lint.errors[0].match.close,
+                state.lint.cm.getScrollInfo().clientHeight / 2
+            );
+
+            setTimeout(() => {
+                state.lint.cm.setCursor(
+                    state.lint.errors[0].line - 1,
+                    state.lint.errors[0].column
+                );
+            });
+        }
+    }
 }
 
 function onCursorActivity(cm) {
@@ -77,17 +118,11 @@ function onCursorActivity(cm) {
     }, []).join('<br>');
 
     if(errors.length) {
-        cm.lintErrorTooltip = createTooltip(message);
+        cm.lintErrorTooltip = createTooltip(message, cm);
         cm.addWidget({ ch, line }, cm.lintErrorTooltip, true);
-
-        document.documentElement.querySelector('.CodeMirror-lint-tooltip-container').appendChild(cm.lintErrorTooltip);
 
         const bounds = cm.lintErrorTooltip.getBoundingClientRect();
         const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
-
-        if(offset > 0) {
-            cm.lintErrorTooltip.style.transform = `translate(${-offset}px, calc(-${cm.lintErrorTooltip.clientHeight}px + 1.5em))`;
-        }
     }
 }
 
@@ -101,16 +136,22 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
     if(options) {
         cm.state.lint = new LintState(cm, options || (options = {}));
         cm.on('cursorActivity', onCursorActivity);
-        cm.on('inputRead', event => {
-            cm.lint();
+        cm.on('inputRead', (cm, event) => {
+            if(event.origin === 'paste') {
+                cm.state.lint.errors = [];
+                cm.lint();
+            }
         });
+
+        if(options.errors && options.errors.length) {
+            cm.state.lint.errors = options.errors;
+            addErrors(cm.state);
+        }
     }
 });
 
 CodeMirror.defineExtension('lint', function(data, options) {
     return new Promise((resolve, reject) => {
-        console.log(this.state.lint.errors);
-
         const existingErrors = this.state.lint.errors;
 
         this.state.lint
@@ -122,50 +163,7 @@ CodeMirror.defineExtension('lint', function(data, options) {
                 removeExistingErrors(this.state, existingErrors);
 
                 this.state.lint.cm.operation(() => {
-                    const range = this.state.lint.cm.getViewport();
-
-                    if(typeof this.state.lint.errors !== 'array') {
-                        return;
-                    }
-
-                    this.state.lint.errors.forEach(error => {
-                        this.state.lint.cm.setGutterMarker(error.line - 1, this.state.lint.id, createIcon(error));
-
-                        error.match = CodeMirror.findMatchingTag(this.state.lint.cm, {
-                            line: parseInt(error.line) - 1,
-                            ch: parseInt(error.column)
-                        }, range);
-
-                        if(error.match) {
-                            if(error.match.open) {
-                                error.open = this.state.lint.cm.markText(error.match.open.from, error.match.open.to, {
-                                    className: 'CodeMirror-lint-error-underline'
-                                });
-                            }
-
-                            if(error.match.close) {
-                                error.close = this.state.lint.cm.markText(error.match.close.from, error.match.close.to, {
-                                    className: UNDERLINE_CLASS
-                                });
-                            }
-                        }
-                    });
-
-                    if(this.state.lint.errors.length && this.state.lint.errors[0].match) {
-                        this.state.lint.cm.scrollIntoView(
-                            this.state.lint.errors[0].match.open ||
-                            this.state.lint.errors[0].match.close,
-                            this.state.lint.cm.getScrollInfo().clientHeight / 2
-                        );
-
-                        setTimeout(() => {
-                            this.state.lint.cm.setCursor(
-                                parseInt(this.state.lint.errors[0].line) - 1,
-                                parseInt(this.state.lint.errors[0].column)
-                            );
-                        });
-                    }
-
+                    addErrors(this.state);
                     reject(error);
                 });
             });

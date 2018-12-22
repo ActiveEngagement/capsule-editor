@@ -6,19 +6,6 @@ Description: Official README coming soon...
 
 ---
 
-Name: @fortawesome/vue-fontawesome
-Version: 0.1.3
-License: MIT
-Private: false
-Description: Official Vue component for Font Awesome 5
-Repository: git+https://github.com/FortAwesome/vue-fontawesome.git
-Homepage: https://github.com/FortAwesome/vue-fontawesome
-Contributors:
-  Travis Chase <travis@fontawesome.com>
-  Rob Madole <rob@fontawesome.com>
-
----
-
 Name: vue-runtime-helpers
 Version: 0.2.0
 License: MIT
@@ -41,6 +28,17 @@ Author: Matt Zabriskie
 
 ---
 
+Name: process-es6
+Version: 0.11.6
+License: MIT
+Private: false
+Description: process information for node.js and browsers, but in es6
+Repository: git://github.com/calvinmetcalf/node-process-es6.git
+Homepage: https://github.com/calvinmetcalf/node-process-es6#readme
+Author: Roman Shtylman <shtylman@gmail.com>
+
+---
+
 Name: rollup-plugin-node-globals
 Version: 1.4.0
 License: MIT
@@ -52,14 +50,27 @@ Author: Calvin Metcalf <calvin.metcalf@gmail.com>
 
 ---
 
-Name: process-es6
-Version: 0.11.6
+Name: is-buffer
+Version: 1.1.6
 License: MIT
 Private: false
-Description: process information for node.js and browsers, but in es6
-Repository: git://github.com/calvinmetcalf/node-process-es6.git
-Homepage: https://github.com/calvinmetcalf/node-process-es6#readme
-Author: Roman Shtylman <shtylman@gmail.com>
+Description: Determine if an object is a Buffer
+Repository: git://github.com/feross/is-buffer.git
+Homepage: https://github.com/feross/is-buffer#readme
+Author: Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)
+
+---
+
+Name: @fortawesome/vue-fontawesome
+Version: 0.1.3
+License: MIT
+Private: false
+Description: Official Vue component for Font Awesome 5
+Repository: git+https://github.com/FortAwesome/vue-fontawesome.git
+Homepage: https://github.com/FortAwesome/vue-fontawesome
+Contributors:
+  Travis Chase <travis@fontawesome.com>
+  Rob Madole <rob@fontawesome.com>
 
 ---
 
@@ -80,20 +91,26 @@ Contributors:
 
 ---
 
-Name: is-buffer
-Version: 1.1.6
-License: MIT
-Private: false
-Description: Determine if an object is a Buffer
-Repository: git://github.com/feross/is-buffer.git
-Homepage: https://github.com/feross/is-buffer#readme
-Author: Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)
-
----
-
 Name: @fortawesome/free-solid-svg-icons
 Version: 5.6.3
 License: (CC-BY-4.0 AND MIT)
+Private: false
+Description: The iconic font, CSS, and SVG framework
+Repository: git+https://github.com/FortAwesome/Font-Awesome.git
+Homepage: https://fontawesome.com
+Author: Dave Gandy <dave@fontawesome.com> (http://twitter.com/davegandy)
+Contributors:
+  Brian Talbot (http://twitter.com/talbs)
+  Travis Chase (http://twitter.com/supercodepoet)
+  Rob Madole (http://twitter.com/robmadole)
+  Geremia Taglialatela (http://twitter.com/gtagliala)
+  Mike Wilkerson (http://twitter.com/mw77)
+
+---
+
+Name: @fortawesome/fontawesome
+Version: 1.1.8
+License: MIT
 Private: false
 Description: The iconic font, CSS, and SVG framework
 Repository: git+https://github.com/FortAwesome/Font-Awesome.git
@@ -914,20 +931,3 @@ Homepage: https://popper.js.org
 Author: Federico Zivolo <federico.zivolo@gmail.com>
 Contributors:
   Contributors (https://github.com/FezVrasta/popper.js/graphs/contributors)
-
----
-
-Name: @fortawesome/fontawesome
-Version: 1.1.8
-License: MIT
-Private: false
-Description: The iconic font, CSS, and SVG framework
-Repository: git+https://github.com/FortAwesome/Font-Awesome.git
-Homepage: https://fontawesome.com
-Author: Dave Gandy <dave@fontawesome.com> (http://twitter.com/davegandy)
-Contributors:
-  Brian Talbot (http://twitter.com/talbs)
-  Travis Chase (http://twitter.com/supercodepoet)
-  Rob Madole (http://twitter.com/robmadole)
-  Geremia Taglialatela (http://twitter.com/gtagliala)
-  Mike Wilkerson (http://twitter.com/mw77)
