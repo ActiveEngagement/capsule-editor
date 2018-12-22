@@ -14,9 +14,10 @@ import {
     WATCH_OPTIONS,
 } from './build/config';
 
+console.log(PACKAGE_FORMAT);
+
 // Export the config object
 export default [{
-    cache: false,
     input: MAINJS,
     output: {
         name: NAMESPACE,

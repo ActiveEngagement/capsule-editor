@@ -12,5 +12,5 @@ export default [
     // prepend({
     //    selector: '.sample-component '
     // }),
-    MINIFY ? cssnano() : null,
+    // MINIFY ? cssnano() : null,
 ];
