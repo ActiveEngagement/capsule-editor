@@ -3,7 +3,7 @@
         <editor-toolbar
             ref="toolbar"
             :value="value"
-            :title.sync="filename"
+            :title.sync="currentFilename"
             :activity="isLinting"
             @lint="onClickLint"
             @new="onClickNew"
@@ -40,7 +40,9 @@ export default {
 
         errors: Array,
 
-        contents: String
+        contents: String,
+
+        filename: String
 
     },
 
@@ -119,17 +121,17 @@ export default {
 
             reader.readAsText(event.target.files[0]);
 
-            this.filename = event.target.files[0].name;
+            this.currentFilename = event.target.files[0].name;
         },
 
         onClickNew() {
-            this.filename = null;
+            this.currentFilename = null;
             this.$refs.editor.cm.setValue(this.value = '');
             this.$refs.editor.cm.focus();
         },
 
         onClickSave() {
-            if(this.filename) {
+            if(this.currentFilename) {
                 this.$emit('download', this.value, this.download);
             }
             else {
@@ -151,11 +153,11 @@ export default {
                     },
                     propsData: {
                         label: 'Enter the name of the file',
-                        value: this.filename
+                        value: this.currentFilename
                     }
                 }
             }).then(modal => {
-                this.$emit('download', this.value, this.filename = modal.$el.querySelector('input').value);
+                this.$emit('download', this.value, this.currentFilename = modal.$el.querySelector('input').value);
             });
         },
 
@@ -178,7 +180,7 @@ export default {
             value: this.contents,
             isLinting: false,
             currentErrors: [],
-            filename: null
+            currentFilename: this.filename
         };
     },
 
