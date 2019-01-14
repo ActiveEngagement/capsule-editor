@@ -2596,47 +2596,6 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=Editor.vue.map */
-.CodeMirror {
-  position: absolute;
-  width: 100%;
-}
-.CodeMirror .CodeMirror-lint-errors {
-    width: 1.2em;
-}
-.CodeMirror .CodeMirror-lint-error-icon {
-    width: 1em;
-    height: 1em;
-    padding: .2em;
-    background: #dc3545;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    transform: translateY(25%);
-    margin: auto;
-}
-.CodeMirror .CodeMirror-lint-error-icon svg {
-      color: #fff;
-      font-size: .7em;
-}
-.CodeMirror .CodeMirror-lint-error-underline {
-    color: red !important;
-    font-weight: bold;
-    background-repeat: repeat-x;
-    background-position-y: bottom;
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
-}
-.CodeMirror-lint-tooltip {
-  background: #dc3545;
-  color: #fff;
-  z-index: 10;
-  padding: .5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/*# sourceMappingURL=EditorField.vue.map */
 .edit-toolbar {
   position: fixed;
   top: 0;
@@ -2678,6 +2637,47 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=EditorHotkey.vue.map */
+.CodeMirror {
+  position: absolute;
+  width: 100%;
+}
+.CodeMirror .CodeMirror-lint-errors {
+    width: 1.2em;
+}
+.CodeMirror .CodeMirror-lint-error-icon {
+    width: 1em;
+    height: 1em;
+    padding: .2em;
+    background: #dc3545;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    transform: translateY(25%);
+    margin: auto;
+}
+.CodeMirror .CodeMirror-lint-error-icon svg {
+      color: #fff;
+      font-size: .7em;
+}
+.CodeMirror .CodeMirror-lint-error-underline {
+    color: red !important;
+    font-weight: bold;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
+}
+.CodeMirror-lint-tooltip {
+  background: #dc3545;
+  color: #fff;
+  z-index: 10;
+  padding: .5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*# sourceMappingURL=EditorField.vue.map */
 .editor-toolbar.bg-dark {
   background-color: #282a36 !important;
 }

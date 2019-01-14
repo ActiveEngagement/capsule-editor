@@ -1,7 +1,7 @@
 /**
  * vue-code-editor
  *
- * 0.1.1
+ * 0.1.2
  * 2019-01-13
  */
 
@@ -25866,6 +25866,10 @@ var script$u = {
   props: {
     activity: Boolean,
     errors: Array,
+    pageControls: {
+      type: Boolean,
+      default: true
+    },
     value: String,
     title: {
       type: String,
@@ -25944,83 +25948,88 @@ var __vue_render__$s = function() {
         })
       ]),
       _vm._v(" "),
-      _c(
-        "btn-dropdown",
-        {
-          staticClass: "editor-toolbar-actions ml-auto",
-          attrs: { size: "sm", variant: "light", align: "right" }
-        },
-        [
-          _c("icon", { attrs: { slot: "label", icon: "cog" }, slot: "label" }),
-          _vm._v(" "),
-          _c("editor-toolbar-menu-item", {
-            attrs: { label: "New File", hotkeys: ["ctrl", "N"] },
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                _vm.$emit("new");
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("editor-toolbar-menu-item", {
-            attrs: { label: "Open", hotkeys: ["ctrl", "O"] },
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                _vm.$emit("open");
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("editor-toolbar-menu-item", {
-            attrs: { label: "Save", hotkeys: ["ctrl", "S"] },
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                _vm.$emit("save");
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("editor-toolbar-menu-item", {
-            attrs: { label: "Save As...", hotkeys: ["shift", "ctrl", "S"] },
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                _vm.$emit("save-as");
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("editor-toolbar-menu-item", {
-            attrs: { label: "Close", hotkeys: ["ctrl", "Q"] },
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                _vm.$emit("close");
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.length
-            ? [
-                _c("dropdown-menu-divider"),
-                _vm._v(" "),
-                _c("editor-toolbar-menu-item", {
-                  attrs: { label: "Export Errors", hotkeys: ["ctrl", "X"] },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault();
-                      _vm.$emit("export-errors");
-                    }
+      _vm.pageControls
+        ? _c(
+            "btn-dropdown",
+            {
+              staticClass: "editor-toolbar-actions ml-auto",
+              attrs: { size: "sm", variant: "light", align: "right" }
+            },
+            [
+              _c("icon", {
+                attrs: { slot: "label", icon: "cog" },
+                slot: "label"
+              }),
+              _vm._v(" "),
+              _c("editor-toolbar-menu-item", {
+                attrs: { label: "New File", hotkeys: ["ctrl", "N"] },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault();
+                    _vm.$emit("new");
                   }
-                })
-              ]
-            : _vm._e()
-        ],
-        2
-      )
+                }
+              }),
+              _vm._v(" "),
+              _c("editor-toolbar-menu-item", {
+                attrs: { label: "Open", hotkeys: ["ctrl", "O"] },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault();
+                    _vm.$emit("open");
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("editor-toolbar-menu-item", {
+                attrs: { label: "Save", hotkeys: ["ctrl", "S"] },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault();
+                    _vm.$emit("save");
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("editor-toolbar-menu-item", {
+                attrs: { label: "Save As...", hotkeys: ["shift", "ctrl", "S"] },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault();
+                    _vm.$emit("save-as");
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("editor-toolbar-menu-item", {
+                attrs: { label: "Close", hotkeys: ["ctrl", "Q"] },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault();
+                    _vm.$emit("close");
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.length
+                ? [
+                    _c("dropdown-menu-divider"),
+                    _vm._v(" "),
+                    _c("editor-toolbar-menu-item", {
+                      attrs: { label: "Export Errors", hotkeys: ["ctrl", "X"] },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault();
+                          _vm.$emit("export-errors");
+                        }
+                      }
+                    })
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
+        : _vm._e()
     ],
     1
   )
@@ -26602,7 +26611,11 @@ var script$B = {
     gutters: Array,
     lint: Object,
     matchTags: Object,
-    options: Object
+    options: Object,
+    pageControls: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
     mergedOptions() {
@@ -26779,7 +26792,8 @@ var __vue_render__$z = function() {
         attrs: {
           value: _vm.value,
           title: _vm.currentFilename,
-          activity: _vm.isLinting
+          activity: _vm.isLinting,
+          "page-controls": _vm.pageControls
         },
         on: {
           "update:title": function($event) {

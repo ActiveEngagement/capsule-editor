@@ -7,7 +7,7 @@
         <div class="editor-toolbar-title">
             <input type="text" placeholder="Untitled Document" :value="title" @input="onInput"/>
         </div>
-        <btn-dropdown size="sm" variant="light" align="right" class="editor-toolbar-actions ml-auto">
+        <btn-dropdown v-if="pageControls" size="sm" variant="light" align="right" class="editor-toolbar-actions ml-auto">
             <icon icon="cog" slot="label"/>
             <editor-toolbar-menu-item label="New File" :hotkeys="['ctrl', 'N']" @click.prevent="$emit('new')" />
             <editor-toolbar-menu-item label="Open" :hotkeys="['ctrl', 'O']" @click.prevent="$emit('open')" />
@@ -60,6 +60,11 @@ export default {
         activity: Boolean,
 
         errors: Array,
+
+        pageControls: {
+            type: Boolean,
+            default: true
+        },
 
         value: String,
 

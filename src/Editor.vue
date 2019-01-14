@@ -5,6 +5,7 @@
             :value="value"
             :title.sync="currentFilename"
             :activity="isLinting"
+            :page-controls="pageControls"
             @input="onToolbarInput"
             @lint="onClickLint"
             @new="onClickNew"
@@ -59,7 +60,12 @@ export default {
 
         matchTags: Object,
 
-        options: Object
+        options: Object,
+
+        pageControls: {
+            type: Boolean,
+            default: true
+        }
 
     },
 
