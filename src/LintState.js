@@ -49,7 +49,7 @@ export default class LintState {
             axios.post(
                 this.value('url'),
                 (data || this.value('data')),
-                (options || this.value('options'))
+                (options || this.value('options') || this.options)
             ).then(response => {
                 this.errors = [];
                 this.response = response = this.option('transformResponse')

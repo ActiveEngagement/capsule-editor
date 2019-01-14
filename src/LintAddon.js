@@ -1,7 +1,7 @@
 import CodeMirror from 'codemirror';
 import LintState from './LintState';
 import fontawesome from '@fortawesome/fontawesome';
-import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
 
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';

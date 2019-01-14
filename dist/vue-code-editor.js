@@ -1,8 +1,8 @@
 /**
  * vue-code-editor
  *
- * 0.1.0
- * 2018-12-22
+ * 0.1.1
+ * 2019-01-13
  */
 
 (function (global, factory) {
@@ -12,6 +12,10 @@
 }(this, (function (exports) { 'use strict';
 
 	var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+	function unwrapExports (x) {
+		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
+	}
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -11440,7 +11444,7 @@
 	  request(data, options) {
 	    this.callback('onStart');
 	    return new Promise((resolve, reject) => {
-	      axios$1.post(this.value('url'), data || this.value('data'), options || this.value('options')).then(response => {
+	      axios$1.post(this.value('url'), data || this.value('data'), options || this.value('options') || this.options).then(response => {
 	        this.errors = [];
 	        this.response = response = this.option('transformResponse') ? this.callback('transformResponse', response) : response.data;
 	        resolve(response);
@@ -13322,16 +13326,47 @@
 
 	if (IS_DOM) bunker(bootstrap);
 
-	var faBug = {
-	  prefix: 'fas',
-	  iconName: 'bug',
-	  icon: [512, 512, [], "f188", "M511.988 288.9c-.478 17.43-15.217 31.1-32.653 31.1H424v16c0 21.864-4.882 42.584-13.6 61.145l60.228 60.228c12.496 12.497 12.496 32.758 0 45.255-12.498 12.497-32.759 12.496-45.256 0l-54.736-54.736C345.886 467.965 314.351 480 280 480V236c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v244c-34.351 0-65.886-12.035-90.636-32.108l-54.736 54.736c-12.498 12.497-32.759 12.496-45.256 0-12.496-12.497-12.496-32.758 0-45.255l60.228-60.228C92.882 378.584 88 357.864 88 336v-16H32.666C15.23 320 .491 306.33.013 288.9-.484 270.816 14.028 256 32 256h56v-58.745l-46.628-46.628c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0L141.255 160h229.489l54.627-54.627c12.498-12.497 32.758-12.497 45.256 0 12.496 12.497 12.496 32.758 0 45.255L424 197.255V256h56c17.972 0 32.484 14.816 31.988 32.9zM257 0c-61.856 0-112 50.144-112 112h224C369 50.144 318.856 0 257 0z"]
-	};
-	var faCog = {
-	  prefix: 'fas',
-	  iconName: 'cog',
-	  icon: [512, 512, [], "f013", "M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"]
-	};
+	var faBug = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, '__esModule', { value: true });
+	var prefix = 'fas';
+	var iconName = 'bug';
+	var width = 512;
+	var height = 512;
+	var ligatures = [];
+	var unicode = 'f188';
+	var svgPathData = 'M511.988 288.9c-.478 17.43-15.217 31.1-32.653 31.1H424v16c0 21.864-4.882 42.584-13.6 61.145l60.228 60.228c12.496 12.497 12.496 32.758 0 45.255-12.498 12.497-32.759 12.496-45.256 0l-54.736-54.736C345.886 467.965 314.351 480 280 480V236c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v244c-34.351 0-65.886-12.035-90.636-32.108l-54.736 54.736c-12.498 12.497-32.759 12.496-45.256 0-12.496-12.497-12.496-32.758 0-45.255l60.228-60.228C92.882 378.584 88 357.864 88 336v-16H32.666C15.23 320 .491 306.33.013 288.9-.484 270.816 14.028 256 32 256h56v-58.745l-46.628-46.628c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0L141.255 160h229.489l54.627-54.627c12.498-12.497 32.758-12.497 45.256 0 12.496 12.497 12.496 32.758 0 45.255L424 197.255V256h56c17.972 0 32.484 14.816 31.988 32.9zM257 0c-61.856 0-112 50.144-112 112h224C369 50.144 318.856 0 257 0z';
+
+	exports.definition = {
+	  prefix: prefix,
+	  iconName: iconName,
+	  icon: [
+	    width,
+	    height,
+	    ligatures,
+	    unicode,
+	    svgPathData
+	  ]};
+
+	exports.faBug = exports.definition;
+	exports.prefix = prefix;
+	exports.iconName = iconName;
+	exports.width = width;
+	exports.height = height;
+	exports.ligatures = ligatures;
+	exports.unicode = unicode;
+	exports.svgPathData = svgPathData;
+	});
+
+	unwrapExports(faBug);
+	var faBug_1 = faBug.definition;
+	var faBug_2 = faBug.faBug;
+	var faBug_3 = faBug.prefix;
+	var faBug_4 = faBug.iconName;
+	var faBug_5 = faBug.width;
+	var faBug_6 = faBug.height;
+	var faBug_7 = faBug.ligatures;
+	var faBug_8 = faBug.unicode;
+	var faBug_9 = faBug.svgPathData;
 
 	const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
 
@@ -13372,7 +13407,7 @@
 	function createIcon(error) {
 	  const icon$$1 = document.createElement('div');
 	  icon$$1.className = 'CodeMirror-lint-error-icon';
-	  icon$$1.innerHTML = api$1.icon(faBug).html;
+	  icon$$1.innerHTML = api$1.icon(faBug_2).html;
 	  icon$$1.title = `${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`;
 	  icon$$1.error = error;
 	  return icon$$1;
@@ -17610,7 +17645,7 @@
 	});
 	});
 
-	function prefix$1(subject, prefix, delimeter = '-') {
+	function prefix(subject, prefix, delimeter = '-') {
 	    const prefixer = (value, key$$1) => {
 	        const string = (key$$1 || value)
 	            .replace(new RegExp(`^${prefix}${delimeter}?`), '');
@@ -17981,7 +18016,7 @@
 	        },
 
 	        controlSizeClass() {
-	            return prefix$1(this.size, this.controlClass);
+	            return prefix(this.size, this.controlClass);
 	        },
 
 	        customControlClass() {
@@ -17989,9 +18024,9 @@
 	        },
 
 	        formGroupClasses() {
-	            const name = prefix$1(this.$options.name, this.custom ? customPrefix : '');
+	            const name = prefix(this.$options.name, this.custom ? customPrefix : '');
 
-	            return this.mergeClasses(name, prefix$1(this.size, name), {
+	            return this.mergeClasses(name, prefix(this.size, name), {
 	                'has-activity': this.activity,
 	                'is-valid': !!(this.valid || this.validFeedback),
 	                'is-invalid': !!(this.invalid || this.invalidFeedback)
@@ -18234,7 +18269,7 @@
 	        },
 
 	        variantClass() {
-	            return prefix$1(this.variant, this.variantClassPrefix);
+	            return prefix(this.variant, this.variantClassPrefix);
 	        }
 
 	    }
@@ -18294,7 +18329,7 @@
 	    computed: {
 
 	        classes() {
-	            return prefix$1({
+	            return prefix({
 	                'pill': this.pill,
 	                'secondary': this.secondary
 	            }, this.$options.name);
@@ -18866,14 +18901,14 @@
 	                return this.expand;
 	            }
 
-	            return prefix$1(prefix$1(this.expand, 'expand'), 'navbar');
+	            return prefix(prefix(this.expand, 'expand'), 'navbar');
 	        },
 
 	        classes() {
 	            return this.mergeClasses(
 	                'navbar',
-	                prefix$1(this.sticky === true ? 'top' : this.sticky, 'sticky'),
-	                prefix$1(this.fixed === true ? 'top' : this.fixed, 'fixed'),
+	                prefix(this.sticky === true ? 'top' : this.sticky, 'sticky'),
+	                prefix(this.fixed === true ? 'top' : this.fixed, 'fixed'),
 	                this.expandedClass,
 	                this.variantClass,
 	                this.colorableClasses
@@ -19344,7 +19379,7 @@
 	            });
 
 	            return this.mergeClasses(
-	                prefix$1(this.align, 'justify-content'),
+	                prefix(this.align, 'justify-content'),
 	                this.colorableClasses, {
 	                    'card-header-tabs': this.isCard && this.tabs,
 	                    'card-header-pills': this.isCard && this.pills,
@@ -19754,7 +19789,7 @@
 
 	    methods: {
 
-	        prefix: prefix$1,
+	        prefix: prefix,
 
 	        /**
 	         * A callback function for the `click` event.
@@ -19873,7 +19908,7 @@
 	        },
 
 	        sizeableClass() {
-	            return prefix$1(this.size, this.sizeableClassPrefix);
+	            return prefix(this.size, this.sizeableClassPrefix);
 	        }
 
 	    }
@@ -23129,8 +23164,8 @@
 	        actionClasses() {
 	            return [
 	                'btn',
-	                prefix$1(this.size, 'btn'),
-	                prefix$1(this.variant, 'btn')
+	                prefix(this.size, 'btn'),
+	                prefix(this.variant, 'btn')
 	            ].join(' ');
 	        },
 
@@ -25165,6 +25200,48 @@
 	    undefined
 	  );
 
+	var faCog = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, '__esModule', { value: true });
+	var prefix = 'fas';
+	var iconName = 'cog';
+	var width = 512;
+	var height = 512;
+	var ligatures = [];
+	var unicode = 'f013';
+	var svgPathData = 'M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z';
+
+	exports.definition = {
+	  prefix: prefix,
+	  iconName: iconName,
+	  icon: [
+	    width,
+	    height,
+	    ligatures,
+	    unicode,
+	    svgPathData
+	  ]};
+
+	exports.faCog = exports.definition;
+	exports.prefix = prefix;
+	exports.iconName = iconName;
+	exports.width = width;
+	exports.height = height;
+	exports.ligatures = ligatures;
+	exports.unicode = unicode;
+	exports.svgPathData = svgPathData;
+	});
+
+	unwrapExports(faCog);
+	var faCog_1 = faCog.definition;
+	var faCog_2 = faCog.faCog;
+	var faCog_3 = faCog.prefix;
+	var faCog_4 = faCog.iconName;
+	var faCog_5 = faCog.width;
+	var faCog_6 = faCog.height;
+	var faCog_7 = faCog.ligatures;
+	var faCog_8 = faCog.unicode;
+	var faCog_9 = faCog.svgPathData;
+
 	//
 	//
 	//
@@ -25776,8 +25853,8 @@
 	  );
 
 	//
-	library$1.add(faBug);
-	library$1.add(faCog);
+	library$1.add(faBug_2);
+	library$1.add(faCog_2);
 	library$1.add(alt);
 	library$1.add(ctrl);
 	library$1.add(shift);
@@ -25804,6 +25881,11 @@
 	  methods: {
 	    isLintingDisabled() {
 	      return !this.value || this.value === '';
+	    },
+
+	    onInput(event) {
+	      this.$emit('input', event.target.value);
+	      this.$emit('update:title', event.target.value);
 	    },
 
 	    onClickLint(event) {
@@ -25864,11 +25946,7 @@
 	        _c("input", {
 	          attrs: { type: "text", placeholder: "Untitled Document" },
 	          domProps: { value: _vm.title },
-	          on: {
-	            input: function($event) {
-	              _vm.$emit("update:title", $event.target.value);
-	            }
-	          }
+	          on: { input: _vm.onInput }
 	        })
 	      ]),
 	      _vm._v(" "),
@@ -26516,18 +26594,31 @@
 	    EditorToolbar
 	  },
 	  props: {
-	    errors: Array,
-	    contents: String
+	    errors: {
+	      type: Array,
+
+	      default() {
+	        return [];
+	      }
+
+	    },
+	    contents: String,
+	    extraKeys: Object,
+	    filename: String,
+	    gutters: Array,
+	    lint: Object,
+	    matchTags: Object,
+	    options: Object
 	  },
 	  computed: {
-	    options() {
-	      return {
+	    mergedOptions() {
+	      return deepExtend({
 	        foldGutter: true,
-	        matchTags: {
+	        matchTags: Object.assign({
 	          bothTags: true
-	        },
-	        gutters: ['CodeMirror-linenumbers', LintState.id, 'CodeMirror-foldgutter'],
-	        extraKeys: {
+	        }, this.matchTags),
+	        gutters: this.gutters || ['CodeMirror-linenumbers', LintState.id, 'CodeMirror-foldgutter'],
+	        extraKeys: Object.assign({
 	          'Ctrl-N': this.onClickNew,
 	          'Ctrl-O': this.onClickOpen,
 	          'Ctrl-S': this.onClickSave,
@@ -26544,10 +26635,10 @@
 	          }
 	          */
 
-	        },
-	        lint: {
-	          errors: this.errors,
+	        }, this.extraKeys),
+	        lint: Object.assign({
 	          url: 'lint',
+	          errors: this.errors,
 	          data: cm => {
 	            return {
 	              html: cm.getValue()
@@ -26561,18 +26652,32 @@
 	          },
 	          onSuccess: () => {
 	            this.currentErrors = [];
+	            this.$emit('lint-success');
 	          },
 	          onError: error => {
 	            if (error.response.status === 406) {
-	              this.currentErrors = error.response.data.errors;
+	              this.$emit('lint-error', error, this.currentErrors = error.response.data.errors);
 	            }
 	          }
-	        }
-	      };
+	        }, this.lint)
+	      }, this.options);
 	    }
 
 	  },
 	  methods: {
+	    onToolbarInput() {
+	      this.onEditorInput();
+	    },
+
+	    onEditorInput() {
+	      this.$nextTick(() => {
+	        this.$emit('input', {
+	          contents: this.value,
+	          filename: this.currentFilename
+	        });
+	      });
+	    },
+
 	    onExportErrors() {
 	      console.log('export errors');
 	    },
@@ -26586,18 +26691,20 @@
 	      };
 
 	      reader.readAsText(event.target.files[0]);
-	      this.filename = event.target.files[0].name;
+	      this.currentFilename = event.target.files[0].name;
 	    },
 
 	    onClickNew() {
-	      this.filename = null;
+	      this.currentFilename = null;
 	      this.$refs.editor.cm.setValue(this.value = '');
 	      this.$refs.editor.cm.focus();
+	      this.$emit('new');
 	    },
 
 	    onClickSave() {
-	      if (this.filename) {
-	        this.$emit('download', this.value, this.download);
+	      if (this.currentFilename) {
+	        this.$emit('download', this.value, this.currentFilename);
+	        this.$emit('save', this.value, this.currentFilename);
 	      } else {
 	        this.onClickSaveAs();
 	      }
@@ -26617,11 +26724,12 @@
 	          },
 	          propsData: {
 	            label: 'Enter the name of the file',
-	            value: this.filename
+	            value: this.currentFilename
 	          }
 	        }
 	      }).then(modal => {
-	        this.$emit('download', this.value, this.filename = modal.$el.querySelector('input').value);
+	        this.$emit('download', this.value, this.currentFilename);
+	        this.$emit('save-as', this.value, this.currentFilename);
 	      });
 	    },
 
@@ -26644,7 +26752,7 @@
 	      value: this.contents,
 	      isLinting: false,
 	      currentErrors: [],
-	      filename: null
+	      currentFilename: this.filename
 	    };
 	  },
 
@@ -26676,13 +26784,14 @@
 	        ref: "toolbar",
 	        attrs: {
 	          value: _vm.value,
-	          title: _vm.filename,
+	          title: _vm.currentFilename,
 	          activity: _vm.isLinting
 	        },
 	        on: {
 	          "update:title": function($event) {
-	            _vm.filename = $event;
+	            _vm.currentFilename = $event;
 	          },
+	          input: _vm.onToolbarInput,
 	          lint: _vm.onClickLint,
 	          new: _vm.onClickNew,
 	          open: _vm.onClickOpen,
@@ -26702,11 +26811,7 @@
 	            _vm._b(
 	              {
 	                ref: "editor",
-	                on: {
-	                  input: function($event) {
-	                    _vm.$emit("intput", _vm.value);
-	                  }
-	                },
+	                on: { input: _vm.onEditorInput },
 	                model: {
 	                  value: _vm.value,
 	                  callback: function($$v) {
@@ -26716,7 +26821,7 @@
 	                }
 	              },
 	              "editor-field",
-	              _vm.options,
+	              _vm.mergedOptions,
 	              false
 	            )
 	          ),

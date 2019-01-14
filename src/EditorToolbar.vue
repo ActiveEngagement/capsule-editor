@@ -5,7 +5,7 @@
             <badge v-if="errors && errors.length" :label="errors.length" variant="danger" class="position-absolute" pill />
         </btn-activity>
         <div class="editor-toolbar-title">
-            <input type="text" placeholder="Untitled Document" :value="title" @input="$emit('update:title', $event.target.value)"/>
+            <input type="text" placeholder="Untitled Document" :value="title" @input="onInput"/>
         </div>
         <btn-dropdown size="sm" variant="light" align="right" class="editor-toolbar-actions ml-auto">
             <icon icon="cog" slot="label"/>
@@ -28,7 +28,8 @@ import Badge from 'vue-interface/src/Components/Badge';
 import Navbar from 'vue-interface/src/Components/Navbar';
 import EditorToolbarMenuItem from './EditorToolbarMenuItem';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
+import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import BtnActivity from 'vue-interface/src/Components/BtnActivity';
 import BtnDropdown from 'vue-interface/src/Components/BtnDropdown';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
@@ -73,6 +74,11 @@ export default {
 
         isLintingDisabled() {
             return !this.value || this.value === '';
+        },
+
+        onInput(event) {
+            this.$emit('input', event.target.value);
+            this.$emit('update:title', event.target.value);
         },
 
         onClickLint(event) {

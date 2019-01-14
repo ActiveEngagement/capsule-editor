@@ -5,6 +5,7 @@
             :value="value"
             :title.sync="currentFilename"
             :activity="isLinting"
+            @input="onToolbarInput"
             @lint="onClickLint"
             @new="onClickNew"
             @open="onClickOpen"
@@ -14,7 +15,7 @@
             @export-errors="onExportErrors" />
 
         <div class="editor-field-container">
-            <editor-field ref="editor" v-model="value" v-bind="options" @input="$emit('intput', value)" />
+            <editor-field ref="editor" v-model="value" v-bind="mergedOptions" @input="onEditorInput" />
             <input ref="file" type="file" class="d-none" @input="onFileSelected"/>
         </div>
     </div>
@@ -26,6 +27,7 @@ import LintState from './LintState';
 import EditorField from './EditorField';
 import EditorToolbar from './EditorToolbar';
 import InputField from 'vue-interface/src/Components/InputField';
+import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 
 export default {
 
@@ -38,28 +40,43 @@ export default {
 
     props: {
 
-        errors: Array,
+        errors: {
+            type: Array,
+            default() {
+                return [];
+            }
+        },
 
         contents: String,
 
-        filename: String
+        extraKeys: Object,
+
+        filename: String,
+
+        gutters: Array,
+
+        lint: Object,
+
+        matchTags: Object,
+
+        options: Object
 
     },
 
     computed: {
 
-        options() {
-            return {
+        mergedOptions() {
+            return deepExtend({
                 foldGutter: true,
-                matchTags: {
+                matchTags: Object.assign({
                     bothTags: true
-                },
-                gutters: [
+                }, this.matchTags),
+                gutters: this.gutters || [
                     'CodeMirror-linenumbers',
                     LintState.id,
                     'CodeMirror-foldgutter'
                 ],
-                extraKeys: {
+                extraKeys: Object.assign({
                     'Ctrl-N': this.onClickNew,
                     'Ctrl-O': this.onClickOpen,
                     'Ctrl-S': this.onClickSave,
@@ -75,10 +92,10 @@ export default {
                         cm.foldCode(cm.getCursor());
                     }
                     */
-                },
-                lint: {
-                    errors: this.errors,
+                }, this.extraKeys),
+                lint: Object.assign({
                     url: 'lint',
+                    errors: this.errors,
                     data: cm => {
                         return {
                             html: cm.getValue()
@@ -92,19 +109,33 @@ export default {
                     },
                     onSuccess: () => {
                         this.currentErrors = [];
+                        this.$emit('lint-success');
                     },
                     onError: error => {
                         if(error.response.status === 406) {
-                            this.currentErrors = error.response.data.errors;
+                            this.$emit('lint-error', error, this.currentErrors = error.response.data.errors);
                         }
                     }
-                }
-            };
+                }, this.lint)
+            }, this.options);
         }
 
     },
 
     methods: {
+
+        onToolbarInput() {
+            this.onEditorInput();
+        },
+
+        onEditorInput() {
+            this.$nextTick(() => {
+                this.$emit('input', {
+                    contents: this.value,
+                    filename: this.currentFilename
+                });
+            });
+        },
 
         onExportErrors() {
             console.log('export errors');
@@ -128,11 +159,13 @@ export default {
             this.currentFilename = null;
             this.$refs.editor.cm.setValue(this.value = '');
             this.$refs.editor.cm.focus();
+            this.$emit('new');
         },
 
         onClickSave() {
             if(this.currentFilename) {
-                this.$emit('download', this.value, this.download);
+                this.$emit('download', this.value, this.currentFilename);
+                this.$emit('save', this.value, this.currentFilename);
             }
             else {
                 this.onClickSaveAs();
@@ -157,7 +190,8 @@ export default {
                     }
                 }
             }).then(modal => {
-                this.$emit('download', this.value, this.currentFilename = modal.$el.querySelector('input').value);
+                this.$emit('download', this.value, this.currentFilename);
+                this.$emit('save-as', this.value, this.currentFilename);
             });
         },
 
