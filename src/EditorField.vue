@@ -6,6 +6,7 @@
 import CodeMirror from 'codemirror';
 import 'codemirror/theme/yeti.css';
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/addon/merge/merge.css';
 import 'codemirror/addon/fold/foldgutter.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/theme/dracula.css';
@@ -23,6 +24,7 @@ import 'codemirror/addon/fold/comment-fold';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/xml-hint';
 import 'codemirror/addon/hint/html-hint';
+import 'codemirror/addon/merge/merge';
 import FormControl from 'vue-interface/src/Mixins/FormControl';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 

@@ -2637,47 +2637,6 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=EditorField.vue.map */
-.edit-toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-.edit-toolbar .btn {
-    position: relative;
-}
-.edit-toolbar .btn .badge {
-      top: 0;
-      right: 0;
-      z-index: 1;
-      transform: translate(50%, -25%);
-}
-.edit-toolbar .btn.has-error > svg {
-      color: #dc3545;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item {
-    display: flex;
-    align-items: center;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item span {
-      margin-right: 1.5em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item code {
-      font-size: 8px;
-      margin-left: auto;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
-      background: #3c3c3c;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
-        margin-right: .25em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
-      width: 9px;
-}
-
-/*# sourceMappingURL=EditorHotkey.vue.map */
 .editor-toolbar.bg-dark {
   background-color: #282a36 !important;
 }
@@ -2781,7 +2740,101 @@ a.dropdown-item {
       width: 9px;
 }
 
+/*# sourceMappingURL=EditorHotkey.vue.map */
+.edit-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.edit-toolbar .btn {
+    position: relative;
+}
+.edit-toolbar .btn .badge {
+      top: 0;
+      right: 0;
+      z-index: 1;
+      transform: translate(50%, -25%);
+}
+.edit-toolbar .btn.has-error > svg {
+      color: #dc3545;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item {
+    display: flex;
+    align-items: center;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item span {
+      margin-right: 1.5em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item code {
+      font-size: 8px;
+      margin-left: auto;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
+      background: #3c3c3c;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
+        margin-right: .25em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
+      width: 9px;
+}
+
 /*# sourceMappingURL=EditorToolbarMenuItem.vue.map *//*
+
+    Name:       material
+    Author:     Michael Kaminsky (http://github.com/mkaminsky11)
+
+    Original material color scheme by Mattia Astorino (https://github.com/equinusocio/material-theme)
+
+*/
+
+.cm-s-material.CodeMirror {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+}
+.cm-s-material .CodeMirror-gutters {
+  background: #263238;
+  color: rgb(83,127,126);
+  border: none;
+}
+.cm-s-material .CodeMirror-guttermarker, .cm-s-material .CodeMirror-guttermarker-subtle, .cm-s-material .CodeMirror-linenumber { color: rgb(83,127,126); }
+.cm-s-material .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+.cm-s-material div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+.cm-s-material.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
+.cm-s-material .CodeMirror-line::selection, .cm-s-material .CodeMirror-line > span::selection, .cm-s-material .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.10); }
+.cm-s-material .CodeMirror-line::-moz-selection, .cm-s-material .CodeMirror-line > span::-moz-selection, .cm-s-material .CodeMirror-line > span > span::-moz-selection { background: rgba(255, 255, 255, 0.10); }
+
+.cm-s-material .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
+.cm-s-material .cm-keyword { color: rgba(199, 146, 234, 1); }
+.cm-s-material .cm-operator { color: rgba(233, 237, 237, 1); }
+.cm-s-material .cm-variable-2 { color: #80CBC4; }
+.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #82B1FF; }
+.cm-s-material .cm-builtin { color: #DECB6B; }
+.cm-s-material .cm-atom { color: #F77669; }
+.cm-s-material .cm-number { color: #F77669; }
+.cm-s-material .cm-def { color: rgba(233, 237, 237, 1); }
+.cm-s-material .cm-string { color: #C3E88D; }
+.cm-s-material .cm-string-2 { color: #80CBC4; }
+.cm-s-material .cm-comment { color: #546E7A; }
+.cm-s-material .cm-variable { color: #82B1FF; }
+.cm-s-material .cm-tag { color: #80CBC4; }
+.cm-s-material .cm-meta { color: #80CBC4; }
+.cm-s-material .cm-attribute { color: #FFCB6B; }
+.cm-s-material .cm-property { color: #80CBAE; }
+.cm-s-material .cm-qualifier { color: #DECB6B; }
+.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #DECB6B; }
+.cm-s-material .cm-tag { color: rgba(255, 83, 112, 1); }
+.cm-s-material .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #EC5F67;
+}
+.cm-s-material .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+/*
 
     Name:       yeti
     Author:     Michael Kaminsky (http://github.com/mkaminsky11)
@@ -2865,59 +2918,6 @@ a.dropdown-item {
 
 .cm-s-dracula .CodeMirror-activeline-background { background: rgba(255,255,255,0.1); }
 .cm-s-dracula .CodeMirror-matchingbracket { text-decoration: underline; color: white !important; }
-/*
-
-    Name:       material
-    Author:     Michael Kaminsky (http://github.com/mkaminsky11)
-
-    Original material color scheme by Mattia Astorino (https://github.com/equinusocio/material-theme)
-
-*/
-
-.cm-s-material.CodeMirror {
-  background-color: #263238;
-  color: rgba(233, 237, 237, 1);
-}
-.cm-s-material .CodeMirror-gutters {
-  background: #263238;
-  color: rgb(83,127,126);
-  border: none;
-}
-.cm-s-material .CodeMirror-guttermarker, .cm-s-material .CodeMirror-guttermarker-subtle, .cm-s-material .CodeMirror-linenumber { color: rgb(83,127,126); }
-.cm-s-material .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
-.cm-s-material div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
-.cm-s-material.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
-.cm-s-material .CodeMirror-line::selection, .cm-s-material .CodeMirror-line > span::selection, .cm-s-material .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.10); }
-.cm-s-material .CodeMirror-line::-moz-selection, .cm-s-material .CodeMirror-line > span::-moz-selection, .cm-s-material .CodeMirror-line > span > span::-moz-selection { background: rgba(255, 255, 255, 0.10); }
-
-.cm-s-material .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
-.cm-s-material .cm-keyword { color: rgba(199, 146, 234, 1); }
-.cm-s-material .cm-operator { color: rgba(233, 237, 237, 1); }
-.cm-s-material .cm-variable-2 { color: #80CBC4; }
-.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #82B1FF; }
-.cm-s-material .cm-builtin { color: #DECB6B; }
-.cm-s-material .cm-atom { color: #F77669; }
-.cm-s-material .cm-number { color: #F77669; }
-.cm-s-material .cm-def { color: rgba(233, 237, 237, 1); }
-.cm-s-material .cm-string { color: #C3E88D; }
-.cm-s-material .cm-string-2 { color: #80CBC4; }
-.cm-s-material .cm-comment { color: #546E7A; }
-.cm-s-material .cm-variable { color: #82B1FF; }
-.cm-s-material .cm-tag { color: #80CBC4; }
-.cm-s-material .cm-meta { color: #80CBC4; }
-.cm-s-material .cm-attribute { color: #FFCB6B; }
-.cm-s-material .cm-property { color: #80CBAE; }
-.cm-s-material .cm-qualifier { color: #DECB6B; }
-.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #DECB6B; }
-.cm-s-material .cm-tag { color: rgba(255, 83, 112, 1); }
-.cm-s-material .cm-error {
-  color: rgba(255, 255, 255, 1.0);
-  background-color: #EC5F67;
-}
-.cm-s-material .CodeMirror-matchingbracket {
-  text-decoration: underline;
-  color: white !important;
-}
 /* BASICS */
 
 .CodeMirror {
@@ -3264,6 +3264,125 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
+.CodeMirror-merge {
+  position: relative;
+  border: 1px solid #ddd;
+  white-space: pre;
+}
+
+.CodeMirror-merge, .CodeMirror-merge .CodeMirror {
+  height: 350px;
+}
+
+.CodeMirror-merge-2pane .CodeMirror-merge-pane { width: 47%; }
+.CodeMirror-merge-2pane .CodeMirror-merge-gap { width: 6%; }
+.CodeMirror-merge-3pane .CodeMirror-merge-pane { width: 31%; }
+.CodeMirror-merge-3pane .CodeMirror-merge-gap { width: 3.5%; }
+
+.CodeMirror-merge-pane {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+.CodeMirror-merge-pane-rightmost {
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+}
+
+.CodeMirror-merge-gap {
+  z-index: 2;
+  display: inline-block;
+  height: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  position: relative;
+  background: #f8f8f8;
+}
+
+.CodeMirror-merge-scrolllock-wrap {
+  position: absolute;
+  bottom: 0; left: 50%;
+}
+.CodeMirror-merge-scrolllock {
+  position: relative;
+  left: -50%;
+  cursor: pointer;
+  color: #555;
+  line-height: 1;
+}
+.CodeMirror-merge-scrolllock:after {
+  content: "\21db\00a0\00a0\21da";
+}
+.CodeMirror-merge-scrolllock.CodeMirror-merge-scrolllock-enabled:after {
+  content: "\21db\21da";
+}
+
+.CodeMirror-merge-copybuttons-left, .CodeMirror-merge-copybuttons-right {
+  position: absolute;
+  left: 0; top: 0;
+  right: 0; bottom: 0;
+  line-height: 1;
+}
+
+.CodeMirror-merge-copy {
+  position: absolute;
+  cursor: pointer;
+  color: #44c;
+  z-index: 3;
+}
+
+.CodeMirror-merge-copy-reverse {
+  position: absolute;
+  cursor: pointer;
+  color: #44c;
+}
+
+.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy { left: 2px; }
+.CodeMirror-merge-copybuttons-right .CodeMirror-merge-copy { right: 2px; }
+
+.CodeMirror-merge-r-inserted, .CodeMirror-merge-l-inserted {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAGUlEQVQI12MwuCXy3+CWyH8GBgYGJgYkAABZbAQ9ELXurwAAAABJRU5ErkJggg==);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.CodeMirror-merge-r-deleted, .CodeMirror-merge-l-deleted {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAGUlEQVQI12M4Kyb2/6yY2H8GBgYGJgYkAABURgPz6Ks7wQAAAABJRU5ErkJggg==);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.CodeMirror-merge-r-chunk { background: #ffffe0; }
+.CodeMirror-merge-r-chunk-start { border-top: 1px solid #ee8; }
+.CodeMirror-merge-r-chunk-end { border-bottom: 1px solid #ee8; }
+.CodeMirror-merge-r-connect { fill: #ffffe0; stroke: #ee8; stroke-width: 1px; }
+
+.CodeMirror-merge-l-chunk { background: #eef; }
+.CodeMirror-merge-l-chunk-start { border-top: 1px solid #88e; }
+.CodeMirror-merge-l-chunk-end { border-bottom: 1px solid #88e; }
+.CodeMirror-merge-l-connect { fill: #eef; stroke: #88e; stroke-width: 1px; }
+
+.CodeMirror-merge-l-chunk.CodeMirror-merge-r-chunk { background: #dfd; }
+.CodeMirror-merge-l-chunk-start.CodeMirror-merge-r-chunk-start { border-top: 1px solid #4e4; }
+.CodeMirror-merge-l-chunk-end.CodeMirror-merge-r-chunk-end { border-bottom: 1px solid #4e4; }
+
+.CodeMirror-merge-collapsed-widget:before {
+  content: "(...)";
+}
+.CodeMirror-merge-collapsed-widget {
+  cursor: pointer;
+  color: #88b;
+  background: #eef;
+  border: 1px solid #ddf;
+  font-size: 90%;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+.CodeMirror-merge-collapsed-line .CodeMirror-gutter-elt { display: none; }
 .CodeMirror-foldmarker {
   color: blue;
   text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
@@ -3806,12 +3925,12 @@ a.dropdown-item {
 }
 
 /*# sourceMappingURL=FormGroup.vue.map */
-/*# sourceMappingURL=ActivityIndicator.vue.map */
 .navigation-error {
   color: #dc3545;
 }
 
 /*# sourceMappingURL=NavigationError.vue.map */
+/*# sourceMappingURL=ActivityIndicator.vue.map */
 .activity-indicator-dots > div {
   border-radius: 100%;
   display: inline-block;

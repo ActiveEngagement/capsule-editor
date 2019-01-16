@@ -14,8 +14,6 @@ import {
     WATCH_OPTIONS,
 } from './build/config';
 
-console.log(PACKAGE_FORMAT);
-
 // Export the config object
 export default [{
     input: MAINJS,
