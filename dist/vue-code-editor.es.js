@@ -1,8 +1,8 @@
 /**
  * vue-code-editor
  *
- * 0.1.3
- * 2019-01-16
+ * 0.1.6
+ * 2019-01-23
  */
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -7705,6 +7705,8 @@ var codemirror = createCommonjsModule(function (module, exports) {
       throw new Error("inputStyle can not (yet) be changed in a running editor") // FIXME
     }, true);
     option("spellcheck", false, function (cm, val) { return cm.getInputField().spellcheck = val; }, true);
+    option("autocorrect", false, function (cm, val) { return cm.getInputField().autocorrect = val; }, true);
+    option("autocapitalize", false, function (cm, val) { return cm.getInputField().autocapitalize = val; }, true);
     option("rtlMoveVisually", !windows);
     option("wholeLineUpdateBefore", true);
 
@@ -8173,9 +8175,9 @@ var codemirror = createCommonjsModule(function (module, exports) {
     return {text: text, ranges: ranges}
   }
 
-  function disableBrowserMagic(field, spellcheck) {
-    field.setAttribute("autocorrect", "off");
-    field.setAttribute("autocapitalize", "off");
+  function disableBrowserMagic(field, spellcheck, autocorrect, autocapitalize) {
+    field.setAttribute("autocorrect", !!autocorrect);
+    field.setAttribute("autocapitalize", !!autocapitalize);
     field.setAttribute("spellcheck", !!spellcheck);
   }
 
@@ -8746,7 +8748,7 @@ var codemirror = createCommonjsModule(function (module, exports) {
 
     var input = this, cm = input.cm;
     var div = input.div = display.lineDiv;
-    disableBrowserMagic(div, cm.options.spellcheck);
+    disableBrowserMagic(div, cm.options.spellcheck, cm.options.autocorrect, cm.options.autocapitalize);
 
     on(div, "paste", function (e) {
       if (signalDOMEvent(cm, e) || handlePaste(e, cm)) { return }
@@ -9738,7 +9740,7 @@ var codemirror = createCommonjsModule(function (module, exports) {
 
   addLegacyProps(CodeMirror);
 
-  CodeMirror.version = "5.42.2";
+  CodeMirror.version = "5.43.0";
 
   return CodeMirror;
 
@@ -14269,7 +14271,10 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     }
     if (type == "function") return cont(functiondef);
     if (type == "for") return cont(pushlex("form"), forspec, statement, poplex);
-    if (type == "class" || (isTS && value == "interface")) { cx.marked = "keyword"; return cont(pushlex("form"), className, poplex); }
+    if (type == "class" || (isTS && value == "interface")) {
+      cx.marked = "keyword";
+      return cont(pushlex("form", type == "class" ? type : value), className, poplex)
+    }
     if (type == "variable") {
       if (isTS && value == "declare") {
         cx.marked = "keyword";
@@ -14277,11 +14282,11 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       } else if (isTS && (value == "module" || value == "enum" || value == "type") && cx.stream.match(/^\s*\w/, false)) {
         cx.marked = "keyword";
         if (value == "enum") return cont(enumdef);
-        else if (value == "type") return cont(typeexpr, expect("operator"), typeexpr, expect(";"));
+        else if (value == "type") return cont(typename, expect("operator"), typeexpr, expect(";"));
         else return cont(pushlex("form"), pattern, expect("{"), pushlex("}"), block, poplex, poplex)
       } else if (isTS && value == "namespace") {
         cx.marked = "keyword";
-        return cont(pushlex("form"), expression, block, poplex)
+        return cont(pushlex("form"), expression, statement, poplex)
       } else if (isTS && value == "abstract") {
         cx.marked = "keyword";
         return cont(statement)
@@ -14456,6 +14461,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
         }, proceed);
       }
       if (type == end || value == end) return cont();
+      if (sep && sep.indexOf(";") > -1) return pass(what)
       return cont(expect(end));
     }
     return function(type, value) {
@@ -14474,7 +14480,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
   }
   function maybetype(type, value) {
     if (isTS) {
-      if (type == ":") return cont(typeexpr);
+      if (type == ":" || value == "in") return cont(typeexpr);
       if (value == "?") return cont(maybetype);
     }
   }
@@ -14491,9 +14497,9 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     }
   }
   function typeexpr(type, value) {
-    if (value == "keyof" || value == "typeof") {
+    if (value == "keyof" || value == "typeof" || value == "infer") {
       cx.marked = "keyword";
-      return cont(value == "keyof" ? typeexpr : expressionNoComma)
+      return cont(value == "typeof" ? expressionNoComma : typeexpr)
     }
     if (type == "variable" || value == "void") {
       cx.marked = "type";
@@ -14502,7 +14508,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     if (type == "string" || type == "number" || type == "atom") return cont(afterType);
     if (type == "[") return cont(pushlex("]"), commasep(typeexpr, "]", ","), poplex, afterType)
     if (type == "{") return cont(pushlex("}"), commasep(typeprop, "}", ",;"), poplex, afterType)
-    if (type == "(") return cont(commasep(typearg, ")"), maybeReturnType)
+    if (type == "(") return cont(commasep(typearg, ")"), maybeReturnType, afterType)
     if (type == "<") return cont(commasep(typeexpr, ">"), typeexpr)
   }
   function maybeReturnType(type) {
@@ -14512,24 +14518,28 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     if (type == "variable" || cx.style == "keyword") {
       cx.marked = "property";
       return cont(typeprop)
-    } else if (value == "?") {
+    } else if (value == "?" || type == "number" || type == "string") {
       return cont(typeprop)
     } else if (type == ":") {
       return cont(typeexpr)
     } else if (type == "[") {
-      return cont(expression, maybetype, expect("]"), typeprop)
+      return cont(expect("variable"), maybetype, expect("]"), typeprop)
+    } else if (type == "(") {
+      return pass(functiondecl, typeprop)
     }
   }
   function typearg(type, value) {
     if (type == "variable" && cx.stream.match(/^\s*[?:]/, false) || value == "?") return cont(typearg)
     if (type == ":") return cont(typeexpr)
+    if (type == "spread") return cont(typearg)
     return pass(typeexpr)
   }
   function afterType(type, value) {
     if (value == "<") return cont(pushlex(">"), commasep(typeexpr, ">"), poplex, afterType)
     if (value == "|" || type == "." || value == "&") return cont(typeexpr)
-    if (type == "[") return cont(expect("]"), afterType)
+    if (type == "[") return cont(typeexpr, expect("]"), afterType)
     if (value == "extends" || value == "implements") { cx.marked = "keyword"; return cont(typeexpr) }
+    if (value == "?") return cont(typeexpr, expect(":"), typeexpr)
   }
   function maybeTypeArgs(_, value) {
     if (value == "<") return cont(pushlex(">"), commasep(typeexpr, ">"), poplex, afterType)
@@ -14602,6 +14612,20 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     if (type == "(") return cont(pushcontext, pushlex(")"), commasep(funarg, ")"), poplex, mayberettype, statement, popcontext);
     if (isTS && value == "<") return cont(pushlex(">"), commasep(typeparam, ">"), poplex, functiondef)
   }
+  function functiondecl(type, value) {
+    if (value == "*") {cx.marked = "keyword"; return cont(functiondecl);}
+    if (type == "variable") {register(value); return cont(functiondecl);}
+    if (type == "(") return cont(pushcontext, pushlex(")"), commasep(funarg, ")"), poplex, mayberettype, popcontext);
+    if (isTS && value == "<") return cont(pushlex(">"), commasep(typeparam, ">"), poplex, functiondecl)
+  }
+  function typename(type, value) {
+    if (type == "keyword" || type == "variable") {
+      cx.marked = "type";
+      return cont(typename)
+    } else if (value == "<") {
+      return cont(pushlex(">"), commasep(typeparam, ">"), poplex)
+    }
+  }
   function funarg(type, value) {
     if (value == "@") cont(expression, funarg);
     if (type == "spread") return cont(funarg);
@@ -14636,13 +14660,15 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       cx.marked = "property";
       return cont(isTS ? classfield : functiondef, classBody);
     }
+    if (type == "number" || type == "string") return cont(isTS ? classfield : functiondef, classBody);
     if (type == "[")
       return cont(expression, maybetype, expect("]"), isTS ? classfield : functiondef, classBody)
     if (value == "*") {
       cx.marked = "keyword";
       return cont(classBody);
     }
-    if (type == ";") return cont(classBody);
+    if (isTS && type == "(") return pass(functiondecl, classBody)
+    if (type == ";" || type == ",") return cont(classBody);
     if (type == "}") return cont();
     if (value == "@") return cont(expression, classBody)
   }
@@ -14650,7 +14676,8 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     if (value == "?") return cont(classfield)
     if (type == ":") return cont(typeexpr, maybeAssign)
     if (value == "=") return cont(expressionNoComma)
-    return pass(functiondef)
+    var context = cx.state.lexical.prev, isInterface = context && context.info == "interface";
+    return pass(isInterface ? functiondecl : functiondef)
   }
   function afterExport(type, value) {
     if (value == "*") { cx.marked = "keyword"; return cont(maybeFrom, expect(";")); }
@@ -14878,12 +14905,11 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
       return ret("qualifier", "qualifier");
     } else if (/[:;{}\[\]\(\)]/.test(ch)) {
       return ret(null, ch);
-    } else if (((ch == "u" || ch == "U") && stream.match(/rl(-prefix)?\(/i)) ||
-               ((ch == "d" || ch == "D") && stream.match("omain(", true, true)) ||
-               ((ch == "r" || ch == "R") && stream.match("egexp(", true, true))) {
-      stream.backUp(1);
-      state.tokenize = tokenParenthesized;
-      return ret("property", "word");
+    } else if (stream.match(/[\w-.]+(?=\()/)) {
+      if (/^(url(-prefix)?|domain|regexp)$/.test(stream.current().toLowerCase())) {
+        state.tokenize = tokenParenthesized;
+      }
+      return ret("variable callee", "variable");
     } else if (/[\w\\\-]/.test(ch)) {
       stream.eatWhile(/[\w\\\-]/);
       return ret("property", "word");
@@ -15735,7 +15761,7 @@ var htmlmixed = createCommonjsModule(function (module, exports) {
           return maybeBackup(stream, endTag, state.localMode.token(stream, state.localState));
         };
         state.localMode = mode;
-        state.localState = CodeMirror.startState(mode, htmlMode.indent(state.htmlState, ""));
+        state.localState = CodeMirror.startState(mode, htmlMode.indent(state.htmlState, "", ""));
       } else if (state.inTag) {
         state.inTag += stream.current();
         if (stream.eol()) state.inTag += " ";
@@ -15764,7 +15790,7 @@ var htmlmixed = createCommonjsModule(function (module, exports) {
 
       indent: function (state, textAfter, line) {
         if (!state.localMode || /^\s*<\//.test(textAfter))
-          return htmlMode.indent(state.htmlState, textAfter);
+          return htmlMode.indent(state.htmlState, textAfter, line);
         else if (state.localMode.indent)
           return state.localMode.indent(state.localState, textAfter, line);
         else
@@ -16754,6 +16780,8 @@ var showHint = createCommonjsModule(function (module, exports) {
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
+var mac = /Mac/.test(navigator.platform);
+
 (function(mod) {
   mod(codemirror);
 })(function(CodeMirror) {
@@ -16914,6 +16942,12 @@ var showHint = createCommonjsModule(function (module, exports) {
       Tab: handle.pick,
       Esc: handle.close
     };
+
+    if (mac) {
+      baseMap["Ctrl-P"] = function() {handle.moveFocus(-1);};
+      baseMap["Ctrl-N"] = function() {handle.moveFocus(1);};
+    }
+
     var custom = completion.options.customKeys;
     var ourMap = custom ? {} : baseMap;
     function addBinding(key, val) {
@@ -17613,6 +17647,8 @@ var htmlHint = createCommonjsModule(function (module, exports) {
     itemtype: null,
     lang: ["en", "es"],
     spellcheck: ["true", "false"],
+    autocorrect: ["true", "false"],
+    autocapitalize: ["true", "false"],
     style: null,
     tabindex: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
     title: null,
@@ -18818,7 +18854,7 @@ var FormControl = {
         bindEvents: {
             type: Array,
             default() {
-                return ['focus', 'blur', 'change', 'click', 'keyup', 'keydown', 'progress', 'paste'];
+                return ['focus', 'blur', 'change', 'click', 'keypress', 'keyup', 'keydown', 'progress', 'paste'];
             }
         },
 
@@ -20372,7 +20408,7 @@ var script$b = {
             });
 
             return this.mergeClasses(
-                prefix(this.align, 'justify-content'),
+                this.align ? prefix(this.align, 'justify-content') : null,
                 this.colorableClasses, {
                     'card-header-tabs': this.isCard && this.tabs,
                     'card-header-pills': this.isCard && this.pills,
@@ -24574,11 +24610,7 @@ var __vue_render__$m = function() {
   var _c = _vm._self._c || _h;
   return _c(
     "ul",
-    {
-      staticClass: "navbar-nav",
-      class: _vm.classes,
-      attrs: { role: _vm.role }
-    },
+    { staticClass: "navbar-nav", attrs: { role: "nav" } },
     [_vm._t("default")],
     2
   )
@@ -26031,6 +26063,10 @@ var FontAwesomeIcon = {
     symbol: {
       type: [Boolean, String],
       default: false
+    },
+    title: {
+      type: String,
+      default: null
     }
   },
 
@@ -26038,14 +26074,15 @@ var FontAwesomeIcon = {
     var props = context.props;
     var iconArgs = props.icon,
         maskArgs = props.mask,
-        symbol = props.symbol;
+        symbol = props.symbol,
+        title = props.title;
 
     var icon$$1 = normalizeIconArgs(iconArgs);
     var classes = objectWithKey('classes', classList(props));
     var transform = objectWithKey('transform', typeof props.transform === 'string' ? parse$1.transform(props.transform) : props.transform);
     var mask = objectWithKey('mask', normalizeIconArgs(maskArgs));
 
-    var renderedIcon = icon$1(icon$$1, _extends$2({}, classes, transform, mask, { symbol: symbol }));
+    var renderedIcon = icon$1(icon$$1, _extends$2({}, classes, transform, mask, { symbol: symbol, title: title }));
 
     if (!renderedIcon) {
       return log('Could not find one or more icon(s)', icon$$1, mask);
@@ -26159,7 +26196,8 @@ var __vue_render__$o = function() {
                   label: key.length === 1 ? key : null
                 }
               })
-            })
+            }),
+            1
           )
         : _vm._e()
     ]
@@ -26285,7 +26323,8 @@ var __vue_render__$p = function() {
     { staticClass: "activity-indicator", class: _vm.classes },
     _vm._l(_vm.nodes, function(i) {
       return _c("div")
-    })
+    }),
+    0
   )
 };
 var __vue_staticRenderFns__$p = [];
@@ -27024,7 +27063,22 @@ var __vue_render__$s = function() {
                       }
                     })
                   ]
-                : _vm._e()
+                : [
+                    _c("dropdown-menu-divider"),
+                    _vm._v(" "),
+                    _c("editor-toolbar-menu-item", {
+                      attrs: {
+                        label: "Convert Document",
+                        hotkeys: ["ctrl", "C"]
+                      },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault();
+                          _vm.$emit("convert");
+                        }
+                      }
+                    })
+                  ]
             ],
             2
           )
@@ -27671,6 +27725,10 @@ var script$B = {
 
   },
   methods: {
+    onConvert() {
+      this.$emit('convert', this.value, this.currentFilename);
+    },
+
     onToolbarInput() {
       this.onEditorInput();
     },
@@ -27805,6 +27863,7 @@ var __vue_render__$z = function() {
           close: _vm.onClickClose,
           save: _vm.onClickSave,
           "save-as": _vm.onClickSaveAs,
+          convert: _vm.onConvert,
           "export-errors": _vm.onExportErrors
         }
       }),
@@ -28740,7 +28799,7 @@ var __vue_render__$H = function() {
         keydown: function($event) {
           if (
             !("button" in $event) &&
-            _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+            _vm._k($event.keyCode, "esc", 27, $event.key, ["Esc", "Escape"])
           ) {
             return null
           }
@@ -28884,6 +28943,8 @@ function modal(Vue, options) {
             options = {};
         }
 
+        console.log(options.modal);
+
         const instance = instantiate(Vue, Modal, options.modal);
 
         instance.$content = instantiate(Vue, Component, options.content);
@@ -28903,14 +28964,14 @@ function modal(Vue, options) {
 
     Vue.prototype.$alert = function(title, Component, options) {
         return new Promise((resolve, reject) => {
-            const modal = this.$modal(Component, deepExtend(options, {
+            const modal = this.$modal(Component, deepExtend({
                 modal: {
                     propsData: {
                         title: title,
                         type: 'alert'
                     }
                 }
-            }));
+            }, options));
 
             modal.$on('confirm', event => {
                 modal.close();
@@ -28924,14 +28985,14 @@ function modal(Vue, options) {
 
     Vue.prototype.$confirm = function(title, Component, options) {
         return new Promise((resolve, reject) => {
-            const modal = this.$modal(Component || title, deepExtend(options, {
+            const modal = this.$modal(Component || title, deepExtend({
                 modal: {
                     propsData: {
                         title: Component ? title : null,
                         type: 'confirm'
                     }
                 }
-            }));
+            }, options));
 
             modal.$on('cancel', event => {
                 reject(modal);
@@ -28956,14 +29017,14 @@ function modal(Vue, options) {
                 predicate = () => true;
             }
 
-            const modal = this.$modal(Component, deepExtend(options, {
+            const modal = this.$modal(Component, deepExtend({
                 modal: {
                     propsData: {
                         title: title,
                         type: 'prompt'
                     }
                 }
-            }));
+            }, options));
 
             modal.$on('cancel', event => {
                 reject(modal);
