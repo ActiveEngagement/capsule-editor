@@ -3476,7 +3476,69 @@ a.dropdown-item {
   flex: 1;
 }
 
-/*# sourceMappingURL=Editor.vue.map */.CodeMirror {
+/*# sourceMappingURL=Editor.vue.map */.editor-toolbar.bg-dark {
+  background-color: #282a36 !important;
+}
+.editor-toolbar.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.editor-toolbar .btn {
+  position: relative;
+}
+.editor-toolbar .btn .badge {
+    top: 0;
+    right: 0;
+    z-index: 1;
+    transform: translate(50%, -25%);
+}
+.editor-toolbar .btn.has-error > svg {
+    color: #dc3545;
+}
+.editor-toolbar .editor-toolbar-title {
+  color: white;
+  font-size: 1em;
+  width: auto;
+  background: transparent;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+}
+.editor-toolbar .editor-toolbar-title input {
+    border: 0;
+    margin: 0;
+    color: white;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    flex-grow: 1;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item {
+  display: flex;
+  align-items: center;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item span {
+    margin-right: 1.5em;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item code {
+    font-size: 8px;
+    margin-left: auto;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item kbd {
+    background: #3c3c3c;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item kbd:not(:last-child) {
+      margin-right: .25em;
+}
+.editor-toolbar .editor-toolbar-actions .dropdown-item svg {
+    width: 9px;
+}
+
+/*# sourceMappingURL=EditorToolbar.vue.map */.CodeMirror {
   position: absolute;
   width: 100%;
 }
@@ -3556,69 +3618,7 @@ a.dropdown-item {
       width: 9px;
 }
 
-/*# sourceMappingURL=EditorHotkey.vue.map */.editor-toolbar.bg-dark {
-  background-color: #282a36 !important;
-}
-.editor-toolbar.fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-.editor-toolbar .btn {
-  position: relative;
-}
-.editor-toolbar .btn .badge {
-    top: 0;
-    right: 0;
-    z-index: 1;
-    transform: translate(50%, -25%);
-}
-.editor-toolbar .btn.has-error > svg {
-    color: #dc3545;
-}
-.editor-toolbar .editor-toolbar-title {
-  color: white;
-  font-size: 1em;
-  width: auto;
-  background: transparent;
-  text-align: center;
-  margin: 0 auto;
-  display: flex;
-  flex-grow: 1;
-}
-.editor-toolbar .editor-toolbar-title input {
-    border: 0;
-    margin: 0;
-    color: white;
-    outline: none;
-    background: transparent;
-    text-align: center;
-    flex-grow: 1;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item {
-  display: flex;
-  align-items: center;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item span {
-    margin-right: 1.5em;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item code {
-    font-size: 8px;
-    margin-left: auto;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item kbd {
-    background: #3c3c3c;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item kbd:not(:last-child) {
-      margin-right: .25em;
-}
-.editor-toolbar .editor-toolbar-actions .dropdown-item svg {
-    width: 9px;
-}
-
-/*# sourceMappingURL=EditorToolbar.vue.map */.edit-toolbar {
+/*# sourceMappingURL=EditorHotkey.vue.map */.edit-toolbar {
   position: fixed;
   top: 0;
   left: 0;

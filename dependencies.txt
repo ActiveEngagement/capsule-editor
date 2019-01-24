@@ -78,23 +78,6 @@ Contributors:
 
 ---
 
-Name: @fortawesome/fontawesome
-Version: 1.1.8
-License: MIT
-Private: false
-Description: The iconic font, CSS, and SVG framework
-Repository: git+https://github.com/FortAwesome/Font-Awesome.git
-Homepage: https://fontawesome.com
-Author: Dave Gandy <dave@fontawesome.com> (http://twitter.com/davegandy)
-Contributors:
-  Brian Talbot (http://twitter.com/talbs)
-  Travis Chase (http://twitter.com/supercodepoet)
-  Rob Madole (http://twitter.com/robmadole)
-  Geremia Taglialatela (http://twitter.com/gtagliala)
-  Mike Wilkerson (http://twitter.com/mw77)
-
----
-
 Name: @fortawesome/fontawesome-svg-core
 Version: 1.2.12
 License: MIT
@@ -126,6 +109,23 @@ Contributors:
   Liu Xinyu <github.com/meteorlxy>
   Xaver Schulz <github.com/schulz3000>
   Yannick Ihmels <github.com/ihmels>
+
+---
+
+Name: @fortawesome/fontawesome
+Version: 1.1.8
+License: MIT
+Private: false
+Description: The iconic font, CSS, and SVG framework
+Repository: git+https://github.com/FortAwesome/Font-Awesome.git
+Homepage: https://fontawesome.com
+Author: Dave Gandy <dave@fontawesome.com> (http://twitter.com/davegandy)
+Contributors:
+  Brian Talbot (http://twitter.com/talbs)
+  Travis Chase (http://twitter.com/supercodepoet)
+  Rob Madole (http://twitter.com/robmadole)
+  Geremia Taglialatela (http://twitter.com/gtagliala)
+  Mike Wilkerson (http://twitter.com/mw77)
 
 ---
 

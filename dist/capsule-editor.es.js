@@ -1,7 +1,7 @@
 /**
- * vue-code-editor
+ * capsule-editor
  *
- * 0.1.7
+ * 0.1.8
  * 2019-01-23
  */
 
@@ -29052,4 +29052,4 @@ if (window && window.Vue) {
 }
 
 export { Editor, EditorField, EditorHotkey, EditorToolbar, EditorToolbarMenuItem, LintState };
-//# sourceMappingURL=vue-code-editor.es.js.map
+//# sourceMappingURL=capsule-editor.es.js.map

@@ -1,14 +1,14 @@
 /**
- * vue-code-editor
+ * capsule-editor
  *
- * 0.1.7
+ * 0.1.8
  * 2019-01-23
  */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.VueCodeEditor = {})));
+	(factory((global.CapsuleEditor = {})));
 }(this, (function (exports) { 'use strict';
 
 	var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -29067,4 +29067,4 @@
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=vue-code-editor.js.map
+//# sourceMappingURL=capsule-editor.js.map
