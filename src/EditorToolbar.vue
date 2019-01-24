@@ -2,7 +2,7 @@
     <navbar class="editor-toolbar" variant="dark" bg-dark>
         <btn-activity ref="lint" size="sm" variant="light" class="mr-auto" :disabled="isLintingDisabled()" :activity="activity" @click.prevent="onClickLint">
             <icon icon="bug" />
-            <badge v-if="errors.length" :label="errors.length" variant="danger" class="position-absolute" pill />
+            <badge v-if="errors && errors.length" :label="errors.length" variant="danger" class="position-absolute" pill />
         </btn-activity>
         <div class="editor-toolbar-title">
             <input type="text" placeholder="Untitled Document" :value="title" @input="onInput"/>
@@ -14,11 +14,11 @@
             <editor-toolbar-menu-item label="Save" :hotkeys="['ctrl', 'S']" @click.prevent="$emit('save')" />
             <editor-toolbar-menu-item label="Save As..." :hotkeys="['shift', 'ctrl', 'S']" @click.prevent="$emit('save-as')" />
             <editor-toolbar-menu-item label="Close" :hotkeys="['ctrl', 'Q']" @click.prevent="$emit('close')" />
-            <template v-if="errors.length">
+            <template v-if="errors && errors.length">
                 <dropdown-menu-divider/>
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
             </template>
-            <template v-else if="!errors.length">
+            <template v-else if="errors && !errors.length">
                 <dropdown-menu-divider/>
                 <editor-toolbar-menu-item label="Convert Document" :hotkeys="['ctrl', 'C']" @click.prevent="$emit('convert')" />
             </template>
