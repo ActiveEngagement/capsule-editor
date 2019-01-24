@@ -3,8 +3,9 @@
         <editor-toolbar
             ref="toolbar"
             :value="value"
-            :title.sync="currentFilename"
             :activity="isLinting"
+            :errors="currentErrors"
+            :title.sync="currentFilename"
             :page-controls="pageControls"
             @input="onToolbarInput"
             @lint="onClickLint"
@@ -42,12 +43,7 @@ export default {
 
     props: {
 
-        errors: {
-            type: Array,
-            default() {
-                return [];
-            }
-        },
+        errors: Array,
 
         contents: String,
 
@@ -222,10 +218,10 @@ export default {
 
     data() {
         return {
-            value: this.contents,
             isLinting: false,
-            currentErrors: [],
-            currentFilename: this.filename
+            value: this.contents,
+            currentFilename: this.filename,
+            currentErrors: this.errors || []
         };
     },
 
@@ -234,7 +230,7 @@ export default {
             this.$refs.editor.cm.focus();
             this.$refs.editor.cm.setSize('100%', `calc(100% - ${this.$el.querySelector('.editor-toolbar').clientHeight}px)`);
 
-            if(this.$refs.editor.cm.getValue() && !this.errors.length) {
+            if(this.$refs.editor.cm.getValue() && !this.currentErrors.length) {
                 this.$refs.editor.cm.lint();
             }
         });

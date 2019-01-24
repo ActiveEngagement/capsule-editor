@@ -1,8 +1,8 @@
 /**
  * capsule-editor
  *
- * 0.1.9
- * 2019-01-23
+ * 0.1.10
+ * 2019-01-24
  */
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -26968,7 +26968,7 @@ var __vue_render__$s = function() {
         [
           _c("icon", { attrs: { icon: "bug" } }),
           _vm._v(" "),
-          _vm.errors && _vm.errors.length
+          _vm.errors.length
             ? _c("badge", {
                 staticClass: "position-absolute",
                 attrs: { label: _vm.errors.length, variant: "danger", pill: "" }
@@ -27049,7 +27049,7 @@ var __vue_render__$s = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.errors && _vm.errors.length
+              _vm.errors.length
                 ? [
                     _c("dropdown-menu-divider"),
                     _vm._v(" "),
@@ -27063,22 +27063,24 @@ var __vue_render__$s = function() {
                       }
                     })
                   ]
-                : [
-                    _c("dropdown-menu-divider"),
-                    _vm._v(" "),
-                    _c("editor-toolbar-menu-item", {
-                      attrs: {
-                        label: "Convert Document",
-                        hotkeys: ["ctrl", "C"]
-                      },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault();
-                          _vm.$emit("convert");
+                : !_vm.isLintingDisabled() && _vm.errors.length === 0
+                  ? [
+                      _c("dropdown-menu-divider"),
+                      _vm._v(" "),
+                      _c("editor-toolbar-menu-item", {
+                        attrs: {
+                          label: "Convert Document",
+                          hotkeys: ["ctrl", "C"]
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault();
+                            _vm.$emit("convert");
+                          }
                         }
-                      }
-                    })
-                  ]
+                      })
+                    ]
+                  : _vm._e()
             ],
             2
           )
@@ -27650,14 +27652,7 @@ var script$B = {
     EditorToolbar
   },
   props: {
-    errors: {
-      type: Array,
-
-      default() {
-        return [];
-      }
-
-    },
+    errors: Array,
     contents: String,
     extraKeys: Object,
     filename: String,
@@ -27813,10 +27808,10 @@ var script$B = {
 
   data() {
     return {
-      value: this.contents,
       isLinting: false,
-      currentErrors: [],
-      currentFilename: this.filename
+      value: this.contents,
+      currentFilename: this.filename,
+      currentErrors: this.errors || []
     };
   },
 
@@ -27825,7 +27820,7 @@ var script$B = {
       this.$refs.editor.cm.focus();
       this.$refs.editor.cm.setSize('100%', `calc(100% - ${this.$el.querySelector('.editor-toolbar').clientHeight}px)`);
 
-      if (this.$refs.editor.cm.getValue() && !this.errors.length) {
+      if (this.$refs.editor.cm.getValue() && !this.currentErrors.length) {
         this.$refs.editor.cm.lint();
       }
     });
@@ -27848,8 +27843,9 @@ var __vue_render__$z = function() {
         ref: "toolbar",
         attrs: {
           value: _vm.value,
-          title: _vm.currentFilename,
           activity: _vm.isLinting,
+          errors: _vm.currentErrors,
+          title: _vm.currentFilename,
           "page-controls": _vm.pageControls
         },
         on: {

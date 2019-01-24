@@ -3476,47 +3476,7 @@ a.dropdown-item {
   flex: 1;
 }
 
-/*# sourceMappingURL=Editor.vue.map */.edit-toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-.edit-toolbar .btn {
-    position: relative;
-}
-.edit-toolbar .btn .badge {
-      top: 0;
-      right: 0;
-      z-index: 1;
-      transform: translate(50%, -25%);
-}
-.edit-toolbar .btn.has-error > svg {
-      color: #dc3545;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item {
-    display: flex;
-    align-items: center;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item span {
-      margin-right: 1.5em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item code {
-      font-size: 8px;
-      margin-left: auto;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
-      background: #3c3c3c;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
-        margin-right: .25em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
-      width: 9px;
-}
-
-/*# sourceMappingURL=EditorHotkey.vue.map */.CodeMirror {
+/*# sourceMappingURL=Editor.vue.map */.CodeMirror {
   position: absolute;
   width: 100%;
 }
@@ -3556,7 +3516,47 @@ a.dropdown-item {
   white-space: nowrap;
 }
 
-/*# sourceMappingURL=EditorField.vue.map */.editor-toolbar.bg-dark {
+/*# sourceMappingURL=EditorField.vue.map */.edit-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.edit-toolbar .btn {
+    position: relative;
+}
+.edit-toolbar .btn .badge {
+      top: 0;
+      right: 0;
+      z-index: 1;
+      transform: translate(50%, -25%);
+}
+.edit-toolbar .btn.has-error > svg {
+      color: #dc3545;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item {
+    display: flex;
+    align-items: center;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item span {
+      margin-right: 1.5em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item code {
+      font-size: 8px;
+      margin-left: auto;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
+      background: #3c3c3c;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
+        margin-right: .25em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
+      width: 9px;
+}
+
+/*# sourceMappingURL=EditorHotkey.vue.map */.editor-toolbar.bg-dark {
   background-color: #282a36 !important;
 }
 .editor-toolbar.fixed {

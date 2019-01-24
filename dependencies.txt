@@ -95,8 +95,8 @@ Contributors:
 
 ---
 
-Name: @fortawesome/fontawesome
-Version: 1.1.8
+Name: @fortawesome/fontawesome-svg-core
+Version: 1.2.12
 License: MIT
 Private: false
 Description: The iconic font, CSS, and SVG framework
@@ -112,8 +112,8 @@ Contributors:
 
 ---
 
-Name: @fortawesome/fontawesome-svg-core
-Version: 1.2.12
+Name: @fortawesome/fontawesome
+Version: 1.1.8
 License: MIT
 Private: false
 Description: The iconic font, CSS, and SVG framework
