@@ -4141,26 +4141,6 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
-.CodeMirror-foldmarker {
-  color: blue;
-  text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
-  font-family: arial;
-  line-height: .3;
-  cursor: pointer;
-}
-.CodeMirror-foldgutter {
-  width: .7em;
-}
-.CodeMirror-foldgutter-open,
-.CodeMirror-foldgutter-folded {
-  cursor: pointer;
-}
-.CodeMirror-foldgutter-open:after {
-  content: "\25BE";
-}
-.CodeMirror-foldgutter-folded:after {
-  content: "\25B8";
-}
 .CodeMirror-merge {
   position: relative;
   border: 1px solid #ddd;
@@ -4280,6 +4260,26 @@ span.CodeMirror-selectedtext { background: none; }
   border-radius: 4px;
 }
 .CodeMirror-merge-collapsed-line .CodeMirror-gutter-elt { display: none; }
+.CodeMirror-foldmarker {
+  color: blue;
+  text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
+  font-family: arial;
+  line-height: .3;
+  cursor: pointer;
+}
+.CodeMirror-foldgutter {
+  width: .7em;
+}
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  cursor: pointer;
+}
+.CodeMirror-foldgutter-open:after {
+  content: "\25BE";
+}
+.CodeMirror-foldgutter-folded:after {
+  content: "\25B8";
+}
 .CodeMirror-hints {
   position: absolute;
   z-index: 10;

@@ -3476,7 +3476,87 @@ a.dropdown-item {
   flex: 1;
 }
 
-/*# sourceMappingURL=Editor.vue.map */.editor-toolbar.bg-dark {
+/*# sourceMappingURL=Editor.vue.map */.edit-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.edit-toolbar .btn {
+    position: relative;
+}
+.edit-toolbar .btn .badge {
+      top: 0;
+      right: 0;
+      z-index: 1;
+      transform: translate(50%, -25%);
+}
+.edit-toolbar .btn.has-error > svg {
+      color: #dc3545;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item {
+    display: flex;
+    align-items: center;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item span {
+      margin-right: 1.5em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item code {
+      font-size: 8px;
+      margin-left: auto;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
+      background: #3c3c3c;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
+        margin-right: .25em;
+}
+.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
+      width: 9px;
+}
+
+/*# sourceMappingURL=EditorHotkey.vue.map */.CodeMirror {
+  position: absolute;
+  width: 100%;
+}
+.CodeMirror .CodeMirror-lint-errors {
+    width: 1.2em;
+}
+.CodeMirror .CodeMirror-lint-error-icon {
+    width: 1em;
+    height: 1em;
+    padding: .2em;
+    background: #dc3545;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    transform: translateY(25%);
+    margin: auto;
+}
+.CodeMirror .CodeMirror-lint-error-icon svg {
+      color: #fff;
+      font-size: .7em;
+}
+.CodeMirror .CodeMirror-lint-error-underline {
+    color: red !important;
+    font-weight: bold;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
+}
+.CodeMirror-lint-tooltip {
+  background: #dc3545;
+  color: #fff;
+  z-index: 10;
+  padding: .5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*# sourceMappingURL=EditorField.vue.map */.editor-toolbar.bg-dark {
   background-color: #282a36 !important;
 }
 .editor-toolbar.fixed {
@@ -3538,87 +3618,7 @@ a.dropdown-item {
     width: 9px;
 }
 
-/*# sourceMappingURL=EditorToolbar.vue.map */.CodeMirror {
-  position: absolute;
-  width: 100%;
-}
-.CodeMirror .CodeMirror-lint-errors {
-    width: 1.2em;
-}
-.CodeMirror .CodeMirror-lint-error-icon {
-    width: 1em;
-    height: 1em;
-    padding: .2em;
-    background: #dc3545;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    transform: translateY(25%);
-    margin: auto;
-}
-.CodeMirror .CodeMirror-lint-error-icon svg {
-      color: #fff;
-      font-size: .7em;
-}
-.CodeMirror .CodeMirror-lint-error-underline {
-    color: red !important;
-    font-weight: bold;
-    background-repeat: repeat-x;
-    background-position-y: bottom;
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
-}
-.CodeMirror-lint-tooltip {
-  background: #dc3545;
-  color: #fff;
-  z-index: 10;
-  padding: .5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/*# sourceMappingURL=EditorField.vue.map */.edit-toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-.edit-toolbar .btn {
-    position: relative;
-}
-.edit-toolbar .btn .badge {
-      top: 0;
-      right: 0;
-      z-index: 1;
-      transform: translate(50%, -25%);
-}
-.edit-toolbar .btn.has-error > svg {
-      color: #dc3545;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item {
-    display: flex;
-    align-items: center;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item span {
-      margin-right: 1.5em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item code {
-      font-size: 8px;
-      margin-left: auto;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd {
-      background: #3c3c3c;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item kbd:not(:last-child) {
-        margin-right: .25em;
-}
-.edit-toolbar .edit-toolbar-actions .dropdown-item svg {
-      width: 9px;
-}
-
-/*# sourceMappingURL=EditorHotkey.vue.map */.edit-toolbar {
+/*# sourceMappingURL=EditorToolbar.vue.map */.edit-toolbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -4811,89 +4811,7 @@ li.CodeMirror-hint-active {
   color: #dc3545;
 }
 
-/*# sourceMappingURL=NavigationError.vue.map */.activity-indicator-dots > div {
-  border-radius: 100%;
-  display: inline-block;
-  background-color: #212529;
-  width: 0.6rem;
-  height: 0.6rem;
-  animation: activity-indicator-dots 1.4s infinite ease-in-out both;
-}
-.activity-indicator-dots > div:not(:last-child) {
-  margin-right: 0.198rem;
-}
-.activity-indicator-dots.activity-indicator-xs > div {
-  width: 0.3rem;
-  height: 0.3rem;
-}
-.activity-indicator-dots.activity-indicator-sm > div {
-  width: 0.45rem;
-  height: 0.45rem;
-}
-.activity-indicator-dots.activity-indicator-md > div {
-  width: 0.6rem;
-  height: 0.6rem;
-}
-.activity-indicator-dots.activity-indicator-lg > div {
-  width: 0.9rem;
-  height: 0.9rem;
-}
-.activity-indicator-dots.activity-indicator-xl > div {
-  width: 1.2rem;
-  height: 1.2rem;
-}
-.activity-indicator-dots > div:nth-child(1) {
-  animation-delay: 0s;
-}
-.activity-indicator-dots > div:nth-child(2) {
-  animation-delay: 0.16s;
-}
-.activity-indicator-dots > div:nth-child(3) {
-  animation-delay: 0.32s;
-}
-.activity-indicator-dots > div:nth-child(4) {
-  animation-delay: 0.48s;
-}
-.activity-indicator-dots > div:nth-child(5) {
-  animation-delay: 0.64s;
-}
-.activity-indicator-dots > div:nth-child(6) {
-  animation-delay: 0.8s;
-}
-.activity-indicator-dots > div:nth-child(7) {
-  animation-delay: 0.96s;
-}
-.activity-indicator-dots > div:nth-child(8) {
-  animation-delay: 1.12s;
-}
-.activity-indicator-dots > div:nth-child(9) {
-  animation-delay: 1.28s;
-}
-.activity-indicator-dots > div:nth-child(10) {
-  animation-delay: 1.44s;
-}
-.activity-indicator-dots > div:nth-child(11) {
-  animation-delay: 1.6s;
-}
-.activity-indicator-dots > div:nth-child(12) {
-  animation-delay: 1.76s;
-}
-.activity-indicator-dots > div:nth-child(13) {
-  animation-delay: 1.92s;
-}
-@keyframes activity-indicator-dots {
-0%, 80%, 100% {
-    transform: scale(0);
-}
-40% {
-    transform: scale(1);
-}
-}
-.btn-activity-indicator-dots:not(.btn-warning) .activity-indicator-dots > div {
-  background: white;
-}
-
-/*# sourceMappingURL=Dots.vue.map */.activity-indicator-spinner {
+/*# sourceMappingURL=NavigationError.vue.map */.activity-indicator-spinner {
   position: relative;
   width: 2.25rem;
   height: 2.25rem;
@@ -5571,4 +5489,86 @@ li.CodeMirror-hint-active {
   background-color: white;
 }
 
-/*# sourceMappingURL=Spinner.vue.map */
+/*# sourceMappingURL=Spinner.vue.map */.activity-indicator-dots > div {
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #212529;
+  width: 0.6rem;
+  height: 0.6rem;
+  animation: activity-indicator-dots 1.4s infinite ease-in-out both;
+}
+.activity-indicator-dots > div:not(:last-child) {
+  margin-right: 0.198rem;
+}
+.activity-indicator-dots.activity-indicator-xs > div {
+  width: 0.3rem;
+  height: 0.3rem;
+}
+.activity-indicator-dots.activity-indicator-sm > div {
+  width: 0.45rem;
+  height: 0.45rem;
+}
+.activity-indicator-dots.activity-indicator-md > div {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+.activity-indicator-dots.activity-indicator-lg > div {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.activity-indicator-dots.activity-indicator-xl > div {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.activity-indicator-dots > div:nth-child(1) {
+  animation-delay: 0s;
+}
+.activity-indicator-dots > div:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.activity-indicator-dots > div:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.activity-indicator-dots > div:nth-child(4) {
+  animation-delay: 0.48s;
+}
+.activity-indicator-dots > div:nth-child(5) {
+  animation-delay: 0.64s;
+}
+.activity-indicator-dots > div:nth-child(6) {
+  animation-delay: 0.8s;
+}
+.activity-indicator-dots > div:nth-child(7) {
+  animation-delay: 0.96s;
+}
+.activity-indicator-dots > div:nth-child(8) {
+  animation-delay: 1.12s;
+}
+.activity-indicator-dots > div:nth-child(9) {
+  animation-delay: 1.28s;
+}
+.activity-indicator-dots > div:nth-child(10) {
+  animation-delay: 1.44s;
+}
+.activity-indicator-dots > div:nth-child(11) {
+  animation-delay: 1.6s;
+}
+.activity-indicator-dots > div:nth-child(12) {
+  animation-delay: 1.76s;
+}
+.activity-indicator-dots > div:nth-child(13) {
+  animation-delay: 1.92s;
+}
+@keyframes activity-indicator-dots {
+0%, 80%, 100% {
+    transform: scale(0);
+}
+40% {
+    transform: scale(1);
+}
+}
+.btn-activity-indicator-dots:not(.btn-warning) .activity-indicator-dots > div {
+  background: white;
+}
+
+/*# sourceMappingURL=Dots.vue.map */

@@ -18,7 +18,7 @@
                 <dropdown-menu-divider/>
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
             </template>
-            <template v-else if="errors && !errors.length">
+            <template v-else if="errors && errors.length === 0">
                 <dropdown-menu-divider/>
                 <editor-toolbar-menu-item label="Convert Document" :hotkeys="['ctrl', 'C']" @click.prevent="$emit('convert')" />
             </template>
