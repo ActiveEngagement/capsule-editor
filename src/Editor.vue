@@ -10,11 +10,11 @@
             @input="onToolbarInput"
             @lint="onClickLint"
             @new="onClickNew"
+            @save="onClickSave"
             @open="onClickOpen"
             @close="onClickClose"
-            @save="onClickSave"
             @save-as="onClickSaveAs"
-            @convert="onConvert"
+            @convert="onClickConvert"
             @export-errors="onExportErrors" />
 
         <div class="editor-field-container">
@@ -84,6 +84,7 @@ export default {
                     'Ctrl-O': this.onClickOpen,
                     'Ctrl-S': this.onClickSave,
                     'Ctrl-Q': this.onClickClose,
+                    'Ctrl-C': this.onClickConvert,
                     'Shift-Ctrl-S': this.onClickSaveAs,
                     'Ctrl-J': 'toMatchingTag',
                     'Ctrl-Space': 'autocomplete',
@@ -127,7 +128,7 @@ export default {
 
     methods: {
 
-        onConvert() {
+        onClickConvert() {
             this.$emit('convert', this.value, this.currentFilename);
         },
 

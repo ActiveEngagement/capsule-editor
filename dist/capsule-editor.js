@@ -1,7 +1,7 @@
 /**
  * capsule-editor
  *
- * 0.1.10
+ * 0.1.11
  * 2019-01-24
  */
 
@@ -27684,6 +27684,7 @@
 	          'Ctrl-O': this.onClickOpen,
 	          'Ctrl-S': this.onClickSave,
 	          'Ctrl-Q': this.onClickClose,
+	          'Ctrl-C': this.onClickConvert,
 	          'Shift-Ctrl-S': this.onClickSaveAs,
 	          'Ctrl-J': 'toMatchingTag',
 	          'Ctrl-Space': 'autocomplete',
@@ -27726,7 +27727,7 @@
 
 	  },
 	  methods: {
-	    onConvert() {
+	    onClickConvert() {
 	      this.$emit('convert', this.value, this.currentFilename);
 	    },
 
@@ -27861,11 +27862,11 @@
 	          input: _vm.onToolbarInput,
 	          lint: _vm.onClickLint,
 	          new: _vm.onClickNew,
+	          save: _vm.onClickSave,
 	          open: _vm.onClickOpen,
 	          close: _vm.onClickClose,
-	          save: _vm.onClickSave,
 	          "save-as": _vm.onClickSaveAs,
-	          convert: _vm.onConvert,
+	          convert: _vm.onClickConvert,
 	          "export-errors": _vm.onExportErrors
 	        }
 	      }),
