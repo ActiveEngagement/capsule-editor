@@ -13,6 +13,7 @@
             @close="onClickClose"
             @save="onClickSave"
             @save-as="onClickSaveAs"
+            @convert="onConvert"
             @export-errors="onExportErrors" />
 
         <div class="editor-field-container">
@@ -129,6 +130,10 @@ export default {
     },
 
     methods: {
+
+        onConvert() {
+            this.$emit('convert', this.value, this.currentFilename);
+        },
 
         onToolbarInput() {
             this.onEditorInput();
