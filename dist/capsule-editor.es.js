@@ -1,7 +1,7 @@
 /**
  * capsule-editor
  *
- * 0.1.11
+ * 0.1.12
  * 2019-01-24
  */
 
@@ -27739,7 +27739,7 @@ var script$B = {
     },
 
     onExportErrors() {
-      console.log('export errors');
+      this.$emit('export', this.value, this.currentFilename);
     },
 
     onFileSelected(event) {

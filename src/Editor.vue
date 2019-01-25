@@ -146,7 +146,7 @@ export default {
         },
 
         onExportErrors() {
-            console.log('export errors');
+            this.$emit('export', this.value, this.currentFilename);
         },
 
         onFileSelected(event) {
