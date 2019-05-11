@@ -1,9 +1,13 @@
+import { debounce } from 'lodash';
 import CodeMirror from 'codemirror';
 import LintState from './LintState';
 import fontawesome from '@fortawesome/fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
 
+const debounced = debounce(fn => fn(), 500);
+
+/*
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
 
 function removeExistingErrors(state, errors) {
@@ -15,7 +19,6 @@ function removeExistingErrors(state, errors) {
     });
 }
 
-/*
 function offset(cm) {
     let container = document.querySelector('.CodeMirror-lint-tooltip-container');
 
@@ -32,7 +35,6 @@ function offset(cm) {
 
     return container;
 }
-*/
 
 function createTooltip(html, cm) {
     const div = document.createElement('div');
@@ -55,8 +57,6 @@ function createIcon(error) {
 }
 
 function addErrors(state) {
-    const range = state.lint.cm.getViewport();
-
     if(isArray(state.lint.errors)) {
         state.lint.errors.forEach(error => {
             state.lint.cm.setGutterMarker(error.line - 1, state.lint.id, createIcon(error));
@@ -64,12 +64,12 @@ function addErrors(state) {
             error.match = CodeMirror.findMatchingTag(state.lint.cm, {
                 line: error.line - 1,
                 ch: error.column
-            }, range);
+            }, state.lint.cm.getViewport());
 
             if(error.match) {
                 if(error.match.open) {
                     error.open = state.lint.cm.markText(error.match.open.from, error.match.open.to, {
-                        className: 'CodeMirror-lint-error-underline'
+                        className: UNDERLINE_CLASS
                     });
                 }
 
@@ -80,25 +80,84 @@ function addErrors(state) {
                 }
             }
         });
-
-        if(state.lint.errors.length && state.lint.errors[0].match) {
-            state.lint.cm.scrollIntoView(
-                state.lint.errors[0].match.open ||
-                state.lint.errors[0].match.close,
-                state.lint.cm.getScrollInfo().clientHeight / 2
-            );
-
-            setTimeout(() => {
-                state.lint.cm.setCursor(
-                    state.lint.errors[0].line - 1,
-                    state.lint.errors[0].column
-                );
-            });
-        }
     }
 }
 
+function setCursorOnError(state) {
+    if(state.lint.errors.length && state.lint.errors[0].match) {
+        state.lint.cm.scrollIntoView(
+            state.lint.errors[0].match.open ||
+            state.lint.errors[0].match.close,
+            state.lint.cm.getScrollInfo().clientHeight / 2
+        );
+
+        setTimeout(() => {
+            state.lint.cm.setCursor(
+                state.lint.errors[0].line - 1,
+                state.lint.errors[0].column
+            );
+        });
+    }
+}
+*/
+
 function onCursorActivity(cm) {
+    let errors = [];
+
+    const match = CodeMirror.findMatchingTag(cm, cm.getCursor(), cm.getViewport());
+
+    if(match) {
+        const from = (match.open || match.close).from;
+        const to = (match.close || match.open).to;
+        
+        // errors = cm.state.lint.findErrorsInRange(from, to);
+    }
+    else {
+        errors = cm.state.lint.findNearbyErrors(cm.getCursor());
+    }
+
+    cm.state.lint.errors
+        .filter(error => error !== errors[0])
+        .forEach(({ bookmark }) => {
+            bookmark.widgetNode.classList.remove('show');
+        });
+
+    if(errors[0]) {
+        errors[0].bookmark.widgetNode.classList.add('show');
+    }
+
+    /*
+    if(cm.lintErrorTooltip) {
+        cm.lintErrorTooltip.parentNode.removeChild(cm.lintErrorTooltip);
+        cm.lintErrorTooltip = null;
+    }
+
+    if(errors.length) {
+        const ch = errors.reduce((carry, error) => {
+            return carry === null || carry > error.column ? error.column : carry;
+        }, null) - 1;
+    
+        const line = errors.reduce((carry, error) => {
+            return carry === null || carry > error.line ? error.line : carry;
+        }, null) - 1;
+    
+        const message = errors.reduce((carry, error) => {
+            carry.push(`${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`);
+            return carry;
+        }, []).join('<br>');
+
+        // cm.lintErrorTooltip = cm.state.lint.createTooltip(message, cm);
+        // cm.addWidget({ ch, line }, cm.lintErrorTooltip, true);
+    }
+    */
+
+    // const errors = cm.state.lint.findNearbyErrors(cm.getCursor());
+    
+    /*
+    if(errors.length) {
+        // console.log(errors);
+    }
+
     if(cm.lintErrorTooltip) {
         cm.lintErrorTooltip.parentNode.removeChild(cm.lintErrorTooltip);
         cm.lintErrorTooltip = null;
@@ -126,11 +185,12 @@ function onCursorActivity(cm) {
         // const bounds = cm.lintErrorTooltip.getBoundingClientRect();
         // const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
     }
+    */
 }
 
 CodeMirror.defineOption('lint', false, function(cm, options, old) {
     if(old && old !== CodeMirror.Init) {
-        removeExistingErrors(cm.state);
+        cm.state.removeErrors();
         cm.off('cursorActivity', onCursorActivity);
         delete cm.state.lint;
     }
@@ -138,34 +198,101 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
     if(options) {
         cm.state.lint = new LintState(cm, options || (options = {}));
         cm.on('cursorActivity', onCursorActivity);
+
+        /*
+        cm.on('electricInput', (cm, event) => {
+            console.log('electricInput', event);
+        });
+        */
+        
+        cm.on('change', (cm, event) => {
+            if(event.origin === 'undo') {
+                cm.lint();
+            }
+            else { 
+                /*             
+                const match = CodeMirror.findMatchingTag(cm, {
+                    line: event.from.line,
+                    ch: event.from.ch
+                }, cm.getViewport());
+
+                if(match && match.close) {
+                    debounced(() => {
+                        !!cm.getValue() && cm.lint();
+                    });
+                }
+                */
+            }
+        });
+
+        cm.on('change', (cm, event) => {
+            if(!!(event.from.line - event.to.line) || !!(event.from.ch - event.to.ch)) {
+                console.log(cm.state.lint.findErrorsInRange(event.from, event.to));
+
+                //cm.state.lint.removeErrors(cm.state.lint.findErrorsInRange(event.from, event.to));
+            }
+            
+            /*
+            let lineOffset = 0, charOffset = 0;
+
+            console.log(errors);
+
+            if(event.origin === '+input') {
+
+                lineOffset = event.text.length - 1;
+                charOffset = event.text.filter(ch => !!ch).length;
+            }
+            else if(event.origin === '+delete') {
+                lineOffset = -event.removed.length + 1;
+                charOffset = event.from.ch - event.to.ch;
+            }
+
+
+            if(event.origin === '+input') {
+                event.text.forEach(text => {
+                    console.log(!!text && text.charCodeAt(0));
+                });
+            }
+            */
+
+            /*
+            const lineOffset = event.from.line - event.to.line;
+            const charOffset = event.from.ch - event.to.ch;
+            */
+
+
+            /*
+            const errors = cm.state.lint.findErrorsInRange(event.from, event.to);
+
+            errors.forEach(error => {
+                cm.state.lint.removeError(error);
+            });
+            */
+        });
+        
         cm.on('inputRead', (cm, event) => {
             if(event.origin === 'paste') {
-                cm.state.lint.errors = [];
                 cm.lint();
             }
         });
 
         if(options.errors && options.errors.length) {
             cm.state.lint.errors = options.errors;
-            addErrors(cm.state);
+
+            // addErrors(cm.state);
+            // setCursorOnError(cm.state);
         }
     }
 });
 
 CodeMirror.defineExtension('lint', function(data, options) {
     return new Promise((resolve, reject) => {
-        const existingErrors = this.state.lint.errors;
-
         this.state.lint
             .request(data, options)
             .then(response => {
-                removeExistingErrors(this.state, existingErrors);
                 resolve(this.state.lint);
             }, error => {
-                removeExistingErrors(this.state, existingErrors);
-
                 this.state.lint.cm.operation(() => {
-                    addErrors(this.state);
                     reject(error);
                 });
             });

@@ -1,20 +1,9 @@
 module.exports = {
-    root: true,
-    parser: 'babel-eslint',
-    parserOptions: {
-        sourceType: 'module'
-    },
-    // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-    extends: 'standard',
-    // required to lint *.vue files
-    plugins: [
-        'html',
-        'jest'
+    extends: [
+        'plugin:vue/recommended'
     ],
-    env: {
-        'browser': true,
-        'node': true,
-        'jest': true
+    parserOptions: {
+        'parser': 'babel-eslint'
     },
     // add your custom rules here
     rules: {
@@ -33,7 +22,7 @@ module.exports = {
         // Indent for tabs because spaces suck
         'indent': ['error', 4],
         // Semi colons always where they need to be
-        'semi': [2,'always'],
+        'semi': [2, 'always'],
         // allow paren-less arrow functions
         'arrow-parens': 0,
         // allow async-await

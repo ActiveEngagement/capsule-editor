@@ -1,7 +1,12 @@
 import axios from 'axios';
+import CodeMirror from 'codemirror';
+import fontawesome from '@fortawesome/fontawesome';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
+import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
+const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
+
 
 export default class LintState {
     constructor(cm, options) {
@@ -9,8 +14,12 @@ export default class LintState {
             throw new Error('The options must be a JSON object.');
         }
 
+        const errors = options.errors || [];
+
+        delete options.errors;
+
         this.cm = cm;
-        this.errors = [];
+        this.errors = errors;
         this.options = options;
     }
 
@@ -28,7 +37,7 @@ export default class LintState {
         const fn = this.option(key);
 
         if(typeof fn === 'function') {
-            return fn(...args);
+            return fn(this.cm, ...args);
         }
     }
 
@@ -43,7 +52,7 @@ export default class LintState {
     }
 
     request(data, options) {
-        this.callback('onStart');
+        this.callback('onLintStart');
 
         return new Promise((resolve, reject) => {
             axios.post(
@@ -52,13 +61,14 @@ export default class LintState {
                 (options || this.value('options') || this.options)
             ).then(response => {
                 this.errors = [];
-                this.response = response = this.option('transformResponse')
-                    ? this.callback('transformResponse', response) : response.data;
+                this.response = response = (
+                    this.option('transformResponse') ? this.callback('transformResponse', response) : response.data
+                );
 
                 resolve(response);
 
-                this.callback('onSuccess', response);
-                this.callback('onComplete', true, response);
+                this.callback('onLintSuccess', response);
+                this.callback('onLintComplete', true, response);
             }, error => {
                 this.response = null;
                 const errors = this.option('transformResponseError')
@@ -71,8 +81,8 @@ export default class LintState {
 
                 reject(error);
 
-                this.callback('onError', error);
-                this.callback('onComplete', false, error);
+                this.callback('onLintError', error);
+                this.callback('onLintComplete', false, error);
             });
         });
     }
@@ -90,6 +100,121 @@ export default class LintState {
 
         return this.errors.filter(error => {
             return error.match && (check(error.match.open) || check(error.match.close));
+        });
+    }
+
+    isTagInRange(tag, from, to) {
+        return (tag.to && this.isPositionInRange(tag.to, from, to)) || (tag.from && this.isPositionInRange(tag.from, from, to));
+    }
+
+    isPositionInRange({line, ch}, from, to) {
+        //console.log(line, ch, JSON.parse(JSON.stringify(from)), JSON.parse(JSON.stringify(to)), from.line > line || to.line < line, from.line === line && from.ch > ch, to.line === line && to.ch < ch);
+
+        if(from.line > line || to.line < line) {
+            return false;
+        }
+        else if(from.line === line && from.ch > ch) {
+            return false;
+        }
+        else if(to.line === line && to.ch < ch) {
+            return false;
+        }
+
+        return true;
+    }
+
+    findErrorsInRange(from, to) {
+        return this.errors.filter(error => {
+            console.log(error.match.open, error.match.close);
+            
+            return (
+                this.isTagInRange(error.match.open, from, to) ||
+                this.isTagInRange(error.match.close, from, to)
+            );
+        });
+    }
+
+    createIcon(error) {
+        const icon = document.createElement('div');
+    
+        icon.className = 'CodeMirror-lint-error-icon';
+        icon.innerHTML = fontawesome.icon(faBug).html;
+        icon.title = `${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`;
+        icon.error = error;
+    
+        return icon;
+    }
+
+    setCursorOnError(error) {
+        if(!error && this.errors.length) {
+            error = this.errors[0];
+        }
+        
+        if(error) {
+            const tag = error.match.open || error.match.close;
+
+            this.cm.scrollIntoView(tag, this.cm.getScrollInfo().clientHeight / 2);
+
+            setTimeout(() => {
+                this.cm.setCursor(error.line - 1, error.column);
+            });
+        }
+    }
+
+    getErrorIndex(error) {
+        return this.errors.findIndex(value => error === value);
+    }    
+
+    createTooltip(html) {
+        const div = document.createElement('div');
+
+        div.className = 'CodeMirror-lint-tooltip';
+        div.innerHTML = html;
+
+        return div;
+    }
+
+    createErrorBookmark(error) {
+        const div = document.createElement('div');
+
+        div.error = error;
+        div.className = 'CodeMirror-lint-error-bookmark';
+        div.innerHTML = `
+            <div class="CodeMirror-lint-error-bookmark-text">
+                ${fontawesome.icon(faExclamation).html} ${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})
+            </div>
+        `;
+
+        document.documentElement.appendChild(div);
+
+        return div;
+    }
+
+    removeError(error) {
+        const removed = this.errors.splice(this.getErrorIndex(error), 1).pop();
+
+        error.open && error.open.clear();
+        error.close && error.close.clear();
+
+        if(!this.errors.length) {
+            this.cm.clearGutter(this.id);
+        }
+        else {
+            const lineErrors = this.errors.filter(e => {
+                return removed.line === e.line;
+            });
+            
+            if(!lineErrors.length) {
+                this.cm.setGutterMarker(removed.line - 1, this.id, null);
+            }
+        }
+
+        this.callback('onRemoveError', removed, this.errors);
+    }
+
+    removeErrors(errors) {
+        (errors || this.errors).forEach(error => {
+            this.removeError(error);
         });
     }
 
@@ -126,7 +251,45 @@ export default class LintState {
     }
 
     set errors(value) {
-        this.$errors = value;
+        this.$errors = !isArray(value) ? null : value.map(error => {
+            this.cm.setGutterMarker(error.line - 1, this.id, this.createIcon(error));
+
+            error.match = CodeMirror.findMatchingTag(this.cm, {
+                line: error.line - 1,
+                ch: error.column
+            }, this.cm.getViewport());
+
+            if(error.match) {
+                if(error.match.open) {
+                    error.open = this.cm.markText(
+                        error.match.open.from,
+                        error.match.open.to, {
+                            title: error.message,
+                            className: UNDERLINE_CLASS
+                        }
+                    );
+                }
+
+                if(error.match.close) {
+                    error.close = this.cm.markText(
+                        error.match.close.from,
+                        error.match.close.to, {
+                            className: UNDERLINE_CLASS
+                        }
+                    );
+                }
+
+                const pos = error.match.open.from;
+                
+                error.bookmark = this.cm.setBookmark(new pos.constructor(pos.line, pos.ch, pos.sticky), {
+                    insertLeft: true,
+                    widget: this.createErrorBookmark(error)
+                });
+                
+            }
+
+            return error;
+        });
     }
 
     get hasGutter() {

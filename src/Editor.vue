@@ -1,5 +1,20 @@
 <template>
     <div class="editor">
+        <alert v-if="globalErrors" variant="danger" class="mt-3 mx-3">
+            <div class="d-flex">
+                <icon icon="exclamation-triangle" size="2x" class="mt-1 mr-4"/>
+                <div>
+                    <h3>Ooops!</h3>
+                    <p class="mb-2">The following errors occurred when your tried to save the document:</p>
+                    <ul class="pl-0">
+                        <template v-for="error in globalErrors">
+                            <li v-for="line in error" :key="line">{{ line }}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </alert>
+
         <editor-toolbar
             ref="toolbar"
             :value="value"
@@ -29,21 +44,32 @@ import './LintAddon';
 import LintState from './LintState';
 import EditorField from './EditorField';
 import EditorToolbar from './EditorToolbar';
-import InputField from 'vue-interface/src/Components/InputField';
+import Alert from 'vue-interface/src/Components/Alert';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
+import InputField from 'vue-interface/src/Components/InputField';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+
+library.add(faExclamationTriangle);
+
+var beautify_js = require('js-beautify'); // also available under "js" export
+var beautify_css = require('js-beautify').css;
+var beautify_html = require('js-beautify').html;
 
 export default {
 
     name: 'editor',
 
     components: {
+        Alert,
         EditorField,
         EditorToolbar
     },
 
     props: {
 
-        errors: Array,
+        globalErrors: Object,
 
         contents: String,
 
@@ -59,6 +85,11 @@ export default {
 
         options: Object,
 
+        errors: {
+            type: Array,
+            default: () => []
+        },
+
         pageControls: {
             type: Boolean,
             default: true
@@ -70,7 +101,13 @@ export default {
 
         mergedOptions() {
             return deepExtend({
+                tabSize: 4,
+                indentUnit: 4,
                 foldGutter: true,
+                smartIndent: true,
+                lineNumbers: true,
+                lineWrapping: true,
+                indentWithTabs: true,
                 matchTags: Object.assign({
                     bothTags: true
                 }, this.matchTags),
@@ -98,26 +135,33 @@ export default {
                     */
                 }, this.extraKeys),
                 lint: Object.assign({
-                    url: 'lint',
-                    errors: this.errors,
+                    url: `http://api.thecapsule.${process.env.NODE_ENV === 'production' ? 'email' : 'test'}/v1/lint`,
+                    errors: this.currentErrors,
                     data: cm => {
                         return {
                             html: cm.getValue()
                         };
                     },
-                    onStart: () => {
+                    onLintStart: () => {
                         this.isLinting = true;
                     },
-                    onComplete: () => {
+                    onLintComplete: () => {
                         this.isLinting = false;
                     },
-                    onSuccess: () => {
+                    onLintSuccess: () => {
                         this.currentErrors = [];
                         this.$emit('lint-success');
                     },
-                    onError: error => {
+                    onRemoveError: (cm, error, errors) => {
+                        this.currentErrors = errors;
+                        this.$emit('remove-error', error, this.currentErrors);
+
+                        // cm.lint();
+                    },
+                    onLintError: (cm, error) => {
                         if(error.response.status === 406) {
-                            this.$emit('lint-error', error, this.currentErrors = error.response.data.errors);
+                            this.currentErrors = error.response.data.errors;
+                            this.$emit('lint-error', error, this.currentErrors);
                         }
                     }
                 }, this.lint)
@@ -127,6 +171,21 @@ export default {
     },
 
     methods: {
+
+        getSlotContents() {
+            return this.$slots.default ? 
+                this.$slots.default
+                    .filter(vnode => {
+                        return vnode.tag.toLowerCase() === 'textarea';
+                    })
+                    .reduce((carry, vnode) => {
+                        return (
+                            carry + vnode.children.map(child => {
+                                return child.text;
+                            }).join('')
+                        );
+                    }, '') : null;
+        },
 
         onClickConvert() {
             this.$emit('convert', this.value, this.currentFilename);
@@ -181,6 +240,8 @@ export default {
         },
 
         onClickSaveAs() {
+            let currentFilename = this.currentFilename;
+
             this.$prompt('Save File As', InputField, {
                 content: {
                     on: {
@@ -190,6 +251,9 @@ export default {
                                 e.target.closest('.modal-dialog').querySelector('.btn-primary').click();
                                 e.preventDefault();
                             }
+                            else {
+                                currentFilename = e.target.value;
+                            }
                         }
                     },
                     propsData: {
@@ -198,8 +262,11 @@ export default {
                     }
                 }
             }).then(modal => {
-                this.$emit('download', this.value, this.currentFilename);
-                this.$emit('save-as', this.value, this.currentFilename);
+                this.currentFilename = currentFilename;
+                
+                this.$emit('download', this.value, currentFilename);
+                this.$emit('save-as', this.value, currentFilename);
+                this.$emit('save', this.value, currentFilename);
             });
         },
 
@@ -220,9 +287,12 @@ export default {
     data() {
         return {
             isLinting: false,
-            value: this.contents,
+            currentErrors: this.errors,
             currentFilename: this.filename,
-            currentErrors: this.errors || []
+            value: beautify_html((this.contents || this.getSlotContents()), {
+                indent_size: 1,
+                indent_char: '\t'
+            })
         };
     },
 
@@ -253,6 +323,15 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: #282a36 !important;
+
+    /*
+    .cm-tab {
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAABGdBTUEAALGPC/xhBQAAADFJREFUSA1j+P///z6GIQyYhrDbh4nTR5PQMInIgfPGaBIauLAfJjaPJqFhEpED5g0AcM4O9Unyy94AAAAASUVORK5CYII=);
+        background-position: top left;
+        background-repeat: repeat-y;
+        background-size: contain;
+    }
+    */
 }
 
 .edit-toolbar {

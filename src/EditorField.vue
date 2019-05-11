@@ -44,13 +44,13 @@ export default {
             type: Object,
             default() {
                 return {
-                    mode: 'htmlmixed',
-                    theme: 'dracula',
+                    indentUnit: 4,
                     indentAuto: true,
-                    newlineAndIndent: true,
+                    theme: 'dracula',
+                    mode: 'htmlmixed',
                     lineNumbers: true,
                     lineWrapping: true,
-                    indentUnit: 4
+                    newlineAndIndent: true
                 };
             }
         },
@@ -137,5 +137,36 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: inline-block;
+}
+
+.CodeMirror-lint-error-bookmark {
+    z-index: 10;
+    display: none;
+    position: absolute;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .show > & {
+        display: inline-block;
+    }
+
+    /*
+    svg {
+        color: red;
+        font-size: .5em;
+        transform: translateX(-150%);
+    }
+    */
+
+    .CodeMirror-lint-error-bookmark-text {
+        top: 0;
+        left: 0;
+        color: $white;
+        padding: .5em;
+        position: absolute;
+        background: $danger;
+        transform: translateY(-100%);
+    }
 }
 </style>
