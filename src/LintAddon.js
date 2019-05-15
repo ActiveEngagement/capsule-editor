@@ -102,7 +102,6 @@ function setCursorOnError(state) {
         });
     }
 }
-*/
 
 function onCursorActivity(cm) {
     cm.state.lint.errors.forEach(error => {
@@ -111,17 +110,18 @@ function onCursorActivity(cm) {
         }
     });
 }
+*/
 
 CodeMirror.defineOption('lint', false, function(cm, options, old) {
     if(old && old !== CodeMirror.Init) {
         cm.state.removeErrors();
-        cm.off('cursorActivity', onCursorActivity);
+        // cm.off('cursorActivity', onCursorActivity);
         delete cm.state.lint;
     }
 
     if(options) {
         cm.state.lint = new LintState(cm, options || (options = {}));
-        cm.on('cursorActivity', onCursorActivity);
+        // cm.on('cursorActivity', onCursorActivity);
 
         cm.on('changes', (cm, event) => {
             let { line, ch } = cm.getCursor();
@@ -134,9 +134,9 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
             // changeHistory.splice(0, 0, event);
             // changeHistory.splice(5);
 
-            if(cm.state.lint.isOpenedTagClosing(match) || cm.state.lint.isNonClosingTagOpened(match)) {
-                console.log('asd');
-    
+            if(!cm.state.lint.findNearbyErrors(cm.getCursor()).length && (
+                cm.state.lint.isOpenedTagClosing(match) || cm.state.lint.isNonClosingTagOpened(match)
+            )) {
                 cm.lint();
             }
         });

@@ -4,7 +4,7 @@ import fontawesome from '@fortawesome/fontawesome';
 import isPositionInRange from './Helpers/isPositionInRange';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
-const debounced = debounce(fn => fn(), 333);
+const debounced = debounce(fn => fn(), 500);
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
@@ -14,7 +14,7 @@ let nextId = 0;
 export default class LintError {
     
     constructor(cm, error) {
-        this.id = ++nextId;
+        this.id = nextId++;
         this.cm = cm;
         //this.markedText = {};
         this.msg = error.msg;
@@ -23,30 +23,42 @@ export default class LintError {
         this.match = error.match;
         this.ch = error.column - 1;
         this.line = error.line - 1;
-        this.bookmark = this.createBookmark();
 
-        const { line, ch } = this.cm.getCursor();
+        const errors = this.cm.state.lint.findNearbyErrors({line: this.line, ch: this.ch});
+
+        if(!errors.length) {
+            this.parent = true;
+            this.bookmark = this.createBookmark();
+        }
+        else {
+            this.parent = errors[0];
+            this.bookmark = errors[0].bookmark;
+            this.bookmark.children.push(this);
+            
+            console.log('error', errors[0]);
+        }
 
         if((this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) ||
             this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)) {
             this.show();
         }
 
-
         this.on('change', this.onChange);
         this.on('changes', this.onChanges);
         this.on('beforeChange', this.onBeforeChange);
-        // this.on('cursorActivity', this.onCursorActivity);
+        this.on('cursorActivity', this.onCursorActivity);
+
+        this.cm.state.lint.errors.push(this);
     }
 
     set bookmark(value) {
         this.$bookmark = value;
 
-        if(this.open) {
+        if(this.parent === true && this.open) {
             this.$bookmark.open = this.markText(this.open);
         }
 
-        if(this.close) {
+        if(this.parent === true && this.close) {
             this.$bookmark.close = this.markText(this.close);
         }
     }
@@ -126,40 +138,32 @@ export default class LintError {
     }
 
     get formattedMsg() {
-        return `${fontawesome.icon(faExclamation).html} <span>${this.line + 1},${this.ch + 1} :: ${this.rule} ${this.msg} (${this.code})</span>`;
-    }
+        function msg(error) {
+            return `${fontawesome.icon(faExclamation).html} <span>${error.line + 1},${error.ch + 1} :: ${error.rule} ${error.msg} (${error.code})</span>`;
+        }
 
-    get shouldSendLintRequest() {
-        console.log(this.close, this.lastChange);
-
-        /*
-        if(this.lastChange && !!this.lastChange.close !== !!this.close) {
-            return true;
-        }
-        else if(this.lastChange && !!this.lastChange.open !== !!this.open) {
-            return true;
-        }
-        else if(this.isEditing) {
-            return true;
-        }
-        */
-
-        return false;
-    }
-
-    get isEditing() {
-        if(this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) {
-            return true;
-        }
-        else if(this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)) {
-            return true;
-        }
-        
-        return false;
+        return [this]
+            .concat(this.bookmark && this.bookmark.children || [])
+            .map(error => msg(error))
+            .join('<br>');
     }
 
     get isAttachedToDom() {
-        return document.body.contains(this.bookmark.widgetNode);
+        return this.bookmark && this.bookmark.widgetNode && document.body.contains(this.bookmark.widgetNode);
+    }
+
+    get parent() {
+        return this.$parent;
+    }
+
+    set parent(value) {
+        this.$parent = value;
+        
+        if(value !== true) {
+            console.log('asd');
+
+            setTimeout(() => value.redraw());
+        }
     }
 
     set rule(value) {
@@ -190,10 +194,18 @@ export default class LintError {
 
         const pos = tag && (tag.open || tag.close);
 
-        return pos && this.cm.setBookmark(pos.from, {
+        if(!pos) {
+            return null;
+        }
+
+        const bookmark = this.cm.setBookmark(pos.from, {
             insertLeft: tag.open ? true : false,
             widget: this.createWidgetNode()
-        });    
+        });  
+        
+        return Object.assign(bookmark, {
+            children: []
+        });
     }
 
     redraw() {
@@ -224,12 +236,16 @@ export default class LintError {
         });
     }
 
-    isActive() {
+    nearby(pos) {
         return (
-            this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)
+            this.open && isPositionInRange(pos, this.open.from, this.open.to)
         ) || (
-            this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)
+            this.close && isPositionInRange(pos, this.close.from, this.close.to)
         );
+    }
+
+    isActive() {
+        return this.nearby(this.cm.getCursor());
     }
 
     inRange(from, to) {
@@ -253,9 +269,13 @@ export default class LintError {
     }
 
     clear() {
-        this.bookmark.clear();
-        this.bookmark.open && this.bookmark.open.clear();
-        this.bookmark.close && this.bookmark.close.clear();
+        if(this.bookmark) {
+            this.bookmark.clear();
+            this.bookmark.open && this.bookmark.open.clear();
+            this.bookmark.close && this.bookmark.close.clear();
+        }
+
+        this.cm.state.lint.removeError(this);
     }
 
     lint() {
@@ -280,18 +300,22 @@ export default class LintError {
             this.$bookmark.close && this.$bookmark.close.clear();
             this.$bookmark.close = this.markText(this.close);
         }
+        else if(this.lastChange.open && !this.open) {
+            this.clear();
+        }
 
-        if((this.close && this.lastChange.close) || this.isEditing) {
-            debounced(() => this.cm.lint());
+        if(this.isActive && (this.close && this.lastChange.close || this.cm.state.lint.isNonClosingTagOpened(this.tag))) {
+            this.lint();
         }
     }
 
     onChanges(cm, e) {
-        this.redraw();
+        if(this.parent === true) {
+            this.redraw();
+        };
 
         if(!this.tag) {
             this.clear();
-            this.lint();
         }
     }
 
@@ -304,7 +328,9 @@ export default class LintError {
     }
 
     onCursorActivity(cm) {
-        console.log('asd');
+        if(this.bookmark.widgetNode) {
+            this.bookmark.widgetNode.classList[this.isActive() ? 'add' : 'remove']('show');
+        }
     }
 
     static compare(a, b) {
@@ -319,7 +345,7 @@ export default class LintError {
     toJSON() {
         return {
             code: this.code,
-            column: this.ch,
+            column: this.ch + 1,
             line: this.line + 1,
             match: this.match,
             msg: this.msg,

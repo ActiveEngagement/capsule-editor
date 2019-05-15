@@ -89,21 +89,23 @@ export default class LintState {
     }
 
     isOpenedTagClosing(tag) {
-        return tag && !this.findNearbyErrors(this.cm.getCursor()).length && (tag.open && tag.close);
+        return tag && tag.open && tag.close;
     }
 
     isNonClosingTagOpened(tag) {
-        return tag && !this.findNearbyErrors(this.cm.getCursor()).length && (tag.open && tag.open.tag === 'img');
+        return tag && tag.open && tag.open.tag === 'img';
     }
 
     findNearbyErrors(position) {
         return this.errors.filter(error => {
-            return error.isActive();
+            return error.nearby(position);
         });
     }
 
     findErrorsInRange(from, to) {
         return this.errors.filter(error => {
+            return error.inRange(from, to);
+
             const match = CodeMirror.findMatchingTag(this.cm, {
                 line: error.line - 1,
                 ch: error.column
@@ -173,11 +175,10 @@ export default class LintState {
     }
 
     removeError(error) {
-        const removed = this.errors.splice(this.getErrorIndex(error), 1).pop();
+        // error.open && error.open.clear();
+        // error.close && error.close.clear();
 
-        error.open && error.open.clear();
-        error.close && error.close.clear();
-
+        /*
         if(!this.errors.length) {
             this.cm.clearGutter(this.id);
         }
@@ -190,8 +191,9 @@ export default class LintState {
                 this.cm.setGutterMarker(removed.line - 1, this.id, null);
             }
         }
+        */
 
-        this.callback('onRemoveError', removed, this.errors);
+        this.callback('onRemoveError', this.errors.splice(this.getErrorIndex(error), 1).pop(), this.errors);
     }
 
     removeErrors(errors) {

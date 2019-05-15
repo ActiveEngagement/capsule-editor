@@ -1,7 +1,7 @@
 <template>
     <div>
         <editor>
-            
+            <textarea><img src=""></textarea>
         </editor>
     </div>
 </template>
