@@ -23,21 +23,8 @@ export default class LintError {
         this.match = error.match;
         this.ch = error.column - 1;
         this.line = error.line - 1;
-
-        const errors = this.cm.state.lint.findNearbyErrors({line: this.line, ch: this.ch});
-
-        if(!errors.length) {
-            this.parent = true;
-            this.bookmark = this.createBookmark();
-        }
-        else {
-            this.parent = errors[0];
-            this.bookmark = errors[0].bookmark;
-            this.bookmark.children.push(this);
-            
-            console.log('error', errors[0]);
-        }
-
+        this.bookmark = this.createBookmark();
+        
         if((this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) ||
             this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)) {
             this.show();
@@ -54,11 +41,11 @@ export default class LintError {
     set bookmark(value) {
         this.$bookmark = value;
 
-        if(this.parent === true && this.open) {
+        if(this.open) {
             this.$bookmark.open = this.markText(this.open);
         }
 
-        if(this.parent === true && this.close) {
+        if(this.close) {
             this.$bookmark.close = this.markText(this.close);
         }
     }
@@ -152,20 +139,6 @@ export default class LintError {
         return this.bookmark && this.bookmark.widgetNode && document.body.contains(this.bookmark.widgetNode);
     }
 
-    get parent() {
-        return this.$parent;
-    }
-
-    set parent(value) {
-        this.$parent = value;
-        
-        if(value !== true) {
-            console.log('asd');
-
-            setTimeout(() => value.redraw());
-        }
-    }
-
     set rule(value) {
         this.$rule = value;
     }
@@ -194,17 +167,9 @@ export default class LintError {
 
         const pos = tag && (tag.open || tag.close);
 
-        if(!pos) {
-            return null;
-        }
-
-        const bookmark = this.cm.setBookmark(pos.from, {
+        return pos && this.cm.setBookmark(pos.from, {
             insertLeft: tag.open ? true : false,
             widget: this.createWidgetNode()
-        });  
-        
-        return Object.assign(bookmark, {
-            children: []
         });
     }
 
@@ -304,16 +269,12 @@ export default class LintError {
             this.clear();
         }
 
-        if(this.isActive && (this.close && this.lastChange.close || this.cm.state.lint.isNonClosingTagOpened(this.tag))) {
+        if(this.isActive() && (this.close && this.lastChange.close || this.cm.state.lint.isNonClosingTagOpened(this.tag))) {
             this.lint();
         }
     }
 
     onChanges(cm, e) {
-        if(this.parent === true) {
-            this.redraw();
-        };
-
         if(!this.tag) {
             this.clear();
         }
