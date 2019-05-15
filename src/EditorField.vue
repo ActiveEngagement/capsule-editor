@@ -143,7 +143,7 @@ export default {
 .CodeMirror-lint-error-bookmark {
     z-index: 10;
     display: none;
-    position: absolute;
+    position: fixed;
     white-space: nowrap;
     text-overflow: ellipsis;
 

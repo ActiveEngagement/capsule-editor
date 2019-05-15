@@ -108,6 +108,7 @@ export default {
                 lineNumbers: true,
                 lineWrapping: true,
                 indentWithTabs: true,
+                clearOnEnter: true,
                 matchTags: Object.assign({
                     bothTags: true
                 }, this.matchTags),
@@ -289,10 +290,13 @@ export default {
             isLinting: false,
             currentErrors: this.errors,
             currentFilename: this.filename,
+            value: (this.contents || this.getSlotContents())
+            /*
             value: beautify_html((this.contents || this.getSlotContents()), {
                 indent_size: 1,
                 indent_char: '\t'
             })
+            */
         };
     },
 
@@ -323,15 +327,6 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: #282a36 !important;
-
-    /*
-    .cm-tab {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAABGdBTUEAALGPC/xhBQAAADFJREFUSA1j+P///z6GIQyYhrDbh4nTR5PQMInIgfPGaBIauLAfJjaPJqFhEpED5g0AcM4O9Unyy94AAAAASUVORK5CYII=);
-        background-position: top left;
-        background-repeat: repeat-y;
-        background-size: contain;
-    }
-    */
 }
 
 .edit-toolbar {

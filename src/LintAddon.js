@@ -4,8 +4,11 @@ import LintState from './LintState';
 import fontawesome from '@fortawesome/fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
+import { match } from 'minimatch';
 
-const debounced = debounce(fn => fn(), 500);
+// let changeHistory = [];
+
+const debounced = debounce(fn => fn(), 250);
 
 /*
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
@@ -102,90 +105,11 @@ function setCursorOnError(state) {
 */
 
 function onCursorActivity(cm) {
-    let errors = [];
-
-    const match = CodeMirror.findMatchingTag(cm, cm.getCursor(), cm.getViewport());
-
-    if(match) {
-        const from = (match.open || match.close).from;
-        const to = (match.close || match.open).to;
-        
-        // errors = cm.state.lint.findErrorsInRange(from, to);
-    }
-    else {
-        errors = cm.state.lint.findNearbyErrors(cm.getCursor());
-    }
-
-    cm.state.lint.errors
-        .filter(error => error !== errors[0])
-        .forEach(({ bookmark }) => {
-            bookmark.widgetNode.classList.remove('show');
-        });
-
-    if(errors[0]) {
-        errors[0].bookmark.widgetNode.classList.add('show');
-    }
-
-    /*
-    if(cm.lintErrorTooltip) {
-        cm.lintErrorTooltip.parentNode.removeChild(cm.lintErrorTooltip);
-        cm.lintErrorTooltip = null;
-    }
-
-    if(errors.length) {
-        const ch = errors.reduce((carry, error) => {
-            return carry === null || carry > error.column ? error.column : carry;
-        }, null) - 1;
-    
-        const line = errors.reduce((carry, error) => {
-            return carry === null || carry > error.line ? error.line : carry;
-        }, null) - 1;
-    
-        const message = errors.reduce((carry, error) => {
-            carry.push(`${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`);
-            return carry;
-        }, []).join('<br>');
-
-        // cm.lintErrorTooltip = cm.state.lint.createTooltip(message, cm);
-        // cm.addWidget({ ch, line }, cm.lintErrorTooltip, true);
-    }
-    */
-
-    // const errors = cm.state.lint.findNearbyErrors(cm.getCursor());
-    
-    /*
-    if(errors.length) {
-        // console.log(errors);
-    }
-
-    if(cm.lintErrorTooltip) {
-        cm.lintErrorTooltip.parentNode.removeChild(cm.lintErrorTooltip);
-        cm.lintErrorTooltip = null;
-    }
-
-    const errors = cm.state.lint.findNearbyErrors(cm.getCursor());
-
-    const ch = errors.reduce((carry, error) => {
-        return carry === null || carry > error.column ? error.column : carry;
-    }, null) - 1;
-
-    const line = errors.reduce((carry, error) => {
-        return carry === null || carry > error.line ? error.line : carry;
-    }, null) - 1;
-
-    const message = errors.reduce((carry, error) => {
-        carry.push(`${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`);
-        return carry;
-    }, []).join('<br>');
-
-    if(errors.length) {
-        cm.lintErrorTooltip = createTooltip(message, cm);
-        cm.addWidget({ ch, line }, cm.lintErrorTooltip, true);
-
-        // const bounds = cm.lintErrorTooltip.getBoundingClientRect();
-        // const offset = bounds.left + bounds.width - cm.getScrollInfo().clientWidth;
-    }
-    */
+    cm.state.lint.errors.forEach(error => {
+        if(error.bookmark.widgetNode) {
+            error.bookmark.widgetNode.classList[error.isActive() ? 'add' : 'remove']('show');
+        }
+    });
 }
 
 CodeMirror.defineOption('lint', false, function(cm, options, old) {
@@ -199,75 +123,26 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
         cm.state.lint = new LintState(cm, options || (options = {}));
         cm.on('cursorActivity', onCursorActivity);
 
-        /*
-        cm.on('electricInput', (cm, event) => {
-            console.log('electricInput', event);
+        cm.on('changes', (cm, event) => {
+            let { line, ch } = cm.getCursor();
+            
+            const match = CodeMirror.findMatchingTag(cm, { line, ch: ch - 1 }, cm.getViewport());
+
+            event.open = match && match.open;
+            event.close = match && match.close;
+            
+            // changeHistory.splice(0, 0, event);
+            // changeHistory.splice(5);
+
+            if(!cm.state.lint.findNearbyErrors({ line, ch }).length && event.open && event.close) {
+                cm.lint();
+            }
         });
-        */
-        
+
         cm.on('change', (cm, event) => {
             if(event.origin === 'undo') {
                 cm.lint();
             }
-            else { 
-                /*             
-                const match = CodeMirror.findMatchingTag(cm, {
-                    line: event.from.line,
-                    ch: event.from.ch
-                }, cm.getViewport());
-
-                if(match && match.close) {
-                    debounced(() => {
-                        !!cm.getValue() && cm.lint();
-                    });
-                }
-                */
-            }
-        });
-
-        cm.on('change', (cm, event) => {
-            if(!!(event.from.line - event.to.line) || !!(event.from.ch - event.to.ch)) {
-                console.log(cm.state.lint.findErrorsInRange(event.from, event.to));
-
-                //cm.state.lint.removeErrors(cm.state.lint.findErrorsInRange(event.from, event.to));
-            }
-            
-            /*
-            let lineOffset = 0, charOffset = 0;
-
-            console.log(errors);
-
-            if(event.origin === '+input') {
-
-                lineOffset = event.text.length - 1;
-                charOffset = event.text.filter(ch => !!ch).length;
-            }
-            else if(event.origin === '+delete') {
-                lineOffset = -event.removed.length + 1;
-                charOffset = event.from.ch - event.to.ch;
-            }
-
-
-            if(event.origin === '+input') {
-                event.text.forEach(text => {
-                    console.log(!!text && text.charCodeAt(0));
-                });
-            }
-            */
-
-            /*
-            const lineOffset = event.from.line - event.to.line;
-            const charOffset = event.from.ch - event.to.ch;
-            */
-
-
-            /*
-            const errors = cm.state.lint.findErrorsInRange(event.from, event.to);
-
-            errors.forEach(error => {
-                cm.state.lint.removeError(error);
-            });
-            */
         });
         
         cm.on('inputRead', (cm, event) => {
@@ -287,14 +162,22 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
 
 CodeMirror.defineExtension('lint', function(data, options) {
     return new Promise((resolve, reject) => {
-        this.state.lint
-            .request(data, options)
-            .then(response => {
-                resolve(this.state.lint);
-            }, error => {
-                this.state.lint.cm.operation(() => {
-                    reject(error);
+        if(this.state.lint.cm.getValue()) {
+            this.state.lint
+                .request(data, options)
+                .then(response => {
+                    resolve(this.state.lint);
+                }, error => {
+                    this.state.lint.cm.operation(() => {
+                        reject(error);
+                    });
                 });
-            });
+        }
+        else {
+            this.state.lint.errors = [];
+            this.state.lint.callback('onLintSuccess');
+
+            resolve(this.state.lint);
+        }
     });
 });

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import CodeMirror from 'codemirror';
+import LintError from './LintError';
 import fontawesome from '@fortawesome/fontawesome';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -88,45 +89,18 @@ export default class LintState {
     }
 
     findNearbyErrors(position) {
-        function check(value) {
-            return value && (
-                value.from.line <= position.line &&
-                value.to.line >= position.line
-            ) && (
-                value.from.ch <= position.ch &&
-                value.to.ch >= position.ch
-            );
-        }
-
         return this.errors.filter(error => {
-            return error.match && (check(error.match.open) || check(error.match.close));
+            return error.isActive();
         });
-    }
-
-    isTagInRange(tag, from, to) {
-        return (tag.to && this.isPositionInRange(tag.to, from, to)) || (tag.from && this.isPositionInRange(tag.from, from, to));
-    }
-
-    isPositionInRange({line, ch}, from, to) {
-        //console.log(line, ch, JSON.parse(JSON.stringify(from)), JSON.parse(JSON.stringify(to)), from.line > line || to.line < line, from.line === line && from.ch > ch, to.line === line && to.ch < ch);
-
-        if(from.line > line || to.line < line) {
-            return false;
-        }
-        else if(from.line === line && from.ch > ch) {
-            return false;
-        }
-        else if(to.line === line && to.ch < ch) {
-            return false;
-        }
-
-        return true;
     }
 
     findErrorsInRange(from, to) {
         return this.errors.filter(error => {
-            console.log(error.match.open, error.match.close);
-            
+            const match = CodeMirror.findMatchingTag(this.cm, {
+                line: error.line - 1,
+                ch: error.column
+            }, this.cm.getViewport());
+
             return (
                 this.isTagInRange(error.match.open, from, to) ||
                 this.isTagInRange(error.match.close, from, to)
@@ -247,47 +221,40 @@ export default class LintState {
     }
 
     get errors() {
-        return this.$errors;
+        return this.$errors || [];
     }
 
     set errors(value) {
-        this.$errors = !isArray(value) ? null : value.map(error => {
-            this.cm.setGutterMarker(error.line - 1, this.id, this.createIcon(error));
+        // Check if the value isn't an array
+        if(!isArray(value)) {
+            return this.$errors = [];
+        }
+        
+        let showError;
 
-            error.match = CodeMirror.findMatchingTag(this.cm, {
-                line: error.line - 1,
-                ch: error.column
-            }, this.cm.getViewport());
-
-            if(error.match) {
-                if(error.match.open) {
-                    error.open = this.cm.markText(
-                        error.match.open.from,
-                        error.match.open.to, {
-                            title: error.message,
-                            className: UNDERLINE_CLASS
-                        }
-                    );
-                }
-
-                if(error.match.close) {
-                    error.close = this.cm.markText(
-                        error.match.close.from,
-                        error.match.close.to, {
-                            className: UNDERLINE_CLASS
-                        }
-                    );
-                }
-
-                const pos = error.match.open.from;
-                
-                error.bookmark = this.cm.setBookmark(new pos.constructor(pos.line, pos.ch, pos.sticky), {
-                    insertLeft: true,
-                    widget: this.createErrorBookmark(error)
-                });
-                
+        // Loop through the existing errors and check to see if any are visible.
+        // If an error is visible, set the variable. After the check, clear the
+        // error.
+        this.errors.forEach(error => {
+            if(error.isVisible()) {
+                showError = error;
             }
 
+            error.clear();
+        });
+        
+        // Map the array of standard objects to an array of LintError instances.
+        this.$errors = value.map(error => {
+            // Convert error to a LintError
+            error = new LintError(this.cm, error);
+
+            // Compare the error to the showError variable and if they are
+            // the same, show the error by default. Keeps the state from
+            // shuffling after a lint request returns.
+            if(showError && LintError.compare(error, showError)) {
+                error.show();
+            }
+            
             return error;
         });
     }

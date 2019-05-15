@@ -1,13 +1,7 @@
 <template>
     <div>
         <editor>
-<textarea>
-<div>
-  <a href=""></a>
-  <a href=""></a>
-  <a href=""></a>
-</div>
-</textarea>
+            
         </editor>
     </div>
 </template>
@@ -17,6 +11,7 @@ import axios from "axios";
 import Editor from "./Editor";
 
 axios.defaults.headers = {
+    Accept: 'application/json',
     Authorization: `Bearer ${process.env.VUE_APP_SECRET}`
 };
 
