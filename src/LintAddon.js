@@ -134,7 +134,9 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
             // changeHistory.splice(0, 0, event);
             // changeHistory.splice(5);
 
-            if(!cm.state.lint.findNearbyErrors({ line, ch }).length && event.open && event.close) {
+            if(cm.state.lint.isOpenedTagClosing(match) || cm.state.lint.isNonClosingTagOpened(match)) {
+                console.log('asd');
+    
                 cm.lint();
             }
         });

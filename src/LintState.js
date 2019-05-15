@@ -88,6 +88,14 @@ export default class LintState {
         });
     }
 
+    isOpenedTagClosing(tag) {
+        return tag && !this.findNearbyErrors(this.cm.getCursor()).length && (tag.open && tag.close);
+    }
+
+    isNonClosingTagOpened(tag) {
+        return tag && !this.findNearbyErrors(this.cm.getCursor()).length && (tag.open && tag.open.tag === 'img');
+    }
+
     findNearbyErrors(position) {
         return this.errors.filter(error => {
             return error.isActive();
