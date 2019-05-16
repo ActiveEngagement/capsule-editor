@@ -179,6 +179,7 @@ export default class LintState {
     }
 
     removeError(error) {
+
         // error.open && error.open.clear();
         // error.close && error.close.clear();
 
@@ -204,6 +205,8 @@ export default class LintState {
         (errors || this.errors).forEach(error => {
             this.removeError(error);
         });
+        
+        this.cm.clearGutter(this.cm.state.lint.id);
     }
 
     get id() {

@@ -139,6 +139,10 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
             )) {
                 cm.lint();
             }
+
+            if(!cm.getValue()) {
+                cm.state.lint.removeErrors();
+            }
         });
 
         cm.on('change', (cm, event) => {
@@ -155,7 +159,6 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
 
         if(options.errors && options.errors.length) {
             cm.state.lint.errors = options.errors;
-
             // addErrors(cm.state);
             // setCursorOnError(cm.state);
         }
@@ -176,7 +179,7 @@ CodeMirror.defineExtension('lint', function(data, options) {
                 });
         }
         else {
-            this.state.lint.errors = [];
+            this.state.lint.removeErrors();
             this.state.lint.callback('onLintSuccess');
 
             resolve(this.state.lint);
