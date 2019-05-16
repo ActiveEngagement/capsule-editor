@@ -118,6 +118,10 @@ export default class LintState {
         });
     }
 
+    findErrorsOnLine(line) {
+        return this.errors.filter(error => error.line === line);
+    }
+
     createIcon(error) {
         const icon = document.createElement('div');
     
@@ -246,7 +250,7 @@ export default class LintState {
         // If an error is visible, set the variable. After the check, clear the
         // error.
         this.errors.forEach(error => {
-            if(error.isVisible()) {
+            if(error.isVisible) {
                 showError = error;
             }
 

@@ -1,7 +1,13 @@
 <template>
     <div>
         <editor>
-            <textarea><img src=""></textarea>
+<textarea>
+<div>
+    <a href=""></a>
+    <img src="">
+    </p>
+</div>
+</textarea>
         </editor>
     </div>
 </template>
