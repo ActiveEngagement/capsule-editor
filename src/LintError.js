@@ -270,8 +270,10 @@ export default class LintError {
             this.bookmark.close && this.bookmark.close.clear();
         }
 
-        this.cm.state.lint.removeError(this);
+        const removed = this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1).pop();
+        
         this.clearGutter();
+        this.cm.state.lint.callback('onRemoveError', removed, this.cm.state.lint.errors);
     }
 
     lint() {
@@ -297,10 +299,6 @@ export default class LintError {
             this.$bookmark.close = this.markText(this.close);
         }
         
-        if(this.lastChange.open && !this.open) {
-            this.clear();
-        }
-
         if(this.isCursorInsideTag && (this.close && this.lastChange.close || this.cm.state.lint.isNonClosingTagOpened(this.tag))) {
             this.lint();
         }
@@ -309,7 +307,14 @@ export default class LintError {
             this.redraw();
         }
 
-        if(this.lastChange && this.lastChange.change.from.line !== this.line) {
+        if(this.lastChange.open && !this.open) {
+            this.clear();
+        }
+
+        if(!this.open && !this.close) {
+            this.clearGutter(this.lastChange.change.from.line);
+        }
+        else if((this.lastChange && this.lastChange.change.from.line !== this.line)) {
             this.clearGutter(this.lastChange.change.from.line);
             this.createGutter();
         }

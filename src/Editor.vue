@@ -41,6 +41,7 @@
 
 <script>
 import './LintAddon';
+import { debounce } from 'lodash';
 import LintState from './LintState';
 import EditorField from './EditorField';
 import EditorToolbar from './EditorToolbar';
@@ -53,9 +54,11 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
 
 library.add(faExclamationTriangle);
 
-var beautify_js = require('js-beautify'); // also available under "js" export
-var beautify_css = require('js-beautify').css;
-var beautify_html = require('js-beautify').html;
+// var beautify_js = require('js-beautify'); // also available under "js" export
+// var beautify_css = require('js-beautify').css;
+// var beautify_html = require('js-beautify').html;
+
+const debounced = debounce(fn => fn(), 600);
 
 export default {
 
@@ -93,6 +96,16 @@ export default {
         pageControls: {
             type: Boolean,
             default: true
+        }
+
+    },
+
+    watch: {
+
+        currentErrors(value, oldValue) {
+            if(this.value && oldValue.length && !value.length) {
+                debounced(() => console.log(value.length, oldValue.length));
+            }
         }
 
     },

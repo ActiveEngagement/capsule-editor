@@ -178,33 +178,8 @@ export default class LintState {
         return div;
     }
 
-    removeError(error) {
-
-        // error.open && error.open.clear();
-        // error.close && error.close.clear();
-
-        /*
-        if(!this.errors.length) {
-            this.cm.clearGutter(this.id);
-        }
-        else {
-            const lineErrors = this.errors.filter(e => {
-                return removed.line === e.line;
-            });
-            
-            if(!lineErrors.length) {
-                this.cm.setGutterMarker(removed.line - 1, this.id, null);
-            }
-        }
-        */
-
-        this.callback('onRemoveError', this.errors.splice(this.getErrorIndex(error), 1).pop(), this.errors);
-    }
-
     removeErrors(errors) {
-        (errors || this.errors).forEach(error => {
-            this.removeError(error);
-        });
+        (errors || this.errors).forEach(error => error.clear());
         
         this.cm.clearGutter(this.cm.state.lint.id);
     }
