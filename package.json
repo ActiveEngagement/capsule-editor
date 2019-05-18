@@ -15,6 +15,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "@fortawesome/vue-fontawesome": "^0.1.6",
+    "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "codemirror": "^5.46.0",

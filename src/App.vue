@@ -1,11 +1,12 @@
 <template>
     <div>
-        <editor>
+        <editor demo-mode>
 <textarea>
 <div>
-    <a href=""></a>
-    <img src="">
-    </p>
+    <a href="http:/"></a>
+    <a href="http:/"></a>
+    <a href="http:/"></a>
+    <a href="http:/"></a>
 </div>
 </textarea>
         </editor>

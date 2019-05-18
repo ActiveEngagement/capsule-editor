@@ -31,13 +31,14 @@ import { alt, ctrl, shift } from './Icons';
 import Badge from 'vue-interface/src/Components/Badge';
 import Navbar from 'vue-interface/src/Components/Navbar';
 import EditorToolbarMenuItem from './EditorToolbarMenuItem';
+import BtnActivity from 'vue-interface/src/Components/BtnActivity';
+import BtnDropdown from 'vue-interface/src/Components/BtnDropdown';
+import DropdownMenuDivider from 'vue-interface/src/Components/DropdownMenu/DropdownMenuDivider';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import BtnActivity from 'vue-interface/src/Components/BtnActivity';
-import BtnDropdown from 'vue-interface/src/Components/BtnDropdown';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
-import DropdownMenuDivider from 'vue-interface/src/Components/DropdownMenu/DropdownMenuDivider';
 
 library.add(faBug);
 library.add(faCog);
@@ -62,7 +63,7 @@ export default {
     props: {
 
         activity: Boolean,
-
+        
         errors: Array,
 
         pageControls: {

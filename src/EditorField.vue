@@ -78,6 +78,7 @@ export default {
     mounted() {
         this.cm = CodeMirror.fromTextArea(this.$el, this.options);
         this.cm.on('change', () => this.$emit('input', this.cm.getValue()));
+        this.cm.on('cursorActivity', (...args) => this.$emit('cursor-activity', ...args));
         this.cm.setSize(this.width, this.height);
     },
 
@@ -95,8 +96,11 @@ export default {
 @import './node_modules/bootstrap/scss/_variables.scss';
 
 .CodeMirror {
-    position: absolute;
-    width: 100%;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
 
     .CodeMirror-lint-errors {
         width: 1.2em;
