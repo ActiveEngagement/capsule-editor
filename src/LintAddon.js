@@ -28,7 +28,9 @@ function onChanges(cm, event) {
 
 function onInputRead(cm, event) {
     if(event.origin === 'paste') {
-        cm.lint();
+        if(!cm.state.lint.errors.filter(error => error.isActive).length) {
+            cm.lint();
+        }
     }
 }
 
@@ -55,7 +57,7 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
 });
 
 CodeMirror.defineExtension('lint', function(data, options) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {    
         if(this.state.lint.cm.getValue()) {
             this.state.lint
                 .send(data, options)
