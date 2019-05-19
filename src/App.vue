@@ -1,6 +1,6 @@
 <template>
     <div>
-        <editor>
+        <editor demo-mode>
             <template slot="modal">
                 <img src="./assets/img/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
                 <div class="text-center">

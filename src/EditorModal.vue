@@ -59,11 +59,25 @@ export default {
         padding: 1rem;
     }
 
-    .slide-deck-controls {
-        .slide-deck-control-icon {
-            color: $gray-400;
-            font-size: .75rem;
-        }        
+    .slide-deck {
+        .slide-deck-controls {
+            bottom: 1.75rem;
+
+            .slide-deck-control-icon {
+                font-size: .75rem;
+
+                &:not(.is-active) {
+                    color: $gray-400;
+                }
+            }        
+        }
+    }
+
+    .capsule-editor-modal-footer {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
     }
 }
 </style>

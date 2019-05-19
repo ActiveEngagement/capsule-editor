@@ -36,7 +36,6 @@
                         <div class="mb-3">
                             <btn type="button" @click="active = 2">Next <icon icon="long-arrow-alt-right" /></btn>
                         </div>
-                        <small><a href="#" @click.prevent="$emit('clear')">Skip Tutorial</a></small>
                     </div>
                 </div>
             </div>
@@ -54,7 +53,6 @@
                     <div class="mb-3">
                         <btn type="button" @click="active = 3">Next <icon icon="long-arrow-alt-right" /></btn>
                     </div>
-                    <small><a href="#" @click.prevent="$emit('clear')">Skip Tutorial</a></small>
                 </div>
             </div>
             <div :key="3">
@@ -67,6 +65,12 @@
                     <btn variant="success" type="button" @click="$emit('clear')">Get Started!</btn>
                 </div>
             </div>
+            
+            <template v-if="active > 0 && active < 3" #bottom>
+                <div class="capsule-editor-modal-footer">
+                    <small><a href="#" @click.prevent="$emit('clear')">Skip Tutorial</a></small>
+                </div>
+            </template>
         </slide-deck>
     </editor-modal>
 </template>
@@ -118,14 +122,25 @@ export default {
 .capsule-editor-demo-modal {
     &:not(.step-1):not(.step-4) .slide-deck-content {
         min-height: 28rem;
+        margin-bottom: 3rem;
+    }
+
+    &.step-4 {        
+        .slide-deck-controls {
+            bottom: 0;
+        }
+
+        .slide-deck-content {
+            margin-bottom: 2rem;
+        }
     }
 
     .slide-deck-content {
         min-height: 25rem;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
 
         .screenshot {
-            min-height: 170px;
+            min-height: 260.5px;
         }
     }
 }
