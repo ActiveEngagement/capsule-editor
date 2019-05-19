@@ -5,7 +5,13 @@
         :enter-active-class="enterActiveClassName"
         :leave-class="leaveClass"
         :leave-to-class="leaveToClass"
-        :leave-active-class="leaveActiveClassName">
+        :leave-active-class="leaveActiveClassName"
+        @before-enter="(...args) => this.$emit('before-enter', ...args)"
+        @enter="(...args) => this.$emit('enter', ...args)"
+        @after-enter="(...args) => this.$emit('after-enter', ...args)"
+        @before-leave="(...args) => this.$emit('before-leave', ...args)"
+        @leave="(...args) => this.$emit('leave', ...args)"
+        @after-leave="(...args) => this.$emit('after-leave', ...args)">
         <slot/>
     </transition>
 </template>
@@ -36,8 +42,6 @@ export default {
 
         big: Boolean,
 
-        special: Boolean,
-
         name: {
             type: [Array, String],
             required: true
@@ -50,6 +54,8 @@ export default {
         left: Boolean,
 
         right: Boolean,
+
+        special: Boolean,
 
         direction: {
             type: String,

@@ -17,13 +17,15 @@ export default class LintError {
     constructor(cm, error) {
         this.id = nextId++;
         this.cm = cm;
-        //this.markedText = {};
         this.msg = error.msg;
         this.code = error.code;
         this.rule = error.rule;
         this.match = error.match;
-        this.ch = error.column;
+        // Subtract one from ch and line because the API returns the base as 1
+        // but CodeMirror uses a base of 0.
+        this.ch = error.column - 1;
         this.line = error.line - 1;
+        
         this.gutter = this.createGutter();
         this.bookmark = this.createBookmark();
 
@@ -42,6 +44,16 @@ export default class LintError {
 
     set bookmark(value) {
         this.$bookmark = value;
+
+        this.$bookmark.on('clear', () => {
+            const index = this.cm.state.lint.getErrorIndex(this);
+
+            if(index !== -1) {
+                this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1);
+            }
+
+            this.clearGutter();
+        });
 
         if(this.open) {
             this.$bookmark.open = this.markText(this.open);
@@ -265,15 +277,17 @@ export default class LintError {
 
     clear() {
         if(this.bookmark) {
-            this.bookmark.clear();
             this.bookmark.open && this.bookmark.open.clear();
             this.bookmark.close && this.bookmark.close.clear();
+            this.cm.state.lint.$nextTick(() => {
+                this.bookmark.clear();
+            });
         }
 
-        const removed = this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1).pop();
+        // this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1);
+        // this.clearGutter();
         
-        this.clearGutter();
-        this.cm.state.lint.callback('onRemoveError', removed, this.cm.state.lint.errors);
+        // this.cm.state.lint.callback('onRemoveError', this);
     }
 
     lint() {
@@ -294,12 +308,14 @@ export default class LintError {
     }
 
     onChange(cm, change) {
+        const isNonOpeningTag = this.cm.state.lint.isNonClosingTagOpened(this.tag);
+
         if(this.close) {
             this.$bookmark.close && this.$bookmark.close.clear();
             this.$bookmark.close = this.markText(this.close);
         }
         
-        if(this.isCursorInsideTag && (this.close && this.lastChange.close || this.cm.state.lint.isNonClosingTagOpened(this.tag))) {
+        if(this.isCursorInsideTag && (this.close && this.lastChange.close || isNonOpeningTag)) {
             this.lint();
         }
 
@@ -323,9 +339,6 @@ export default class LintError {
     onChanges(cm, e) {
         if(!this.tag) {
             this.clear();
-        }
-        else {
-            // this.updateGutterIcon();
         }
     }
 

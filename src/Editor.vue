@@ -18,6 +18,7 @@
         <editor-toolbar
             ref="toolbar"
             :value="value"
+            :demo-mode="demoMode"
             :activity="isLinting"
             :errors="currentErrors"
             :title.sync="currentFilename"
@@ -31,6 +32,7 @@
             @save-as="onClickSaveAs"
             @convert="onClickConvert"
             @export-errors="onExportErrors"
+            @demo-modal="demoModalCleared = false"
         />
 
         <div class="editor-field-container">
@@ -45,29 +47,41 @@
         </div>
 
         <editor-footer
-            v-if="$refs.editor"
+            v-if="$refs.editor && (!demoMode || demoModalCleared)"
             ref="footer"
             :cm="$refs.editor.cm"
             :demo-mode="demoMode"
-            @finish-popup=""
             @finish="$emit('finish')"
             @finish-popup="showFinishPopup = true"
         />
+
+        <animate-css name="fade" @leave="onLeave">
+            <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onClear" />
+        </animate-css>
+
+        <animate-css name="tada" special>
+            <editor-modal v-if="showFinishPopup">
+                <slot name="modal"/>
+            </editor-modal>
+        </animate-css>
     </div>
 </template>
 
 <script>
-import "./LintAddon";
-import LintState from "./LintState";
-import EditorField from "./EditorField";
-import EditorFooter from "./EditorFooter";
-import EditorToolbar from "./EditorToolbar";
-import Alert from "vue-interface/src/Components/Alert";
-import { deepExtend } from "vue-interface/src/Helpers/Functions";
-import InputField from "vue-interface/src/Components/InputField";
+import './LintAddon';
+import LintState from './LintState';
+import AnimateCss from './AnimateCss';
+import EditorModal from './EditorModal';
+import EditorField from './EditorField';
+import EditorFooter from './EditorFooter';
+import EditorToolbar from './EditorToolbar';
+import EditorDemoModal from './EditorDemoModal';
+import Alert from 'vue-interface/src/Components/Alert';
+import { deepExtend } from 'vue-interface/src/Helpers/Functions';
+import InputField from 'vue-interface/src/Components/InputField';
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons/faExclamationTriangle";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 
 library.add(faExclamationTriangle);
 
@@ -76,13 +90,16 @@ library.add(faExclamationTriangle);
 // var beautify_html = require('js-beautify').html;
 
 export default {
-    name: "editor",
+    name: 'editor',
 
     components: {
         Alert,
+        AnimateCss,
+        EditorModal,
         EditorField,
         EditorFooter,
-        EditorToolbar
+        EditorToolbar,
+        EditorDemoModal
     },
 
     props: {
@@ -125,98 +142,76 @@ export default {
 
     computed: {
         mergedOptions() {
-            return deepExtend(
-                {
-                    tabSize: 4,
-                    indentUnit: 4,
-                    foldGutter: true,
-                    smartIndent: true,
-                    lineNumbers: true,
-                    lineWrapping: true,
-                    indentWithTabs: true,
-                    clearOnEnter: true,
-                    matchTags: Object.assign(
-                        {
-                            bothTags: true
-                        },
-                        this.matchTags
-                    ),
-                    gutters: this.gutters || [
-                        "CodeMirror-linenumbers",
-                        LintState.id,
-                        "CodeMirror-foldgutter"
-                    ],
-                    extraKeys: Object.assign(
-                        {
-                            "Ctrl-N": this.onClickNew,
-                            "Ctrl-O": this.onClickOpen,
-                            "Ctrl-S": this.onClickSave,
-                            "Ctrl-Q": this.onClickClose,
-                            "Ctrl-C": this.onClickConvert,
-                            "Shift-Ctrl-S": this.onClickSaveAs,
-                            "Ctrl-J": "toMatchingTag",
-                            "Ctrl-Space": "autocomplete",
-                            "Ctrl-V": () => {
-                                this.$refs.toolbar.$refs.lint.$el.click();
-                            }
-                            /*,
-                    'Ctrl-Q': cm => {
-                        cm.foldCode(cm.getCursor());
+            return deepExtend({
+                tabSize: 4,
+                indentUnit: 4,
+                foldGutter: true,
+                smartIndent: true,
+                lineNumbers: true,
+                lineWrapping: true,
+                indentWithTabs: true,
+                clearOnEnter: true,
+                matchTags: Object.assign(
+                    {
+                        bothTags: true
+                    },
+                    this.matchTags
+                ),
+                gutters: this.gutters || [
+                    'CodeMirror-linenumbers',
+                    LintState.id,
+                    'CodeMirror-foldgutter'
+                ],
+                extraKeys: Object.assign({
+                    'Ctrl-N': this.onClickNew,
+                    'Ctrl-O': this.onClickOpen,
+                    'Ctrl-S': this.onClickSave,
+                    'Ctrl-Q': this.onClickClose,
+                    'Ctrl-C': this.onClickConvert,
+                    'Shift-Ctrl-S': this.onClickSaveAs,
+                    'Ctrl-J': 'toMatchingTag',
+                    'Ctrl-Space': 'autocomplete',
+                    'Ctrl-V': () => {
+                        this.$refs.toolbar.$refs.lint.$el.click();
                     }
-                    */
-                        },
-                        this.extraKeys
-                    ),
-                    lint: Object.assign(
-                        {
-                            url: `http://api.thecapsule.${
-                                process.env.NODE_ENV === "production"
-                                    ? "email"
-                                    : "test"
-                            }/v1/lint`,
-                            errors: this.currentErrors,
-                            data: cm => {
-                                return {
-                                    html: cm.getValue()
-                                };
-                            },
-                            onLintStart: () => {
-                                this.isLinting = true;
-                            },
-                            onLintComplete: () => {
-                                this.isLinting = false;
-                            },
-                            onLintSuccess: () => {
-                                this.currentErrors = [];
-                                this.$emit("lint-success");
-                            },
-                            onRemoveError: (cm, error, errors) => {
-                                this.currentErrors = errors;
-                                this.$emit(
-                                    "remove-error",
-                                    error,
-                                    this.currentErrors
-                                );
+                }, this.extraKeys),
+                lint: Object.assign({
+                    nextTick: this.$nextTick,
+                    url: `http://api.thecapsule.${process.env.NODE_ENV === 'production' ? 'email' : 'test'}/v1/lint`,
+                    errors: this.currentErrors,
+                    data: cm => {
+                        return {
+                            html: cm.getValue()
+                        };
+                    },
+                    onLintStart: () => {
+                        this.isLinting = true;
+                    },
+                    onLintComplete: () => {
+                        this.isLinting = false;
+                    },
+                    onLintSuccess: () => {
+                        this.currentErrors = [];
+                        this.$emit('lint-success');
+                    },
+                    onRemoveError: (cm, error) => {
 
-                                // cm.lint();
-                            },
-                            onLintError: (cm, error) => {
-                                if (error.response.status === 406) {
-                                    this.currentErrors =
-                                        error.response.data.errors;
-                                    this.$emit(
-                                        "lint-error",
-                                        error,
-                                        this.currentErrors
-                                    );
-                                }
-                            }
-                        },
-                        this.lint
-                    )
-                },
-                this.options
-            );
+                        console.log(error);
+        
+                        this.$nextTick(() => {
+                            this.currentErrors = cm.state.lint.errors.splice(cm.state.lint.getErrorIndex(error), 1);
+                        });
+
+                        this.$emit('remove-error', error, this.currentErrors);
+                    },
+                    onLintError: (cm, error) => {
+                        if (error.response.status === 406) {
+                            this.currentErrors = error.response.data.errors;
+                            this.$emit('lint-error', error, this.currentErrors);
+                        }
+                    }
+                }, this.lint)
+            }, this.options);
         }
     },
 
@@ -225,7 +220,7 @@ export default {
             return this.$slots.default
                 ? this.$slots.default
                       .filter(vnode => {
-                          return vnode.tag.toLowerCase() === "textarea";
+                          return vnode.tag.toLowerCase() === 'textarea';
                       })
                       .reduce((carry, vnode) => {
                           return (
@@ -234,14 +229,24 @@ export default {
                                   .map(child => {
                                       return child.text;
                                   })
-                                  .join("")
+                                  .join('')
                           );
-                      }, "")
+                      }, '')
                 : null;
         },
 
+        onLeave() {
+            if(this.$refs.editor.cm.state.lint.errors.length) {
+                this.$refs.editor.cm.setCursor(this.$refs.editor.cm.state.lint.errors[0]);
+            }
+        },
+
+        onClear() {
+            this.demoModalCleared = true;
+        },
+
         onClickConvert() {
-            this.$emit("convert", this.value, this.currentFilename);
+            this.$emit('convert', this.value, this.currentFilename);
         },
 
         onToolbarInput() {
@@ -250,7 +255,7 @@ export default {
 
         onEditorInput() {
             this.$nextTick(() => {
-                this.$emit("input", {
+                this.$emit('input', {
                     contents: this.value,
                     filename: this.currentFilename
                 });
@@ -258,7 +263,7 @@ export default {
         },
 
         onExportErrors() {
-            this.$emit("export", this.value, this.currentFilename);
+            this.$emit('export', this.value, this.currentFilename);
         },
 
         onFileSelected(event) {
@@ -277,15 +282,15 @@ export default {
 
         onClickNew() {
             this.currentFilename = null;
-            this.$refs.editor.cm.setValue((this.value = ""));
+            this.$refs.editor.cm.setValue((this.value = ''));
             this.$refs.editor.cm.focus();
-            this.$emit("new");
+            this.$emit('new');
         },
 
         onClickSave() {
             if (this.currentFilename) {
-                this.$emit("download", this.value, this.currentFilename);
-                this.$emit("save", this.value, this.currentFilename);
+                this.$emit('download', this.value, this.currentFilename);
+                this.$emit('save', this.value, this.currentFilename);
             } else {
                 this.onClickSaveAs();
             }
@@ -294,15 +299,14 @@ export default {
         onClickSaveAs() {
             let currentFilename = this.currentFilename;
 
-            this.$prompt("Save File As", InputField, {
+            this.$prompt('Save File As', InputField, {
                 content: {
                     on: {
                         keypress: e => {
-                            // "return" key code
                             if (e.keyCode === 13) {
                                 e.target
-                                    .closest(".modal-dialog")
-                                    .querySelector(".btn-primary")
+                                    .closest('.modal-dialog')
+                                    .querySelector('.btn-primary')
                                     .click();
                                 e.preventDefault();
                             } else {
@@ -311,16 +315,16 @@ export default {
                         }
                     },
                     propsData: {
-                        label: "Enter the name of the file",
+                        label: 'Enter the name of the file',
                         value: this.currentFilename
                     }
                 }
             }).then(modal => {
                 this.currentFilename = currentFilename;
 
-                this.$emit("download", this.value, currentFilename);
-                this.$emit("save-as", this.value, currentFilename);
-                this.$emit("save", this.value, currentFilename);
+                this.$emit('download', this.value, currentFilename);
+                this.$emit('save-as', this.value, currentFilename);
+                this.$emit('save', this.value, currentFilename);
             });
         },
 
@@ -329,7 +333,7 @@ export default {
         },
 
         onClickClose() {
-            this.$emit("close");
+            this.$emit('close');
         },
 
         onClickLint(event) {
@@ -341,6 +345,8 @@ export default {
         return {
             isLinting: false,
             showFooter: false,
+            showFinishPopup: false,
+            demoModalCleared: false,
             currentErrors: this.errors,
             currentFilename: this.filename,
             value: this.contents || this.getSlotContents()

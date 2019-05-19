@@ -23,11 +23,15 @@
                 <editor-toolbar-menu-item label="Convert Document" :hotkeys="['ctrl', 'C']" @click.prevent="$emit('convert')" />
             </template>
         </btn-dropdown>
+        <btn v-if="demoMode" size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
+            <icon :icon="['far', 'question-circle']" />
+        </btn>
     </navbar>
 </template>
 
 <script>
 import { alt, ctrl, shift } from './Icons';
+import Btn from 'vue-interface/src/Components/Btn';
 import Badge from 'vue-interface/src/Components/Badge';
 import Navbar from 'vue-interface/src/Components/Navbar';
 import EditorToolbarMenuItem from './EditorToolbarMenuItem';
@@ -36,8 +40,8 @@ import BtnDropdown from 'vue-interface/src/Components/BtnDropdown';
 import DropdownMenuDivider from 'vue-interface/src/Components/DropdownMenu/DropdownMenuDivider';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBug } from '@fortawesome/free-solid-svg-icons/faBug';
-import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
 
 library.add(faBug);
@@ -45,16 +49,18 @@ library.add(faCog);
 library.add(alt);
 library.add(ctrl);
 library.add(shift);
+library.add(faQuestionCircle);
 
 export default {
 
     name: 'editor-toolbar',
 
     components: {
+        Btn,
         Icon,
-        BtnActivity,
         Badge,
         Navbar,
+        BtnActivity,
         BtnDropdown,
         DropdownMenuDivider,
         EditorToolbarMenuItem
@@ -63,6 +69,8 @@ export default {
     props: {
 
         activity: Boolean,
+
+        demoMode: Boolean,
         
         errors: Array,
 
@@ -153,6 +161,11 @@ export default {
             text-align: center;
             flex-grow: 1;
         }
+    }
+
+    .editor-help, .editor-help:hover {
+        font-size: 1.5em;
+        color: #228DFF;
     }
 
     .editor-toolbar-actions {

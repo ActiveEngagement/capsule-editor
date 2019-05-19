@@ -5,7 +5,7 @@ export default function isPositionInRange({line, ch}, from, to) {
     else if(from.line === line && from.ch > ch) {
         return false;
     }
-    else if(to.line === line && to.ch <= ch) {
+    else if(to.line === line && to.ch < ch) {
         return false;
     }
 

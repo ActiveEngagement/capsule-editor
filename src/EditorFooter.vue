@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
 import AnimateCss from './AnimateCss';
 import EditorError from './EditorError';
 import Btn from 'vue-interface/src/Components/Btn';
@@ -32,8 +31,6 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
 
 library.add(faCaretLeft);
 library.add(faCaretRight);
-
-const debounced = debounce(fn => fn(), 600);
 
 export default {
 
@@ -59,12 +56,6 @@ export default {
 
     watch: {
 
-        showFinishButton(value, oldValue) {
-            if(!oldValue && value) {
-                this.demoMode && this.$emit('finish-popup');
-            }
-        },
-
         ['cm.state.lint.errors'](value, oldValue) {
             if(!this.error && this.errors.length) {
                 this.error = this.errors[0];
@@ -72,17 +63,19 @@ export default {
             else if(!this.errors.length) {
                 this.error = null;
             }
-
-            if(this.cm.getValue() && !value.length && this.totalErrors) {    
-                this.showFinishButton = true;
+ 
+ 
+            if(this.cm.getValue() && !value.length && this.totalErrors) {  
+                this.demoMode && this.$emit('finish-popup');
             }
+
+            this.totalErrors = value.length;
+
             /*
             else if(value.length) {
                 this.showFinishButton = false;
             }
             */
-            
-            this.totalErrors = value.length;
         }
 
     },
@@ -137,11 +130,16 @@ export default {
     },
 
     mounted() {
-        this.$parent.$refs.editor.$on('cursor-activity', this.onCursorActivity);
+        if(this.$parent.$refs.editor) {
+            this.$parent.$refs.editor.$on('cursor-activity', this.onCursorActivity);
+            this.$nextTick(() => this.totalErrors = this.errors.length);
+        }
     },
 
     beforeDestroy() {
-        this.$parent.$refs.editor.$off('cursor-activity', this.onCursorActivity);
+        if(this.$parent.$refs.editor) {
+            this.$parent.$refs.editor.$off('cursor-activity', this.onCursorActivity);
+        }
     },
 
     data() {

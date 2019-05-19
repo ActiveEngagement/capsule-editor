@@ -8,7 +8,6 @@ import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 const GUTTER_ID = 'CodeMirror-lint-errors';
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
 
-
 export default class LintState {
     constructor(cm, options) {
         if(typeof options !== 'object') {
@@ -52,38 +51,55 @@ export default class LintState {
         return value === undefined ? defaultValue : value;
     }
 
-    request(data, options) {
+    send(data, options) {
         this.callback('onLintStart');
 
         return new Promise((resolve, reject) => {
-            axios.post(
+            const { token, cancel } = axios.CancelToken.source();
+    
+            options = options || this.value('options') || this.options || {};
+
+            Object.assign(options, {
+                cancelToken: token
+            });
+
+            if(this.abort) {
+                this.abort();
+            }
+
+            this.abort = cancel;
+            this.request = axios.post(
                 this.value('url'),
                 (data || this.value('data')),
-                (options || this.value('options') || this.options)
+                options
             ).then(response => {
                 this.errors = [];
                 this.response = response = (
                     this.option('transformResponse') ? this.callback('transformResponse', response) : response.data
                 );
 
-                resolve(response);
-
                 this.callback('onLintSuccess', response);
                 this.callback('onLintComplete', true, response);
-            }, error => {
-                this.response = null;
-                const errors = this.option('transformResponseError')
-                    ? this.callback('transformResponseError', error)
-                    : (error.response.data.errors || error.response.data);
 
-                if(isArray(errors)) {
-                    this.errors = errors;
+                resolve(response);
+            }, error => {
+                if(!axios.isCancel(error)) {
+                    this.response = null;
+                    const errors = this.option('transformResponseError')
+                        ? this.callback('transformResponseError', error)
+                        : (error.response.data.errors || error.response.data);
+    
+                    if(isArray(errors)) {
+                        this.errors = errors;
+                    }
+    
+                    this.callback('onLintError', error);
+                    this.callback('onLintComplete', false, error);
                 }
 
                 reject(error);
-
-                this.callback('onLintError', error);
-                this.callback('onLintComplete', false, error);
+            }).finally(() => {
+                this.request = null;
             });
         });
     }
@@ -178,9 +194,8 @@ export default class LintState {
         return div;
     }
 
-    removeErrors(errors) {
-        (errors || this.errors).forEach(error => error.clear());
-        
+    removeErrors() {
+        this.errors.forEach(error => error.clear());
         this.cm.clearGutter(this.cm.state.lint.id);
     }
 
@@ -188,6 +203,14 @@ export default class LintState {
         return this.constructor.id;
     }
 
+    get abort() {
+        return this.$abort;
+    }
+
+    set abort(value) {
+        this.$abort = value;
+    }
+    
     get cm() {
         return this.$cm;
     }
@@ -204,6 +227,14 @@ export default class LintState {
         this.$options = value;
     }
 
+    set request(value) {
+        this.$request = value;
+    }
+
+    get request() {
+        return this.$request;
+    }
+
     get response() {
         return this.$response;
     }
@@ -216,25 +247,25 @@ export default class LintState {
         return this.$errors || [];
     }
 
+    get $nextTick() {
+        return this.options.nextTick;
+    }
+
     set errors(value) {
+        let showError = this.errors
+            .filter(error => error.isVisible)
+            .reverse()
+            .pop();
+
+        // Loop through the existing errors and check to see if any are visible.
+        // If an error is visible, set the variable and clear the error.
+        this.errors.forEach(error => error.clear());
+        
         // Check if the value isn't an array
         if(!isArray(value)) {
             return this.$errors = [];
         }
-        
-        let showError;
 
-        // Loop through the existing errors and check to see if any are visible.
-        // If an error is visible, set the variable. After the check, clear the
-        // error.
-        this.errors.forEach(error => {
-            if(error.isVisible) {
-                showError = error;
-            }
-
-            error.clear();
-        });
-        
         // Map the array of standard objects to an array of LintError instances.
         this.$errors = value.map(error => {
             // Convert error to a LintError
