@@ -76,10 +76,10 @@
 </template>
 
 <script>
-import AnimateCss from './AnimateCss';
 import EditorModal from './EditorModal';
 import Btn from 'vue-interface/src/Components/Btn';
 import SlideDeck from 'vue-interface/src/Components/SlideDeck';
+import AnimateCss from 'vue-interface/src/ComponentsAnimateCss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';

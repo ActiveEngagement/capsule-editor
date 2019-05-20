@@ -70,13 +70,13 @@
 <script>
 import './LintAddon';
 import LintState from './LintState';
-import AnimateCss from './AnimateCss';
 import EditorModal from './EditorModal';
 import EditorField from './EditorField';
 import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
 import Alert from 'vue-interface/src/Components/Alert';
+import AnimateCss from 'vue-interface/src/ComponentsAnimateCss';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 import InputField from 'vue-interface/src/Components/InputField';
 

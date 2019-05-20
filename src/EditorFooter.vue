@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import AnimateCss from './AnimateCss';
 import EditorError from './EditorError';
 import Btn from 'vue-interface/src/Components/Btn';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import AnimateCss from 'vue-interface/src/ComponentsAnimateCss';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
