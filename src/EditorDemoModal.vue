@@ -4,7 +4,7 @@
             <div :key="0">
                 <div>
                     <animate-css name="zoom" in left>
-                        <img v-if="loaded" src="./assets/img/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
+                        <img v-if="loaded" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
                     </animate-css>
                     <h1 class="text-center font-weight-light">Capsule Editor</h1>
                     <p class="mx-3 py-2">
@@ -30,7 +30,7 @@
                     </p>
                     
 
-                    <img src="./assets/img/fixing-errors.gif" class="screenshot img-fluid mb-3" />
+                    <img src="./assets/fixing-errors.gif" class="screenshot img-fluid mb-3" />
 
                     <div class="text-center">
                         <div class="mb-3">
@@ -47,7 +47,7 @@
                     the document.
                 </p>
 
-                <img src="./assets/img/error-paginating.gif" class="screenshot img-fluid mb-3" />
+                <img src="./assets/error-paginating.gif" class="screenshot img-fluid mb-3" />
 
                 <div class="text-center">
                     <div class="mb-3">
@@ -60,7 +60,7 @@
                 <p>
                     If you ever need to return to this tutorial, just click the question mark in the top right corner.
                 </p>
-                <img src="./assets/img/show-help-modal.gif" class="screenshot img-fluid mb-3" />
+                <img src="./assets/show-help-modal.gif" class="screenshot img-fluid mb-3" />
                 <div class="text-center">
                     <btn variant="success" type="button" @click="$emit('clear')">Get Started!</btn>
                 </div>
