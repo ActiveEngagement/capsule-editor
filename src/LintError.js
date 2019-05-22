@@ -38,8 +38,6 @@ export default class LintError {
         this.on('changes', this.onChanges);
         this.on('beforeChange', this.onBeforeChange);
         this.on('cursorActivity', this.onCursorActivity);
-
-        this.cm.state.lint.errors.push(this);
     }
 
     set bookmark(value) {

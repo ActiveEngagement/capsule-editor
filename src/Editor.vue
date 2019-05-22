@@ -341,11 +341,11 @@ export default {
     data() {
         return {
             isLinting: false,
-            showFooter: false,
             showFinishPopup: false,
             demoModalCleared: false,
             currentErrors: this.errors,
             currentFilename: this.filename,
+            showFooter: this.errors.length,
             value: this.contents || this.getSlotContents()
             /*
             value: beautify_html((this.contents || this.getSlotContents()), {
