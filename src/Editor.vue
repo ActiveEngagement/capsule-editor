@@ -244,11 +244,12 @@ export default {
         },
 
         onModalLeave() {
-            const { errors } = this.$refs.field.cm.state.lint;
-
-            if(!!errors.filter(error => error.isActive).length) {
-                this.$refs.field.cm.setCursor(errors[0]);
-                this.$refs.field.cm.focus();
+            if(this.$refs.field.cm.state.lint.errors.length) {
+                const activeErrors = this.$refs.field.cm.state.lint.errors.filter(error => error.isActive);
+                
+                if(!activeErrors.length) {
+                    this.$refs.field.cm.state.lint.errors[0].focus();
+                }
             }
         },
 

@@ -274,7 +274,10 @@ export default class LintError {
     }
 
     focus() {
-        this.cm.setCursor(this.open);
+        const pos = this.bookmark.find();
+
+        this.cm.scrollIntoView(pos, this.cm.getTextArea().parentNode.offsetHeight / 2);
+        this.cm.setCursor(pos);
         this.cm.focus();
     }
 
