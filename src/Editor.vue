@@ -223,6 +223,7 @@ export default {
     },
 
     methods: {
+
         getSlotContents() {
             return this.$slots.default
                 ? this.$slots.default
@@ -349,6 +350,7 @@ export default {
         onClickLint(event) {
             this.$refs.editor.cm.lint();
         }
+        
     },
 
     data() {
