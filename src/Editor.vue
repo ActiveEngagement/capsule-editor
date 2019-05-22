@@ -41,13 +41,14 @@
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
+                @init="initialized = true"
             />
 
             <input ref="file" type="file" class="d-none" @input="onFileSelected">
         </div>
 
         <editor-footer
-            v-if="$refs.editor && (!demoMode || demoModalCleared)"
+            v-if="initialized"
             ref="footer"
             :cm="$refs.editor.cm"
             :demo-mode="demoMode"
@@ -133,11 +134,19 @@ export default {
     },
 
     watch: {
+
         currentErrors(value) {
             if (!this.showFooter && value.length) {
                 this.showFooter = true;
             }
+        },
+
+        demoModalCleared(value) {
+            this.$nextTick(() => {
+                this.showFooter = !!this.currentErrors.length;
+            });
         }
+
     },
 
     computed: {
@@ -341,11 +350,12 @@ export default {
     data() {
         return {
             isLinting: false,
+            showFooter: false,
+            initialized: false,
             showFinishPopup: false,
             demoModalCleared: false,
             currentErrors: this.errors,
             currentFilename: this.filename,
-            showFooter: this.errors.length,
             value: this.contents || this.getSlotContents()
             /*
             value: beautify_html((this.contents || this.getSlotContents()), {
@@ -359,8 +369,7 @@ export default {
     mounted() {
         this.$nextTick(() => {
             this.$refs.editor.cm.focus();
-            //this.$refs.editor.cm.setSize('100%', `calc(100% - ${this.$el.querySelector('.editor-toolbar').clientHeight}px)`);
-
+            
             if (this.$refs.editor.cm.getValue() && !this.currentErrors.length) {
                 this.$refs.editor.cm.lint();
             }

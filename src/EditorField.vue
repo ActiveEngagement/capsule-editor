@@ -80,6 +80,7 @@ export default {
         this.cm.on('change', () => this.$emit('input', this.cm.getValue()));
         this.cm.on('cursorActivity', (...args) => this.$emit('cursor-activity', ...args));
         this.cm.setSize(this.width, this.height);
+        this.$emit('init')
     },
 
     data() {
