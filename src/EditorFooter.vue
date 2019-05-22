@@ -188,12 +188,13 @@ export default {
     }
 
     .editor-footer-pager {
+        width: 9.5rem;
         padding-left: .5rem;
 
         & > div {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .btn {
