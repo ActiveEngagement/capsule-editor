@@ -1,6 +1,6 @@
 {
   "name": "capsule-editor",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "scripts": {
     "commit": "git add -A && git commit -m 'Pre-release commit';",
     "serve": "vue-cli-service serve",
