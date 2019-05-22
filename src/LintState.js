@@ -19,7 +19,7 @@ export default class LintState {
         delete options.errors;
 
         this.cm = cm;
-        this.errors = errors;
+        // this.errors = errors;
         this.options = options;
     }
 

@@ -190,12 +190,12 @@ export default class LintError {
         }
 
         if(!this.cm.state.lint.findErrorsOnLine(line).length) {
-            this.cm.setGutterMarker(line, this.cm.state.lint.id, null);
+            this.cm.setGutterMarker(line, 'capsule-lint', null);
         }
     }
 
     createGutter() {
-        return this.cm.setGutterMarker(this.line, this.cm.state.lint.id, this.createGutterIcon());
+        return this.cm.setGutterMarker(this.line, 'capsule-lint', this.createGutterIcon());
     }
     
     createGutterIcon() {
@@ -283,11 +283,6 @@ export default class LintError {
                 this.bookmark.clear();
             });
         }
-
-        // this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1);
-        // this.clearGutter();
-        
-        // this.cm.state.lint.callback('onRemoveError', this);
     }
 
     lint() {
@@ -363,17 +358,4 @@ export default class LintError {
             (a && a.code) === (b && b.code)
         );
     }
-
-    /*
-    toJSON() {
-        return {
-            code: this.code,
-            column: this.ch + 1,
-            line: this.line + 1,
-            match: this.match,
-            msg: this.msg,
-            rule: this.rule
-        };
-    }
-    */
 }

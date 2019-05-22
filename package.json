@@ -2,13 +2,14 @@
   "name": "capsule-editor",
   "version": "0.3.5",
   "scripts": {
+    "commit": "git add -A && git commit -m 'Pre-release commit';",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name VueNotepad ./src/index.js",
     "lint": "vue-cli-service lint",
-    "release-patch": "npm version patch; npm run release;",
-    "release-minor": "npm version minor; npm run release;",
-    "release-major": "npm version major; npm run release;",
-    "release": "npm run build; npm run commit; npm publish; git push --follow-tags;"
+    "release-patch": "npm run build && npm run commit && npm version patch; npm run release;",
+    "release-minor": "git add -A && npm run commit && npm run build && npm version minor; npm run release;",
+    "release-major": "git add -A && npm run commit && npm run build && npm version major; npm run release;",
+    "release": "npm run commit; npm publish; git push --follow-tags;"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
@@ -21,7 +22,7 @@
     "codemirror": "^5.46.0",
     "js-beautify": "^1.10.0",
     "popper.js": "^1.15.0",
-    "vue-interface": "^0.3.40"
+    "vue-interface": "^0.4.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",

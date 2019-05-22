@@ -76,8 +76,8 @@ import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
 import Alert from 'vue-interface/src/Components/Alert';
-import AnimateCss from 'vue-interface/src/ComponentsAnimateCss';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
+import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import InputField from 'vue-interface/src/Components/InputField';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -195,9 +195,6 @@ export default {
                         this.$emit('lint-success');
                     },
                     onRemoveError: (cm, error) => {
-
-                        console.log(error);
-        
                         this.$nextTick(() => {
                             this.currentErrors = cm.state.lint.errors.splice(cm.state.lint.getErrorIndex(error), 1);
                         });
