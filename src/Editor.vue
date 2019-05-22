@@ -56,8 +56,8 @@
             @finish-popup="showFinishPopup = true"
         />
 
-        <animate-css name="fade" @leave="onLeave">
-            <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onClear" />
+        <animate-css name="fade" @leave="onModalLeave">
+            <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
         </animate-css>
 
         <animate-css name="tada" special>
@@ -83,6 +83,7 @@ import InputField from 'vue-interface/src/Components/InputField';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+import { error } from 'util';
 
 library.add(faExclamationTriangle);
 
@@ -241,13 +242,16 @@ export default {
                 : null;
         },
 
-        onLeave() {
-            if(this.$refs.editor.cm.state.lint.errors.length) {
-                this.$refs.editor.cm.setCursor(this.$refs.editor.cm.state.lint.errors[0]);
+        onModalLeave() {
+            const { errors } = this.$refs.editor.cm.state.lint;
+
+            if(!!errors.filter(error => error.isActive).length) {
+                this.$refs.editor.cm.setCursor(errors[0]);
+                this.$refs.editor.cm.focus();
             }
         },
 
-        onClear() {
+        onModalClear() {
             this.demoModalCleared = true;
         },
 
