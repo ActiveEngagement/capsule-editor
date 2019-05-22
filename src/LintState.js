@@ -56,13 +56,16 @@ export default class LintState {
 
         return new Promise((resolve, reject) => {
             const { token, cancel } = axios.CancelToken.source();
+
+            options = Object.assign({
+                cancelToken: token,
+                headers: {
+                    Authorization: `Bearer ${this.options.apiKey}`
+                }
+            }, options || this.value('options') || this.options || {});
+
+            console.log(options);
     
-            options = options || this.value('options') || this.options || {};
-
-            Object.assign(options, {
-                cancelToken: token
-            });
-
             if(this.abort) {
                 this.abort();
             }

@@ -62,7 +62,13 @@
 
         <animate-css name="tada" special>
             <editor-modal v-if="showFinishPopup">
-                <slot name="modal"/>
+                <slot name="success">
+                    <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
+                    <div class="text-center">
+                        <h1 class="font-weight-light">Success!</h1>
+                        <h5 class="font-weight-light mb-5">Your document has been fixed.</h5>
+                    </div>
+                </slot>
             </editor-modal>
         </animate-css>
     </div>
@@ -133,6 +139,8 @@ export default {
             default: true
         },
 
+        apiKey: String,
+
         environment: {
             type: String,
             default() {
@@ -194,6 +202,7 @@ export default {
                 }, this.extraKeys),
                 lint: Object.assign({
                     nextTick: this.$nextTick,
+                    apiKey: this.apiKey,
                     url: `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lint`,
                     errors: this.currentErrors,
                     data: cm => {
