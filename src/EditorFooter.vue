@@ -130,15 +130,15 @@ export default {
     },
 
     mounted() {
-        if(this.$parent.$refs.editor) {
-            this.$parent.$refs.editor.$on('cursor-activity', this.onCursorActivity);
+        if(this.$parent.$refs.field) {
+            this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
             this.$nextTick(() => this.totalErrors = this.errors.length);
         }
     },
 
     beforeDestroy() {
-        if(this.$parent.$refs.editor) {
-            this.$parent.$refs.editor.$off('cursor-activity', this.onCursorActivity);
+        if(this.$parent.$refs.field) {
+            this.$parent.$refs.field.$off('cursor-activity', this.onCursorActivity);
         }
     },
 

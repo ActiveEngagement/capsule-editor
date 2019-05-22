@@ -37,7 +37,7 @@
 
         <div class="editor-field-container">
             <editor-field
-                ref="editor"
+                ref="field"
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
@@ -50,7 +50,7 @@
         <editor-footer
             v-if="initialized"
             ref="footer"
-            :cm="$refs.editor.cm"
+            :cm="$refs.field.cm"
             :demo-mode="demoMode"
             @finish="$emit('finish')"
             @finish-popup="showFinishPopup = true"
@@ -244,11 +244,11 @@ export default {
         },
 
         onModalLeave() {
-            const { errors } = this.$refs.editor.cm.state.lint;
+            const { errors } = this.$refs.field.cm.state.lint;
 
             if(!!errors.filter(error => error.isActive).length) {
-                this.$refs.editor.cm.setCursor(errors[0]);
-                this.$refs.editor.cm.focus();
+                this.$refs.field.cm.setCursor(errors[0]);
+                this.$refs.field.cm.focus();
             }
         },
 
@@ -282,8 +282,8 @@ export default {
 
             // Closure to capture the file information.
             reader.onload = e => {
-                this.$refs.editor.cm.setValue(e.target.result);
-                this.$refs.editor.cm.lint();
+                this.$refs.field.cm.setValue(e.target.result);
+                this.$refs.field.cm.lint();
             };
 
             reader.readAsText(event.target.files[0]);
@@ -293,8 +293,8 @@ export default {
 
         onClickNew() {
             this.currentFilename = null;
-            this.$refs.editor.cm.setValue((this.value = ''));
-            this.$refs.editor.cm.focus();
+            this.$refs.field.cm.setValue((this.value = ''));
+            this.$refs.field.cm.focus();
             this.$emit('new');
         },
 
@@ -348,7 +348,7 @@ export default {
         },
 
         onClickLint(event) {
-            this.$refs.editor.cm.lint();
+            this.$refs.field.cm.lint();
         }
         
     },
@@ -374,10 +374,10 @@ export default {
 
     mounted() {
         this.$nextTick(() => {
-            this.$refs.editor.cm.focus();
+            this.$refs.field.cm.focus();
             
-            if (this.$refs.editor.cm.getValue() && !this.currentErrors.length) {
-                this.$refs.editor.cm.lint();
+            if (this.$refs.field.cm.getValue() && !this.currentErrors.length) {
+                this.$refs.field.cm.lint();
             }
         });
     }

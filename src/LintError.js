@@ -273,6 +273,11 @@ export default class LintError {
         this.isNotVisible && this.bookmark.widgetNode.classList.add('show');
     }
 
+    focus() {
+        this.cm.setCursor(this.open);
+        this.cm.focus();
+    }
+
     clear() {
         if(this.bookmark) {
             this.bookmark.open && this.bookmark.open.clear();
