@@ -131,6 +131,13 @@ export default {
         pageControls: {
             type: Boolean,
             default: true
+        },
+
+        environment: {
+            type: String,
+            default() {
+                return process.env.NODE_ENV;
+            }
         }
     },
 
@@ -187,7 +194,7 @@ export default {
                 }, this.extraKeys),
                 lint: Object.assign({
                     nextTick: this.$nextTick,
-                    url: `http://api.thecapsule.${process.env.NODE_ENV === 'production' ? 'email' : 'test'}/v1/lint`,
+                    url: `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lint`,
                     errors: this.currentErrors,
                     data: cm => {
                         return {

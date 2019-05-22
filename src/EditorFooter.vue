@@ -64,18 +64,15 @@ export default {
                 this.error = null;
             }
  
- 
             if(this.cm.getValue() && !value.length && this.totalErrors) {  
                 this.demoMode && this.$emit('finish-popup');
             }
 
             this.totalErrors = value.length;
+        },
 
-            /*
-            else if(value.length) {
-                this.showFinishButton = false;
-            }
-            */
+        error(value, oldValue) {
+            this.direction = this.index > this.errors.indexOf(oldValue) ? 'down': 'up';
         }
 
     },
@@ -119,11 +116,11 @@ export default {
 
         onCursorActivity(cm) {
             const { line, ch } = cm.getCursor();
+            
             const error = this.findActiveError() || this.error;
 
             this.ch = ch;
             this.line = line;
-            this.direction = this.index > this.errors.indexOf(error) ? 'down': 'up';
             this.error = error;
         }
 
@@ -132,7 +129,10 @@ export default {
     mounted() {
         if(this.$parent.$refs.field) {
             this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
-            this.$nextTick(() => this.totalErrors = this.errors.length);
+            this.$nextTick(() => {
+                this.error = this.findActiveError();
+                this.totalErrors = this.errors.length;
+            });
         }
     },
 
@@ -143,9 +143,11 @@ export default {
     },
 
     data() {
+        const { line, ch } = this.cm.getCursor();
+
         return {
-            ch: 0,
-            line: 0,
+            ch: ch,
+            line: line,
             error: null,
             totalErrors: 0,
             direction: 'up',
