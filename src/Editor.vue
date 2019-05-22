@@ -41,7 +41,7 @@
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
-                @init="initialized = true"
+                @initialize="initialized = true"
             />
 
             <input ref="file" type="file" class="d-none" @input="onFileSelected">
