@@ -64,8 +64,6 @@ export default class LintState {
                 }
             }, options || this.value('options') || this.options || {});
 
-            console.log(options);
-    
             if(this.abort) {
                 this.abort();
             }
