@@ -7,7 +7,7 @@
                         <img v-if="loaded" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
                     </animate-css>
                     <h1 class="text-center font-weight-light">Capsule Editor</h1>
-                    <p class="mx-3 py-2">
+                    <p class="mx-5 px-3 py-2">
                         Capsule Editor will step you through each error to help you quickly find the correct solution.
                         Would like to learn more about Capsule Editor?
                     </p>
