@@ -13,7 +13,7 @@
                     </p>
                     <div class="text-center">
                         <div class="mb-3">
-                            <btn type="button" @click="active = 1">Learn More</btn>
+                            <btn type="button" @click="active = 1"><icon icon="info-circle" /> Learn More</btn>
                         </div>
                         <small><a href="#" @click.prevent="$emit('clear')">No, I just want to fix the errors.</a></small>
                     </div>
@@ -29,7 +29,6 @@
                         will have a brief description of what is most likely causing the error.
                     </p>
                     
-
                     <img src="./assets/fixing-errors.gif" class="screenshot img-fluid mb-3" />
 
                     <div class="text-center">
@@ -83,8 +82,9 @@ import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
-import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faLongArrowAltRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
+library.add(faInfoCircle);
 library.add(faLongArrowAltRight);
 
 export default {
