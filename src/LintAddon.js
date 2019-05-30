@@ -6,12 +6,9 @@ let matchBeforeChange;
 
 
 function onChange(cm, event) {
-    const { removed, origin, to, from } = event;
+    const { removed, origin } = event;
 
-    const match = (
-        CodeMirror.findMatchingTag(cm, to, cm.getViewport()) || 
-        CodeMirror.findMatchingTag(cm, from, cm.getViewport())
-    );
+    const match = CodeMirror.findMatchingTag(cm, cm.getCursor(), cm.getViewport());
 
     if((matchBeforeChange && !match) || 
        (!matchBeforeChange && match) ||

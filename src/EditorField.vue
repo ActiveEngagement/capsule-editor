@@ -83,7 +83,7 @@ export default {
         this.cm.on('cursorActivity', (...args) => this.$emit('cursor-activity', ...args));
         this.cm.setSize(this.width, this.height);
         this.$nextTick(() => {
-            this.$emit('initialize');
+            this.$emit('initialize', this.cm);
         });
     },
 

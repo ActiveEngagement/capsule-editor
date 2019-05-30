@@ -50,12 +50,18 @@ export default {
             required: true
         },
 
-        demoMode: Boolean
+        demoMode: Boolean,
+
+        errors: {
+            type: Array,
+            default: () => []
+        }
 
     },
 
     watch: {
 
+        /*
         ['cm.state.lint.errors'](value, oldValue) {
             if(!this.error && this.errors.length) {
                 this.error = this.errors[0];
@@ -76,6 +82,15 @@ export default {
 
             this.totalErrors = value.length;
         },
+        */
+
+        errors(value) {
+            const error = this.findActiveError() || this.errors[0];
+
+            if(this.errors !== error) {
+                this.error = error;
+            }
+        },
 
         error(value, oldValue) {
             this.direction = this.index > this.errors.indexOf(oldValue) ? 'down': 'up';
@@ -85,12 +100,12 @@ export default {
 
     computed: {
 
-        errors() {
-            return this.cm.state.lint.errors;
-        },
-
         index() {
             return Math.max(0, this.errors.indexOf(this.error));
+        },
+
+        totalErrors() {
+            return this.errors.length;
         }
 
     },
@@ -122,12 +137,14 @@ export default {
 
         onCursorActivity(cm) {
             const { line, ch } = cm.getCursor();
-            
-            const error = this.findActiveError() || this.error;
+            const error = this.findActiveError();
 
             this.ch = ch;
             this.line = line;
-            this.error = error;
+
+            if(error) {
+                this.error = error;
+            }
         }
 
     },
@@ -135,10 +152,6 @@ export default {
     mounted() {
         if(this.$parent.$refs.field) {
             this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
-            this.$nextTick(() => {
-                this.error = this.findActiveError();
-                this.totalErrors = this.errors.length;
-            });
         }
     },
 
@@ -154,10 +167,9 @@ export default {
         return {
             ch: ch,
             line: line,
-            error: null,
-            totalErrors: 0,
             direction: 'up',
-            showFinishButton: false
+            showFinishButton: false,
+            error: this.errors.length && this.errors[0]
         }
     }
 

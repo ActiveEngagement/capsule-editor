@@ -26,7 +26,7 @@
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
-                @initialize="initialized = true"
+                @initialize="onInitialize"
             />
 
             <input ref="file" type="file" class="d-none" @input="onFileSelected">
@@ -37,8 +37,8 @@
             ref="footer"
             :cm="$refs.field.cm"
             :demo-mode="demoMode"
+            :errors="currentErrors"
             @finish="$emit('finish')"
-            @finish-popup="showFinishPopup = true"
         />
 
         <animate-css name="fade" @leave="onModalLeave">
@@ -138,7 +138,33 @@ export default {
 
     watch: {
 
-        currentErrors(value) {
+        ['cm.state.lint.errors'](value, oldValue) {
+            if(!value.length && this.currentErrors.length) {
+                this.cm.lint().then(response => {
+                    if(this.demoMode && this.cm.getValue()) {
+                        this.showFinishPopup = true;
+                    }
+                }, e => {
+                    // this.state.lint.errors = e.response.data.errors;
+                });
+            }
+        
+            this.currentErrors = value.slice(0);
+
+            /*
+            if(!this.error && this.errors.length) {
+                this.error = this.errors[0];
+            }
+            else if(!this.errors.length) {
+                this.error = null;
+            }
+ 
+
+            this.totalErrors = value.length;
+            */
+        },
+
+        currentErrors(value, oldValue) {
             if (!this.showFooter && value.length) {
                 this.showFooter = true;
             }
@@ -200,19 +226,12 @@ export default {
                         this.isLinting = false;
                     },
                     onLintSuccess: () => {
-                        this.currentErrors = [];
+                        // this.currentErrors = [];
                         this.$emit('lint-success');
-                    },
-                    onRemoveError: (cm, error) => {
-                        this.$nextTick(() => {
-                            this.currentErrors = cm.state.lint.errors.splice(cm.state.lint.getErrorIndex(error), 1);
-                        });
-
-                        this.$emit('remove-error', error, this.currentErrors);
                     },
                     onLintError: (cm, error) => {
                         if (error.response.status === 406) {
-                            this.currentErrors = error.response.data.errors;
+                            // this.currentErrors = error.response.data.errors;
                             this.$emit('lint-error', error, this.currentErrors);
                         }
                     }
@@ -240,6 +259,11 @@ export default {
                           );
                       }, '')
                 : null;
+        },
+
+        onInitialize(cm) {
+            this.cm = cm;
+            this.initialized = true;
         },
 
         onModalLeave() {
@@ -355,12 +379,13 @@ export default {
 
     data() {
         return {
+            cm: null,
             isLinting: false,
             showFooter: false,
             initialized: false,
             showFinishPopup: false,
             demoModalCleared: false,
-            currentErrors: this.errors,
+            currentErrors: this.errors.splice(0, 0),
             currentFilename: this.filename,
             value: this.contents || this.getSlotContents()
             /*

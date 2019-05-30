@@ -275,7 +275,7 @@ export default class LintError {
 
         markedText.on('hide', () => {
             if(!this.open && !this.close) {
-                // this.clear();
+                this.clear();
             }
         });
 
