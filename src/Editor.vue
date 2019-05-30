@@ -165,6 +165,16 @@ export default {
         },
 
         currentErrors(value, oldValue) {
+            oldValue.filter(oldError => {
+                return !value.filter(newError => {
+                    return (
+                        newError.line === oldError.line && 
+                        newError.ch === oldError.ch && 
+                        newError.code === oldError.code
+                    );
+                }).length;
+            }).forEach(error => error.clear());
+            
             if (!this.showFooter && value.length) {
                 this.showFooter = true;
             }

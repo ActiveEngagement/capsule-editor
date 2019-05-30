@@ -38,7 +38,7 @@
             <a href="file://some/absolute/path">file://some/absolute/path
         </div>
     </body>
-</html>
+    
 </textarea>
 
         </editor>
