@@ -1,20 +1,5 @@
 <template>
     <div class="editor" :class="{footer: showFooter}">
-        <alert v-if="globalErrors" variant="danger" class="mt-3 mx-3">
-            <div class="d-flex">
-                <icon icon="exclamation-triangle" size="2x" class="mt-1 mr-4"/>
-                <div>
-                    <h3>Ooops!</h3>
-                    <p class="mb-2">The following errors occurred when your tried to save the document:</p>
-                    <ul class="pl-0">
-                        <template v-for="error in globalErrors">
-                            <li v-for="line in error" :key="line">{{ line }}</li>
-                        </template>
-                    </ul>
-                </div>
-            </div>
-        </alert>
-
         <editor-toolbar
             ref="toolbar"
             :value="value"
@@ -57,7 +42,7 @@
         />
 
         <animate-css name="fade" @leave="onModalLeave">
-            <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
+            <editor-demo-modal v-if="!skipIntro && demoMode && !demoModalCleared" @clear="onModalClear" />
         </animate-css>
 
         <animate-css name="tada" special>
@@ -82,14 +67,12 @@ import EditorField from './EditorField';
 import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
-import Alert from 'vue-interface/src/Components/Alert';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import InputField from 'vue-interface/src/Components/InputField';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-import { error } from 'util';
 
 library.add(faExclamationTriangle);
 
@@ -101,7 +84,6 @@ export default {
     name: 'editor',
 
     components: {
-        Alert,
         AnimateCss,
         EditorModal,
         EditorField,
@@ -111,11 +93,11 @@ export default {
     },
 
     props: {
-        globalErrors: Object,
-
         contents: String,
 
         demoMode: Boolean,
+
+        skipIntro: Boolean,
 
         extraKeys: Object,
 
@@ -124,8 +106,6 @@ export default {
         gutters: Array,
 
         lint: Object,
-
-        matchTags: Object,
 
         options: Object,
 
@@ -145,6 +125,13 @@ export default {
             type: String,
             default() {
                 return process.env.NODE_ENV;
+            }
+        },
+
+        url: {
+            type: String,
+            default() {
+                return `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lint`;
             }
         }
     },
@@ -175,13 +162,9 @@ export default {
                 lineNumbers: true,
                 lineWrapping: true,
                 indentWithTabs: true,
-                clearOnEnter: true,
-                matchTags: Object.assign(
-                    {
-                        bothTags: true
-                    },
-                    this.matchTags
-                ),
+                matchTags: {
+                    bothTags: true
+                },
                 gutters: this.gutters || [
                     'CodeMirror-linenumbers',
                     LintState.id,
@@ -201,9 +184,9 @@ export default {
                     }
                 }, this.extraKeys),
                 lint: Object.assign({
-                    nextTick: this.$nextTick,
                     apiKey: this.apiKey,
-                    url: `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lint`,
+                    nextTick: this.$nextTick,
+                    url: this.url,
                     errors: this.currentErrors,
                     data: cm => {
                         return {

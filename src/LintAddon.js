@@ -1,10 +1,28 @@
 import CodeMirror from 'codemirror';
 import LintState from './LintState';
 
+let lastChange;
+let matchBeforeChange;
+
+
 function onChange(cm, event) {
-    if(event.origin === 'undo') {
+    const { removed, origin, to, from } = event;
+
+    const match = (
+        CodeMirror.findMatchingTag(cm, to, cm.getViewport()) || 
+        CodeMirror.findMatchingTag(cm, from, cm.getViewport())
+    );
+
+    if((matchBeforeChange && !match) || 
+       (!matchBeforeChange && match) ||
+       (origin === 'undo') || 
+       (origin === '+delete' && (removed.indexOf('<') !== -1 || removed.indexOf('>') !== -1))) {
         cm.lint();
     }
+
+    lastChange = event;
+    lastChange.open = match && match.open;
+    lastChange.close = match && match.close;
 }
 
 function onChanges(cm, event) {
@@ -34,12 +52,20 @@ function onInputRead(cm, event) {
     }
 }
 
+function onBeforeChange(cm, { to, from }) {
+    matchBeforeChange = (
+        CodeMirror.findMatchingTag(cm, to, cm.getViewport()) || 
+        CodeMirror.findMatchingTag(cm, from, cm.getViewport())
+    );
+}
+
 CodeMirror.defineOption('lint', false, function(cm, options, old) {
     if(old && old !== CodeMirror.Init) {
         cm.state.removeErrors();
         cm.off('change', onChange);
         cm.off('changes', onChanges);
         cm.off('inputRead', onInputRead);
+        cm.off('beforeChange', onBeforeChange);
 
         delete cm.state.lint;
     }
@@ -49,6 +75,7 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
         cm.on('change', onChange);
         cm.on('changes', onChanges);
         cm.on('inputRead', onInputRead);
+        cm.on('beforeChange', onBeforeChange);
 
         if(options.errors && options.errors.length) {
             cm.state.lint.errors = options.errors;

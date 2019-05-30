@@ -64,8 +64,14 @@ export default {
                 this.error = null;
             }
  
-            if(this.cm.getValue() && !value.length && this.totalErrors) {  
-                this.demoMode && this.$emit('finish-popup');
+            if(!value.length && this.totalErrors) {  
+                this.cm.state.lint.send().then(response => {
+                    if(this.demoMode && this.cm.getValue()) {
+                        this.$emit('finish-popup');
+                    }
+                }, e => {
+                    this.state.lint.errors = e.response.data.errors;
+                });
             }
 
             this.totalErrors = value.length;

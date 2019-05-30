@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { debounce } from 'lodash';
 import CodeMirror from 'codemirror';
 import LintError from './LintError';
 import fontawesome from '@fortawesome/fontawesome';
@@ -6,7 +7,10 @@ import { isArray } from 'vue-interface/src/Helpers/Functions';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
-const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
+
+const debounced = debounce(fn => fn(), 500, {
+    leading: true
+});
 
 export default class LintState {
     constructor(cm, options) {
@@ -17,6 +21,8 @@ export default class LintState {
         const errors = options.errors || [];
 
         delete options.errors;
+
+        cm.on('beforeChange', () => this.abort());
 
         this.cm = cm;
         this.errors = errors;
@@ -52,55 +58,54 @@ export default class LintState {
     }
 
     send(data, options) {
-        this.callback('onLintStart');
-
         return new Promise((resolve, reject) => {
-            const { token, cancel } = axios.CancelToken.source();
-
-            options = Object.assign({
-                cancelToken: token,
-                headers: {
-                    Authorization: `Bearer ${this.options.apiKey}`
-                }
-            }, options || this.value('options') || this.options || {});
-
-            if(this.abort) {
-                this.abort();
-            }
-
-            this.abort = cancel;
-            this.request = axios.post(
-                this.value('url'),
-                (data || this.value('data')),
-                options
-            ).then(response => {
-                this.errors = [];
-                this.response = response = (
-                    this.option('transformResponse') ? this.callback('transformResponse', response) : response.data
-                );
-
-                this.callback('onLintSuccess', response);
-                this.callback('onLintComplete', true, response);
-
-                resolve(response);
-            }, error => {
-                if(!axios.isCancel(error)) {
-                    this.response = null;
-                    const errors = this.option('transformResponseError')
-                        ? this.callback('transformResponseError', error)
-                        : (error.response.data.errors || error.response.data);
+            debounced(() => {
+                this.callback('onLintStart');
+        
+                const { token, cancel } = axios.CancelToken.source();
     
-                    if(isArray(errors)) {
-                        this.errors = errors;
+                options = Object.assign({
+                    cancelToken: token,
+                    headers: {
+                        Authorization: this.options.apiKey && `Bearer ${this.options.apiKey}`
                     }
+                }, options || this.value('options') || this.options || {});
     
-                    this.callback('onLintError', error);
-                    this.callback('onLintComplete', false, error);
-                }
+                this.abort();    
+                this.abort = cancel;
+                this.request = axios.post(
+                    this.value('url'),
+                    (data || this.value('data')),
+                    options
+                ).then(response => {
+                    this.errors = [];
+                    this.response = response = (
+                        this.option('transformResponse') ? this.callback('transformResponse', response) : response.data
+                    );
 
-                reject(error);
-            }).finally(() => {
-                this.request = null;
+                    this.callback('onLintSuccess', response);
+                    this.callback('onLintComplete', true, response);
+
+                    resolve(response);
+                }, error => {
+                    if(!axios.isCancel(error)) {
+                        this.response = null;
+                        const errors = this.option('transformResponseError')
+                            ? this.callback('transformResponseError', error)
+                            : (error.response.data.errors || error.response.data);
+        
+                        if(isArray(errors)) {
+                            this.errors = errors;
+                        }
+        
+                        this.callback('onLintError', error);
+                        this.callback('onLintComplete', false, error);
+                    }
+
+                    reject(error);
+                }).finally(() => {
+                    this.request = null;
+                });
             });
         });
     }
@@ -205,7 +210,7 @@ export default class LintState {
     }
 
     get abort() {
-        return this.$abort;
+        return this.$abort || (() => {});
     }
 
     set abort(value) {

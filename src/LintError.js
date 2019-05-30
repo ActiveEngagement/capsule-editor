@@ -1,11 +1,8 @@
-import { debounce } from 'lodash';
 import CodeMirror from 'codemirror';
 import isTagInRange from './Helpers/isTagInRange';
 import fontawesome from '@fortawesome/fontawesome';
 import isPositionInRange from './Helpers/isPositionInRange';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
-
-const debounced = debounce(fn => fn(), 500);
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
@@ -26,7 +23,7 @@ export default class LintError {
         this.ch = error.column - 1;
         this.line = error.line - 1;
         
-        this.gutter = this.createGutter();
+        this.createGutter();
         this.bookmark = this.createBookmark();
 
         if((this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) ||
@@ -43,15 +40,11 @@ export default class LintError {
     set bookmark(value) {
         this.$bookmark = value;
 
-        this.$bookmark.on('clear', () => {
-            const index = this.cm.state.lint.getErrorIndex(this);
-
-            if(index !== -1) {
-                this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1);
-            }
-
-            this.clearGutter();
-        });
+        if(this.$bookmark) {
+            this.$bookmark.on('clear', () => {
+                this.clearGutter();
+            });
+        }
 
         if(this.open) {
             this.$bookmark.open = this.markText(this.open);
@@ -188,21 +181,49 @@ export default class LintError {
         }
 
         if(!this.cm.state.lint.findErrorsOnLine(line).length) {
-            this.cm.setGutterMarker(line, 'capsule-lint', null);
+            this.cm.setGutterMarker(line, this.cm.state.lint.constructor.id, null);
         }
     }
 
     createGutter() {
-        return this.cm.setGutterMarker(this.line, 'capsule-lint', this.createGutterIcon());
+        this.gutter = this.cm.setGutterMarker(this.line, this.cm.state.lint.constructor.id, this.createGutterIcon());
     }
     
     createGutterIcon() {
         const icon = document.createElement('div');
 
         icon.className = 'CodeMirror-lint-error-icon';
-        icon.innerHTML = fontawesome.icon(faBug).html;
+        icon.innerHTML = `<div>${fontawesome.icon(faBug).html}</div>`;
         icon.title = this.formattedMsg;
         icon.error = this;
+        
+        const errors = this.errorWindow = document.createElement('div');
+
+        errors.className = 'CodeMirror-lint-error-window';
+        errors.innerHTML = this.formattedMsg;
+        
+        document.documentElement.appendChild(errors);
+
+        icon.addEventListener('click', e => {
+            errors.classList.remove('show');
+            
+            this.focus();
+        });
+
+        icon.addEventListener('mouseenter', e => {
+            errors.classList.add('show');
+        });
+
+        icon.addEventListener('mousemove', e => {
+            let { left, top } = icon.getBoundingClientRect();
+
+            errors.style.left = `${left}px`;
+            errors.style.top = `${top}px`;
+        });
+
+        icon.addEventListener('mouseleave', e => {
+            errors.classList.remove('show');
+        });
 
         return icon;
     }
@@ -216,8 +237,9 @@ export default class LintError {
         const pos = tag && (tag.open || tag.close);
 
         return pos && this.cm.setBookmark(pos.from, {
+            clearWhenEmpty: true,
+            widget: this.createWidgetNode(),
             insertLeft: tag.open ? true : false,
-            widget: this.createWidgetNode()
         });
     }
 
@@ -228,6 +250,12 @@ export default class LintError {
         div.innerHTML = `<div class="CodeMirror-lint-error-bookmark-text">${this.formattedMsg}</div>`;
 
         div.addEventListener('click', e => this.hide());
+        
+        document.documentElement.addEventListener('keyup', e => {
+            if(e.keyCode === 27) {
+                this.hide();
+            }
+        });
 
         document.documentElement.appendChild(div);
 
@@ -239,10 +267,19 @@ export default class LintError {
     }
 
     markText({from, to}) {
-        return this.cm.markText(from, to, {
+        const markedText = this.cm.markText(from, to, {
             title: this.msg,
-            className: UNDERLINE_CLASS
+            clearWhenEmpty: true,
+            className: UNDERLINE_CLASS,
         });
+
+        markedText.on('hide', () => {
+            if(!this.open && !this.close) {
+                // this.clear();
+            }
+        });
+
+        return markedText;
     }
 
     nearby(pos) {
@@ -282,17 +319,23 @@ export default class LintError {
     }
 
     clear() {
+        const index = this.cm.state.lint.getErrorIndex(this);
+
+        if(index !== -1) {
+            this.cm.state.lint.errors.splice(this.cm.state.lint.getErrorIndex(this), 1);
+        }
+
         if(this.bookmark) {
             this.bookmark.open && this.bookmark.open.clear();
             this.bookmark.close && this.bookmark.close.clear();
-            this.cm.state.lint.$nextTick(() => {
-                this.bookmark.clear();
-            });
+            this.bookmark.clear();
         }
+
+        this.errorWindow && this.errorWindow.remove();
     }
 
     lint() {
-        debounced(() => this.cm.lint());
+        this.cm.lint();
     }
 
     on(name, fn) {
@@ -316,16 +359,16 @@ export default class LintError {
             this.$bookmark.close = this.markText(this.close);
         }
         
-        if(this.isCursorInsideTag && (this.close && this.lastChange.close || isNonOpeningTag)) {
-            this.lint();
-        }
-
         if(this.isVisible) {
             this.redraw();
         }
+        
+        if(this.isCursorInsideTag && (this.close && this.lastChange.close || isNonOpeningTag)) {
+            // this.lint();
+        }
 
         if(this.lastChange.open && !this.open) {
-            this.clear();
+            // this.clear();
         }
 
         if(!this.open && !this.close) {
@@ -333,7 +376,7 @@ export default class LintError {
         }
         else if((this.lastChange && this.lastChange.change.from.line !== this.line)) {
             this.clearGutter(this.lastChange.change.from.line);
-            this.createGutter();
+            //this.createGutter();
         }
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <textarea :value="value" />
+    <textarea :value="value" v-html="value" />
 </template>
 
 <script>
@@ -63,7 +63,9 @@ export default {
         width: {
             type: String,
             default: '100%'
-        }
+        },
+
+        value: String
 
     },
 
@@ -112,18 +114,20 @@ export default {
     .CodeMirror-lint-error-icon {
         width: 1em;
         height: 1em;
-        padding: .2em;
+        font-size: 1em;
+        cursor: pointer;
         background: $danger;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         border-radius: 100%;
         transform: translateY(25%);
         margin: auto;
 
         svg {
             color: $white;
-            font-size: .7em;
+            font-size: .75em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 
@@ -136,7 +140,8 @@ export default {
     }
 }
 
-.CodeMirror-lint-tooltip {
+.CodeMirror-lint-tooltip,
+.CodeMirror-lint-error-window {
     background: $danger;
     color: $white;
     z-index: 10;
@@ -145,6 +150,19 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
+}
+
+.CodeMirror-lint-error-window {
+    z-index: -1;
+    position: fixed;
+    opacity: 0;
+    transition: .25s all ease-in;
+    transform: translate(1em, -100%);
+    
+    &.show {
+        z-index: 10000;
+        opacity: 1;
+    }
 }
 
 .CodeMirror-lint-error-bookmark {
