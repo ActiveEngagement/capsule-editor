@@ -191,7 +191,7 @@ export default {
     transition: .2s all ease-in;
 
     .footer & {
-        height: 5rem;
+        height: 4rem;
     }
 
     .editor-footer-error {

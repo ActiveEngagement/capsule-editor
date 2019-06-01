@@ -7,12 +7,12 @@ let matchBeforeChange;
 
 function onChange(cm, event) {
     const { removed, origin } = event;
-
-    const match = CodeMirror.findMatchingTag(cm, cm.getCursor(), cm.getViewport());
+    const { line, ch } = cm.getCursor();
+    const match = CodeMirror.findMatchingTag(cm, { line, ch: ch - 1 }, cm.getViewport());
 
     if((matchBeforeChange && !match) || 
        (!matchBeforeChange && match) ||
-       (origin === 'undo') || 
+       (origin === 'undo' && removed.filter(value => !!value.trim()).length) || 
        (origin === '+delete' && (removed.indexOf('<') !== -1 || removed.indexOf('>') !== -1))) {
         cm.lint();
     }

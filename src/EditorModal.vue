@@ -51,7 +51,9 @@ export default {
 
     .capsule-editor-modal-content {
         width: 50%;
+        overflow: auto;
         max-width: 40rem;
+        max-height: 30rem;
         background: white;
         box-shadow: 0 0 30px rgba(0, 0, 0, .5);
         position: relative;

@@ -42,10 +42,10 @@
         />
 
         <animate-css name="fade" @leave="onModalLeave">
-            <editor-demo-modal v-if="!skipIntro && demoMode && !demoModalCleared" @clear="onModalClear" />
+            <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
         </animate-css>
 
-        <animate-css name="tada" special>
+        <animate-css enter="tada" leave="fadeOut">
             <editor-modal v-if="showFinishPopup">
                 <slot name="success">
                     <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
@@ -175,15 +175,7 @@ export default {
                 }).length;
             }).forEach(error => error.clear());
             
-            if (!this.showFooter && value.length) {
-                this.showFooter = true;
-            }
-        },
-
-        demoModalCleared(value) {
-            this.$nextTick(() => {
-                this.showFooter = !!this.currentErrors.length;
-            });
+            this.showFooter = !!value.length;
         }
 
     },
@@ -288,6 +280,7 @@ export default {
 
         onModalClear() {
             this.demoModalCleared = true;
+            this.$emit('demo-complete');
         },
 
         onClickConvert() {
@@ -388,14 +381,16 @@ export default {
     },
 
     data() {
+        const errors = this.errors.splice(0, 0);
+
         return {
             cm: null,
             isLinting: false,
-            showFooter: false,
             initialized: false,
             showFinishPopup: false,
-            demoModalCleared: false,
-            currentErrors: this.errors.splice(0, 0),
+            showFooter: !!errors.length,
+            demoModalCleared: this.skipIntro,
+            currentErrors: errors,
             currentFilename: this.filename,
             value: this.contents || this.getSlotContents()
             /*
