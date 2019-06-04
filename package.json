@@ -25,7 +25,7 @@
     "codemirror": "^5.46.0",
     "js-beautify": "^1.10.0",
     "popper.js": "^1.15.0",
-    "vue-interface": "^0.4.1"
+    "vue-interface": "^0.4.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
