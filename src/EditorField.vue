@@ -107,6 +107,10 @@ export default {
     left:0;
     right:0;
 
+    .CodeMirror-lines {
+        padding-top: 1em;
+    }
+
     .CodeMirror-lint-errors {
         width: 1.2em;
     }
