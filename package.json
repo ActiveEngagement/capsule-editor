@@ -1,6 +1,6 @@
 {
   "name": "capsule-editor",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "module": "./src/index.js",
   "main": "./dist/CapsuleEditor.umd.min.js",
   "scripts": {
