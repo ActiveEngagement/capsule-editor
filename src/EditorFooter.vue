@@ -180,12 +180,12 @@ export default {
 @import './node_modules/bootstrap/scss/_functions.scss';
 @import './node_modules/bootstrap/scss/_variables.scss';
 
-.editor-footer{
+.editor-footer {
     height: 0;
     color: $white;
     display: grid;
     padding-right: 1rem;
-    grid-template-columns: auto minmax(auto, 100%) minmax(auto, 5rem);
+    grid-template-columns: auto minmax(0, 100%) minmax(0, auto);
     position: relative;
     align-items: center;
     transition: .2s all ease-in;
@@ -198,11 +198,6 @@ export default {
         font-weight: 300;
         font-size: 1.2em;
         padding-left: .75rem;
-
-        svg {
-            margin-right: .75rem;
-        }
-
     }
 
     .editor-footer-pager {

@@ -1,22 +1,14 @@
 <template>
     <div class="capsule-editor-error">
-        <icon icon="exclamation-triangle" /> {{ error.line + 1 }},{{ error.ch + 1 }} :: {{ error.rule }} {{ error.msg }} ({{ error.code }})
+        <div class="text-truncate" v-html="formattedError" />
     </div>
 </template>
 
 <script>
 import { camelCase } from 'lodash';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faExclamationTriangle);
+import formattedError from './Helpers/formatError';
 
 export default {
-
-    components: {
-        Icon
-    },
 
     props: {
 
@@ -25,6 +17,12 @@ export default {
             required: true
         }
 
+    },
+
+    computed: {
+        formattedError() {
+            return formattedError(this.error);
+        }
     }
     
 }

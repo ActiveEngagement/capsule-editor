@@ -4,7 +4,8 @@ import CodeMirror from 'codemirror';
 import LintError from './LintError';
 import fontawesome from '@fortawesome/fontawesome';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
-import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import formatError from './Helpers/formatError';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
 
@@ -149,7 +150,7 @@ export default class LintState {
     
         icon.className = 'CodeMirror-lint-error-icon';
         icon.innerHTML = fontawesome.icon(faBug).html;
-        icon.title = `${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})`;
+        icon.title = `${error.line},${error.column} :: ${error.code} (${error.rule}) ${error.msg}`;
         icon.error = error;
     
         return icon;
@@ -189,11 +190,7 @@ export default class LintState {
 
         div.error = error;
         div.className = 'CodeMirror-lint-error-bookmark';
-        div.innerHTML = `
-            <div class="CodeMirror-lint-error-bookmark-text">
-                ${fontawesome.icon(faExclamation).html} ${error.line},${error.column} :: ${error.code} ${error.msg} (${error.rule})
-            </div>
-        `;
+        div.innerHTML = `<div class="CodeMirror-lint-error-bookmark-text">${formatError(error)}</div>`;
 
         document.documentElement.appendChild(div);
 

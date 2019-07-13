@@ -1,6 +1,7 @@
 import CodeMirror from 'codemirror';
+import formatError from './Helpers/formatError';
 import isTagInRange from './Helpers/isTagInRange';
-import fontawesome from '@fortawesome/fontawesome';
+import fontawesome from '@fortawesome/fontawesome'
 import isPositionInRange from './Helpers/isPositionInRange';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -138,7 +139,7 @@ export default class LintError {
     }
 
     get formattedMsg() {
-        return `${fontawesome.icon(faExclamation).html} <span>${this.line + 1},${this.ch + 1} :: ${this.rule} ${this.msg} (${this.code})</span>`;
+        return formatError(this);
     }
 
     get isActive() {
@@ -194,13 +195,13 @@ export default class LintError {
 
         icon.className = 'CodeMirror-lint-error-icon';
         icon.innerHTML = `<div>${fontawesome.icon(faBug).html}</div>`;
-        icon.title = this.formattedMsg;
+        icon.title = `${fontawesome.icon(faExclamation).html} {this.line + 1},${this.ch + 1} :: ${this.code} (${this.rule}) ${this.msg}`;
         icon.error = this;
         
         const errors = this.errorWindow = document.createElement('div');
 
         errors.className = 'CodeMirror-lint-error-window';
-        errors.innerHTML = this.formattedMsg;
+        errors.innerHTML = formatError(this, true);
         
         document.documentElement.appendChild(errors);
 
