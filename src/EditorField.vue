@@ -12,6 +12,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/theme/dracula.css';
 import 'codemirror/addon/hint/show-hint.css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/edit/matchtags';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/fold/foldcode';
@@ -25,8 +26,12 @@ import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/xml-hint';
 import 'codemirror/addon/hint/html-hint';
 import 'codemirror/addon/merge/merge';
+import 'codemirror/keymap/sublime';
 import FormControl from 'vue-interface/src/Mixins/FormControl';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
+
+import './CodeMirror/Lint';
+import './CodeMirror/BlockTags';
 
 export default {
 
@@ -44,13 +49,26 @@ export default {
             type: Object,
             default() {
                 return {
-                    indentUnit: 4,
-                    indentAuto: true,
                     theme: 'dracula',
                     mode: 'htmlmixed',
+                    keyMap: 'sublime',
+                    tabSize: 4,
+                    indentUnit: 4,
+                    foldGutter: true,
+                    blockTags: true,
+                    smartIndent: false,
                     lineNumbers: true,
                     lineWrapping: true,
-                    newlineAndIndent: true
+                    indentWithTabs: true,
+                    newlineAndIndent: false,
+                    autoCloseTags: {
+                        indentTags: [],
+                        whenClosing: true,
+                        whenOpening: true
+                    },
+                    matchTags: {
+                        bothTags: true
+                    }
                 };
             }
         },
@@ -107,10 +125,6 @@ export default {
     left:0;
     right:0;
 
-    .CodeMirror-lines {
-        padding-top: 1em;
-    }
-
     .CodeMirror-lint-errors {
         width: 1.2em;
     }
@@ -135,6 +149,7 @@ export default {
         }
     }
 
+    .cm-error,
     .CodeMirror-lint-error-underline {
         color: red !important;
         font-weight: bold;

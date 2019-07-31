@@ -1,14 +1,26 @@
 <template>
-    <div class="capsule-editor-error">
+    <div class="d-flex align-items-center capsule-editor-error">
         <div class="text-truncate" v-html="formattedError" />
+        <btn :href="url" variant="dark" text-light size="sm" target="_blank" class="ml-3">
+            Reference <span class="ml-1" v-html="externalLinkIcon" />
+        </btn>
     </div>
 </template>
 
 <script>
 import { camelCase } from 'lodash';
 import formattedError from './Helpers/formatError';
+import Btn from 'vue-interface/src/Components/Btn';
+
+import fontawesome from '@fortawesome/fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default {
+
+    components: {
+        Btn,
+        
+    },
 
     props: {
 
@@ -20,6 +32,12 @@ export default {
     },
 
     computed: {
+        externalLinkIcon() {
+            return fontawesome.icon(faExternalLinkAlt).html.join('');
+        },
+        url() {
+            return `http://thecapsule.email/docs/codes/${this.error.code}.html`;
+        },
         formattedError() {
             return formattedError(this.error);
         }
@@ -30,7 +48,6 @@ export default {
 
 <style lang="scss">
 .capsule-editor-error {
-    padding: .25em 0;
     animation-duration: .5s;
 }
 </style>

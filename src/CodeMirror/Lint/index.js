@@ -85,7 +85,7 @@ CodeMirror.defineExtension('lint', function(data, options) {
         if(this.state.lint.cm.getValue()) {
             this.state.lint
                 .send(data, options)
-                .then(response => {
+                .then(() => {
                     resolve(this.state.lint);
                 }, error => {
                     this.state.lint.cm.operation(() => {

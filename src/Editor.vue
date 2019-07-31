@@ -60,13 +60,12 @@
 </template>
 
 <script>
-import './LintAddon';
-import LintState from './LintState';
 import EditorModal from './EditorModal';
 import EditorField from './EditorField';
 import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
+import LintState from './CodeMirror/Lint/LintState';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import InputField from 'vue-interface/src/Components/InputField';
@@ -183,16 +182,6 @@ export default {
     computed: {
         mergedOptions() {
             return deepExtend({
-                tabSize: 4,
-                indentUnit: 4,
-                foldGutter: true,
-                smartIndent: true,
-                lineNumbers: true,
-                lineWrapping: true,
-                indentWithTabs: true,
-                matchTags: {
-                    bothTags: true
-                },
                 gutters: this.gutters || [
                     'CodeMirror-linenumbers',
                     LintState.id,
@@ -227,6 +216,9 @@ export default {
                     onLintComplete: () => {
                         this.isLinting = false;
                     },
+                    onLintCancel: () => {
+                        this.isLinting = false;
+                    },
                     onLintSuccess: () => {
                         // this.currentErrors = [];
                         this.$emit('lint-success');
@@ -248,7 +240,7 @@ export default {
             return this.$slots.default
                 ? this.$slots.default
                       .filter(vnode => {
-                          return vnode.tag.toLowerCase() === 'textarea';
+                          return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
                       })
                       .reduce((carry, vnode) => {
                           return (
@@ -419,8 +411,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./node_modules/bootstrap/scss/_functions.scss";
-@import "./node_modules/bootstrap/scss/_variables.scss";
+$editor-background: #282a36;
+
+$dark: darken($editor-background, 6.5%);
+
+@import "bootstrap/scss/bootstrap.scss";
 
 .editor {
     position: absolute;
@@ -429,7 +424,7 @@ export default {
     width: 100%;
     height: 100%;
     display: grid;
-    background-color: #282a36 !important;
+    background-color: $editor-background;
     grid-template-rows: minmax(3rem, auto) minmax(auto, 100%) auto;
 }
 

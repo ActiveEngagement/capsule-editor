@@ -1,8 +1,8 @@
 import CodeMirror from 'codemirror';
-import formatError from './Helpers/formatError';
-import isTagInRange from './Helpers/isTagInRange';
+import formatError from '../../Helpers/formatError';
+import isTagInRange from '../../Helpers/isTagInRange';
 import fontawesome from '@fortawesome/fontawesome'
-import isPositionInRange from './Helpers/isPositionInRange';
+import isPositionInRange from '../../Helpers/isPositionInRange';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
@@ -195,7 +195,7 @@ export default class LintError {
 
         icon.className = 'CodeMirror-lint-error-icon';
         icon.innerHTML = `<div>${fontawesome.icon(faBug).html}</div>`;
-        icon.title = `${fontawesome.icon(faExclamation).html} {this.line + 1},${this.ch + 1} :: ${this.code} (${this.rule}) ${this.msg}`;
+        //icon.title = `${this.line + 1},${this.ch + 1} :: ${this.code} (${this.rule}) ${this.msg}`;
         icon.error = this;
         
         const errors = this.errorWindow = document.createElement('div');
@@ -239,7 +239,7 @@ export default class LintError {
 
         return pos && this.cm.setBookmark(pos.from, {
             clearWhenEmpty: true,
-            widget: this.createWidgetNode(),
+            // widget: this.createWidgetNode(),
             insertLeft: tag.open ? true : false,
         });
     }
@@ -295,7 +295,7 @@ export default class LintError {
     }
 
     redraw() {
-        this.bookmark.widgetNode.querySelector('.CodeMirror-lint-error-bookmark-text').innerHTML = this.formattedMsg;
+        this.bookmark.widgetNode && (this.bookmark.widgetNode.querySelector('.CodeMirror-lint-error-bookmark-text').innerHTML = this.formattedMsg);
     }
     
     inRange(from, to) {

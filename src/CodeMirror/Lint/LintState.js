@@ -5,7 +5,7 @@ import LintError from './LintError';
 import fontawesome from '@fortawesome/fontawesome';
 import { isArray } from 'vue-interface/src/Helpers/Functions';
 import { faBug, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import formatError from './Helpers/formatError';
+import formatError from '../../Helpers/formatError';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
 
@@ -23,7 +23,7 @@ export default class LintState {
 
         delete options.errors;
 
-        cm.on('beforeChange', () => this.abort());
+        cm.on('beforeChange', () => this.cancel());
 
         this.cm = cm;
         this.errors = errors;
@@ -71,9 +71,8 @@ export default class LintState {
                         Authorization: this.options.apiKey && `Bearer ${this.options.apiKey}`
                     }
                 }, options || this.value('options') || this.options || {});
-    
-                this.abort();    
-                this.abort = cancel;
+      
+                this.cancel = cancel;
                 this.request = axios.post(
                     this.value('url'),
                     (data || this.value('data')),
@@ -206,12 +205,17 @@ export default class LintState {
         return this.constructor.id;
     }
 
-    get abort() {
-        return this.$abort || (() => {});
+    get cancel() {
+        return this.$cancel || (() => {});
     }
 
-    set abort(value) {
-        this.$abort = value;
+    set cancel(fn) {
+        this.$cancel = () => {
+            fn();
+
+            this.$cancel = null;
+            this.callback('onLintCancel');
+        };
     }
     
     get cm() {
