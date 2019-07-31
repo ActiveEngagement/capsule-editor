@@ -180,7 +180,7 @@ export default class LintError {
         if(line === undefined) {
             line = this.line;
         }
-
+        
         if(!this.cm.state.lint.findErrorsOnLine(line).length) {
             this.cm.setGutterMarker(line, this.cm.state.lint.constructor.id, null);
         }
@@ -312,11 +312,16 @@ export default class LintError {
     }
 
     focus() {
-        const pos = this.bookmark.find();
+        const pos = (this.bookmark && this.bookmark.find()) || {
+            line: this.line,
+            ch: this.ch
+        };
 
-        this.cm.scrollIntoView(pos, this.cm.getTextArea().parentNode.offsetHeight / 2);
-        this.cm.setCursor(pos);
-        this.cm.focus();
+        if(pos) {
+            this.cm.scrollIntoView(pos, this.cm.getTextArea().parentNode.offsetHeight / 2);
+            this.cm.setCursor(pos);
+            this.cm.focus();
+        }
     }
 
     clear() {
@@ -330,6 +335,9 @@ export default class LintError {
             this.bookmark.open && this.bookmark.open.clear();
             this.bookmark.close && this.bookmark.close.clear();
             this.bookmark.clear();
+        }
+        else {
+            this.clearGutter();
         }
 
         this.errorWindow && this.errorWindow.remove();
