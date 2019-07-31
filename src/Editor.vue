@@ -396,11 +396,11 @@ export default {
 
     mounted() {
         this.$nextTick(() => {
-            this.$refs.field.cm.focus();
+            // this.$refs.field.cm.focus();
             
             if (this.$refs.field.cm.getValue() && !this.currentErrors.length) {
                 this.$refs.field.cm.lint().then(null, e => {
-                    if(this.currentErrors[0]) {
+                    if(this.currentErrors[0] && !this.$refs.field.cm.hasFocus()) {
                         this.currentErrors[0].focus();
                     }
                 });
