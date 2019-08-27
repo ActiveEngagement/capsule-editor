@@ -35,7 +35,7 @@
         <editor-footer
             v-if="initialized"
             ref="footer"
-            :cm="$refs.field.cm"
+            :cm="cm"
             :demo-mode="demoMode"
             :errors="currentErrors"
             @finish="$emit('finish')"
@@ -92,6 +92,12 @@ export default {
     },
 
     props: {
+
+        team: {
+            type: [Number, Object],
+            required: true
+        },
+
         contents: String,
 
         demoMode: Boolean,
@@ -173,7 +179,7 @@ export default {
                     );
                 }).length;
             }).forEach(error => error.clear());
-            
+
             this.showFooter = !!value.length;
         }
 
@@ -201,13 +207,14 @@ export default {
                     }
                 }, this.extraKeys),
                 lint: Object.assign({
+                    url: this.url,
                     apiKey: this.apiKey,
                     nextTick: this.$nextTick,
-                    url: this.url,
                     errors: this.currentErrors,
                     data: cm => {
                         return {
-                            html: cm.getValue()
+                            html: cm.getValue(),
+                            team_id: typeof this.team === 'object' ? this.team.id : this.team
                         };
                     },
                     onLintStart: () => {
@@ -261,11 +268,11 @@ export default {
         },
 
         onModalLeave() {
-            if(this.$refs.field.cm.state.lint.errors.length) {
-                const activeErrors = this.$refs.field.cm.state.lint.errors.filter(error => error.isActive);
+            if(this.cm.state.lint.errors.length) {
+                const activeErrors = this.cm.state.lint.errors.filter(error => error.isActive);
                 
                 if(!activeErrors.length) {
-                    this.$refs.field.cm.state.lint.errors[0].focus();
+                    this.cm.state.lint.errors[0].focus();
                 }
             }
         },
@@ -301,8 +308,8 @@ export default {
 
             // Closure to capture the file information.
             reader.onload = e => {
-                this.$refs.field.cm.setValue(e.target.result);
-                this.$refs.field.cm.lint();
+                this.cm.setValue(e.target.result);
+                this.cm.lint();
             };
 
             reader.readAsText(event.target.files[0]);
@@ -312,8 +319,8 @@ export default {
 
         onClickNew() {
             this.currentFilename = null;
-            this.$refs.field.cm.setValue((this.value = ''));
-            this.$refs.field.cm.focus();
+            this.cm.setValue((this.value = ''));
+            this.cm.focus();
             this.$emit('new');
         },
 
@@ -367,7 +374,7 @@ export default {
         },
 
         onClickLint(event) {
-            this.$refs.field.cm.lint();
+            this.cm.lint();
         }
         
     },
@@ -396,11 +403,9 @@ export default {
 
     mounted() {
         this.$nextTick(() => {
-            // this.$refs.field.cm.focus();
-            
-            if (this.$refs.field.cm.getValue() && !this.currentErrors.length) {
-                this.$refs.field.cm.lint().then(null, e => {
-                    if(this.currentErrors[0] && !this.$refs.field.cm.hasFocus()) {
+            if (this.cm.getValue() && !this.currentErrors.length) {
+                this.cm.lint().then(null, e => {
+                    if(this.currentErrors[0] && !this.cm.hasFocus()) {
                         this.currentErrors[0].focus();
                     }
                 });
