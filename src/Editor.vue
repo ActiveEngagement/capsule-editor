@@ -136,7 +136,7 @@ export default {
         url: {
             type: String,
             default() {
-                return `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lint`;
+                return `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lints`;
             }
         }
     },
@@ -155,18 +155,6 @@ export default {
             }
         
             this.currentErrors = value.slice(0);
-
-            /*
-            if(!this.error && this.errors.length) {
-                this.error = this.errors[0];
-            }
-            else if(!this.errors.length) {
-                this.error = null;
-            }
- 
-
-            this.totalErrors = value.length;
-            */
         },
 
         currentErrors(value, oldValue) {
