@@ -24,8 +24,8 @@
     "bootstrap": "^4.3.1",
     "codemirror": "^5.49.0",
     "js-beautify": "^1.10.2",
-    "popper.js": "^1.15.0",
-    "vue-interface": "^0.4.35"
+    "popper.js": "^1.16.0",
+    "vue-interface": "^0.4.36"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",
@@ -36,7 +36,7 @@
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-jest": "^22.19.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
