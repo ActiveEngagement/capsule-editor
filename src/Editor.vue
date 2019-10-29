@@ -136,7 +136,7 @@ export default {
         url: {
             type: String,
             default() {
-                return `http://api.thecapsule.${this.environment === 'production' ? 'email' : 'test'}/v1/lints`;
+                return `lints`;
             }
         }
     },

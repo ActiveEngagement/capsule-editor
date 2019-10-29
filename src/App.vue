@@ -93,13 +93,6 @@ body, table, td, a, blockquote, li, p { -webkit-text-size-adjust: 100%; -ms-text
 import axios from "axios";
 import Editor from "./Editor";
 
-/*
-axios.defaults.baseURL = 'http://api.thecapsule.test';
-axios.defaults.headers = {
-    Accept: 'application/json',
-};
-*/
-
 export default {
     components: {
         Editor
