@@ -10,7 +10,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
 
 export default {
 
-    name: 'editor-hotkey',
+    name: 'EditorHotkey',
 
     components: {
         Icon

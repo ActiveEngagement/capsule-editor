@@ -1,7 +1,7 @@
 import CodeMirror from 'codemirror';
 import formatError from '../../Helpers/formatError';
 import isTagInRange from '../../Helpers/isTagInRange';
-import fontawesome from '@fortawesome/fontawesome'
+import fontawesome from '@fortawesome/fontawesome';
 import isPositionInRange from '../../Helpers/isPositionInRange';
 import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
 

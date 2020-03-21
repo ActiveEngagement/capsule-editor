@@ -1,7 +1,7 @@
 <template>
     <div>
         <editor :demo-mode="false" skip-intro :api-key="apiKey" :team="{id: 1}">
-<textarea>
+            <textarea>
 
 <!DOCTYPE html>
 <html>
@@ -98,14 +98,14 @@ export default {
         Editor
     },
 
+    data() {
+        return {};
+    },
+
     computed: {
         apiKey() {
             return process.env.VUE_APP_SECRET;
         }
-    },
-
-    data() {
-        return {};
     }
 };
 </script>

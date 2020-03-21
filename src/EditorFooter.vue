@@ -3,19 +3,25 @@
         <div class="editor-footer-pager">
             <animate-css name="fade">
                 <div v-if="totalErrors">
-                    <btn variant="link" @click.prevent="goto(index - 1)"><icon icon="caret-left" /></btn> 
+                    <btn variant="link" @click.prevent="goto(index - 1)">
+                        <icon icon="caret-left" />
+                    </btn> 
                     <span>{{ index + 1 }} of {{ errors.length }} </span>
-                    <btn variant="link" @click.prevent="goto(index + 1)"><icon icon="caret-right" /></btn>
+                    <btn variant="link" @click.prevent="goto(index + 1)">
+                        <icon icon="caret-right" />
+                    </btn>
                 </div>
             </animate-css>
         </div>
         <div class="editor-footer-error">
             <animate-css name="fade" :direction="direction" leave-active-class="position-absolute">
-                <editor-error v-if="error" :error="error" :key="index" />
+                <editor-error v-if="error" :key="index" :error="error" />
             </animate-css>
         </div>
         <animate-css name="fade">
-            <btn v-if="showFinishButton" type="button" size="lg" :disabled="!!error" @click="$emit('finish')">Finish</btn>
+            <btn v-if="showFinishButton" type="button" size="lg" :disabled="!!error" @click="$emit('finish')">
+                Finish
+            </btn>
         </animate-css>
     </footer>
 </template>
@@ -34,7 +40,7 @@ library.add(faCaretRight);
 
 export default {
 
-    name: 'editor-footer',
+    name: 'EditorFooter',
 
     components: {
         Btn,
@@ -55,6 +61,30 @@ export default {
         errors: {
             type: Array,
             default: () => []
+        }
+
+    },
+
+    data() {
+        const { line, ch } = this.cm.getCursor();
+
+        return {
+            ch: ch,
+            line: line,
+            direction: 'up',
+            showFinishButton: false,
+            error: this.errors.length && this.errors[0]
+        };
+    },
+
+    computed: {
+
+        index() {
+            return Math.max(0, this.errors.indexOf(this.error));
+        },
+
+        totalErrors() {
+            return this.errors.length;
         }
 
     },
@@ -98,16 +128,16 @@ export default {
 
     },
 
-    computed: {
-
-        index() {
-            return Math.max(0, this.errors.indexOf(this.error));
-        },
-
-        totalErrors() {
-            return this.errors.length;
+    mounted() {
+        if(this.$parent.$refs.field) {
+            this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
         }
+    },
 
+    beforeDestroy() {
+        if(this.$parent.$refs.field) {
+            this.$parent.$refs.field.$off('cursor-activity', this.onCursorActivity);
+        }
     },
 
     methods: {
@@ -147,30 +177,6 @@ export default {
             }
         }
 
-    },
-
-    mounted() {
-        if(this.$parent.$refs.field) {
-            this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
-        }
-    },
-
-    beforeDestroy() {
-        if(this.$parent.$refs.field) {
-            this.$parent.$refs.field.$off('cursor-activity', this.onCursorActivity);
-        }
-    },
-
-    data() {
-        const { line, ch } = this.cm.getCursor();
-
-        return {
-            ch: ch,
-            line: line,
-            direction: 'up',
-            showFinishButton: false,
-            error: this.errors.length && this.errors[0]
-        }
     }
 
 };

@@ -1,25 +1,32 @@
 <template>
     <navbar class="editor-toolbar" variant="dark" bg-dark>
-        <btn-activity ref="lint" size="sm" variant="light" class="mr-auto" :disabled="isLintingDisabled()" :activity="activity" @click.prevent="onClickLint">
+        <btn-activity
+            ref="lint"
+            size="sm"
+            variant="light"
+            class="mr-auto"
+            :disabled="isLintingDisabled()"
+            :activity="activity"
+            @click.prevent="onClickLint">
             <icon icon="bug" />
             <badge v-if="errors.length" :label="errors.length" variant="danger" class="position-absolute" pill />
         </btn-activity>
         <div class="editor-toolbar-title">
-            <input type="text" placeholder="Untitled Document" :value="title" @input="onInput"/>
+            <input type="text" placeholder="Untitled Document" :value="title" @input="onInput">
         </div>
         <btn-dropdown v-if="pageControls" size="sm" variant="light" align="right" class="editor-toolbar-actions ml-auto">
-            <icon icon="cog" slot="label"/>
+            <icon slot="label" icon="cog" />
             <editor-toolbar-menu-item label="New File" :hotkeys="['ctrl', 'N']" @click.prevent="$emit('new')" />
             <editor-toolbar-menu-item label="Open" :hotkeys="['ctrl', 'O']" @click.prevent="$emit('open')" />
             <editor-toolbar-menu-item label="Save" :hotkeys="['ctrl', 'S']" @click.prevent="$emit('save')" />
             <editor-toolbar-menu-item label="Save As..." :hotkeys="['shift', 'ctrl', 'S']" @click.prevent="$emit('save-as')" />
             <editor-toolbar-menu-item label="Close" :hotkeys="['ctrl', 'Q']" @click.prevent="$emit('close')" />
             <template v-if="errors.length">
-                <dropdown-menu-divider/>
+                <dropdown-menu-divider />
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
             </template>
             <template v-else-if="!isLintingDisabled() && errors.length === 0">
-                <dropdown-menu-divider/>
+                <dropdown-menu-divider />
                 <editor-toolbar-menu-item label="Convert Document" :hotkeys="['ctrl', 'C']" @click.prevent="$emit('convert')" />
             </template>
         </btn-dropdown>
@@ -53,7 +60,7 @@ library.add(faQuestionCircle);
 
 export default {
 
-    name: 'editor-toolbar',
+    name: 'EditorToolbar',
 
     components: {
         Btn,

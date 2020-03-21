@@ -17,8 +17,7 @@
             @save-as="onClickSaveAs"
             @convert="onClickConvert"
             @export-errors="onExportErrors"
-            @demo-modal="demoModalCleared = false"
-        />
+            @demo-modal="demoModalCleared = false" />
 
         <div class="editor-field-container">
             <editor-field
@@ -26,8 +25,7 @@
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
-                @initialize="onInitialize"
-            />
+                @initialize="onInitialize" />
 
             <input ref="file" type="file" class="d-none" @input="onFileSelected">
         </div>
@@ -38,8 +36,7 @@
             :cm="cm"
             :demo-mode="demoMode"
             :errors="currentErrors"
-            @finish="$emit('finish')"
-        />
+            @finish="$emit('finish')" />
 
         <animate-css name="fade" @leave="onModalLeave">
             <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
@@ -48,10 +45,14 @@
         <animate-css enter="tada" leave="fadeOut">
             <editor-modal v-if="showFinishPopup">
                 <slot name="success">
-                    <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo" />
+                    <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
                     <div class="text-center">
-                        <h1 class="font-weight-light">Success!</h1>
-                        <h5 class="font-weight-light mb-5">Your document has been fixed.</h5>
+                        <h1 class="font-weight-light">
+                            Success!
+                        </h1>
+                        <h5 class="font-weight-light mb-5">
+                            Your document has been fixed.
+                        </h5>
                     </div>
                 </slot>
             </editor-modal>
@@ -80,7 +81,7 @@ library.add(faExclamationTriangle);
 // var beautify_html = require('js-beautify').html;
 
 export default {
-    name: 'editor',
+    name: 'Editor',
 
     components: {
         AnimateCss,
@@ -141,36 +142,26 @@ export default {
         }
     },
 
-    watch: {
+    data() {
+        const errors = this.errors.splice(0, 0);
 
-        ['cm.state.lint.errors'](value, oldValue) {
-            if(!value.length && this.currentErrors.length) {
-                this.cm.lint().then(response => {
-                    if(this.demoMode && this.cm.getValue()) {
-                        this.showFinishPopup = true;
-                    }
-                }, e => {
-                    // this.state.lint.errors = e.response.data.errors;
-                });
-            }
-        
-            this.currentErrors = value.slice(0);
-        },
-
-        currentErrors(value, oldValue) {
-            oldValue.filter(oldError => {
-                return !value.filter(newError => {
-                    return (
-                        newError.line === oldError.line && 
-                        newError.ch === oldError.ch && 
-                        newError.code === oldError.code
-                    );
-                }).length;
-            }).forEach(error => error.clear());
-
-            this.showFooter = !!value.length;
-        }
-
+        return {
+            cm: null,
+            isLinting: false,
+            initialized: false,
+            showFinishPopup: false,
+            showFooter: !!errors.length,
+            demoModalCleared: this.skipIntro,
+            currentErrors: errors,
+            currentFilename: this.filename,
+            value: this.contents || this.getSlotContents()
+            /*
+            value: beautify_html((this.contents || this.getSlotContents()), {
+                indent_size: 1,
+                indent_char: '\t'
+            })
+            */
+        };
     },
 
     computed: {
@@ -219,7 +210,7 @@ export default {
                         this.$emit('lint-success');
                     },
                     onLintError: (cm, error) => {
-                        if (error.response.status === 406) {
+                        if(error.response.status === 406) {
                             // this.currentErrors = error.response.data.errors;
                             this.$emit('lint-error', error, this.currentErrors);
                         }
@@ -229,24 +220,68 @@ export default {
         }
     },
 
+    watch: {
+
+        ['cm.state.lint.errors'](value, oldValue) {
+            if(!value.length && this.currentErrors.length) {
+                this.cm.lint().then(response => {
+                    if(this.demoMode && this.cm.getValue()) {
+                        this.showFinishPopup = true;
+                    }
+                }, e => {
+                    // this.state.lint.errors = e.response.data.errors;
+                });
+            }
+        
+            this.currentErrors = value.slice(0);
+        },
+
+        currentErrors(value, oldValue) {
+            oldValue.filter(oldError => {
+                return !value.filter(newError => {
+                    return (
+                        newError.line === oldError.line && 
+                        newError.ch === oldError.ch && 
+                        newError.code === oldError.code
+                    );
+                }).length;
+            }).forEach(error => error.clear());
+
+            this.showFooter = !!value.length;
+        }
+
+    },
+
+    mounted() {
+        this.$nextTick(() => {
+            if(this.cm.getValue() && !this.currentErrors.length) {
+                this.cm.lint().then(null, e => {
+                    if(this.currentErrors[0] && !this.cm.hasFocus()) {
+                        this.currentErrors[0].focus();
+                    }
+                });
+            }
+        });
+    },
+
     methods: {
 
         getSlotContents() {
             return this.$slots.default
                 ? this.$slots.default
-                      .filter(vnode => {
-                          return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
-                      })
-                      .reduce((carry, vnode) => {
-                          return (
-                              carry +
+                    .filter(vnode => {
+                        return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
+                    })
+                    .reduce((carry, vnode) => {
+                        return (
+                            carry +
                               vnode.children
                                   .map(child => {
                                       return child.text;
                                   })
                                   .join('')
-                          );
-                      }, '')
+                        );
+                    }, '')
                 : null;
         },
 
@@ -313,10 +348,11 @@ export default {
         },
 
         onClickSave() {
-            if (this.currentFilename) {
+            if(this.currentFilename) {
                 this.$emit('download', this.value, this.currentFilename);
                 this.$emit('save', this.value, this.currentFilename);
-            } else {
+            }
+            else {
                 this.onClickSaveAs();
             }
         },
@@ -328,13 +364,14 @@ export default {
                 content: {
                     on: {
                         keypress: e => {
-                            if (e.keyCode === 13) {
+                            if(e.keyCode === 13) {
                                 e.target
                                     .closest('.modal-dialog')
                                     .querySelector('.btn-primary')
                                     .click();
                                 e.preventDefault();
-                            } else {
+                            }
+                            else {
                                 currentFilename = e.target.value;
                             }
                         }
@@ -365,50 +402,17 @@ export default {
             this.cm.lint();
         }
         
-    },
-
-    data() {
-        const errors = this.errors.splice(0, 0);
-
-        return {
-            cm: null,
-            isLinting: false,
-            initialized: false,
-            showFinishPopup: false,
-            showFooter: !!errors.length,
-            demoModalCleared: this.skipIntro,
-            currentErrors: errors,
-            currentFilename: this.filename,
-            value: this.contents || this.getSlotContents()
-            /*
-            value: beautify_html((this.contents || this.getSlotContents()), {
-                indent_size: 1,
-                indent_char: '\t'
-            })
-            */
-        };
-    },
-
-    mounted() {
-        this.$nextTick(() => {
-            if (this.cm.getValue() && !this.currentErrors.length) {
-                this.cm.lint().then(null, e => {
-                    if(this.currentErrors[0] && !this.cm.hasFocus()) {
-                        this.currentErrors[0].focus();
-                    }
-                });
-            }
-        });
     }
 };
 </script>
 
 <style lang="scss">
+@import '~capsule-common/src/scss/colors';
+@import '~bootstrap/scss/bootstrap';
+
 $editor-background: #282a36;
 
 $dark: darken($editor-background, 6.5%);
-
-@import "bootstrap/scss/bootstrap.scss";
 
 .editor {
     position: absolute;

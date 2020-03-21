@@ -35,13 +35,13 @@ import './CodeMirror/BlockTags';
 
 export default {
 
-    inheritAttrs: false,
-
-    name: 'editor-field',
+    name: 'EditorField',
 
     mixins: [
         FormControl
     ],
+
+    inheritAttrs: false,
 
     props: {
 
@@ -87,6 +87,12 @@ export default {
 
     },
 
+    data() {
+        return {
+            cm: null
+        };
+    },
+
     computed: {
 
         options() {
@@ -103,12 +109,6 @@ export default {
         this.$nextTick(() => {
             this.$emit('initialize', this.cm);
         });
-    },
-
-    data() {
-        return {
-            cm: null
-        };
     }
 
 };
