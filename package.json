@@ -22,7 +22,7 @@
     "animate.css": "^3.7.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "capsule-common": "^0.1.19",
+    "capsule-common": "^0.1.20",
     "codemirror": "^5.52.2",
     "js-beautify": "^1.10.3",
     "popper.js": "^1.16.1",
