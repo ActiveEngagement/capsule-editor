@@ -15,7 +15,12 @@ import DropdownMenuItem from 'vue-interface/src/Components/DropdownMenu/Dropdown
 
 export default {
 
-    name: 'editor-toolbar-menu-item',
+    name: 'EditorToolbarMenuItem',
+
+    components: {
+        EditorHotkey,
+        DropdownMenuItem
+    },
 
     props: {
 
@@ -23,11 +28,6 @@ export default {
 
         hotkeys: Array
 
-    },
-
-    components: {
-        EditorHotkey,
-        DropdownMenuItem
     }
 
 };
