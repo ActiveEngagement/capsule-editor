@@ -25,10 +25,13 @@
                 <dropdown-menu-divider />
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
             </template>
+            <slot name="extra-page-controls" />
+            <!-- 
             <template v-else-if="!isLintingDisabled() && errors.length === 0">
                 <dropdown-menu-divider />
                 <editor-toolbar-menu-item label="Convert Document" :hotkeys="['ctrl', 'C']" @click.prevent="$emit('convert')" />
             </template>
+             -->
         </btn-dropdown>
         <btn v-if="demoMode" size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
             <icon :icon="['far', 'question-circle']" />

@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex align-items-center capsule-editor-error">
         <div class="text-truncate" v-html="formattedError" />
-        <btn :href="url" variant="dark" text-light size="sm" target="_blank" class="ml-3">
+        <btn :href="url" variant="light" text-light size="sm" target="_blank" class="ml-3">
             Reference <span class="ml-1" v-html="externalLinkIcon" />
         </btn>
     </div>

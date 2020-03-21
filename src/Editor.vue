@@ -1,5 +1,5 @@
 <template>
-    <div class="editor" :class="{footer: showFooter}">
+    <div class="editor" :class="{footer: showFooter || showFinishButton}">
         <editor-toolbar
             ref="toolbar"
             :value="value"
@@ -34,6 +34,7 @@
             v-if="initialized"
             ref="footer"
             :cm="cm"
+            :finish="!currentErrors.length && showFinishButton"
             :demo-mode="demoMode"
             :errors="currentErrors"
             @finish="$emit('finish')" />
@@ -44,7 +45,7 @@
 
         <animate-css enter="tada" leave="fadeOut">
             <editor-modal v-if="showFinishPopup">
-                <slot name="success">
+                <slot name="success" :close="closeFinishPopup">
                     <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
                     <div class="text-center">
                         <h1 class="font-weight-light">
@@ -53,6 +54,9 @@
                         <h5 class="font-weight-light mb-5">
                             Your document has been fixed.
                         </h5>
+                        <btn type="button" variant="primary" size="lg" block @click="closeFinishPopup">
+                            Dismiss
+                        </btn>
                     </div>
                 </slot>
             </editor-modal>
@@ -67,6 +71,7 @@ import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
 import LintState from './CodeMirror/Lint/LintState';
+import Btn from 'vue-interface/src/Components/Btn';
 import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import InputField from 'vue-interface/src/Components/InputField';
@@ -76,6 +81,8 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
 
 library.add(faExclamationTriangle);
 
+const beautify = require('js-beautify').html;
+
 // var beautify_js = require('js-beautify'); // also available under "js" export
 // var beautify_css = require('js-beautify').css;
 // var beautify_html = require('js-beautify').html;
@@ -84,6 +91,7 @@ export default {
     name: 'Editor',
 
     components: {
+        Btn,
         AnimateCss,
         EditorModal,
         EditorField,
@@ -149,7 +157,8 @@ export default {
             cm: null,
             isLinting: false,
             initialized: false,
-            showFinishPopup: false,
+            showFinishPopup: true,
+            showFinishButton: false,
             showFooter: !!errors.length,
             demoModalCleared: this.skipIntro,
             currentErrors: errors,
@@ -225,7 +234,7 @@ export default {
         ['cm.state.lint.errors'](value, oldValue) {
             if(!value.length && this.currentErrors.length) {
                 this.cm.lint().then(response => {
-                    if(this.demoMode && this.cm.getValue()) {
+                    if(this.demoMode && this.cm.getValue() && !this.showFinishButton) {
                         this.showFinishPopup = true;
                     }
                 }, e => {
@@ -266,23 +275,45 @@ export default {
 
     methods: {
 
+        beautify(content) {
+            return beautify(content, {
+                indent_size: '4',
+                indent_char: ' ',
+                max_preserve_newlines: '0',
+                preserve_newlines: true,
+                keep_array_indentation: false,
+                break_chained_methods: false,
+                indent_scripts: 'separate',
+                brace_style: 'collapse',
+                space_before_conditional: false,
+                unescape_strings: false,
+                jslint_happy: false,
+                end_with_newline: false,
+                wrap_line_length: '0',
+                indent_inner_html: true,
+                comma_first: false,
+                e4x: false,
+                indent_empty_lines: false
+            });
+        },
+
+        closeFinishPopup() {
+            this.showFinishPopup = false;
+            this.showFinishButton = true;
+        },
+
         getSlotContents() {
-            return this.$slots.default
-                ? this.$slots.default
-                    .filter(vnode => {
-                        return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
-                    })
-                    .reduce((carry, vnode) => {
-                        return (
-                            carry +
-                              vnode.children
-                                  .map(child => {
-                                      return child.text;
-                                  })
-                                  .join('')
-                        );
-                    }, '')
-                : null;
+            const content = this.$slots.default ? this.$slots.default.filter(vnode => {
+                return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
+            }).reduce((carry, vnode) => {
+                return (
+                    carry + vnode.children.map(child => {
+                        return child.text;
+                    }).join('')
+                );
+            }, '') : null;
+
+            return this.beautify(content);
         },
 
         onInitialize(cm) {
@@ -332,7 +363,9 @@ export default {
             // Closure to capture the file information.
             reader.onload = e => {
                 this.cm.setValue(e.target.result);
-                this.cm.lint();
+                this.cm.lint().then(null, e => {
+                    // this.state.lint.errors = e.response.data.errors;
+                });
             };
 
             reader.readAsText(event.target.files[0]);
@@ -399,7 +432,9 @@ export default {
         },
 
         onClickLint(event) {
-            this.cm.lint();
+            this.cm.lint().then(null, e => {
+                // this.state.lint.errors = e.response.data.errors;
+            });;
         }
         
     }

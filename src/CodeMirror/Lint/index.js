@@ -14,7 +14,9 @@ function onChange(cm, event) {
        (!matchBeforeChange && match) ||
        (origin === 'undo' && removed.filter(value => !!value.trim()).length) || 
        (origin === '+delete' && (removed.indexOf('<') !== -1 || removed.indexOf('>') !== -1))) {
-        cm.lint();
+        cm.lint().then(null, e => {
+            // this.state.lint.errors = e.response.data.errors;
+        });
     }
 
     lastChange = event;
@@ -33,7 +35,9 @@ function onChanges(cm, event) {
     if(!cm.state.lint.findNearbyErrors(cm.getCursor()).length && (
         cm.state.lint.isOpenedTagClosing(match) || cm.state.lint.isNonClosingTagOpened(match)
     )) {
-        cm.lint();
+        cm.lint().then(null, e => {
+            // this.state.lint.errors = e.response.data.errors;
+        });
     }
 
     if(!cm.getValue()) {
@@ -44,7 +48,9 @@ function onChanges(cm, event) {
 function onInputRead(cm, event) {
     if(event.origin === 'paste') {
         if(!cm.state.lint.errors.filter(error => error.isActive).length) {
-            cm.lint();
+            cm.lint().then(null, e => {
+                // this.state.lint.errors = e.response.data.errors;
+            });
         }
     }
 }

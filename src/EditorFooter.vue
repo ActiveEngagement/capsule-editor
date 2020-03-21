@@ -19,8 +19,8 @@
             </animate-css>
         </div>
         <animate-css name="fade">
-            <btn v-if="showFinishButton" type="button" size="lg" :disabled="!!error" @click="$emit('finish')">
-                Finish
+            <btn v-if="finish" type="button" variant="light" size="lg" :disabled="!!error" @click="$emit('finish')">
+                Finish <icon icon="long-arrow-alt-right" />
             </btn>
         </animate-css>
     </footer>
@@ -32,11 +32,9 @@ import Btn from 'vue-interface/src/Components/Btn';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
+import { faCaretLeft, faCaretRight, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCaretLeft);
-library.add(faCaretRight);
+library.add(faCaretLeft, faCaretRight, faLongArrowAltRight);
 
 export default {
 
@@ -56,6 +54,11 @@ export default {
             required: true
         },
 
+        finish: {
+            type: Boolean,
+            default: false
+        },
+
         demoMode: Boolean,
 
         errors: {
@@ -72,7 +75,6 @@ export default {
             ch: ch,
             line: line,
             direction: 'up',
-            showFinishButton: false,
             error: this.errors.length && this.errors[0]
         };
     },
@@ -197,7 +199,7 @@ export default {
     transition: .2s all ease-in;
 
     .footer & {
-        height: 4rem;
+        height: 4.75rem;
     }
 
     .editor-footer-error {

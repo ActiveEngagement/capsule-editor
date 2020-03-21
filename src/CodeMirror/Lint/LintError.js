@@ -344,7 +344,9 @@ export default class LintError {
     }
 
     lint() {
-        this.cm.lint();
+        this.cm.lint().then(null, e => {
+            // this.state.lint.errors = e.response.data.errors;
+        });
     }
 
     on(name, fn) {
