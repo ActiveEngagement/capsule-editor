@@ -9,9 +9,9 @@
     "build": "vue-cli-service build --target lib --name CapsuleEditor ./src/Editor.vue",
     "build-dev-lib": "NODE_ENV=development vue-cli-service build --target lib --name CapsuleEditor ./src/Editor.vue",
     "lint": "vue-cli-service lint",
-    "release-patch": "yarn run build && yarn run commit && yarn version patch; yarn run release;",
-    "release-minor": "yarn run build && yarn run commit && yarn version minor; yarn run release;",
-    "release-major": "yarn run build && yarn run commit && yarn version major; yarn run release;",
+    "release-patch": "yarn run build && yarn run commit && npm version patch; yarn run release;",
+    "release-minor": "yarn run build && yarn run commit && npm version minor; yarn run release;",
+    "release-major": "yarn run build && yarn run commit && npm version major; yarn run release;",
     "release": "yarn run commit; yarn publish; git push --follow-tags;"
   },
   "dependencies": {
