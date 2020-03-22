@@ -1,5 +1,5 @@
 <template>
-    <div class="editor" :class="{footer: showFooter || showFinishButton}">
+    <div class="editor" :class="{footer: (showFooter || showFinishButton) && !showFinishPopup}">
         <editor-toolbar
             ref="toolbar"
             :value="value"
