@@ -25,7 +25,7 @@
                 v-model="value"
                 v-bind="mergedOptions"
                 @input="onEditorInput"
-                @initialize="onInitialize" />
+                @initialize="onEditorInitialized" />
 
             <input ref="file" type="file" class="d-none" @input="onFileSelected">
         </div>
@@ -37,7 +37,7 @@
             :finish="!currentErrors.length && showFinishButton"
             :demo-mode="demoMode"
             :errors="currentErrors"
-            @finish="$emit('finish')" />
+            @finish="() => showFinishPopup = true" />
 
         <animate-css name="fade" @leave="onModalLeave">
             <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
@@ -86,6 +86,19 @@ const beautify = require('js-beautify').html;
 // var beautify_js = require('js-beautify'); // also available under "js" export
 // var beautify_css = require('js-beautify').css;
 // var beautify_html = require('js-beautify').html;
+
+class Deferred {
+    constructor(fn) {
+        this.promise = new Promise((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject = reject;
+            
+            if(fn instanceof Function) {
+                fn(resolve, reject);
+            }
+        });
+    }
+}
 
 export default {
     name: 'Editor',
@@ -157,13 +170,17 @@ export default {
             cm: null,
             isLinting: false,
             initialized: false,
-            showFinishPopup: true,
+            showFinishPopup: false,
             showFinishButton: false,
             showFooter: !!errors.length,
             demoModalCleared: this.skipIntro,
             currentErrors: errors,
             currentFilename: this.filename,
-            value: this.contents || this.getSlotContents()
+            value: this.contents || this.getSlotContents(),
+            resolvers: {
+                init: new Deferred,
+                lint: new Deferred,
+            },
             /*
             value: beautify_html((this.contents || this.getSlotContents()), {
                 indent_size: 1,
@@ -257,8 +274,25 @@ export default {
             }).forEach(error => error.clear());
 
             this.showFooter = !!value.length;
+        },
+
+        initialize() {
+
         }
 
+    },
+
+    created() {
+        const promises = Object.entries(this.resolvers)
+            .map(([key, { promise }]) => promise);
+
+        Promise.all(promises).finally(() => {
+            if(this.demoMode && !this.currentErrors.length) {
+                this.showFinishPopup = true;
+            }
+
+            this.$emit('initialize');
+        });
     },
 
     mounted() {
@@ -268,6 +302,8 @@ export default {
                     if(this.currentErrors[0] && !this.cm.hasFocus()) {
                         this.currentErrors[0].focus();
                     }
+                }).finally(() => {
+                    this.resolvers.lint.resolve();
                 });
             }
         });
@@ -316,9 +352,10 @@ export default {
             return this.beautify(content);
         },
 
-        onInitialize(cm) {
+        onEditorInitialized(cm) {
             this.cm = cm;
             this.initialized = true;
+            this.resolvers.init.resolve();
         },
 
         onModalLeave() {
