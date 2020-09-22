@@ -65,16 +65,16 @@
 </template>
 
 <script>
+import AnimateCss from '@vue-interface/animate-css';
+import Btn from '@vue-interface/btn';
+import InputField from '@vue-interface/input-field';
+import { deepExtend } from '@vue-interface/utils';
 import EditorModal from './EditorModal';
 import EditorField from './EditorField';
 import EditorFooter from './EditorFooter';
 import EditorToolbar from './EditorToolbar';
 import EditorDemoModal from './EditorDemoModal';
 import LintState from './CodeMirror/Lint/LintState';
-import Btn from 'vue-interface/src/Components/Btn';
-import { deepExtend } from 'vue-interface/src/Helpers/Functions';
-import AnimateCss from 'vue-interface/src/Components/AnimateCss';
-import InputField from 'vue-interface/src/Components/InputField';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
@@ -101,8 +101,6 @@ class Deferred {
 }
 
 export default {
-    name: 'Editor',
-
     components: {
         Btn,
         AnimateCss,

@@ -1,8 +1,10 @@
+import axios from 'axios';
 import Vue from 'vue';
 import App from './App.vue';
-import AxiosDefaults from 'capsule-common/src/Plugins/AxiosDefaults';
+import { AxiosDefaults } from 'capsule-common';
 
 Vue.use(AxiosDefaults, {
+    axios,
     id: 'capsule-editor'
 });
 

@@ -1,10 +1,10 @@
+
+import { debounce, isArray } from '@vue-interface/utils';
 import axios from 'axios';
-import { debounce } from 'lodash';
 import CodeMirror from 'codemirror';
 import LintError from './LintError';
-import fontawesome from '@fortawesome/fontawesome';
-import { isArray } from 'vue-interface/src/Helpers/Functions';
-import { faBug, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { icon } from '@fortawesome/fontawesome';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 import formatError from '../../Helpers/formatError';
 
 const GUTTER_ID = 'CodeMirror-lint-errors';
@@ -145,14 +145,14 @@ export default class LintState {
     }
 
     createIcon(error) {
-        const icon = document.createElement('div');
+        const el = document.createElement('div');
     
-        icon.className = 'CodeMirror-lint-error-icon';
-        icon.innerHTML = fontawesome.icon(faBug).html;
-        icon.title = `${error.line},${error.column} :: ${error.code} (${error.rule}) ${error.msg}`;
-        icon.error = error;
+        el.className = 'CodeMirror-lint-error-icon';
+        el.innerHTML = icon(faBug).html;
+        el.title = `${error.line},${error.column} :: ${error.code} (${error.rule}) ${error.msg}`;
+        el.error = error;
     
-        return icon;
+        return el;
     }
 
     setCursorOnError(error) {

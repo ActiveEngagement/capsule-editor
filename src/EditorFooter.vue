@@ -27,10 +27,10 @@
 </template>
 
 <script>
+import AnimateCss from '@vue-interface/animate-css';
+import Btn from '@vue-interface/btn';
 import EditorError from './EditorError';
-import Btn from 'vue-interface/src/Components/Btn';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
 import { faCaretLeft, faCaretRight, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -38,13 +38,11 @@ library.add(faCaretLeft, faCaretRight, faLongArrowAltRight);
 
 export default {
 
-    name: 'EditorFooter',
-
     components: {
-        Btn,
-        Icon,
         AnimateCss,
-        EditorError
+        Btn,
+        EditorError,
+        Icon,
     },
 
     props: {

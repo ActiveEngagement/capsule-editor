@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import FormControl from '@vue-interface/form-control';
+import { deepExtend } from '@vue-interface/utils';
 import CodeMirror from 'codemirror';
 import 'codemirror/theme/yeti.css';
 import 'codemirror/lib/codemirror.css';
@@ -27,15 +29,11 @@ import 'codemirror/addon/hint/xml-hint';
 import 'codemirror/addon/hint/html-hint';
 import 'codemirror/addon/merge/merge';
 import 'codemirror/keymap/sublime';
-import FormControl from 'vue-interface/src/Mixins/FormControl';
-import { deepExtend } from 'vue-interface/src/Helpers/Functions';
 
 import './CodeMirror/Lint';
 import './CodeMirror/BlockTags';
 
 export default {
-
-    name: 'EditorField',
 
     mixins: [
         FormControl

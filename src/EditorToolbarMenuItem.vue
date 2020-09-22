@@ -1,25 +1,21 @@
 <template>
-    <dropdown-menu-item @click="$emit('click', $event)">
+    <a href="#" @click.prevent="$emit('click', $event)">
         <span>
             <slot>{{ label }}</slot>
         </span>
         <code v-if="hotkeys">
             <editor-hotkey v-for="(key, i) in hotkeys" :key="i" :icon="key.length > 1 ? key : null" :label="key.length === 1 ? key : null" />
         </code>
-    </dropdown-menu-item>
+    </a>
 </template>
 
 <script>
 import EditorHotkey from './EditorHotkey';
-import DropdownMenuItem from 'vue-interface/src/Components/DropdownMenu/DropdownMenuItem';
 
 export default {
 
-    name: 'EditorToolbarMenuItem',
-
     components: {
         EditorHotkey,
-        DropdownMenuItem
     },
 
     props: {

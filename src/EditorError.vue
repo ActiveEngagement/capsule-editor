@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import { camelCase } from 'lodash';
+import Btn from '@vue-interface/btn';
+import { camelCase } from '@vue-interface/utils';
 import formattedError from './Helpers/formatError';
-import Btn from 'vue-interface/src/Components/Btn';
 
 import fontawesome from '@fortawesome/fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';

@@ -91,10 +91,10 @@
 </template>
 
 <script>
+import AnimateCss from '@vue-interface/animate-css';
+import Btn from '@vue-interface/btn';
+import { SlideDeck } from '@vue-interface/slide-deck';
 import EditorModal from './EditorModal';
-import Btn from 'vue-interface/src/Components/Btn';
-import SlideDeck from 'vue-interface/src/Components/SlideDeck';
-import AnimateCss from 'vue-interface/src/Components/AnimateCss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
@@ -106,11 +106,11 @@ library.add(faLongArrowAltRight);
 export default {
 
     components: {
+        AnimateCss,
         Btn,
+        EditorModal,
         Icon,
         SlideDeck,
-        AnimateCss,
-        EditorModal
     },
 
     data() {

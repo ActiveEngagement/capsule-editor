@@ -22,7 +22,7 @@
             <editor-toolbar-menu-item label="Save As..." :hotkeys="['shift', 'ctrl', 'S']" @click.prevent="$emit('save-as')" />
             <editor-toolbar-menu-item label="Close" :hotkeys="['ctrl', 'Q']" @click.prevent="$emit('close')" />
             <template v-if="errors.length">
-                <dropdown-menu-divider />
+                <hr>
                 <editor-toolbar-menu-item label="Export Errors" :hotkeys="['ctrl', 'X']" @click.prevent="$emit('export-errors')" />
             </template>
             <slot name="extra-page-controls" />
@@ -40,15 +40,14 @@
 </template>
 
 <script>
-import { alt, ctrl, shift } from './Icons';
-import Btn from 'vue-interface/src/Components/Btn';
-import Badge from 'vue-interface/src/Components/Badge';
-import Navbar from 'vue-interface/src/Components/Navbar';
+import Badge from '@vue-interface/badge';
+import Btn from '@vue-interface/btn';
+import BtnActivity from '@vue-interface/btn-activity';
+import BtnDropdown from '@vue-interface/btn-dropdown';
+import { Navbar } from '@vue-interface/navbar';
 import EditorToolbarMenuItem from './EditorToolbarMenuItem';
-import BtnActivity from 'vue-interface/src/Components/BtnActivity';
-import BtnDropdown from 'vue-interface/src/Components/BtnDropdown';
-import DropdownMenuDivider from 'vue-interface/src/Components/DropdownMenu/DropdownMenuDivider';
 
+import { alt, ctrl, shift } from './Icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
@@ -63,8 +62,6 @@ library.add(faQuestionCircle);
 
 export default {
 
-    name: 'EditorToolbar',
-
     components: {
         Btn,
         Icon,
@@ -72,7 +69,6 @@ export default {
         Navbar,
         BtnActivity,
         BtnDropdown,
-        DropdownMenuDivider,
         EditorToolbarMenuItem
     },
 

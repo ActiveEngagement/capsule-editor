@@ -3,9 +3,8 @@ import formatError from '../../Helpers/formatError';
 import isTagInRange from '../../Helpers/isTagInRange';
 import fontawesome from '@fortawesome/fontawesome';
 import isPositionInRange from '../../Helpers/isPositionInRange';
-import { faBug, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 
-const GUTTER_ID = 'CodeMirror-lint-errors';
 const UNDERLINE_CLASS = 'CodeMirror-lint-error-underline';
 
 let nextId = 0;
