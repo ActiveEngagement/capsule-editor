@@ -72,11 +72,13 @@ export default class LintState {
                     }
                 }, options || this.value('options') || this.options || {});
       
+                console.log(123);
+                
                 this.cancel = cancel;
                 this.request = axios.post(
                     this.value('url'),
                     (data || this.value('data')),
-                    options
+                    // options
                 ).then(response => {
                     this.errors = [];
                     this.response = response = (
