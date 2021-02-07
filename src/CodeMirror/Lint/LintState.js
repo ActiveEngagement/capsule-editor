@@ -72,8 +72,6 @@ export default class LintState {
                     }
                 }, options || this.value('options') || this.options || {});
       
-                console.log(123);
-                
                 this.cancel = cancel;
                 this.request = axios.post(
                     this.value('url'),
