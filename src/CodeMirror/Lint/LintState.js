@@ -127,16 +127,6 @@ export default class LintState {
     findErrorsInRange(from, to) {
         return this.errors.filter(error => {
             return error.inRange(from, to);
-
-            const match = CodeMirror.findMatchingTag(this.cm, {
-                line: error.line - 1,
-                ch: error.column
-            }, this.cm.getViewport());
-
-            return (
-                this.isTagInRange(error.match.open, from, to) ||
-                this.isTagInRange(error.match.close, from, to)
-            );
         });
     }
 
@@ -149,7 +139,7 @@ export default class LintState {
     
         el.className = 'CodeMirror-lint-error-icon';
         el.innerHTML = icon(faBug).html;
-        el.title = `${error.line},${error.column} :: ${error.code} (${error.rule}) ${error.msg}`;
+        el.title = `${error.line},${error.col} :: (${error.rule.id}) ${error.message}`;
         el.error = error;
     
         return el;
@@ -166,7 +156,7 @@ export default class LintState {
             this.cm.scrollIntoView(tag, this.cm.getScrollInfo().clientHeight / 2);
 
             setTimeout(() => {
-                this.cm.setCursor(error.line - 1, error.column);
+                this.cm.setCursor(error.line - 1, error.col);
             });
         }
     }
