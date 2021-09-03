@@ -35,11 +35,11 @@ export default {
         externalLinkIcon() {
             return fontawesome.icon(faExternalLinkAlt).html.join('');
         },
-        url() {
-            return `http://thecapsule.email/docs/codes/${this.error.code}.html`;
-        },
         formattedError() {
             return formattedError(this.error);
+        },
+        url() {
+            return this.error.rule.link;
         }
     }
     

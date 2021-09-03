@@ -266,7 +266,7 @@ export default {
                     return (
                         newError.line === oldError.line && 
                         newError.ch === oldError.ch && 
-                        newError.code === oldError.code
+                        newError.rule.id === oldError.rule.id
                     );
                 }).length;
             }).forEach(error => error.clear());

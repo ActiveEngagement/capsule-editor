@@ -14,13 +14,12 @@ export default class LintError {
     constructor(cm, error) {
         this.id = nextId++;
         this.cm = cm;
-        this.msg = error.msg;
-        this.code = error.code;
+        this.message = error.message;
         this.rule = error.rule;
         this.match = error.match;
         // Subtract one from ch and line because the API returns the base as 1
         // but CodeMirror uses a base of 0.
-        this.ch = error.column - 1;
+        this.ch = error.col - 1;
         this.line = error.line - 1;
         
         this.createGutter();
@@ -129,15 +128,15 @@ export default class LintError {
         return this.$match;
     }
 
-    set msg(value) {
-        this.$msg = value;
+    set message(value) {
+        this.$message = value;
     }
 
-    get msg() {
-        return this.$msg;
+    get message() {
+        return this.$message;
     }
 
-    get formattedMsg() {
+    get formattedMessage() {
         return formatError(this);
     }
 
@@ -194,7 +193,6 @@ export default class LintError {
 
         icon.className = 'CodeMirror-lint-error-icon';
         icon.innerHTML = `<div>${fontawesome.icon(faBug).html}</div>`;
-        //icon.title = `${this.line + 1},${this.ch + 1} :: ${this.code} (${this.rule}) ${this.msg}`;
         icon.error = this;
         
         const errors = this.errorWindow = document.createElement('div');
@@ -247,7 +245,7 @@ export default class LintError {
         const div = document.createElement('div');
 
         div.className = 'CodeMirror-lint-error-bookmark';
-        div.innerHTML = `<div class="CodeMirror-lint-error-bookmark-text">${this.formattedMsg}</div>`;
+        div.innerHTML = `<div class="CodeMirror-lint-error-bookmark-text">${this.formattedMessage}</div>`;
 
         div.addEventListener('click', e => this.hide());
         
@@ -268,7 +266,7 @@ export default class LintError {
 
     markText({from, to}) {
         const markedText = this.cm.markText(from, to, {
-            title: this.msg,
+            title: this.message,
             clearWhenEmpty: true,
             className: UNDERLINE_CLASS,
         });
@@ -294,7 +292,7 @@ export default class LintError {
     }
 
     redraw() {
-        this.bookmark.widgetNode && (this.bookmark.widgetNode.querySelector('.CodeMirror-lint-error-bookmark-text').innerHTML = this.formattedMsg);
+        this.bookmark.widgetNode && (this.bookmark.widgetNode.querySelector('.CodeMirror-lint-error-bookmark-text').innerHTML = this.formattedMessage);
     }
     
     inRange(from, to) {
@@ -414,7 +412,7 @@ export default class LintError {
         return (a && a.id === b && b.id) || (
             (a && a.line) === (b && b.line) &&
             (a && a.ch) === (b && b.ch) &&
-            (a && a.code) === (b && b.code)
+            (a && a.rule.id) === (b && b.rule.id)
         );
     }
 }
