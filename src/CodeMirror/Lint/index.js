@@ -73,16 +73,16 @@ CodeMirror.defineOption('lint', false, function(cm, options, old) {
         delete cm.state.lint;
     }
 
-    if(options) {
-        cm.state.lint = new LintState(cm, options || (options = {}));
-        cm.on('change', onChange);
-        cm.on('changes', onChanges);
-        cm.on('inputRead', onInputRead);
-        cm.on('beforeChange', onBeforeChange);
+    options = Object.assign({}, options || {});
 
-        if(options.errors && options.errors.length) {
-            cm.state.lint.errors = options.errors;
-        }
+    cm.state.lint = new LintState(cm, options);
+    cm.on('change', onChange);
+    cm.on('changes', onChanges);
+    cm.on('inputRead', onInputRead);
+    cm.on('beforeChange', onBeforeChange);
+
+    if(options.errors && options.errors.length) {
+        cm.state.lint.errors = options.errors;
     }
 });
 
@@ -94,9 +94,7 @@ CodeMirror.defineExtension('lint', function(data, options) {
                 .then(() => {
                     resolve(this.state.lint);
                 }, error => {
-                    this.state.lint.cm.operation(() => {
-                        reject(error);
-                    });
+                    // Ignore the error
                 });
         }
         else {

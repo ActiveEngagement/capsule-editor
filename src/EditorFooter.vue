@@ -1,28 +1,39 @@
 <template>
-    <footer class="editor-footer">
-        <div class="editor-footer-pager">
-            <animate-css name="fade">
-                <div v-if="totalErrors">
-                    <btn variant="link" @click.prevent="goto(index - 1)">
-                        <icon icon="caret-left" />
-                    </btn> 
-                    <span>{{ index + 1 }} of {{ errors.length }} </span>
-                    <btn variant="link" @click.prevent="goto(index + 1)">
-                        <icon icon="caret-right" />
-                    </btn>
+    <footer class="editor-footer d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center w-100">
+            <div class="d-flex align-items-center">
+                <div class="ml-2 mr-2">
+                    <animate-css name="fade">
+                        <btn type="button" variant="link" v-if="totalErrors" class="text-white" @click="goto(index)">
+                            <font-awesome-icon icon="exclamation-triangle" size="lg" />
+                        </btn>
+                    </animate-css>
                 </div>
-            </animate-css>
+                <div class="editor-footer-pager flex-shrink-0">
+                    <animate-css name="fade">
+                        <div v-if="totalErrors" class="py-2 mr-3">
+                            <btn type="button" variant="link" @click="goto(index - 1)">
+                                <font-awesome-icon icon="caret-left" />
+                            </btn> 
+                            <span>{{ index + 1 }} of {{ errors.length }} </span>
+                            <btn type="button" variant="link" @click="goto(index + 1)">
+                                <font-awesome-icon icon="caret-right" />
+                            </btn>
+                        </div>
+                    </animate-css>
+                </div>
+            </div>
+            <div class="editor-footer-error">
+                <animate-css name="fade" :direction="direction" leave-active-class="position-absolute">
+                    <editor-error v-if="currentError" :key="index" :error="currentError" class="py-2" />
+                </animate-css>
+            </div>
         </div>
-        <div class="editor-footer-error">
-            <animate-css name="fade" :direction="direction" leave-active-class="position-absolute">
-                <editor-error v-if="error" :key="index" :error="error" />
-            </animate-css>
-        </div>
-        <animate-css name="fade">
-            <btn v-if="finish" type="button" variant="light" size="lg" :disabled="!!error" @click="$emit('finish')">
-                Finish <icon icon="long-arrow-alt-right" />
-            </btn>
-        </animate-css>
+            <div v-if="finish" class="flex-shrink-0 px-3 py-2">
+                <btn type="button" variant="light" @click="$emit('finish')">
+                    Save & Continue <font-awesome-icon icon="long-arrow-alt-right" />
+                </btn>
+            </div>
     </footer>
 </template>
 
@@ -30,8 +41,9 @@
 import AnimateCss from '@vue-interface/animate-css';
 import Btn from '@vue-interface/btn';
 import EditorError from './EditorError';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faCaretLeft, faCaretRight, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCaretLeft, faCaretRight, faLongArrowAltRight);
@@ -42,45 +54,22 @@ export default {
         AnimateCss,
         Btn,
         EditorError,
-        Icon,
-    },
-
-    props: {
-
-        cm: {
-            type: Object,
-            required: true
-        },
-
-        finish: {
-            type: Boolean,
-            default: false
-        },
-
-        demoMode: Boolean,
-
-        errors: {
-            type: Array,
-            default: () => []
-        }
-
+        FontAwesomeIcon,
     },
 
     data() {
-        const { line, ch } = this.cm.getCursor();
-
         return {
-            ch: ch,
-            line: line,
+            currentError: null,
             direction: 'up',
-            error: this.errors.length && this.errors[0]
+            errors: [],
+            finish: false,
         };
     },
 
     computed: {
 
         index() {
-            return Math.max(0, this.errors.indexOf(this.error));
+            return Math.max(0, this.errors.indexOf(this.currentError));
         },
 
         totalErrors() {
@@ -90,64 +79,46 @@ export default {
     },
 
     watch: {
-
-        /*
-        ['cm.state.lint.errors'](value, oldValue) {
-            if(!this.error && this.errors.length) {
-                this.error = this.errors[0];
+        errors(value, oldValue) {
+            if(!value.length && !!oldValue.length) {
+                this.currentError = null;
+                this.finish = true;
             }
-            else if(!this.errors.length) {
-                this.error = null;
+            else {
+                this.finish = false;
             }
- 
-            if(!value.length && this.totalErrors) {  
-                this.cm.state.lint.send().then(response => {
-                    if(this.demoMode && this.cm.getValue()) {
-                        this.$emit('finish-popup');
-                    }
-                }, e => {
-                    this.state.lint.errors = e.response.data.errors;
-                });
-            }
-
-            this.totalErrors = value.length;
-        },
-        */
-
-        errors(value) {
-            const error = this.findActiveError() || this.errors[0];
-
-            if(this.errors !== error) {
-                this.error = error;
-            }
-        },
-
-        error(value, oldValue) {
-            this.direction = this.index > this.errors.indexOf(oldValue) ? 'down': 'up';
-        }
-
-    },
-
-    mounted() {
-        if(this.$parent.$refs.field) {
-            this.$parent.$refs.field.$on('cursor-activity', this.onCursorActivity);
-        }
-    },
-
-    beforeDestroy() {
-        if(this.$parent.$refs.field) {
-            this.$parent.$refs.field.$off('cursor-activity', this.onCursorActivity);
         }
     },
 
     methods: {
+
+        update(view, { errors }) {
+            this.errors = errors || [];
+
+            const { from, to } = view.state.selection.main;
+
+            const active = errors.filter(error => {
+                if(from === to) {
+                    return error.from <= from && error.to >= to;
+                }
+
+                return error.from >= from && error.to <= to;
+            });
+
+            if(active.length) {
+                this.currentError = active[0];
+            }
+            else {
+                this.currentError = this.errors[0];
+            }
+        },
 
         findActiveError() {
             return this.errors
                 .filter(error => error.isActive)
                 .pop();
         },
-        
+
         goto(index) {
             if(index < 0) {
                 index = this.errors.length - 1;
@@ -155,26 +126,10 @@ export default {
             else if(index > this.errors.length - 1) {
                 index = 0;
             }
-            
-            const { line, ch } = this.errors[index] || {
-                ch: this.ch,
-                line: this.line
-            };
 
-            this.cm.setCursor(line, ch);
-            this.cm.focus();
-        },
+            this.currentError = this.errors[index];
 
-        onCursorActivity(cm) {
-            const { line, ch } = cm.getCursor();
-            const error = this.findActiveError();
-
-            this.ch = ch;
-            this.line = line;
-
-            if(error) {
-                this.error = error;
-            }
+            this.$emit('goto', this.currentError);
         }
 
     }
@@ -183,17 +138,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import './node_modules/bootstrap/scss/_functions.scss';
-@import './node_modules/bootstrap/scss/_variables.scss';
-
 .editor-footer {
-    height: 0;
-    color: $white;
-    display: grid;
-    padding-right: 1rem;
-    grid-template-columns: auto minmax(0, 100%) minmax(0, auto);
+    color: white;
     position: relative;
-    align-items: center;
+    align-items: end;
     transition: .2s all ease-in;
 
     .footer & {
@@ -203,12 +151,10 @@ export default {
     .editor-footer-error {
         font-weight: 300;
         font-size: 1.2em;
-        padding-left: .75rem;
     }
 
     .editor-footer-pager {
-        width: 9.5rem;
-        padding-left: .5rem;
+        min-width: 10.5rem;
 
         & > div {
             display: flex;
@@ -218,7 +164,7 @@ export default {
 
         .btn {
             padding: 0;
-            color: $white;
+            color: white;
             width: 2.5rem;
             height: 2.5rem;
             font-size: 2rem;
@@ -226,6 +172,8 @@ export default {
             align-items: center;
             justify-content: center;
             border-radius: .6666rem;
+            background: transparent;
+            border: 0;
         }
 
         .btn:active {

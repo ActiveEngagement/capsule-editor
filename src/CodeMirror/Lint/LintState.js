@@ -1,7 +1,5 @@
 
 import { debounce, isArray } from '@vue-interface/utils';
-import axios from 'axios';
-import CodeMirror from 'codemirror';
 import LintError from './LintError';
 import { icon } from '@fortawesome/fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
@@ -63,7 +61,7 @@ export default class LintState {
             debounced(() => {
                 this.callback('onLintStart');
         
-                const { token, cancel } = axios.CancelToken.source();
+                const { token, cancel } = this.options.axios.CancelToken.source();
     
                 options = Object.assign({
                     cancelToken: token,
@@ -73,7 +71,7 @@ export default class LintState {
                 }, options || this.value('options') || this.options || {});
       
                 this.cancel = cancel;
-                this.request = axios.post(
+                this.request = this.options.axios.post(
                     this.value('url'),
                     (data || this.value('data')),
                     // options
@@ -88,7 +86,7 @@ export default class LintState {
 
                     resolve(response);
                 }, error => {
-                    if(!axios.isCancel(error)) {
+                    if(!this.options.axios.isCancel(error)) {
                         this.response = null;
                         const errors = this.option('transformResponseError')
                             ? this.callback('transformResponseError', error)
@@ -137,6 +135,13 @@ export default class LintState {
     createIcon(error) {
         const el = document.createElement('div');
     
+        error.message = error.message
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+
         el.className = 'CodeMirror-lint-error-icon';
         el.innerHTML = icon(faBug).html;
         el.title = `${error.line},${error.col} :: (${error.rule.id}) ${error.message}`;

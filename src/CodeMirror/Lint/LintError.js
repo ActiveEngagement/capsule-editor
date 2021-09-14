@@ -21,19 +21,19 @@ export default class LintError {
         // but CodeMirror uses a base of 0.
         this.ch = error.col - 1;
         this.line = error.line - 1;
-        
-        this.createGutter();
-        this.bookmark = this.createBookmark();
 
-        if((this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) ||
-            this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)) {
-            this.show();
-        }
+        // this.createGutter();
+        this.bookmark = this.createBookmark();
 
         this.on('change', this.onChange);
         this.on('changes', this.onChanges);
         this.on('beforeChange', this.onBeforeChange);
         this.on('cursorActivity', this.onCursorActivity);
+
+        if((this.open && isPositionInRange(this.cm.getCursor(), this.open.from, this.open.to)) ||
+            this.close && isPositionInRange(this.cm.getCursor(), this.close.from, this.close.to)) {
+            this.show();
+        }
     }
 
     set bookmark(value) {
@@ -41,7 +41,10 @@ export default class LintError {
 
         if(this.$bookmark) {
             this.$bookmark.on('clear', () => {
-                this.clearGutter();
+                // this.clearGutter();
+
+                // this.clearGutter(this.lastChange.open && this.lastChange.open.to.line);
+                // this.clearGutter(this.lastChange.close && this.lastChange.close.to.line);
             });
         }
 
@@ -180,7 +183,7 @@ export default class LintError {
         }
         
         if(!this.cm.state.lint.findErrorsOnLine(line).length) {
-            this.cm.setGutterMarker(line, this.cm.state.lint.constructor.id, null);
+           //  this.cm.setGutterMarker(line, this.cm.state.lint.constructor.id, null);
         }
     }
 
@@ -395,6 +398,8 @@ export default class LintError {
     }
 
     onBeforeChange(cm, change) {
+        console.log('before change');
+        
         this.lastChange = {
             change,
             open: this.open,

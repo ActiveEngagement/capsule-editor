@@ -16,7 +16,7 @@
                     <div class="text-center">
                         <div class="mb-3">
                             <btn type="button" @click="active = 1">
-                                <font-awesome-icon icon="info-circle" /> Learn More
+                                <icon icon="info-circle" /> Learn More
                             </btn>
                         </div>
                         <small><a href="#" @click.prevent="$emit('clear')">No, I just want to fix the errors.</a></small>
@@ -40,7 +40,7 @@
                     <div class="text-center">
                         <div class="mb-3">
                             <btn type="button" @click="active = 2">
-                                Next <font-awesome-icon icon="long-arrow-alt-right" />
+                                Next <icon icon="long-arrow-alt-right" />
                             </btn>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="text-center">
                     <div class="mb-3">
                         <btn type="button" @click="active = 3">
-                            Next <font-awesome-icon icon="long-arrow-alt-right" />
+                            Next <icon icon="long-arrow-alt-right" />
                         </btn>
                     </div>
                 </div>
@@ -97,7 +97,7 @@ import { SlideDeck } from '@vue-interface/slide-deck';
 import EditorModal from './EditorModal';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
 import { faLongArrowAltRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faInfoCircle);
@@ -109,7 +109,7 @@ export default {
         AnimateCss,
         Btn,
         EditorModal,
-        FontAwesomeIcon,
+        Icon,
         SlideDeck,
     },
 
