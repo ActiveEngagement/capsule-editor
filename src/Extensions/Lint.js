@@ -84,7 +84,7 @@ function helpPanel(parent) {
                 }); 
                 
                 component.$on('save', () => {
-                    console.log('save')
+                    parent.showFinishPopup = true;
                 });
             }
         }),

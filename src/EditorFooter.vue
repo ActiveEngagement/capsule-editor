@@ -110,6 +110,24 @@ export default {
 
     methods: {
 
+        findActiveError() {
+            return this.errors
+                .filter(error => error.isActive)
+                .pop();
+        },
+
+        goto(index) {
+            if(index < 0) {
+                index = this.errors.length - 1;
+            }
+            else if(index > this.errors.length - 1) {
+                index = 0;
+            }
+
+            this.currentError = this.errors[index];
+            this.$emit('goto', this.currentError);
+        },
+
         isEmpty() {
             return this.view.state.doc.toString() === '';
         },
@@ -134,25 +152,6 @@ export default {
                 this.currentError = this.errors[0];
             }
         },
-
-        findActiveError() {
-            return this.errors
-                .filter(error => error.isActive)
-                .pop();
-        },
-
-        goto(index) {
-            if(index < 0) {
-                index = this.errors.length - 1;
-            }
-            else if(index > this.errors.length - 1) {
-                index = 0;
-            }
-
-            this.currentError = this.errors[index];
-
-            this.$emit('goto', this.currentError);
-        }
 
     }
 
