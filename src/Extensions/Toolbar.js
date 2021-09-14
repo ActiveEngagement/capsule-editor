@@ -10,6 +10,10 @@ export default function(parent, left, right) {
 
     component.$on('input', value => {
         parent.filename = value;
+        parent.$emit('input', {
+            filename: parent.filename,
+            content: parent.content
+        })
     });
 
     component.$slots.left = left || parent.$slots['toolbar-left'];

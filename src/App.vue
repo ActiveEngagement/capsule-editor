@@ -1,7 +1,7 @@
 <template>
-    <editor ref="editor" title="test" :value="value" :save="onSave">
+    <editor ref="editor" title="Some Title Here" :save="onSave" v-model="value">
         <template #toolbar-left>
-            left
+            left: {{ value }}
         </template>
         <template #toolbar-right>
             right
@@ -27,12 +27,8 @@ export default {
     },
 
     data() {
-const value = `
-<div></div>
-<div></div>
-`;
         return {
-            value
+            value: null
         };
     },
 
@@ -45,6 +41,12 @@ const value = `
     methods: {
         onSave({ filename }) {
             this.$refs.editor.showFinishModal = true;
+        }
+    },
+
+    watch: {
+        value(value) {
+            console.log('change', value)
         }
     }
 };

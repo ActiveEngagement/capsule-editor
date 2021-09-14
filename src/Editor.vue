@@ -91,8 +91,12 @@ export default {
 
         value: String,
     },
+    model: {
+        prop: 'content'
+    },
     data() {
         return {
+            content: this.value,
             demoModalCleared: this.skipIntro,
             filename: this.title,
             hasDismissedFinishPopup: false,
@@ -102,6 +106,12 @@ export default {
         }
     },
     watch: {
+        content(content) {
+            this.$emit('input', {
+                filename: this.filename,
+                content
+            });
+        },
         showFinishModal(value) {
             if(value) {
                 this.$nextTick(() => this.showFinishModalShowing = true)
@@ -120,7 +130,7 @@ export default {
     mounted() {
         this.view = new EditorView({
             state: EditorState.create({
-                doc: this.value || this.getSlotContents(),
+                doc: this.value ||this.getSlotContents(),
                 extensions: [
                     oneDark,
                     ...basicSetup,
@@ -128,6 +138,11 @@ export default {
                     html(),
                     toolbar(this),
                     lint(this),
+                    EditorView.updateListener.of(view => {
+                        if(view.docChanged) {
+                            this.content = view.state.doc.toString();
+                        }
+                    }),
                 ]
             }),
             parent: this.$refs.wrapper
@@ -140,8 +155,6 @@ export default {
         },
 
         getSlotContents() {
-                console.log(this);
-                
             return this.$slots.default ? this.$slots.default.filter(vnode => {
                 return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
             }).reduce((carry, vnode) => {
@@ -177,4 +190,5 @@ html, body {
 
 .cm-editor.cm-focused { outline: none }
 .cm-panels.cm-panels-top { border: none !important; }
+.cm-panels.cm-panels-bottom { border: 1px solid #101114 !important; }
 </style>
