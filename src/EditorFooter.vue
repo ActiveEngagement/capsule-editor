@@ -29,11 +29,11 @@
                 </animate-css>
             </div>
         </div>
-            <div v-if="finish" class="flex-shrink-0 px-3 py-2">
-                <btn type="button" variant="light" @click="$emit('finish')">
-                    Save & Continue <font-awesome-icon icon="long-arrow-alt-right" />
-                </btn>
-            </div>
+        <div v-if="!isEmpty() && (saveButton || fixedAllErrors)" class="flex-shrink-0 p-2">
+            <btn type="button" variant="light" @click="$emit('save'); $emit('finish')">
+                <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
+            </btn>
+        </div>
     </footer>
 </template>
 
@@ -44,9 +44,9 @@ import EditorError from './EditorError';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCaretLeft, faCaretRight, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faSave } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCaretLeft, faCaretRight, faLongArrowAltRight);
+library.add(faCaretLeft, faCaretRight, faSave);
 
 export default {
 
@@ -57,12 +57,27 @@ export default {
         FontAwesomeIcon,
     },
 
+    props: {
+        view: {
+            type: Object,
+            required: true,
+        },
+        saveButton: {
+            type: Boolean,
+            default: false
+        },
+        saveButtonLabel: {
+            type: String,
+            default: 'Save File'
+        }
+    },
+
     data() {
         return {
             currentError: null,
             direction: 'up',
             errors: [],
-            finish: false,
+            fixedAllErrors: false
         };
     },
 
@@ -80,17 +95,24 @@ export default {
 
     watch: {
         errors(value, oldValue) {
-            if(!value.length && !!oldValue.length) {
-                this.currentError = null;
-                this.finish = true;
+            if(value.length) {
+                this.fixedAllErrors = false;
             }
-            else {
-                this.finish = false;
+            else if(!value.length && !!oldValue.length) {
+                this.currentError = null;
+                this.fixedAllErrors = true;
+            }
+            else if(!value.length) {
+                this.fixedAllErrors = true;
             }
         }
     },
 
     methods: {
+
+        isEmpty() {
+            return this.view.state.doc.toString() === '';
+        },
 
         update(view, { errors }) {
             this.errors = errors || [];

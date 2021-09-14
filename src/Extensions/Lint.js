@@ -60,14 +60,19 @@ function handler(view) {
 }
 
 function helpPanel(parent) {
-    const component = new parent.footer({
-        el: document.createElement('div'),
-        parent,
-    });
-
+    let component;
+    
     return [
         ViewPlugin.fromClass(class {
             constructor(view) {
+                component = new parent.footer({
+                    el: document.createElement('div'),
+                    parent,
+                    propsData: {
+                        view
+                    }
+                });
+            
                 component.$on('goto', ({ from, to }) => {
                     const tr = view.state.update({
                         selection: {anchor: from, head: to},
@@ -78,8 +83,8 @@ function helpPanel(parent) {
                     view.focus();
                 }); 
                 
-                component.$on('finish', () => {
-                    console.log('finish')
+                component.$on('save', () => {
+                    console.log('save')
                 });
             }
         }),

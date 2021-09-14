@@ -1,8 +1,7 @@
 <template>
     <editor :footer="footer">
         <textarea>
-            <div id="test" id="test"></div>
-            <div id="test" id="test"></div>
+            
         </textarea>
     </editor>
 </template>

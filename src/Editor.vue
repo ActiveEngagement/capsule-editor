@@ -37,10 +37,11 @@ export default {
     data() {
         return {
             demoModalCleared: this.skipIntro,
+            view: null,
         }
     },
     mounted() {
-        new EditorView({
+        this.view = new EditorView({
             state: EditorState.create({
                 doc: this.getSlotContents(),
                 extensions: [
