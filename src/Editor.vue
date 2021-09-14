@@ -25,6 +25,10 @@
                 </slot>
             </editor-modal>
         </animate-css>
+
+        <div ref="content" class="d-none">
+            <slot />
+        </div>
         
         <div ref="wrapper" class="cm-wrapper"></div>
     </div>
@@ -83,7 +87,9 @@ export default {
         toolbar: {
             type: Function,
             default: Vue.extend(EditorToolbar)
-        }
+        },
+
+        value: String,
     },
     data() {
         return {
@@ -114,7 +120,7 @@ export default {
     mounted() {
         this.view = new EditorView({
             state: EditorState.create({
-                doc: this.getSlotContents(),
+                doc: this.value || this.getSlotContents(),
                 extensions: [
                     oneDark,
                     ...basicSetup,
@@ -134,6 +140,8 @@ export default {
         },
 
         getSlotContents() {
+                console.log(this);
+                
             return this.$slots.default ? this.$slots.default.filter(vnode => {
                 return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
             }).reduce((carry, vnode) => {

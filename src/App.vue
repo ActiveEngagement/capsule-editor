@@ -1,5 +1,5 @@
 <template>
-    <editor ref="editor" title="test" :save="onSave">
+    <editor ref="editor" title="test" :value="value" :save="onSave">
         <template #toolbar-left>
             left
         </template>
@@ -15,10 +15,6 @@
         <template #success-content="{ close, filename }">
             {{ filename }} <a href="#" @click.prevent="close">Close</a>
         </template>
-
-        <textarea>
-            
-        </textarea>
     </editor>
 </template>
 
@@ -31,7 +27,13 @@ export default {
     },
 
     data() {
-        return {};
+const value = `
+<div></div>
+<div></div>
+`;
+        return {
+            value
+        };
     },
 
     computed: {
