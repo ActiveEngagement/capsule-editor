@@ -12,9 +12,5 @@ Vue.use(AxiosDefaults, {
 Vue.config.productionTip = false;
 
 new Vue({
-    render: h => h(App, {
-        props: {
-            footer: Vue.extend(EditorFooter)
-        }
-    })
+    render: h => h(App)
 }).$mount('#app');

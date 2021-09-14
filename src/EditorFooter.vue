@@ -30,9 +30,13 @@
             </div>
         </div>
         <div v-if="!isEmpty() && (saveButton || fixedAllErrors)" class="flex-shrink-0 p-2">
-            <btn type="button" variant="light" @click="$emit('save'); $emit('finish')">
-                <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
-            </btn>
+            <slot name="before-save-button" />
+            <slot name="save-button">
+                <btn type="button" variant="light" @click="$emit('save'); $emit('finish')">
+                    <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
+                </btn>
+            </slot>
+            <slot name="after-save-button" />
         </div>
     </footer>
 </template>

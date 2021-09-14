@@ -3,20 +3,25 @@
         <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
 
         <animate-css enter="tada" leave="fadeOut">
-            <editor-modal v-if="showFinishPopup">
-                <slot name="success" :close="closeFinishPopup">
-                    <img src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
-                    <div class="text-center">
-                        <h1 class="font-weight-light">
-                            Success!
-                        </h1>
-                        <h5 class="font-weight-light mb-5">
-                            Your document has been fixed.
-                        </h5>
-                        <btn type="button" variant="primary" size="lg" block @click="closeFinishPopup">
-                            Dismiss
-                        </btn>
-                    </div>
+            <editor-modal v-if="showFinishModal">
+                <slot name="success" :close="closeFinishPopup" :view="view" :filename="filename">
+                    <animate-css name="zoom" in left>
+                        <img v-if="showFinishModalShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
+                    </animate-css>
+                    
+                    <slot name="success-content" :close="closeFinishPopup" :view="view" :filename="filename">
+                        <div class="text-center">
+                            <h1 class="font-weight-light">
+                                Success!
+                            </h1>
+                            <h5 class="font-weight-light mb-5">
+                                Your document has been fixed.
+                            </h5>
+                            <btn type="button" variant="primary" size="lg" block @click="closeFinishPopup">
+                                Dismiss
+                            </btn>
+                        </div>
+                    </slot>
                 </slot>
             </editor-modal>
         </animate-css>
@@ -34,15 +39,21 @@ import { html } from '@codemirror/lang-html';
 import { EditorView, keymap } from '@codemirror/view';
 import { oneDark } from "@codemirror/theme-one-dark";
 import EditorDemoModal from './EditorDemoModal';
+import EditorFooter from './EditorFooter';
 import EditorModal from './EditorModal';
+import EditorToolbar from './EditorToolbar';
 import lint from './Extensions/Lint';
+import toolbar from './Extensions/Toolbar';
+import Vue from 'vue';
 
 export default {
     components: {
         AnimateCss,
         Btn,
         EditorDemoModal,
-        EditorModal
+        EditorFooter,
+        EditorModal,
+        EditorToolbar,
     },
     props: {
         demoMode: {
@@ -52,26 +63,51 @@ export default {
 
         footer: {
             type: Function,
-            required: true
+            default: Vue.extend(EditorFooter),
+        },
+
+        save: {
+            type: Function,
+            default() {
+                return this.showFinishModal = true;
+            }
         },
 
         skipIntro: {
             type: Boolean,
             default: false
+        },
+
+        title: String,
+
+        toolbar: {
+            type: Function,
+            default: Vue.extend(EditorToolbar)
         }
     },
     data() {
         return {
             demoModalCleared: this.skipIntro,
+            filename: this.title,
             hasDismissedFinishPopup: false,
-            showFinishPopup: false,
+            showFinishModal: false,
+            showFinishModalShowing: false,
             view: null,
+        }
+    },
+    watch: {
+        showFinishModal(value) {
+            if(value) {
+                this.$nextTick(() => this.showFinishModalShowing = true)
+            }
+
+            this.showFinishModalShowing = false;
         }
     },
     created() {
         this.$on('finish', value => {
             if(this.demoMode) {
-                this.showFinishPopup = value;
+                this.showFinishModal = value;
             }
         });
     },
@@ -84,6 +120,7 @@ export default {
                     ...basicSetup,
                     keymap.of([ indentWithTab ]),
                     html(),
+                    toolbar(this),
                     lint(this),
                 ]
             }),
@@ -92,7 +129,7 @@ export default {
     },
     methods: {
         closeFinishPopup() {
-            this.showFinishPopup = false;
+            this.showFinishModal = false;
             this.hasDismissedFinishPopup = true;
         },
 
@@ -129,4 +166,7 @@ html, body {
 .cm-editor,
 .cm-wrapper { height: 100%; }
 .cm-scroller { overflow: auto }
+
+.cm-editor.cm-focused { outline: none }
+.cm-panels.cm-panels-top { border: none !important; }
 </style>
