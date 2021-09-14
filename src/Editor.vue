@@ -9,7 +9,12 @@
                         <img v-if="showFinishModalShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
                     </animate-css>
                     
-                    <slot name="success-content" :close="closeFinishPopup" :view="view" :filename="filename">
+                    <slot
+                        name="success-content"
+                        :content="content"
+                        :close="closeFinishPopup"
+                        :filename="filename"
+                        :view="view">
                         <div class="text-center">
                             <h1 class="font-weight-light">
                                 Success!

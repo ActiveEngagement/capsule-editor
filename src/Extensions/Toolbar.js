@@ -7,7 +7,7 @@ export default function(parent, left, right) {
             title: parent.title
         }
     });
-
+    
     component.$on('input', value => {
         parent.filename = value;
         parent.$emit('input', {
