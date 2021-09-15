@@ -50,9 +50,9 @@
             </template>
         </editor-toolbar>
 
-        <div ref="wrapper" class="cm-wrapper"></div>
+        <div ref="wrapper" class="cm-wrapper" />
 
-        <editor-footer v-model="errors" ref="footer" @save="onSave">
+        <editor-footer ref="footer" v-model="errors" @save="onSave">
             <template #before-save-button>
                 <slot
                     name="before-save-button"
@@ -92,7 +92,6 @@ import EditorModal from './EditorModal';
 import EditorToolbar from './EditorToolbar';
 import lint from './Extensions/Lint';
 import toolbar from './Extensions/Toolbar';
-import Vue from 'vue';
 
 export default {
     components: {
@@ -107,11 +106,6 @@ export default {
         demoMode: {
             type: Boolean,
             default: true
-        },
-
-        footer: {
-            type: Function,
-            default: Vue.extend(EditorFooter),
         },
 
         save: {
