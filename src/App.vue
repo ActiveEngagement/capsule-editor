@@ -1,11 +1,6 @@
 <template>
     <editor ref="editor" title="test" @input="onInput">
-        <template #toolbar-left="{ errors }">
-            left: {{ errors.length }}
-        </template>
-        <template #toolbar-right="{ filename }">
-            right: {{ filename }}
-        </template>
+        
     </editor>
 </template>
 

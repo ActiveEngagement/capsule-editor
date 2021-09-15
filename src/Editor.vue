@@ -31,7 +31,7 @@
             </editor-modal>
         </animate-css>
 
-        <editor-toolbar v-model="filename" :title="title" ref="toolbar">
+        <editor-toolbar ref="toolbar" v-model="filename" :title="title" @demo-modal="() => demoModalCleared = false">
             <template #left>
                 <slot
                     name="toolbar-left"
@@ -69,7 +69,7 @@
             </template>
             <template #after-save-button>
                 <slot
-                    name="before-save-button"
+                    name="after-save-button"
                     :errors="errors"
                     :filename="filename"
                     :content="content" />

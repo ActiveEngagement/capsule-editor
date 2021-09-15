@@ -1,5 +1,5 @@
 <template>
-    <div class="editor-toolbar d-flex justify-content-between py-1 px-2">
+    <div class="editor-toolbar d-flex justify-content-between pt-2 px-2 pb-1">
         <div class="editor-toolbar-left">
             <slot name="left" />
         </div>
