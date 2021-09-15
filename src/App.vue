@@ -1,8 +1,5 @@
 <template>
-    <editor ref="editor" title="test" @input="onInput">
-        <template #toolbar-left>
-            {{ updates }}
-        </template>
+    <editor ref="editor" @input="onInput">
         <textarea>
             <div>
         </textarea>

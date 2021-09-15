@@ -105,7 +105,7 @@ export default {
     props: {
         demoMode: {
             type: Boolean,
-            default: true
+            default: false
         },
 
         save: {
