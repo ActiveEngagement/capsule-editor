@@ -4,11 +4,11 @@
             <slot name="left" />
         </div>
         <div class="editor-toolbar-title">
-            <input type="text" placeholder="Untitled Document" :value="title" @input="onInput">
+            <input v-model="currentValue" type="text" placeholder="Untitled Document" @input="event => $emit('input', event.target.value)">
         </div>
         <div class="editor-toolbar-right">
             <slot name="right">
-                <btn v-if="demoMode" size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
+                <btn size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
                     <font-awesome-icon :icon="['far', 'question-circle']" />
                 </btn>
             </slot>
@@ -20,62 +20,37 @@
 import Badge from '@vue-interface/badge';
 import Btn from '@vue-interface/btn';
 
-import { alt, ctrl, shift } from './Icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon as Icon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faBug);
-library.add(faCog);
-library.add(alt);
-library.add(ctrl);
-library.add(shift);
-library.add(faQuestionCircle);
+library.add(faBug, faCog, faQuestionCircle);
 
 export default {
 
     components: {
         Btn,
-        Icon,
-        Badge
+        Badge,
+        FontAwesomeIcon
     },
 
     props: {
 
-        activity: Boolean,
-
         demoMode: Boolean,
         
-        errors: Array,
-
-        pageControls: {
-            type: Boolean,
-            default: true
-        },
-
-        value: String,
-
         title: String
 
     },
 
-    methods: {
+    model: {
+        prop: 'currentValue'
+    },
 
-        isLintingDisabled() {
-            return !this.value || this.value === '';
-        },
-
-        onInput(event) {
-            this.$emit('input', event.target.value);
-        },
-
-        onClickLint(event) {
-            if(!this.isLintingDisabled()) {
-                this.$emit('lint', event);
-            }
-        }
-
+    data() {
+        return {
+            currentValue: this.title
+        };
     }
 
 };

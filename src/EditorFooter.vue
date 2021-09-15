@@ -62,10 +62,6 @@ export default {
     },
 
     props: {
-        view: {
-            type: Object,
-            required: true,
-        },
         saveButton: {
             type: Boolean,
             default: false
@@ -81,7 +77,8 @@ export default {
             currentError: null,
             direction: 'up',
             errors: [],
-            fixedAllErrors: false
+            fixedAllErrors: false,
+            view: null
         };
     },
 
@@ -133,7 +130,7 @@ export default {
         },
 
         isEmpty() {
-            return this.view.state.doc.toString() === '';
+            return this.view && this.view.state.doc.toString() === '';
         },
 
         update(view, { errors }) {
@@ -155,6 +152,8 @@ export default {
             else {
                 this.currentError = this.errors[0];
             }
+
+            this.$emit('input', this.errors);
         },
 
     }

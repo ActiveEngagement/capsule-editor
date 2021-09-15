@@ -1,5 +1,12 @@
 <template>
-    <editor ref="editor" title="Some Title Here" />
+    <editor ref="editor" title="test" @input="onInput">
+        <template #toolbar-left="{ errors }">
+            left: {{ errors.length }}
+        </template>
+        <template #toolbar-right="{ filename }">
+            right: {{ filename }}
+        </template>
+    </editor>
 </template>
 
 <script>
@@ -9,10 +16,14 @@ export default {
     components: {
         Editor
     },
+    
+    data: () => ({
+        updates: 0
+    }),
 
-    computed: {
-        apiKey() {
-            return process.env.VUE_APP_SECRET;
+    methods: {
+        onInput(value) {
+            this.updates++;
         }
     }
 }

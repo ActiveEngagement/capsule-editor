@@ -31,11 +31,50 @@
             </editor-modal>
         </animate-css>
 
-        <div ref="content" class="d-none">
-            <slot />
-        </div>
-        
+        <editor-toolbar v-model="filename" :title="title" ref="toolbar">
+            <template #left>
+                <slot
+                    name="toolbar-left"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="content"
+                />
+            </template>
+            <template #right>
+                <slot
+                    name="toolbar-right"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="content"
+                />
+            </template>
+        </editor-toolbar>
+
         <div ref="wrapper" class="cm-wrapper"></div>
+
+        <editor-footer v-model="errors" ref="footer">
+            <template #before-save-button>
+                <slot
+                    name="before-save-button"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="content" />
+            </template>
+            <template #save-button>
+                <slot
+                    name="save-button"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="content" />
+            </template>
+            <template #after-save-button>
+                <slot
+                    name="before-save-button"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="content" />
+            </template>
+        </editor-footer>
     </div>
 </template>
 
@@ -89,11 +128,6 @@ export default {
 
         title: String,
 
-        toolbar: {
-            type: Function,
-            default: Vue.extend(EditorToolbar)
-        },
-
         value: String,
     },
     model: {
@@ -103,6 +137,7 @@ export default {
         return {
             content: this.value,
             demoModalCleared: this.skipIntro,
+            errors: [],
             filename: this.title,
             hasDismissedFinishPopup: false,
             showFinishModal: false,
@@ -143,11 +178,6 @@ export default {
                     html(),
                     toolbar(this),
                     lint(this),
-                    EditorView.updateListener.of(view => {
-                        if(view.docChanged) {
-                            this.content = view.state.doc.toString();
-                        }
-                    }),
                 ]
             }),
             parent: this.$refs.wrapper
@@ -161,7 +191,7 @@ export default {
 
         getSlotContents() {
             return this.$slots.default ? this.$slots.default.filter(vnode => {
-                return vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
+                return vnode.tag && vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
             }).reduce((carry, vnode) => {
                 return (
                     carry + vnode.children.map(child => {

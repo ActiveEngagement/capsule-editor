@@ -60,25 +60,11 @@ function handler(view) {
 }
 
 function helpPanel(parent) {
-    let component, dom = document.createElement('div');
-    
     return [
         ViewPlugin.fromClass(class {
             constructor(view) {
-                const el = document.createElement('div');
-
-                component = new parent.footer({
-                    parent,
-                    propsData: {
-                        view
-                    }
-                });
-
-                component.$slots['before-save-button'] = parent.$slots['before-save-button'];
-                component.$slots['save-button'] = parent.$slots['save-button'];
-                component.$slots['after-save-button'] = parent.$slots['after-save-button'];
-            
-                component.$on('goto', ({ from, to }) => {
+                parent.$refs.footer.view = view;
+                parent.$refs.footer.$on('goto', ({ from, to }) => {
                     const tr = view.state.update({
                         selection: {anchor: from, head: to},
                         scrollIntoView: true
@@ -88,23 +74,16 @@ function helpPanel(parent) {
                     view.focus();
                 }); 
 
-                component.$on('save', () => parent.save(parent));
-                component.$mount(el);
-
-                dom.appendChild(component.$el);
-            }
-        }, {
-            provide() {
-                return [];
+                parent.$refs.footer.$on('save', () => parent.save(parent));
             }
         }),
         EditorView.updateListener.of(view => {
-            component.update(view, view.state.field(detectLintErrors));
+            parent.$refs.footer.update(view, view.state.field(detectLintErrors));
         }),
         showPanel.of(view => {
             return {
                 bottom: true,
-                dom
+                dom: parent.$refs.footer.$el
             };
         })
     ];
