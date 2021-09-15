@@ -66,15 +66,16 @@ function helpPanel(parent) {
                 parent.$refs.footer.view = view;
                 parent.$refs.footer.$on('goto', ({ from, to }) => {
                     const tr = view.state.update({
-                        selection: {anchor: from, head: to},
+                        selection: {
+                            anchor: from,
+                            head: to
+                        },
                         scrollIntoView: true
                     });
 
                     view.dispatch(tr);
                     view.focus();
-                }); 
-
-                parent.$refs.footer.$on('save', () => parent.save(parent));
+                });
             }
         }),
         EditorView.updateListener.of(view => {

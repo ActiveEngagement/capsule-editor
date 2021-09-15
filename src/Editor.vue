@@ -52,7 +52,7 @@
 
         <div ref="wrapper" class="cm-wrapper"></div>
 
-        <editor-footer v-model="errors" ref="footer">
+        <editor-footer v-model="errors" ref="footer" @save="onSave">
             <template #before-save-button>
                 <slot
                     name="before-save-button"
@@ -204,6 +204,10 @@ export default {
         onModalClear() {
             this.demoModalCleared = true;
             this.$emit('demo-complete');
+        },
+
+        onSave() {
+            this.save(this);
         }
     }
 }

@@ -29,10 +29,10 @@
                 </animate-css>
             </div>
         </div>
-        <div v-if="!isEmpty() && (saveButton || fixedAllErrors)" class="flex-shrink-0 p-2">
+        <div v-if="!isEmpty() && hasLinted && fixedAllErrors" class="flex-shrink-0 p-2">
             <slot name="before-save-button" />
             <slot name="save-button">
-                <btn type="button" variant="light" @click="$emit('save'); $emit('finish')">
+                <btn type="button" variant="light" @click="$emit('save')">
                     <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
                 </btn>
             </slot>
@@ -62,10 +62,6 @@ export default {
     },
 
     props: {
-        saveButton: {
-            type: Boolean,
-            default: false
-        },
         saveButtonLabel: {
             type: String,
             default: 'Save File'
@@ -77,6 +73,7 @@ export default {
             currentError: null,
             direction: 'up',
             errors: [],
+            hasLinted: false,
             fixedAllErrors: false,
             view: null
         };
@@ -100,6 +97,7 @@ export default {
                 this.fixedAllErrors = false;
             }
             else if(!value.length && !!oldValue.length) {
+                this.hasLinted = true;
                 this.currentError = null;
                 this.fixedAllErrors = true;
             }

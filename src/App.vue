@@ -1,6 +1,11 @@
 <template>
     <editor ref="editor" title="test" @input="onInput">
-        
+        <template #toolbar-left>
+            {{ updates }}
+        </template>
+        <textarea>
+            <div>
+        </textarea>
     </editor>
 </template>
 
