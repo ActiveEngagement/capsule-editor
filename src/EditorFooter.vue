@@ -165,6 +165,7 @@ export default {
     position: relative;
     align-items: end;
     transition: .2s all ease-in;
+    min-height: 3.5rem;
 
     .footer & {
         height: 4.75rem;
