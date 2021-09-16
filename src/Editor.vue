@@ -31,7 +31,12 @@
             </editor-modal>
         </animate-css>
 
-        <editor-toolbar ref="toolbar" v-model="filename" :title="title" @demo-modal="() => demoModalCleared = false">
+        <editor-toolbar
+            ref="toolbar"
+            v-model="filename"
+            :title="title"
+            :demoMode="demoMode"
+            @demo-modal="() => demoModalCleared = false">
             <template #left>
                 <slot
                     name="toolbar-left"
@@ -52,7 +57,11 @@
 
         <div ref="wrapper" class="cm-wrapper" />
 
-        <editor-footer ref="footer" v-model="errors" @save="onSave">
+        <editor-footer
+            ref="footer"
+            v-model="errors"
+            @goto="onGoto"
+            @save="onSave">
             <template #before-save-button>
                 <slot
                     name="before-save-button"
@@ -198,6 +207,19 @@ export default {
         onModalClear() {
             this.demoModalCleared = true;
             this.$emit('demo-complete');
+        },
+        
+        onGoto({ from, to }) {
+            const tr = this.view.state.update({
+                selection: {
+                    anchor: from,
+                    head: to
+                },
+                scrollIntoView: true
+            });
+
+            this.view.dispatch(tr);
+            this.view.focus();
         },
 
         onSave() {

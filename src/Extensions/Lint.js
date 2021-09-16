@@ -165,8 +165,6 @@ const lintState = StateField.define({
                     }
                 });
             
-                console.log(diagnostics);
-                
                 view.dispatch({
                     effects: setDiagnosticsEffect.of(diagnostics)
                 });

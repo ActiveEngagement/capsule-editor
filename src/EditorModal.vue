@@ -52,6 +52,7 @@ export default {
     .capsule-editor-modal-content {
         width: 50%;
         overflow: auto;
+        min-width: 33rem;
         max-width: 40rem;
         max-height: 35rem;
         background: white;

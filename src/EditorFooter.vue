@@ -130,6 +130,7 @@ export default {
             }
 
             this.currentDiagnostic = this.diagnostics[index];
+            
             this.$emit('goto', this.currentDiagnostic);
         },
 

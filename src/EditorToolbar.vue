@@ -8,7 +8,7 @@
         </div>
         <div class="editor-toolbar-right">
             <slot name="right">
-                <btn size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
+                <btn v-if="demoMode" size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
                     <font-awesome-icon :icon="['far', 'question-circle']" />
                 </btn>
             </slot>
