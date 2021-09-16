@@ -2,34 +2,35 @@
     <footer class="editor-footer d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center w-100">
             <div class="d-flex align-items-center">
-                <div class="ml-2 mr-2">
-                    <animate-css name="fade">
-                        <btn type="button" variant="link" v-if="totalErrors" class="text-white" @click="goto(index)">
-                            <font-awesome-icon icon="exclamation-triangle" size="lg" />
-                        </btn>
-                    </animate-css>
-                </div>
                 <div class="editor-footer-pager flex-shrink-0">
                     <animate-css name="fade">
-                        <div v-if="totalErrors" class="py-2 mr-3">
+                        <div v-if="totalDiagnostics" class="py-2 mr-2">
                             <btn type="button" variant="link" @click="goto(index - 1)">
                                 <font-awesome-icon icon="caret-left" />
                             </btn> 
-                            <span>{{ index + 1 }} of {{ errors.length }} </span>
+                            <span>{{ index + 1 }} of {{ diagnostics.length }} </span>
                             <btn type="button" variant="link" @click="goto(index + 1)">
                                 <font-awesome-icon icon="caret-right" />
                             </btn>
                         </div>
                     </animate-css>
                 </div>
+                <div class="mr-3">
+                    <animate-css name="fade">
+                        <btn v-if="currentDiagnostic" type="button" variant="link" class="text-white" @click="goto(index)">
+                            <font-awesome-icon v-if="currentDiagnostic.severity === 'error'" icon="bug" size="lg" />
+                            <font-awesome-icon v-if="currentDiagnostic.severity === 'warning'" icon="exclamation-triangle" size="lg" />
+                        </btn>
+                    </animate-css>
+                </div>
             </div>
-            <div class="editor-footer-error">
+            <div class="editor-footer-diagnostic">
                 <animate-css name="fade" :direction="direction" leave-active-class="position-absolute">
-                    <editor-error v-if="currentError" :key="index" :error="currentError" class="py-2" />
+                    <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" class="py-2" />
                 </animate-css>
             </div>
         </div>
-        <div v-if="!isEmpty() && hasLinted && fixedAllErrors" class="flex-shrink-0 p-2">
+        <div v-if="!isEmpty() && hasLinted && fixedAllDiagnostics" class="flex-shrink-0 p-2">
             <slot name="before-save-button" />
             <slot name="save-button">
                 <btn type="button" variant="light" @click="$emit('save')">
@@ -48,9 +49,9 @@ import EditorError from './EditorError';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCaretLeft, faCaretRight, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faSave } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCaretLeft, faCaretRight, faSave);
+library.add(faCaretLeft, faCaretRight, faSave, faBug, faExclamationTriangle);
 
 export default {
 
@@ -70,11 +71,11 @@ export default {
 
     data() {
         return {
-            currentError: null,
+            currentDiagnostic: null,
             direction: 'up',
-            errors: [],
+            diagnostics: [],
             hasLinted: false,
-            fixedAllErrors: false,
+            fixedAllDiagnostics: false,
             view: null
         };
     },
@@ -82,77 +83,99 @@ export default {
     computed: {
 
         index() {
-            return Math.max(0, this.errors.indexOf(this.currentError));
+            return Math.max(0, this.diagnostics.indexOf(this.currentDiagnostic));
         },
 
-        totalErrors() {
-            return this.errors.length;
+        totalDiagnostics() {
+            return this.diagnostics.length;
         }
 
     },
 
     watch: {
-        errors(value, oldValue) {
+
+        currentDiagnostic(value, oldValue) {
+            this.direction = this.index > this.diagnostics.indexOf(oldValue) ? 'down': 'up';
+        },
+
+        diagnostics(value, oldValue) {
             if(value.length) {
-                this.fixedAllErrors = false;
+                this.fixedAllDiagnostics = false;
             }
             else if(!value.length && !!oldValue.length) {
                 this.hasLinted = true;
-                this.currentError = null;
-                this.fixedAllErrors = true;
+                this.currentDiagnostic = null;
+                this.fixedAllDiagnostics = true;
             }
             else if(!value.length) {
-                this.fixedAllErrors = true;
+                this.fixedAllDiagnostics = true;
             }
         }
     },
 
     methods: {
 
-        findActiveError() {
-            return this.errors
-                .filter(error => error.isActive)
+        findActiveDiagnostic() {
+            return this.diagnostics
+                .filter(diagnostic => diagnostic.isActive)
                 .pop();
         },
 
         goto(index) {
             if(index < 0) {
-                index = this.errors.length - 1;
+                index = this.diagnostics.length - 1;
             }
-            else if(index > this.errors.length - 1) {
+            else if(index > this.diagnostics.length - 1) {
                 index = 0;
             }
 
-            this.currentError = this.errors[index];
-            this.$emit('goto', this.currentError);
+            this.currentDiagnostic = this.diagnostics[index];
+            this.$emit('goto', this.currentDiagnostic);
         },
 
         isEmpty() {
             return this.view && this.view.state.doc.toString() === '';
         },
 
-        update(view, { errors }) {
-            this.errors = errors || [];
+        compare(a, b) {
+            return (!!a && !!b)
+                && a.from === b.from
+                && a.to === b.to
+                && a.rule.id === b.rule.id;
+        },
 
+        update(diagnostics) {
+            this.diagnostics = diagnostics || [];
+
+            if(!this.currentDiagnostic) {
+                this.currentDiagnostic = this.diagnostics[this.index];
+            }
+            
+            this.$emit('input', this.diagnostics);
+        },
+        
+        activate(view) {
             const { from, to } = view.state.selection.main;
 
-            const active = errors.filter(error => {
+            const active = this.diagnostics.filter(diagnostic => {
                 if(from === to) {
-                    return error.from <= from && error.to >= to;
+                    return diagnostic.from <= from && diagnostic.to >= to;
                 }
 
-                return error.from >= from && error.to <= to;
+                return diagnostic.from >= from && diagnostic.to <= to;
+            });
+
+            const match = this.diagnostics.find(diagnostic => {
+                return this.compare(diagnostic, this.currentDiagnostic);
             });
 
             if(active.length) {
-                this.currentError = active[0];
+                this.currentDiagnostic = active[0];
             }
             else {
-                this.currentError = this.errors[0];
+                this.currentDiagnostic = match || this.diagnostics[this.index];
             }
-
-            this.$emit('input', this.errors);
-        },
+        }
 
     }
 
@@ -166,12 +189,13 @@ export default {
     align-items: end;
     transition: .2s all ease-in;
     min-height: 3.5rem;
+    overflow: hidden;
 
     .footer & {
         height: 4.75rem;
     }
 
-    .editor-footer-error {
+    .editor-footer-diagnostic {
         font-weight: 300;
         font-size: 1.2em;
     }

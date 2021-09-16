@@ -1,13 +1,14 @@
 <template>
-    <editor ref="editor" @input="onInput">
-        <textarea>
-            <div>
-        </textarea>
-    </editor>
+    <editor ref="editor" :value="value" @input="onInput" />
 </template>
 
 <script>
 import Editor from "./Editor";
+
+const value = `
+    <div id="test" id="test">
+        <div id="test" id="test">
+`;
 
 export default {
     components: {
@@ -15,6 +16,7 @@ export default {
     },
     
     data: () => ({
+        value,
         updates: 0
     }),
 
