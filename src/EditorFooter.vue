@@ -4,7 +4,7 @@
             <div class="d-flex align-items-center">
                 <div class="editor-footer-pager flex-shrink-0">
                     <animate-css name="fade">
-                        <div v-if="totalDiagnostics" class="py-2 mr-2">
+                        <div v-if="totalDiagnostics" class="py-2 mx-2">
                             <btn type="button" variant="link" @click="goto(index - 1)">
                                 <font-awesome-icon icon="caret-left" />
                             </btn> 
@@ -26,17 +26,39 @@
             </div>
             <div class="editor-footer-diagnostic">
                 <animate-css name="fade" :direction="direction" leave-active-class="position-absolute">
-                    <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" class="py-2" />
+                    <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" class="py-2 pr-3" />
                 </animate-css>
             </div>
         </div>
-        <div v-if="!isEmpty() && hasLinted && fixedAllDiagnostics" class="flex-shrink-0 p-2">
+        <div class="flex-shrink-0 pr-2">
             <slot name="before-save-button" />
-            <slot name="save-button">
-                <btn type="button" variant="light" @click="$emit('save')">
+
+            <slot name="action-button">
+                <template v-if="currentDiagnostic && currentDiagnostic.rule.actions.length">
+                    <template v-if="currentDiagnostic.rule.actions.length === 1">
+                        <btn type="button" variant="light" @click="$emit('action', currentDiagnostic, actions[0])">
+                            <font-awesome-icon icon="hammer" class="mr-1" /> {{ actions[0].name }}
+                        </btn>
+                    </template>
+                    <template v-else>
+                        <btn-dropdown label="Fix Errors" type="button" variant="light" dropup>
+                            <template #icon>
+                                <font-awesome-icon icon="hammer" class="mr-2" /> 
+                            </template>
+                            <button v-for="(action, i) in actions" :key="`${currentDiagnostic.rule.id}-${i}`" type="button" variant="light" @click="$emit('action', currentDiagnostic, action)">
+                                {{ action.name }}
+                            </button>
+                        </btn-dropdown>
+                    </template>
+                </template>
+            </slot>
+
+            <slot name="save-button" :has-linted="hasLinted" :fixed-all-diagnostics="fixedAllDiagnostics" :is-empty="isEmpty">
+                <btn v-if="!isEmpty() && hasLinted && fixedAllDiagnostics" type="button" variant="light" @click="$emit('save')">
                     <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
                 </btn>
             </slot>
+
             <slot name="after-save-button" />
         </div>
     </footer>
@@ -45,19 +67,21 @@
 <script>
 import AnimateCss from '@vue-interface/animate-css';
 import Btn from '@vue-interface/btn';
+import BtnDropdown from '@vue-interface/btn-dropdown';
 import EditorError from './EditorError';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faHammer, faSave, faScrewdriver } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCaretLeft, faCaretRight, faSave, faBug, faExclamationTriangle);
+library.add(faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faSave, faHammer);
 
 export default {
 
     components: {
         AnimateCss,
         Btn,
+        BtnDropdown,
         EditorError,
         FontAwesomeIcon,
     },
@@ -81,6 +105,10 @@ export default {
     },
 
     computed: {
+
+        actions() {
+            return this.currentDiagnostic && [].concat(this.currentDiagnostic.rule.actions).reverse();
+        },
 
         index() {
             return Math.max(0, this.diagnostics.indexOf(this.currentDiagnostic));
@@ -129,9 +157,11 @@ export default {
                 index = 0;
             }
 
-            this.currentDiagnostic = this.diagnostics[index];
+            const lastDiagnostic = this.currentDiagnostic;
             
-            this.$emit('goto', this.currentDiagnostic);
+            this.currentDiagnostic = this.diagnostics[index];   
+
+            this.$emit('goto', this.currentDiagnostic, lastDiagnostic);
         },
 
         isEmpty() {
@@ -170,8 +200,10 @@ export default {
                 return this.compare(diagnostic, this.currentDiagnostic);
             });
 
+            const index = active.indexOf(this.currentDiagnostic);
+
             if(active.length) {
-                this.currentDiagnostic = active[0];
+                this.currentDiagnostic = active[index];
             }
             else {
                 this.currentDiagnostic = match || this.diagnostics[this.index];
@@ -190,7 +222,6 @@ export default {
     align-items: end;
     transition: .2s all ease-in;
     min-height: 3.5rem;
-    overflow: hidden;
 
     .footer & {
         height: 4.75rem;

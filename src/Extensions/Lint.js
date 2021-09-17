@@ -3,7 +3,6 @@ import { showPanel } from "@codemirror/panel";
 import { StateEffect, StateField } from "@codemirror/state";
 import { Decoration, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
 import { lint } from 'capsule-lint';
-import elt from 'crelt';
 
 // Override the default keymaps
 lintKeymap[0].run = () => {
@@ -127,7 +126,7 @@ class LintState {
 const setDiagnosticsEffect = StateEffect.define();
 
 const lintState = StateField.define({
-    create(state) {
+    create() {
         return new LintState(Decoration.none);
     },
     update(value, tr) {

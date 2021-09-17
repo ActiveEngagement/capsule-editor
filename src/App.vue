@@ -5,10 +5,7 @@
 <script>
 import Editor from "./Editor";
 
-const value = `
-    <div id="test" id="test">
-        <div id="test" id="test">
-`;
+const value = `<a href="javascript:alert(1)" id="test" id="test">asd</a>`;
 
 export default {
     components: {
