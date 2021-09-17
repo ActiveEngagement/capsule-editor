@@ -200,8 +200,8 @@ export default {
                 return this.compare(diagnostic, this.currentDiagnostic);
             });
 
-            const index = active.indexOf(this.currentDiagnostic);
-
+            const index = Math.max(0, active.indexOf(this.currentDiagnostic));
+            
             if(active.length) {
                 this.currentDiagnostic = active[index];
             }
