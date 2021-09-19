@@ -1,11 +1,11 @@
 <template>
-    <editor ref="editor" :value="value" @input="onInput" />
+    <editor ref="editor" />
 </template>
 
 <script>
 import Editor from "./Editor";
 
-const value = `<a href="javascript:alert(1)" id="test" id="test">asd</a>`;
+const content = `<div>`;
 
 export default {
     components: {
@@ -13,14 +13,7 @@ export default {
     },
     
     data: () => ({
-        value,
-        updates: 0
-    }),
-
-    methods: {
-        onInput(value) {
-            this.updates++;
-        }
-    }
+        content
+    })
 }
 </script>

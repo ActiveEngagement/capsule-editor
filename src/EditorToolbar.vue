@@ -39,7 +39,7 @@ export default {
 
         demoMode: Boolean,
         
-        title: String
+        filename: String
 
     },
 
@@ -49,7 +49,7 @@ export default {
 
     data() {
         return {
-            currentValue: this.title
+            currentValue: this.filename
         };
     }
 

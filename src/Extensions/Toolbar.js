@@ -5,12 +5,12 @@ export default function(parent, left, right) {
     return [
         ViewPlugin.fromClass(class {
             constructor(view) {
-                parent.content = view.state.doc.toString();
+                parent.currentContent = view.state.doc.toString();
             }
         }),
         EditorView.updateListener.of(view => {
             if(view.docChanged) {
-                parent.content = view.state.doc.toString();
+                parent.currentContent = view.state.doc.toString();
             }
         }),
         showPanel.of(view => ({

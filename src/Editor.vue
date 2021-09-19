@@ -4,16 +4,16 @@
 
         <animate-css enter="tada" leave="fadeOut">
             <editor-modal v-if="showFinishModal">
-                <slot name="success" :close="closeFinishPopup" :view="view" :filename="filename">
+                <slot name="success" :close="closeFinishPopup" :view="view" :filename="currentFilename">
                     <animate-css name="zoom" in left>
                         <img v-if="showFinishModalShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
                     </animate-css>
                     
                     <slot
                         name="success-content"
-                        :content="content"
+                        :content="currentContent"
                         :close="closeFinishPopup"
-                        :filename="filename"
+                        :filename="currentFilename"
                         :view="view">
                         <div class="text-center">
                             <h1 class="font-weight-light">
@@ -33,24 +33,24 @@
 
         <editor-toolbar
             ref="toolbar"
-            v-model="filename"
-            :title="title"
+            v-model="currentFilename"
             :demoMode="demoMode"
+            :filename="currentFilename"
             @demo-modal="() => demoModalCleared = false">
             <template #left>
                 <slot
                     name="toolbar-left"
                     :errors="errors"
-                    :filename="filename"
-                    :content="content"
+                    :filename="currentFilename"
+                    :content="currentContent"
                 />
             </template>
             <template #right>
                 <slot
                     name="toolbar-right"
                     :errors="errors"
-                    :filename="filename"
-                    :content="content"
+                    :filename="currentFilename"
+                    :content="currentContent"
                 />
             </template>
         </editor-toolbar>
@@ -59,6 +59,7 @@
 
         <editor-footer
             ref="footer"
+            :view="view"
             v-model="errors"
             @action="onAction"
             @goto="onGoto"
@@ -67,22 +68,22 @@
                 <slot
                     name="before-save-button"
                     :errors="errors"
-                    :filename="filename"
-                    :content="content" />
+                    :filename="currentFilename"
+                    :content="currentContent" />
             </template>
             <template #save-button>
                 <slot
                     name="save-button"
                     :errors="errors"
-                    :filename="filename"
-                    :content="content" />
+                    :filename="currentFilename"
+                    :content="currentContent" />
             </template>
             <template #after-save-button>
                 <slot
                     name="after-save-button"
                     :errors="errors"
-                    :filename="filename"
-                    :content="content" />
+                    :filename="currentFilename"
+                    :content="currentContent" />
             </template>
         </editor-footer>
     </div>
@@ -119,6 +120,8 @@ export default {
             default: false
         },
 
+        filename: String,
+
         save: {
             type: Function,
             default() {
@@ -133,17 +136,17 @@ export default {
 
         title: String,
 
-        value: String,
+        content: String,
     },
     model: {
-        prop: 'content'
+        prop: 'currentContent'
     },
     data() {
         return {
-            content: this.value,
+            currentContent: this.content,
+            currentFilename: this.filename || this.title,
             demoModalCleared: this.skipIntro,
             errors: [],
-            filename: this.title,
             hasDismissedFinishPopup: false,
             showFinishModal: false,
             showFinishModalShowing: false,
@@ -151,10 +154,10 @@ export default {
         }
     },
     watch: {
-        content(content) {
+        currentContent(content) {
             this.$emit('input', {
-                filename: this.filename,
-                content
+                content,
+                filename: this.currentFilename,
             });
         },
         showFinishModal(value) {
@@ -175,7 +178,7 @@ export default {
     mounted() {
         this.view = new EditorView({
             state: EditorState.create({
-                doc: this.value ||this.getSlotContents(),
+                doc: this.currentContent ||this.getSlotContents(),
                 extensions: [
                     oneDark,
                     ...basicSetup,
