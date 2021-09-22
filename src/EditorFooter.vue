@@ -108,7 +108,7 @@ export default {
     },
 
     updated() {
-        if(!this.isEmpty()) {
+        if(!this.isEmpty() && this.hasLinted) {
             this.showFooter = true;
             setTimeout(() => this.showFooterContent = true, 200);
         }
@@ -193,6 +193,7 @@ export default {
 
         update(diagnostics) {
             this.diagnostics = diagnostics || [];
+            this.hasLinted = true;
 
             if(!this.currentDiagnostic) {
                 this.currentDiagnostic = this.diagnostics[this.index];
