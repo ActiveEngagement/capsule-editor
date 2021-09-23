@@ -210,16 +210,10 @@ export default {
         onModalClear() {
             this.demoModalCleared = true;
             this.$emit('demo-complete');
+            this.view.focus();
         },
         
         onGoto({ from, to }) {
-            /*
-            if(from <= this.view.state.selection.main.from 
-                && to >= this.view.state.selection.main.to) {
-                return;
-            }
-            */
-            
             const tr = this.view.state.update({
                 selection: {
                     anchor: from,

@@ -239,8 +239,6 @@ export default {
         },
 
         onClickAction(diagnostic, { apply }) {
-            console.log(diagnostic);
-
             apply(this.view, diagnostic.from, diagnostic.to);
 
             forceLinting(this.view);

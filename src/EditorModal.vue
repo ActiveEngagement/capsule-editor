@@ -54,7 +54,7 @@ export default {
         overflow: auto;
         min-width: 33rem;
         max-width: 40rem;
-        max-height: 35rem;
+        max-height: 40rem;
         background: white;
         box-shadow: 0 0 30px rgba(0, 0, 0, .5);
         position: relative;

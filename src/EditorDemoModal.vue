@@ -1,6 +1,10 @@
 <template>
-    <editor-modal class="capsule-editor-demo-modal" :class="`step-${active + 1}`">
-        <slide-deck ref="slides" :active="active" :controls="active > 0" @enter="onEnter">
+    <editor-modal class="capsule-editor-demo-modal" :class="`step-${active}`">
+        <slide-deck ref="slides" :active="active" :controls="active !== 'welcome'" @enter="onEnter">
+            <div v-for="[key, component] in steps" :key="key">
+                <component :is="component" :clear="clear" :next="next" :prev="prev" />
+            </div>
+            <!--
             <div :key="0">
                 <div>
                     <animate-css name="zoom" in left>
@@ -80,10 +84,11 @@
                     </btn>
                 </div>
             </div>
+            -->
             
             <template v-if="active > 0 && active < 3" #bottom>
                 <div class="capsule-editor-modal-footer">
-                    <small><a href="#" @click.prevent="$emit('clear')">Skip Tutorial</a></small>
+                    <small><a href="#" @click.prevent="clear">Skip Tutorial</a></small>
                 </div>
             </template>
         </slide-deck>
@@ -91,40 +96,60 @@
 </template>
 
 <script>
-import AnimateCss from '@vue-interface/animate-css';
-import Btn from '@vue-interface/btn';
 import { SlideDeck } from '@vue-interface/slide-deck';
 import EditorModal from './EditorModal';
-
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faLongArrowAltRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faInfoCircle);
-library.add(faLongArrowAltRight);
+import { steps } from './Demo';
 
 export default {
 
-    components: {
-        AnimateCss,
-        Btn,
+    components: Object.assign({
         EditorModal,
-        FontAwesomeIcon,
         SlideDeck,
-    },
+    }, steps),
 
     data() {
         return {
-            active: 0,
-            loaded: false
+            active: 'welcome'
         };
     },
 
-    mounted() {
-        this.loaded = true;
+    computed: {
+        steps() {
+            return Object.entries(steps);
+        }
     },
 
     methods: {
+
+        indexOf(name) {
+            const match = this.steps.find(([key, component], i) => {
+                if(name === key) {
+                    return true;
+                }
+            });
+            
+            return this.steps.indexOf(match);
+        },
+
+        clear() {
+            this.$emit('clear');
+        },
+
+        goto(index) {
+            if(this.steps[index]) {
+                const [ key ] = this.steps[index];
+
+                this.active = key;
+            }
+        },
+
+        next() {
+            this.goto(Math.max(0, this.indexOf(this.active)) + 1);
+        },
+
+        prev() {
+            this.goto(Math.max(0, this.indexOf(this.active)) - 1);
+        },
 
         onEnter(current) {
             this.active = current.key;
@@ -136,12 +161,12 @@ export default {
 
 <style lang="scss">
 .capsule-editor-demo-modal {
-    &:not(.step-1):not(.step-4) .slide-deck-content {
+    &:not(.step-welcome):not(.step-finished) .slide-deck-content {
         min-height: 28rem;
         margin-bottom: 3rem;
     }
 
-    &.step-4 {        
+    &.step-finished {        
         .slide-deck-controls {
             bottom: 0;
         }
