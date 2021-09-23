@@ -127,12 +127,12 @@ export default {
     computed: {
 
         actions() {
-            return this.currentDiagnostic && []
+            return this.currentDiagnostic ? []
                 .concat(this.currentDiagnostic.rule.actions)
                 .reverse()
                 .filter(({ validate }) => {
                     return !validate || validate(this.view, this.currentDiagnostic);
-                })
+                }) : [];
         },
 
         index() {
