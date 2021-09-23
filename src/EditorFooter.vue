@@ -34,7 +34,7 @@
                     <slot name="action-button">
                         <template v-if="actions.length">
                             <template v-if="actions.length === 1">
-                                <btn type="button" variant="light" @click="onAction">
+                                <btn type="button" variant="light" @click="() => onClickAction(currentDiagnostic, action)">
                                     <font-awesome-icon icon="hammer" class="mr-1" /> {{ actions[0].name }}
                                 </btn>
                             </template>
@@ -48,7 +48,7 @@
                                         :key="`${currentDiagnostic.rule.id}-${i}`"
                                         type="button"
                                         variant="light"
-                                        @click="$emit('action', currentDiagnostic, action)">
+                                        @click="() => onClickAction(currentDiagnostic, action)">
                                         {{ action.name }}
                                     </button>
                                 </btn-dropdown>
@@ -238,12 +238,13 @@ export default {
             }
         },
 
-        onAction(diagnostic, { apply }) {
+        onClickAction(diagnostic, { apply }) {
+            console.log(diagnostic);
+
             apply(this.view, diagnostic.from, diagnostic.to);
 
             forceLinting(this.view);
         }
-
 
     }
 
