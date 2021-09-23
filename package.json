@@ -16,7 +16,7 @@
     "release-major": "npm run build && npm run commit && npm version major; npm run release;",
     "release-major-beta": "npm run build && npm run commit && npm version premajor --preid beta; npm run release;",
     "release": "npm run commit; npm publish; git push --follow-tags;",
-    "prerelease": "npm run build && npm run commit && npm version prerelease; npm run release;"
+    "release-prerelease": "npm run build && npm run commit && npm version prerelease; npm run release;"
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.0",
