@@ -61,7 +61,6 @@
             ref="footer"
             :view="view"
             v-model="errors"
-            @action="onAction"
             @goto="onGoto"
             @save="onSave">
             <template #before-save-button>
@@ -95,7 +94,6 @@ import Btn from '@vue-interface/btn';
 import { EditorState, basicSetup } from "@codemirror/basic-setup";
 import { indentWithTab } from "@codemirror/commands"
 import { html } from '@codemirror/lang-html';
-import { forceLinting } from "@codemirror/lint";
 import { EditorView, keymap } from '@codemirror/view';
 import { oneDark } from "@codemirror/theme-one-dark";
 import EditorDemoModal from './EditorDemoModal';
@@ -207,12 +205,6 @@ export default {
                     }).join('')
                 );
             }, '').trim() : null;
-        },
-
-        onAction(diagnostic, { apply }) {
-            apply(this.view, diagnostic.from, diagnostic.to);
-
-            forceLinting(this.view);
         },
 
         onModalClear() {

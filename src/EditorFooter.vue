@@ -32,9 +32,9 @@
                     <slot name="before-save-button" />
 
                     <slot name="action-button">
-                        <template v-if="currentDiagnostic && currentDiagnostic.rule.actions.length">
-                            <template v-if="currentDiagnostic.rule.actions.length === 1">
-                                <btn type="button" variant="light" @click="$emit('action', currentDiagnostic, actions[0])">
+                        <template v-if="actions.length">
+                            <template v-if="actions.length === 1">
+                                <btn type="button" variant="light" @click="onAction">
                                     <font-awesome-icon icon="hammer" class="mr-1" /> {{ actions[0].name }}
                                 </btn>
                             </template>
@@ -43,7 +43,12 @@
                                     <template #icon>
                                         <font-awesome-icon icon="hammer" class="mr-2" /> 
                                     </template>
-                                    <button v-for="(action, i) in actions" :key="`${currentDiagnostic.rule.id}-${i}`" type="button" variant="light" @click="$emit('action', currentDiagnostic, action)">
+                                    <button
+                                        v-for="(action, i) in actions"
+                                        :key="`${currentDiagnostic.rule.id}-${i}`"
+                                        type="button"
+                                        variant="light"
+                                        @click="$emit('action', currentDiagnostic, action)">
                                         {{ action.name }}
                                     </button>
                                 </btn-dropdown>
@@ -65,6 +70,7 @@
 </template>
 
 <script>
+import { forceLinting } from "@codemirror/lint";
 import AnimateCss from '@vue-interface/animate-css';
 import Btn from '@vue-interface/btn';
 import BtnDropdown from '@vue-interface/btn-dropdown';
@@ -121,7 +127,12 @@ export default {
     computed: {
 
         actions() {
-            return this.currentDiagnostic && [].concat(this.currentDiagnostic.rule.actions).reverse();
+            return this.currentDiagnostic && []
+                .concat(this.currentDiagnostic.rule.actions)
+                .reverse()
+                .filter(({ validate }) => {
+                    return !validate || validate(this.view, this.currentDiagnostic);
+                })
         },
 
         index() {
@@ -225,7 +236,14 @@ export default {
             else {
                 this.currentDiagnostic = match || this.diagnostics[this.index];
             }
+        },
+
+        onAction(diagnostic, { apply }) {
+            apply(this.view, diagnostic.from, diagnostic.to);
+
+            forceLinting(this.view);
         }
+
 
     }
 
