@@ -2,11 +2,11 @@
     <div class="cm-container">
         <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
 
-        <animate-css enter="tada" leave="fadeOut">
-            <editor-modal v-if="showFinishModal">
-                <slot name="success" :close="closeFinishPopup" :view="view" :filename="currentFilename">
-                    <animate-css name="zoom" in left>
-                        <img v-if="showFinishModalShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
+        <editor-modal v-if="showFinishModal" :content-animation="{name: 'tada'}">
+            <template #default="{ isShowing }">
+                <slot name="success" :close="closeFinishPopup" :filename="currentFilename" :view="view" :is-showing="isShowing">
+                    <animate-css name="zoom" left>
+                        <img v-if="isShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
                     </animate-css>
                     
                     <slot
@@ -28,13 +28,14 @@
                         </div>
                     </slot>
                 </slot>
-            </editor-modal>
-        </animate-css>
+            </template>
+        </editor-modal>
 
         <editor-toolbar
             ref="toolbar"
             v-model="currentFilename"
             :demoMode="demoMode"
+            :disable-filename="disableFilename"
             :filename="currentFilename"
             @demo-modal="() => demoModalCleared = false">
             <template #left>
@@ -113,6 +114,8 @@ export default {
         EditorToolbar,
     },
     props: {
+        disableFilename: Boolean,
+        
         demoMode: {
             type: Boolean,
             default: false
@@ -147,7 +150,6 @@ export default {
             errors: [],
             hasDismissedFinishPopup: false,
             showFinishModal: false,
-            showFinishModalShowing: false,
             view: null,
         }
     },
@@ -158,15 +160,20 @@ export default {
                 filename: this.currentFilename,
             });
         },
+        errors(value, oldErrors) {
+            if(!value.length && oldErrors.length) {
+                this.$emit('fixed-errors');
+            }
+        },
         showFinishModal(value) {
             if(value) {
-                this.$nextTick(() => this.showFinishModalShowing = true)
+                // setTimeout(() => this.isSuccessModalShowing = true, 1000)
             }
-
-            this.showFinishModalShowing = false;
         }
     },
     created() {
+        console.log(this.disableFilename);
+        
         this.$on('finish', value => {
             if(this.demoMode) {
                 this.showFinishModal = value;

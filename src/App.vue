@@ -6,10 +6,7 @@
 import Editor from "./Editor";
 
 const content = `<div>
-  <a href="#">Click Me!</a>
-  <div id="test" id="test">
-    <p>This is a paragraph without a closing tag.
-  </div>
+  <p>test
 </div>`;
 
 export default {

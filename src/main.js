@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
 import App from './App';
-import EditorFooter from './EditorFooter';
 import { AxiosDefaults } from 'capsule-common';
 
 Vue.use(AxiosDefaults, {

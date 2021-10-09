@@ -37,7 +37,7 @@ class DiagnosticWidget extends WidgetType {
 }
 
 class LintState {
-    constructor(decorations, state) {
+    constructor(decorations) {
         this.decorations = decorations;
     }
     get length() {

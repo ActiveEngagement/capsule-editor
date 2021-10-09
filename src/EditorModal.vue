@@ -1,16 +1,55 @@
 <template>
-    <div class="capsule-editor-modal">
-        <div class="capsule-editor-modal-content">
-            <slot />
+    <animate-css v-bind="bgAnimation" @after-enter="showContent = true">
+        <div v-if="mounted" class="capsule-editor-modal">
+            <animate-css v-bind="contentAnimation">
+                <div v-if="showContent" class="capsule-editor-modal-content">
+                    <slot :is-showing="isContentShowing" />
+                </div>
+            </animate-css>
         </div>
-    </div>
+    </animate-css>
 </template>
 
 <script>
+import AnimateCss from "@vue-interface/animate-css";
+
 export default {
-    data() {
-        return {};
-    }
+    props: {
+        bgAnimation: {
+            type: Object,
+            default: () => ({
+                name: 'fade',
+                duration: '500ms'
+            })
+        },
+        contentAnimation: {
+            type: Object,
+            default: () => ({
+                name: 'fade',
+                duration: '500ms'
+            })
+        }
+    },
+    components: {
+        AnimateCss
+    },
+    data: () => ({
+        mounted: false,
+        isContentShowing: false,
+        showContent: false,
+    }),
+    watch: {
+        showContent(value) {
+            if(value) {
+                this.$nextTick(() => {
+                    this.isContentShowing = true;
+                })
+            }
+        }
+    },
+    mounted() {
+        this.mounted = true;
+    },
 };
 </script>
 

@@ -4,7 +4,12 @@
             <slot name="left" />
         </div>
         <div class="editor-toolbar-title">
-            <input v-model="currentValue" type="text" placeholder="Untitled Document" @input="event => $emit('input', event.target.value)">
+            <input
+                v-model="currentValue"
+                type="text"
+                placeholder="Untitled Document"
+                :disabled="disableFilename"
+                @input="event => $emit('input', event.target.value)">
         </div>
         <div class="editor-toolbar-right">
             <slot name="right">
@@ -38,6 +43,8 @@ export default {
     props: {
 
         demoMode: Boolean,
+
+        disableFilename: Boolean,
         
         filename: String
 

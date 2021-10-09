@@ -16,7 +16,7 @@
     "release-minor-beta": "npm run build && npm run commit && npm version preminor --preid beta; npm run release;",
     "release-major": "npm run build && npm run commit && npm version major; npm run release;",
     "release-major-beta": "npm run build && npm run commit && npm version premajor --preid beta; npm run release;",
-    "release": "npm run commit; npm publish; git push --follow-tags;",
+    "release": "npm run commit; npm publish; git push --follow-tags;"
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.0",
@@ -30,7 +30,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/vue-fontawesome": "^2.0.0",
-    "@vue-interface/animate-css": "^0.9.4",
+    "@vue-interface/animate-css": "^0.9.10",
     "@vue-interface/badge": "^0.9.3",
     "@vue-interface/btn": "^0.9.9",
     "@vue-interface/btn-activity": "^0.9.5",
@@ -42,7 +42,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.2",
     "capsule-common": "^0.7.0",
-    "capsule-lint": "^0.1.0",
+    "capsule-lint": "^0.2.0",
     "codemirror": "^5.58.0",
     "js-beautify": "^1.13.0",
     "popper.js": "^1.16.1"
