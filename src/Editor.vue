@@ -172,8 +172,6 @@ export default {
         }
     },
     created() {
-        console.log(this.disableFilename);
-        
         this.$on('finish', value => {
             if(this.demoMode) {
                 this.showFinishModal = value;
