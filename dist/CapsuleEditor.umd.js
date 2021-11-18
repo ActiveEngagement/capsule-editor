@@ -653,8 +653,8 @@ module.exports = [{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("557d");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("557d");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorError_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -681,9 +681,8 @@ class Stack {
     constructor(
     /// The parse that this stack is part of @internal
     p, 
-    /// Holds state, pos, value stack pos (15 bits array index, 15 bits
-    /// buffer index) triplets for all but the top state
-    /// @internal
+    /// Holds state, input pos, buffer index triplets for all but the
+    /// top state @internal
     stack, 
     /// The current parse state @internal
     state, 
@@ -969,7 +968,12 @@ class Stack {
         let reduce = this.p.parser.stateSlot(this.state, 5 /* ForcedReduce */);
         if ((reduce & 65536 /* ReduceFlag */) == 0)
             return false;
-        if (!this.p.parser.validAction(this.state, reduce)) {
+        let { parser } = this.p;
+        if (!parser.validAction(this.state, reduce)) {
+            let depth = reduce >> 19 /* ReduceDepthShift */, term = reduce & 65535 /* ValueMask */;
+            let target = this.stack.length - depth * 3;
+            if (target < 0 || parser.getGoto(this.stack[target], term, false) < 0)
+                return false;
             this.storeNode(0 /* Err */, this.reducePos, this.reducePos, 4, true);
             this.score -= 100 /* Reduce */;
         }
@@ -2405,8 +2409,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ab51");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ab51");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorToolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -2781,8 +2785,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("668e");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("668e");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorDemoModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -3062,8 +3066,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("dcc5");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("dcc5");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorFooter_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -3235,8 +3239,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("bbd2");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("bbd2");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditorModal_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -3555,8 +3559,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("3296");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("3296");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_DropdownMenu_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -3939,7 +3943,7 @@ class Tree {
     /// [`NodeType.none`](#common.NodeType^none).
     balance(config = {}) {
         return this.children.length <= 8 /* BranchFactor */ ? this :
-            balanceRange(this.type, this.children, this.positions, 0, this.children.length, 0, this.length, (children, positions, length) => new Tree(this.type, children, positions, length, this.propValues), config.makeTree || ((children, positions, length) => new Tree(NodeType.none, children, positions, length)));
+            balanceRange(NodeType.none, this.children, this.positions, 0, this.children.length, 0, this.length, (children, positions, length) => new Tree(this.type, children, positions, length, this.propValues), config.makeTree || ((children, positions, length) => new Tree(NodeType.none, children, positions, length)));
     }
     /// Build a tree from a postfix-ordered buffer of node information,
     /// or a cursor over such a buffer.
@@ -4039,6 +4043,22 @@ function checkSide(side, pos, from, to) {
         case 4 /* DontCare */: return true;
     }
 }
+function enterUnfinishedNodesBefore(node, pos) {
+    let scan = node.childBefore(pos);
+    while (scan) {
+        let last = scan.lastChild;
+        if (!last || last.to != scan.to)
+            break;
+        if (last.type.isError && last.from == last.to) {
+            node = scan;
+            scan = last.prevSibling;
+        }
+        else {
+            scan = last;
+        }
+    }
+    return node;
+}
 class TreeNode {
     constructor(node, _from, 
     // Index in parent node, set to -1 if the node is not a direct child of _parent.node (overlay)
@@ -4122,6 +4142,7 @@ class TreeNode {
     resolve(pos, side = 0) {
         return this.cursor.moveTo(pos, side).node;
     }
+    enterUnfinishedNodesBefore(pos) { return enterUnfinishedNodesBefore(this, pos); }
     getChild(type, before = null, after = null) {
         let r = getChildren(this, type, before, after);
         return r.length ? r[0] : null;
@@ -4219,6 +4240,7 @@ class BufferNode {
     resolve(pos, side = 0) {
         return this.cursor.moveTo(pos, side).node;
     }
+    enterUnfinishedNodesBefore(pos) { return enterUnfinishedNodesBefore(this, pos); }
     /// @internal
     toString() { return this.context.buffer.childString(this.index); }
     getChild(type, before = null, after = null) {
@@ -4316,7 +4338,7 @@ class TreeCursor {
             return this.yield(this._tree.enter(pos, side, overlays, buffers));
         return buffers ? this.enterChild(1, pos, side) : false;
     }
-    /// Move the node's parent node, if this isn't the top node.
+    /// Move to the node's parent node, if this isn't the top node.
     parent() {
         if (!this.buffer)
             return this.yieldNode((this.mode & 1 /* Full */) ? this._tree._parent : this._tree.parent);
@@ -4638,15 +4660,21 @@ function nodeSize(balanceType, node) {
         return 1;
     let size = nodeSizeCache.get(node);
     if (size == null) {
-        size = node.children.reduce((s, ch) => s + nodeSize(balanceType, ch), 1);
+        size = 1;
+        for (let child of node.children) {
+            if (child.type != balanceType || !(child instanceof Tree)) {
+                size = 1;
+                break;
+            }
+            size += nodeSize(balanceType, child);
+        }
         nodeSizeCache.set(node, size);
     }
     return size;
 }
 function balanceRange(
-// The type to tag the resulting tree with. Will also be used for
-// internal nodes when it is an anonymous type
-type, 
+// The type the balanced tree's inner nodes.
+balanceType, 
 // The direct children and their positions
 children, positions, 
 // The index range in children/positions to use
@@ -4661,22 +4689,22 @@ mkTop,
 mkTree) {
     let total = 0;
     for (let i = from; i < to; i++)
-        total += nodeSize(type, children[i]);
+        total += nodeSize(balanceType, children[i]);
     let maxChild = Math.ceil((total * 1.5) / 8 /* BranchFactor */);
     let localChildren = [], localPositions = [];
     function divide(children, positions, from, to, offset) {
         for (let i = from; i < to;) {
-            let groupFrom = i, groupStart = positions[i], groupSize = nodeSize(type, children[i]);
+            let groupFrom = i, groupStart = positions[i], groupSize = nodeSize(balanceType, children[i]);
             i++;
             for (; i < to; i++) {
-                let nextSize = nodeSize(type, children[i]);
+                let nextSize = nodeSize(balanceType, children[i]);
                 if (groupSize + nextSize >= maxChild)
                     break;
                 groupSize += nextSize;
             }
             if (i == groupFrom + 1) {
                 if (groupSize > maxChild) {
-                    let only = children[groupFrom];
+                    let only = children[groupFrom]; // Only trees can have a size > 1
                     divide(only.children, only.positions, 0, only.children.length, positions[groupFrom] + offset);
                     continue;
                 }
@@ -4684,7 +4712,7 @@ mkTree) {
             }
             else {
                 let length = positions[i - 1] + children[i - 1].length - groupStart;
-                localChildren.push(balanceRange(type, children, positions, groupFrom, i, groupStart, length, null, mkTree));
+                localChildren.push(balanceRange(balanceType, children, positions, groupFrom, i, groupStart, length, null, mkTree));
             }
             localPositions.push(groupStart + offset - start);
         }
@@ -4899,7 +4927,8 @@ class MixedParse {
         let fragmentCursor = new FragmentCursor(this.fragments);
         let overlay = null;
         let covered = null;
-        scan: for (let cursor = this.baseTree.fullCursor(), nest, isCovered;;) {
+        let cursor = new TreeCursor(new TreeNode(this.baseTree, this.ranges[0].from, 0, null), 1 /* Full */);
+        scan: for (let nest, isCovered;;) {
             let enter = true, range;
             if (fragmentCursor.hasNode(cursor)) {
                 if (overlay) {
@@ -5039,7 +5068,7 @@ class StructureCursor {
     }
     hasNode(cursor) {
         this.moveTo(cursor.from);
-        if (!this.done && this.cursor.from + this.offset == cursor.from) {
+        if (!this.done && this.cursor.from + this.offset == cursor.from && this.cursor.tree) {
             for (let tree = this.cursor.tree;;) {
                 if (tree == cursor.tree)
                     return true;
@@ -5587,8 +5616,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0c53");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0c53");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeck_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -5907,7 +5936,12 @@ function classList(props) {
 
   var classes = (_classes = {
     'fa-spin': props.spin,
+    'fa-spin-pulse': props.spinPulse,
+    'fa-spin-reverse': props.spinReverse,
     'fa-pulse': props.pulse,
+    'fa-beat': props.beat,
+    'fa-fade': props.fade,
+    'fa-flash': props.flash,
     'fa-fw': props.fixedWidth,
     'fa-border': props.border,
     'fa-li': props.listItem,
@@ -5930,6 +5964,12 @@ function addStaticClass(to, what) {
 }
 
 function normalizeIconArgs(icon$$1) {
+  // this has everything that it needs to be rendered which means it was probably imported
+  // directly from an icon svg package
+  if (icon$$1 && (typeof icon$$1 === 'undefined' ? 'undefined' : _typeof(icon$$1)) === 'object' && icon$$1.prefix && icon$$1.iconName && icon$$1.icon) {
+    return icon$$1;
+  }
+
   if (_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__[/* parse */ "d"].icon) {
     return _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__[/* parse */ "d"].icon(icon$$1);
   }
@@ -5957,11 +5997,23 @@ var FontAwesomeIcon = {
   functional: true,
 
   props: {
+    beat: {
+      type: Boolean,
+      default: false
+    },
     border: {
       type: Boolean,
       default: false
     },
+    fade: {
+      type: Boolean,
+      default: false
+    },
     fixedWidth: {
+      type: Boolean,
+      default: false
+    },
+    flash: {
       type: Boolean,
       default: false
     },
@@ -6010,10 +6062,18 @@ var FontAwesomeIcon = {
       type: String,
       default: null,
       validator: function validator(value) {
-        return ['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].indexOf(value) > -1;
+        return ['2xs', 'xs', 'sm', 'lg', 'xl', '2xl', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].indexOf(value) > -1;
       }
     },
     spin: {
+      type: Boolean,
+      default: false
+    },
+    spinPulse: {
+      type: Boolean,
+      default: false
+    },
+    spinReverse: {
       type: Boolean,
       default: false
     },
@@ -6146,8 +6206,8 @@ var FontAwesomeLayersText = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e6bd");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e6bd");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_Badge_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -6207,8 +6267,8 @@ module.exports = __webpack_require__.p + "src/assets/img/fixing-errors.b7c79210.
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("674b");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("674b");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_SlideDeckControls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -6554,8 +6614,8 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b5f3");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b5f3");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -7072,8 +7132,8 @@ exports.default = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ee49");
-/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ee49");
+/* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_7_oneOf_1_0_css_loader_dist_cjs_js_ref_7_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_7_oneOf_1_2_cache_loader_dist_cjs_js_ref_1_0_vue_loader_lib_index_js_vue_loader_options_BtnDropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -7095,7 +7155,7 @@ exports.default = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parse; });
 /* unused harmony export findIconDefinition */
 /*!
- * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 function _typeof(obj) {
@@ -7292,7 +7352,7 @@ var STYLE_TO_PREFIX = {
   'kit': 'fak'
 };
 var LAYERS_TEXT_CLASSNAME = 'fa-layers-text';
-var FONT_FAMILY_PATTERN = /Font Awesome ([5 ]*)(Solid|Regular|Light|Duotone|Brands|Free|Pro|Kit).*/; // TODO: do we need to handle font-weight for kit SVG pseudo-elements?
+var FONT_FAMILY_PATTERN = /Font Awesome ([5 ]*)(Solid|Regular|Light|Duotone|Brands|Free|Pro|Kit).*/i; // TODO: do we need to handle font-weight for kit SVG pseudo-elements?
 
 var FONT_WEIGHT_TO_PREFIX = {
   '900': 'fas',
@@ -8192,7 +8252,7 @@ var p = config.measurePerformance && PERFORMANCE && PERFORMANCE.mark && PERFORMA
   mark: noop$1,
   measure: noop$1
 };
-var preamble = "FA \"5.15.2\"";
+var preamble = "FA \"5.15.4\"";
 
 var begin = function begin(name) {
   p.mark("".concat(preamble, " ").concat(name, " begins"));
@@ -9629,16 +9689,16 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Editor.vue?vue&type=template&id=a94bcaba&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Editor.vue?vue&type=template&id=a94bcaba&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"cm-container"},[(_vm.demoMode && !_vm.demoModalCleared)?_c('editor-demo-modal',{on:{"clear":_vm.onModalClear}}):_vm._e(),(_vm.showFinishModal)?_c('editor-modal',{attrs:{"content-animation":{name: 'tada'}},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var isShowing = ref.isShowing;
-return [_vm._t("success",[_c('animate-css',{attrs:{"name":"zoom","left":""}},[(isShowing)?_c('img',{staticClass:"capsule-editor-modal-logo",attrs:{"src":__webpack_require__("ffdb")}}):_vm._e()]),_vm._t("success-content",[_c('div',{staticClass:"text-center"},[_c('h1',{staticClass:"font-weight-light"},[_vm._v(" Success! ")]),_c('h5',{staticClass:"font-weight-light mb-5"},[_vm._v(" Your document has been fixed. ")]),_c('btn',{attrs:{"type":"button","variant":"primary","size":"lg","block":""},on:{"click":_vm.closeFinishPopup}},[_vm._v(" Dismiss ")])],1)],{"content":_vm.currentContent,"close":_vm.closeFinishPopup,"filename":_vm.currentFilename,"view":_vm.view})],{"close":_vm.closeFinishPopup,"filename":_vm.currentFilename,"view":_vm.view,"isShowing":isShowing})]}}],null,true)}):_vm._e(),_c('editor-toolbar',{ref:"toolbar",attrs:{"demoMode":_vm.demoMode,"disable-filename":_vm.disableFilename,"filename":_vm.currentFilename},on:{"demo-modal":function () { return _vm.demoModalCleared = false; }},scopedSlots:_vm._u([{key:"left",fn:function(){return [_vm._t("toolbar-left",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"right",fn:function(){return [_vm._t("toolbar-right",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true}],null,true),model:{value:(_vm.currentFilename),callback:function ($$v) {_vm.currentFilename=$$v},expression:"currentFilename"}}),_c('div',{ref:"wrapper",staticClass:"cm-wrapper"}),_c('editor-footer',{ref:"footer",attrs:{"view":_vm.view},on:{"goto":_vm.onGoto,"save":_vm.onSave},scopedSlots:_vm._u([{key:"before-save-button",fn:function(){return [_vm._t("before-save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"save-button",fn:function(){return [_vm._t("save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"after-save-button",fn:function(){return [_vm._t("after-save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true}],null,true),model:{value:(_vm.errors),callback:function ($$v) {_vm.errors=$$v},expression:"errors"}})],1)}
+return [_vm._t("success",function(){return [_c('animate-css',{attrs:{"name":"zoom","left":""}},[(isShowing)?_c('img',{staticClass:"capsule-editor-modal-logo",attrs:{"src":__webpack_require__("ffdb")}}):_vm._e()]),_vm._t("success-content",function(){return [_c('div',{staticClass:"text-center"},[_c('h1',{staticClass:"font-weight-light"},[_vm._v(" Success! ")]),_c('h5',{staticClass:"font-weight-light mb-5"},[_vm._v(" Your document has been fixed. ")]),_c('btn',{attrs:{"type":"button","variant":"primary","size":"lg","block":""},on:{"click":_vm.closeFinishPopup}},[_vm._v(" Dismiss ")])],1)]},{"content":_vm.currentContent,"close":_vm.closeFinishPopup,"filename":_vm.currentFilename,"view":_vm.view})]},{"close":_vm.closeFinishPopup,"filename":_vm.currentFilename,"view":_vm.view,"isShowing":isShowing})]}}],null,true)}):_vm._e(),_c('editor-toolbar',{ref:"toolbar",attrs:{"demoMode":_vm.demoMode,"disable-filename":_vm.disableFilename,"filename":_vm.currentFilename},on:{"demo-modal":function () { return _vm.demoModalCleared = false; }},scopedSlots:_vm._u([{key:"left",fn:function(){return [_vm._t("toolbar-left",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"right",fn:function(){return [_vm._t("toolbar-right",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true}],null,true),model:{value:(_vm.currentFilename),callback:function ($$v) {_vm.currentFilename=$$v},expression:"currentFilename"}}),_c('div',{ref:"wrapper",staticClass:"cm-wrapper"}),_c('editor-footer',{ref:"footer",attrs:{"view":_vm.view},on:{"goto":_vm.onGoto,"save":_vm.onSave},scopedSlots:_vm._u([{key:"before-save-button",fn:function(){return [_vm._t("before-save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"save-button",fn:function(){return [_vm._t("save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true},{key:"after-save-button",fn:function(){return [_vm._t("after-save-button",null,{"errors":_vm.errors,"filename":_vm.currentFilename,"content":_vm.currentContent})]},proxy:true}],null,true),model:{value:(_vm.errors),callback:function ($$v) {_vm.errors=$$v},expression:"errors"}})],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/Editor.vue?vue&type=template&id=a94bcaba&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/animate-css/src/AnimateCss.vue?vue&type=template&id=927269a6&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/animate-css/src/AnimateCss.vue?vue&type=template&id=927269a6&
 var AnimateCssvue_type_template_id_927269a6_render = function () {
 var this$1 = this;
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"mode":_vm.mode,"enter-class":_vm.enterClass,"enter-to-class":_vm.enterToClass,"enter-active-class":_vm.enterActiveClassName,"leave-class":_vm.leaveClass,"leave-to-class":_vm.leaveToClass,"leave-active-class":_vm.leaveActiveClassName},on:{"before-enter":function () {
@@ -10023,6 +10083,29 @@ function deepExtend(target, ...sources) {
     return deepExtend(target, ...sources);
 }
 
+// CONCATENATED MODULE: ./node_modules/@vue-interface/utils/src/event.js
+function event_event(key, eventInit) {
+    // Ensure the eventInit is an object.
+    eventInit = Object.assign({}, {
+        bubbles: false,
+        cancelable: false,
+        composed: false
+    }, eventInit || {});
+    
+    // If the `Event` class is a constructor, use it.
+    if(typeof(Event) === 'function') {
+        return new Event(key, eventInit);
+    }
+    
+    // Otherwise, assume this to be a legacy browser.
+    const event = document.createEvent('Event');
+
+    // Define that the event name is 'build'.
+    event.initEvent(key, eventInit.bubbles, eventInit.cancelable);
+    
+    return event;
+}
+
 // CONCATENATED MODULE: ./node_modules/@vue-interface/utils/src/first.js
 function first_first(array) {
     return (array && array.length) ? array[0] : undefined;
@@ -10037,11 +10120,11 @@ function isArray(value) {
 // CONCATENATED MODULE: ./node_modules/@vue-interface/utils/src/matches.js
 
 
-function matches_matches(properties) {
+function matches(properties) {
     return subject => {
         for(const i in properties) {
             if(isObject(properties[i])) {
-                return subject[i] ? matches_matches(properties[i])(subject[i]) : false;
+                return subject[i] ? matches(properties[i])(subject[i]) : false;
             }
             else if(!subject || subject[i] !== properties[i]) {
                 return false;
@@ -10116,7 +10199,7 @@ function matchesProperty(path, value) {
 
 function predicate(value) {
     if(isObject(value)) {
-        value = matches_matches(value);
+        value = matches(value);
     }
     else if(isArray(value)) {
         value = matchesProperty(value[0], value[1]);
@@ -10298,6 +10381,76 @@ function sequence(fns, ...args) {
     });
 };
 
+// CONCATENATED MODULE: ./node_modules/@vue-interface/utils/src/throttle.js
+
+
+
+/** Error message constants. */
+var throttle_FUNC_ERROR_TEXT = 'Expected a function';
+
+/**
+ * Creates a throttled function that only invokes `func` at most once per
+ * every `wait` milliseconds. The throttled function comes with a `cancel`
+ * method to cancel delayed `func` invocations and a `flush` method to
+ * immediately invoke them. Provide `options` to indicate whether `func`
+ * should be invoked on the leading and/or trailing edge of the `wait`
+ * timeout. The `func` is invoked with the last arguments provided to the
+ * throttled function. Subsequent calls to the throttled function return the
+ * result of the last `func` invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the throttled function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.throttle` and `_.debounce`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to throttle.
+ * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=true]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new throttled function.
+ * @example
+ *
+ * // Avoid excessively updating the position while scrolling.
+ * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+ *
+ * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+ * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+ * jQuery(element).on('click', throttled);
+ *
+ * // Cancel the trailing throttled invocation.
+ * jQuery(window).on('popstate', throttled.cancel);
+ */
+function throttle(func, wait, options) {
+    var leading = true,
+        trailing = true;
+
+    if(typeof func != 'function') {
+        throw new TypeError(throttle_FUNC_ERROR_TEXT);
+    }
+    if(isObject(options)) {
+        leading = 'leading' in options ? !!options.leading : leading;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+    return src_debounce(func, wait, {
+        'leading': leading,
+        'maxWait': wait,
+        'trailing': trailing
+    });
+}
+
+/* harmony default export */ var src_throttle = (throttle);
 // CONCATENATED MODULE: ./node_modules/@vue-interface/utils/src/transitionDuration.js
 function transitionDuration(el, defaultValue = '0s') {
     let duration = (
@@ -10376,7 +10529,9 @@ function transition(el, defaultValue) {
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/animate-css/src/AnimateCss.vue?vue&type=script&lang=js&
+
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/animate-css/src/AnimateCss.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -10702,7 +10857,7 @@ var component = normalizeComponent(
 // CONCATENATED MODULE: ./node_modules/@vue-interface/animate-css/index.js
 
 /* harmony default export */ var animate_css = (AnimateCss);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn/src/Btn.vue?vue&type=template&id=dfb20136&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn/src/Btn.vue?vue&type=template&id=dfb20136&
 var Btnvue_type_template_id_dfb20136_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.to)?_c('router-link',{class:_vm.classes,attrs:{"to":_vm.to,"disabled":_vm.disabled,"role":"button"},on:{"click":_vm.onClick}},[_vm._t("default")],2):(_vm.href)?_c('a',{class:_vm.classes,attrs:{"href":_vm.href,"disabled":_vm.disabled,"role":"button"},on:{"click":_vm.onClick}},[_vm._t("default")],2):(_vm.label)?_c('label',{class:_vm.classes,attrs:{"disabled":_vm.disabled,"role":"button"},on:{"click":_vm.onClick}},[_vm._t("default")],2):_c('button',{class:_vm.classes,attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":_vm.onClick}},[_vm._t("default")],2)}
 var Btnvue_type_template_id_dfb20136_staticRenderFns = []
 
@@ -10806,7 +10961,7 @@ var Btnvue_type_template_id_dfb20136_staticRenderFns = []
 
 /* harmony default export */ var variant = (Variant);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn/src/Btn.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn/src/Btn.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -11094,16 +11249,21 @@ function countColumn(string, tabSize, to = string.length) {
 }
 /**
 Find the offset that corresponds to the given column position in a
-string, taking extending characters and tab size into account.
+string, taking extending characters and tab size into account. By
+default, the string length is returned when it is too short to
+reach the column. Pass `strict` true to make it return -1 in that
+situation.
 */
-function findColumn(string, col, tabSize) {
-    for (let i = 0, n = 0; i < string.length;) {
+function findColumn(string, col, tabSize, strict) {
+    for (let i = 0, n = 0;;) {
         if (n >= col)
             return i;
+        if (i == string.length)
+            break;
         n += string.charCodeAt(i) == 9 ? tabSize - (n % tabSize) : 1;
         i = findClusterBreak(string, i);
     }
-    return string.length;
+    return strict === true ? -1 : string.length;
 }
 
 /**
@@ -11163,13 +11323,16 @@ class Text {
             return true;
         if (other.length != this.length || other.lines != this.lines)
             return false;
+        let start = this.scanIdentical(other, 1), end = this.length - this.scanIdentical(other, -1);
         let a = new RawTextCursor(this), b = new RawTextCursor(other);
-        for (;;) {
-            a.next();
-            b.next();
+        for (let skip = start, pos = start;;) {
+            a.next(skip);
+            b.next(skip);
+            skip = 0;
             if (a.lineBreak != b.lineBreak || a.done != b.done || a.value != b.value)
                 return false;
-            if (a.done)
+            pos += a.value.length;
+            if (a.done || pos >= end)
                 return true;
         }
     }
@@ -11229,8 +11392,6 @@ class Text {
         return text.length <= 32 /* Branch */ ? new TextLeaf(text) : TextNode.from(TextLeaf.split(text, []));
     }
 }
-if (typeof Symbol != "undefined")
-    Text.prototype[Symbol.iterator] = function () { return this.iter(); };
 // Leaves store an array of line strings. There are always line breaks
 // between these strings. Leaves are limited in size and have to be
 // contained in TextNode instances for bigger documents.
@@ -11294,6 +11455,7 @@ class TextLeaf extends Text {
         for (let line of this.text)
             target.push(line);
     }
+    scanIdentical() { return 0; }
     static split(text, target) {
         let part = [], len = -1;
         for (let line of text) {
@@ -11382,6 +11544,21 @@ class TextNode extends Text {
     flatten(target) {
         for (let child of this.children)
             child.flatten(target);
+    }
+    scanIdentical(other, dir) {
+        if (!(other instanceof TextNode))
+            return 0;
+        let length = 0;
+        let [iA, iB, eA, eB] = dir > 0 ? [0, 0, this.children.length, other.children.length]
+            : [this.children.length - 1, other.children.length - 1, -1, -1];
+        for (;; iA += dir, iB += dir) {
+            if (iA == eA || iB == eB)
+                return length;
+            let chA = this.children[iA], chB = other.children[iB];
+            if (chA != chB)
+                return length + chA.scanIdentical(chB, dir);
+            length += chA.length + 1;
+        }
     }
     static from(children, length = children.reduce((l, ch) => l + ch.length + 1, -1)) {
         let lines = 0;
@@ -11594,6 +11771,11 @@ class LineCursor {
         return this;
     }
     get lineBreak() { return false; }
+}
+if (typeof Symbol != "undefined") {
+    Text.prototype[Symbol.iterator] = function () { return this.iter(); };
+    RawTextCursor.prototype[Symbol.iterator] = PartialTextCursor.prototype[Symbol.iterator] =
+        LineCursor.prototype[Symbol.iterator] = function () { return this; };
 }
 /**
 This type describes a line in the document. It is created
@@ -12600,21 +12782,23 @@ class FacetProvider {
                 depAddrs.push(addresses[dep.id]);
         }
         return (state, tr) => {
-            if (!tr || tr.reconfigured) {
+            let oldVal = state.values[idx];
+            if (oldVal === Uninitialized) {
                 state.values[idx] = getter(state);
                 return 1 /* Changed */;
             }
-            else {
+            if (tr) {
                 let depChanged = (depDoc && tr.docChanged) || (depSel && (tr.docChanged || tr.selection)) ||
                     depAddrs.some(addr => (ensureAddr(state, addr) & 1 /* Changed */) > 0);
-                if (!depChanged)
-                    return 0;
-                let newVal = getter(state), oldVal = tr.startState.values[idx];
-                if (multi ? compareArray(newVal, oldVal, compare) : compare(newVal, oldVal))
-                    return 0;
-                state.values[idx] = newVal;
-                return 1 /* Changed */;
+                if (depChanged) {
+                    let newVal = getter(state);
+                    if (multi ? !compareArray(newVal, oldVal, compare) : !compare(newVal, oldVal)) {
+                        state.values[idx] = newVal;
+                        return 1 /* Changed */;
+                    }
+                }
             }
+            return 0;
         };
     }
 }
@@ -12632,8 +12816,7 @@ function dynamicFacetSlot(addresses, facet, providers) {
     let dynamic = providerAddrs.filter(p => !(p & 1));
     let idx = addresses[facet.id] >> 1;
     return (state, tr) => {
-        let oldAddr = !tr ? null : tr.reconfigured ? tr.startState.config.address[facet.id] : idx << 1;
-        let changed = oldAddr == null;
+        let oldVal = state.values[idx], changed = oldVal === Uninitialized || !tr;
         for (let dynAddr of dynamic) {
             if (ensureAddr(state, dynAddr) & 1 /* Changed */)
                 changed = true;
@@ -12649,16 +12832,12 @@ function dynamicFacetSlot(addresses, facet, providers) {
             else
                 values.push(value);
         }
-        let newVal = facet.combine(values);
-        if (oldAddr != null && facet.compare(newVal, getAddr(tr.startState, oldAddr)))
+        let value = facet.combine(values);
+        if (facet.compare(value, oldVal))
             return 0;
-        state.values[idx] = newVal;
+        state.values[idx] = value;
         return 1 /* Changed */;
     };
-}
-function maybeIndex(state, id) {
-    let found = state.config.address[id];
-    return found == null ? null : found >> 1;
 }
 const initField = /*@__PURE__*/Facet.define({ static: true });
 /**
@@ -12704,24 +12883,19 @@ class StateField {
     slot(addresses) {
         let idx = addresses[this.id] >> 1;
         return (state, tr) => {
-            if (!tr || (tr.reconfigured && maybeIndex(tr.startState, this.id) == null)) {
+            let oldVal = state.values[idx];
+            if (oldVal === Uninitialized) {
                 state.values[idx] = this.create(state);
                 return 1 /* Changed */;
             }
-            let oldVal, changed = 0;
-            if (tr.reconfigured) {
-                oldVal = tr.startState.values[maybeIndex(tr.startState, this.id)];
-                changed = 1 /* Changed */;
+            if (tr) {
+                let value = this.updateF(oldVal, tr);
+                if (!this.compareF(oldVal, value)) {
+                    state.values[idx] = value;
+                    return 1 /* Changed */;
+                }
             }
-            else {
-                oldVal = tr.startState.values[idx];
-            }
-            let value = this.updateF(oldVal, tr);
-            if (!changed && !this.compareF(oldVal, value))
-                changed = 1 /* Changed */;
-            if (changed)
-                state.values[idx] = value;
-            return changed;
+            return 0;
         };
     }
     /**
@@ -12739,7 +12913,7 @@ class StateField {
     */
     get extension() { return this; }
 }
-const Prec_ = { fallback: 3, default: 2, extend: 1, override: 0 };
+const Prec_ = { lowest: 4, low: 3, default: 2, high: 1, highest: 0 };
 function prec(value) {
     return (ext) => new PrecExtension(ext, value);
 }
@@ -12755,23 +12929,42 @@ precedence and then by order within each precedence.
 */
 const Prec = {
     /**
-    A precedence below the default precedence, which will cause
-    default-precedence extensions to override it even if they are
-    specified later in the extension ordering.
+    The lowest precedence level. Meant for things that should end up
+    near the end of the extension order.
     */
-    fallback: /*@__PURE__*/prec(Prec_.fallback),
+    lowest: /*@__PURE__*/prec(Prec_.lowest),
     /**
-    The regular default precedence.
+    A lower-than-default precedence, for extensions.
+    */
+    low: /*@__PURE__*/prec(Prec_.low),
+    /**
+    The default precedence, which is also used for extensions
+    without an explicit precedence.
     */
     default: /*@__PURE__*/prec(Prec_.default),
     /**
-    A higher-than-default precedence.
+    A higher-than-default precedence, for extensions that should
+    come before those with default precedence.
     */
-    extend: /*@__PURE__*/prec(Prec_.extend),
+    high: /*@__PURE__*/prec(Prec_.high),
     /**
-    Precedence above the `default` and `extend` precedences.
+    The highest precedence level, for extensions that should end up
+    near the start of the precedence ordering.
     */
-    override: /*@__PURE__*/prec(Prec_.override)
+    highest: /*@__PURE__*/prec(Prec_.highest),
+    // FIXME Drop these in some future breaking version
+    /**
+    Backwards-compatible synonym for `Prec.lowest`.
+    */
+    fallback: /*@__PURE__*/prec(Prec_.lowest),
+    /**
+    Backwards-compatible synonym for `Prec.high`.
+    */
+    extend: /*@__PURE__*/prec(Prec_.high),
+    /**
+    Backwards-compatible synonym for `Prec.highest`.
+    */
+    override: /*@__PURE__*/prec(Prec_.highest)
 };
 class PrecExtension {
     constructor(inner, prec) {
@@ -12822,7 +13015,7 @@ class Configuration {
         this.staticValues = staticValues;
         this.statusTemplate = [];
         while (this.statusTemplate.length < dynamicSlots.length)
-            this.statusTemplate.push(0 /* Uninitialized */);
+            this.statusTemplate.push(0 /* Unresolved */);
     }
     staticFacet(facet) {
         let addr = this.address[facet.id];
@@ -12877,7 +13070,7 @@ class Configuration {
     }
 }
 function flatten(extension, compartments, newCompartments) {
-    let result = [[], [], [], []];
+    let result = [[], [], [], [], []];
     let seen = new Map();
     function inner(ext, prec) {
         let known = seen.get(ext);
@@ -12925,6 +13118,7 @@ function flatten(extension, compartments, newCompartments) {
     inner(extension, Prec_.default);
     return result.reduce((a, b) => a.concat(b));
 }
+const Uninitialized = {};
 function ensureAddr(state, addr) {
     if (addr & 1)
         return 2 /* Computed */;
@@ -12954,6 +13148,9 @@ const lineSeparator = /*@__PURE__*/Facet.define({
 const changeFilter = /*@__PURE__*/Facet.define();
 const transactionFilter = /*@__PURE__*/Facet.define();
 const transactionExtender = /*@__PURE__*/Facet.define();
+const readOnly = /*@__PURE__*/Facet.define({
+    combine: values => values.length ? values[0] : false
+});
 
 /**
 Annotations are tagged values that are used to add metadata to
@@ -13206,7 +13403,7 @@ class Transaction {
     */
     isUserEvent(event) {
         let e = this.annotation(Transaction.userEvent);
-        return e && (e == event || e.length > event.length && e.slice(0, event.length) == event && e[event.length] == ".");
+        return !!(e && (e == event || e.length > event.length && e.slice(0, event.length) == event && e[event.length] == "."));
     }
 }
 /**
@@ -13446,28 +13643,20 @@ class dist_EditorState {
     /**
     The current selection.
     */
-    selection, tr = null) {
+    selection, 
+    /**
+    @internal
+    */
+    values, tr = null) {
         this.config = config;
         this.doc = doc;
         this.selection = selection;
+        this.values = values;
         /**
         @internal
         */
         this.applying = null;
         this.status = config.statusTemplate.slice();
-        if (tr && tr.startState.config == config) {
-            this.values = tr.startState.values.slice();
-        }
-        else {
-            this.values = config.dynamicSlots.map(_ => null);
-            // Copy over old values for shared facets/fields if this is a reconfigure
-            if (tr)
-                for (let id in config.address) {
-                    let cur = config.address[id], prev = tr.startState.config.address[id];
-                    if (prev != null && (cur & 1) == 0)
-                        this.values[cur >> 1] = getAddr(tr.startState, prev);
-                }
-        }
         this.applying = tr;
         // Fill in the computed state immediately, so that further queries
         // for it made during the update return this state
@@ -13528,7 +13717,23 @@ class dist_EditorState {
                 base = asArray(base).concat(effect.value);
             }
         }
-        new dist_EditorState(conf || Configuration.resolve(base, compartments, this), tr.newDoc, tr.newSelection, tr);
+        let startValues;
+        if (!conf) {
+            conf = Configuration.resolve(base, compartments, this);
+            let updatedValues = conf.dynamicSlots.map(_ => Uninitialized);
+            // Copy over old values for shared facets/fields
+            for (let id in conf.address) {
+                let cur = conf.address[id], prev = this.config.address[id];
+                if (prev != null && (cur & 1) == 0)
+                    updatedValues[cur >> 1] = getAddr(this, prev);
+            }
+            let intermediateState = new dist_EditorState(conf, this.doc, this.selection, updatedValues, null);
+            startValues = intermediateState.values;
+        }
+        else {
+            startValues = tr.startState.values.slice();
+        }
+        new dist_EditorState(conf, tr.newDoc, tr.newSelection, startValues, tr);
     }
     /**
     Create a [transaction spec](https://codemirror.net/6/docs/ref/#state.TransactionSpec) that
@@ -13661,7 +13866,7 @@ class dist_EditorState {
         checkSelection(selection, doc.length);
         if (!configuration.staticFacet(allowMultipleSelections))
             selection = selection.asSingle();
-        return new dist_EditorState(configuration, doc, selection);
+        return new dist_EditorState(configuration, doc, selection, configuration.dynamicSlots.map(_ => Uninitialized));
     }
     /**
     The size (in columns) of a tab in the document, determined by
@@ -13673,6 +13878,11 @@ class dist_EditorState {
     string for this state.
     */
     get lineBreak() { return this.facet(dist_EditorState.lineSeparator) || "\n"; }
+    /**
+    Returns true when the editor is
+    [configured](https://codemirror.net/6/docs/ref/#state.EditorState^readOnly) to be read-only.
+    */
+    get readOnly() { return this.facet(readOnly); }
     /**
     Look up a translation for the given phrase (via the
     [`phrases`](https://codemirror.net/6/docs/ref/#state.EditorState^phrases) facet), or return the
@@ -13764,6 +13974,20 @@ will be used, allowing you to round-trip documents through the
 editor without normalizing line separators.
 */
 dist_EditorState.lineSeparator = lineSeparator;
+/**
+This facet controls the value of the
+[`readOnly`](https://codemirror.net/6/docs/ref/#state.EditorState.readOnly) getter, which is
+consulted by commands and extensions that implement editing
+functionality to determine whether they should apply. It
+defaults to false, but when its highest-precedence value is
+`true`, such functionality disables itself.
+
+Not to be confused with
+[`EditorView.editable`](https://codemirror.net/6/docs/ref/#view.EditorView^editable), which
+controls whether the editor's DOM is set to be editable (and
+thus focusable).
+*/
+dist_EditorState.readOnly = readOnly;
 /**
 Registers translation phrases. The
 [`phrase`](https://codemirror.net/6/docs/ref/#state.EditorState.phrase) method will look through
@@ -14305,11 +14529,9 @@ class RangeSet {
     the given size. When -1, all ranges are compared.
     */
     minPointSize = -1) {
-        let a = oldSets.filter(set => set.maxPoint >= 500 /* BigPointSize */ ||
-            !set.isEmpty && newSets.indexOf(set) < 0 && set.maxPoint >= minPointSize);
-        let b = newSets.filter(set => set.maxPoint >= 500 /* BigPointSize */ ||
-            !set.isEmpty && oldSets.indexOf(set) < 0 && set.maxPoint >= minPointSize);
-        let sharedChunks = findSharedChunks(a, b);
+        let a = oldSets.filter(set => set.maxPoint >= 500 /* BigPointSize */ || !set.isEmpty && set.maxPoint >= minPointSize);
+        let b = newSets.filter(set => set.maxPoint >= 500 /* BigPointSize */ || !set.isEmpty && set.maxPoint >= minPointSize);
+        let sharedChunks = findSharedChunks(a, b, textDiff);
         let sideA = new SpanCursor(a, sharedChunks, minPointSize);
         let sideB = new SpanCursor(b, sharedChunks, minPointSize);
         textDiff.iterGaps((fromA, fromB, length) => compare(sideA, fromA, sideB, fromB, length, comparator));
@@ -14336,7 +14558,7 @@ class RangeSet {
                 !sameValues(sideA.active, sideB.active) ||
                 sideA.point && (!sideB.point || !sideA.point.eq(sideB.point)))
                 return false;
-            if (sideA.to >= to)
+            if (sideA.to > to)
                 return true;
             sideA.next();
             sideB.next();
@@ -14504,7 +14726,7 @@ class RangeSetBuilder {
         return result;
     }
 }
-function findSharedChunks(a, b) {
+function findSharedChunks(a, b, textDiff) {
     let inA = new Map();
     for (let set of a)
         for (let i = 0; i < set.chunk.length; i++)
@@ -14512,9 +14734,11 @@ function findSharedChunks(a, b) {
                 inA.set(set.chunk[i], set.chunkPos[i]);
     let shared = new Set();
     for (let set of b)
-        for (let i = 0; i < set.chunk.length; i++)
-            if (inA.get(set.chunk[i]) == set.chunkPos[i])
+        for (let i = 0; i < set.chunk.length; i++) {
+            let known = inA.get(set.chunk[i]);
+            if (known != null && (textDiff ? textDiff.mapPos(known) : known) == set.chunkPos[i])
                 shared.add(set.chunk[i]);
+        }
     return shared;
 }
 class LayerCursor {
@@ -14976,7 +15200,17 @@ function keyName(event) {
 
 
 function getSelection(root) {
-    return (root.getSelection ? root.getSelection() : document.getSelection());
+    let target;
+    // Browsers differ on whether shadow roots have a getSelection
+    // method. If it exists, use that, otherwise, call it on the
+    // document.
+    if (root.nodeType == 11) { // Shadow root
+        target = root.getSelection ? root : root.ownerDocument;
+    }
+    else {
+        target = root;
+    }
+    return target.getSelection();
 }
 function contains(dom, node) {
     return node ? dom.contains(node.nodeType != 1 ? node.parentNode : node) : false;
@@ -15059,9 +15293,9 @@ function windowRect(win) {
         top: 0, bottom: win.innerHeight };
 }
 const ScrollSpace = 5;
-function scrollRectIntoView(dom, rect) {
+function scrollRectIntoView(dom, rect, side, center) {
     let doc = dom.ownerDocument, win = doc.defaultView;
-    for (let cur = dom.parentNode; cur;) {
+    for (let cur = dom; cur;) {
         if (cur.nodeType == 1) { // Element
             let bounding, top = cur == doc.body;
             if (top) {
@@ -15078,14 +15312,39 @@ function scrollRectIntoView(dom, rect) {
                     top: rect.top, bottom: rect.top + cur.clientHeight };
             }
             let moveX = 0, moveY = 0;
-            if (rect.top < bounding.top)
+            if (center) {
+                let rectHeight = rect.bottom - rect.top, boundingHeight = bounding.bottom - bounding.top;
+                let targetTop;
+                if (rectHeight <= boundingHeight)
+                    targetTop = rect.top + rectHeight / 2 - boundingHeight / 2;
+                else if (side < 0)
+                    targetTop = rect.top - ScrollSpace;
+                else
+                    targetTop = rect.bottom + ScrollSpace - boundingHeight;
+                moveY = targetTop - bounding.top;
+                if (Math.abs(moveY) <= 1)
+                    moveY = 0;
+            }
+            else if (rect.top < bounding.top) {
                 moveY = -(bounding.top - rect.top + ScrollSpace);
-            else if (rect.bottom > bounding.bottom)
+                if (side > 0 && rect.bottom > bounding.bottom + moveY)
+                    moveY = rect.bottom - bounding.bottom + moveY + ScrollSpace;
+            }
+            else if (rect.bottom > bounding.bottom) {
                 moveY = rect.bottom - bounding.bottom + ScrollSpace;
-            if (rect.left < bounding.left)
+                if (side < 0 && (rect.top - moveY) < bounding.top)
+                    moveY = -(bounding.top + moveY - rect.top + ScrollSpace);
+            }
+            if (rect.left < bounding.left) {
                 moveX = -(bounding.left - rect.left + ScrollSpace);
-            else if (rect.right > bounding.right)
+                if (side > 0 && rect.right > bounding.right + moveX)
+                    moveX = rect.right - bounding.right + moveX + ScrollSpace;
+            }
+            else if (rect.right > bounding.right) {
                 moveX = rect.right - bounding.right + ScrollSpace;
+                if (side < 0 && rect.left < bounding.left + moveX)
+                    moveX = -(bounding.left + moveX - rect.left + ScrollSpace);
+            }
             if (moveX || moveY) {
                 if (top) {
                     win.scrollBy(moveX, moveY);
@@ -15108,6 +15367,7 @@ function scrollRectIntoView(dom, rect) {
             if (top)
                 break;
             cur = cur.assignedSlot || cur.parentNode;
+            center = false;
         }
         else if (cur.nodeType == 11) { // A shadow root
             cur = cur.host;
@@ -15183,18 +15443,13 @@ function dispatchKey(elt, name, code) {
     elt.dispatchEvent(up);
     return down.defaultPrevented || up.defaultPrevented;
 }
-let _plainTextSupported = null;
-function contentEditablePlainTextSupported() {
-    if (_plainTextSupported == null) {
-        _plainTextSupported = false;
-        let dummy = document.createElement("div");
-        try {
-            dummy.contentEditable = "plaintext-only";
-            _plainTextSupported = dummy.contentEditable == "plaintext-only";
-        }
-        catch (_) { }
+function getRoot(node) {
+    while (node) {
+        if (node && (node.nodeType == 9 || node.nodeType == 11 && node.host))
+            return node;
+        node = node.assignedSlot || node.parentNode;
     }
-    return _plainTextSupported;
+    return null;
 }
 
 class DOMPos {
@@ -15244,25 +15499,30 @@ class ContentView {
     sync(track) {
         var _a;
         if (this.dirty & 2 /* Node */) {
-            let parent = this.dom, pos = null;
+            let parent = this.dom;
+            let pos = parent.firstChild;
             for (let child of this.children) {
                 if (child.dirty) {
-                    let next = pos ? pos.nextSibling : parent.firstChild;
-                    if (!child.dom && next && !((_a = ContentView.get(next)) === null || _a === void 0 ? void 0 : _a.parent))
-                        child.reuseDOM(next);
+                    if (!child.dom && pos && !((_a = ContentView.get(pos)) === null || _a === void 0 ? void 0 : _a.parent))
+                        child.reuseDOM(pos);
                     child.sync(track);
                     child.dirty = 0 /* Not */;
                 }
-                if (track && track.node == parent && pos != child.dom)
+                if (track && !track.written && track.node == parent && pos != child.dom)
                     track.written = true;
-                syncNodeInto(parent, pos, child.dom);
-                pos = child.dom;
+                if (child.dom.parentNode == parent) {
+                    while (pos && pos != child.dom)
+                        pos = rm(pos);
+                    pos = child.dom.nextSibling;
+                }
+                else {
+                    parent.insertBefore(child.dom, pos);
+                }
             }
-            let next = pos ? pos.nextSibling : parent.firstChild;
-            if (next && track && track.node == parent)
+            if (pos && track && track.node == parent)
                 track.written = true;
-            while (next)
-                next = rm(next);
+            while (pos)
+                pos = rm(pos);
         }
         else if (this.dirty & 1 /* Child */) {
             for (let child of this.children)
@@ -15393,6 +15653,7 @@ class ContentView {
             (this.breakAfter ? "#" : "");
     }
     static get(node) { return node.cmView; }
+    get isEditable() { return true; }
 }
 ContentView.prototype.breakAfter = 0;
 // Remove a DOM node and return its next sibling.
@@ -15400,14 +15661,6 @@ function rm(dom) {
     let next = dom.nextSibling;
     dom.parentNode.removeChild(dom);
     return next;
-}
-function syncNodeInto(parent, after, dom) {
-    let next = after ? after.nextSibling : parent.firstChild;
-    if (dom.parentNode == parent)
-        while (next != dom)
-            next = rm(next);
-    else
-        parent.insertBefore(dom, next);
 }
 class ChildCursor {
     constructor(children, pos, i) {
@@ -15440,15 +15693,18 @@ const dist_gecko = !dist_ie && /*@__PURE__*//gecko\/(\d+)/i.test(nav.userAgent);
 const dist_chrome = !dist_ie && /*@__PURE__*//Chrome\/(\d+)/.exec(nav.userAgent);
 const webkit = "webkitFontSmoothing" in dist_doc.documentElement.style;
 const dist_safari = !dist_ie && /*@__PURE__*//Apple Computer/.test(nav.vendor);
+const ios = dist_safari && (/*@__PURE__*//Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2);
 var browser = {
-    mac: /*@__PURE__*//Mac/.test(nav.platform),
+    mac: ios || /*@__PURE__*//Mac/.test(nav.platform),
+    windows: /*@__PURE__*//Win/.test(nav.platform),
+    linux: /*@__PURE__*//Linux|X11/.test(nav.platform),
     ie: dist_ie,
     ie_version: ie_upto10 ? dist_doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
     gecko: dist_gecko,
     gecko_version: dist_gecko ? +(/*@__PURE__*//Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
     chrome: !!dist_chrome,
     chrome_version: dist_chrome ? +dist_chrome[1] : 0,
-    ios: dist_safari && (/*@__PURE__*//Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2),
+    ios,
     android: /*@__PURE__*//Android\b/.test(nav.userAgent),
     webkit,
     safari: dist_safari,
@@ -15601,7 +15857,7 @@ function textCoords(text, pos, side) {
     let rect = rects[(flatten ? flatten < 0 : side >= 0) ? 0 : rects.length - 1];
     if (browser.safari && !flatten && rect.width == 0)
         rect = Array.prototype.find.call(rects, r => r.width) || rect;
-    return flatten ? flattenRect(rect, flatten < 0) : rect;
+    return flatten ? flattenRect(rect, flatten < 0) : rect || null;
 }
 // Also used for collapsed ranges that don't have a placeholder widget!
 class dist_WidgetView extends InlineView {
@@ -15670,6 +15926,7 @@ class dist_WidgetView extends InlineView {
         }
         return (pos == 0 && side > 0 || pos == this.length && side <= 0) ? rect : flattenRect(rect, pos == 0);
     }
+    get isEditable() { return false; }
 }
 class CompositionView extends dist_WidgetView {
     domAtPos(pos) { return new DOMPos(this.widget.text, pos); }
@@ -15681,6 +15938,38 @@ class CompositionView extends dist_WidgetView {
     ignoreMutation() { return false; }
     get overrideDOMText() { return null; }
     coordsAt(pos, side) { return textCoords(this.widget.text, pos, side); }
+    get isEditable() { return true; }
+}
+// These are drawn around uneditable widgets to avoid a number of
+// browser bugs that show up when the cursor is directly next to
+// uneditable inline content.
+class dist_WidgetBufferView extends InlineView {
+    constructor(side) {
+        super();
+        this.side = side;
+    }
+    get length() { return 0; }
+    merge() { return false; }
+    become(other) {
+        return other instanceof dist_WidgetBufferView && other.side == this.side;
+    }
+    slice() { return new dist_WidgetBufferView(this.side); }
+    sync() {
+        if (!this.dom)
+            this.setDOM(document.createTextNode("\u200b"));
+        else if (this.dirty && this.dom.nodeValue != "\u200b")
+            this.dom.nodeValue = "\u200b";
+    }
+    getSide() { return this.side; }
+    domAtPos(pos) { return DOMPos.before(this.dom); }
+    domBoundsAround() { return null; }
+    coordsAt(pos) {
+        let rects = clientRectsFor(this.dom);
+        return rects[rects.length - 1] || null;
+    }
+    get overrideDOMText() {
+        return Text.of([this.dom.nodeValue.replace(/\u200b/g, "")]);
+    }
 }
 function mergeInlineChildren(parent, from, to, elts, openStart, openEnd) {
     let cur = parent.childCursor();
@@ -15818,7 +16107,7 @@ function coordsInChildren(view, pos, side) {
     if (!last)
         return view.dom.getBoundingClientRect();
     let rects = clientRectsFor(last);
-    return rects[rects.length - 1];
+    return rects[rects.length - 1] || null;
 }
 
 function combineAttrs(source, target) {
@@ -15985,8 +16274,6 @@ class dist_Decoration extends RangeValue {
     */
     static widget(spec) {
         let side = spec.side || 0;
-        if (spec.block)
-            side += (200000000 /* BigBlock */ + 1) * (side > 0 ? 1 : -1);
         return new dist_PointDecoration(spec, side, side, !!spec.block, spec.widget || null, false);
     }
     /**
@@ -15995,9 +16282,9 @@ class dist_Decoration extends RangeValue {
     */
     static replace(spec) {
         let block = !!spec.block;
-        let { start, end } = getInclusive(spec);
-        let startSide = block ? -200000000 /* BigBlock */ * (start ? 2 : 1) : 100000000 /* BigInline */ * (start ? -1 : 1);
-        let endSide = block ? 200000000 /* BigBlock */ * (end ? 2 : 1) : 100000000 /* BigInline */ * (end ? 1 : -1);
+        let { start, end } = getInclusive(spec, block);
+        let startSide = 100000000 /* Big */ * (start ? -1 : 1) * (block ? 2 : 1);
+        let endSide = 100000000 /* Big */ * (end ? 1 : -1) * (block ? 2 : 1);
         return new dist_PointDecoration(spec, startSide, endSide, block, spec.widget || null, true);
     }
     /**
@@ -16027,7 +16314,7 @@ dist_Decoration.none = RangeSet.empty;
 class MarkDecoration extends dist_Decoration {
     constructor(spec) {
         let { start, end } = getInclusive(spec);
-        super(100000000 /* BigInline */ * (start ? -1 : 1), 100000000 /* BigInline */ * (end ? 1 : -1), null, spec);
+        super(100000000 /* Big */ * (start ? -1 : 1), 100000000 /* Big */ * (end ? 1 : -1), null, spec);
         this.tagName = spec.tagName || "span";
         this.class = spec.class || "";
         this.attrs = spec.attributes || null;
@@ -16048,7 +16335,7 @@ class MarkDecoration extends dist_Decoration {
 MarkDecoration.prototype.point = false;
 class LineDecoration extends dist_Decoration {
     constructor(spec) {
-        super(-100000000 /* BigInline */, -100000000 /* BigInline */, null, spec);
+        super(-100000000 /* Big */, -100000000 /* Big */, null, spec);
     }
     eq(other) {
         return other instanceof LineDecoration && attrsEq(this.spec.attributes, other.spec.attributes);
@@ -16089,13 +16376,13 @@ class dist_PointDecoration extends dist_Decoration {
     }
 }
 dist_PointDecoration.prototype.point = true;
-function getInclusive(spec) {
+function getInclusive(spec, block = false) {
     let { inclusiveStart: start, inclusiveEnd: end } = spec;
     if (start == null)
         start = spec.inclusive;
     if (end == null)
         end = spec.inclusive;
-    return { start: start || false, end: end || false };
+    return { start: start !== null && start !== void 0 ? start : block, end: end !== null && end !== void 0 ? end : block };
 }
 function widgetsEq(a, b) {
     return a == b || !!(a && b && a.compare(b));
@@ -16175,14 +16462,17 @@ class LineView extends ContentView {
     }
     // Only called when building a line view in ContentBuilder
     addLineDeco(deco) {
-        let attrs = deco.spec.attributes;
+        let attrs = deco.spec.attributes, cls = deco.spec.class;
         if (attrs)
             this.attrs = combineAttrs(attrs, this.attrs || {});
+        if (cls)
+            this.attrs = combineAttrs(attrs, { class: cls });
     }
     domAtPos(pos) {
         return inlineDOMAtPos(this.dom, this.children, pos);
     }
     sync(track) {
+        var _a;
         if (!this.dom || (this.dirty & 4 /* Attrs */)) {
             this.setDOM(document.createElement("div"));
             this.dom.className = "cm-line";
@@ -16198,7 +16488,7 @@ class LineView extends ContentView {
         while (last && ContentView.get(last) instanceof MarkView)
             last = last.lastChild;
         if (!last ||
-            last.nodeName != "BR" && ContentView.get(last) instanceof dist_WidgetView &&
+            last.nodeName != "BR" && ((_a = ContentView.get(last)) === null || _a === void 0 ? void 0 : _a.isEditable) == false &&
                 (!browser.ios || !this.children.some(ch => ch instanceof TextView))) {
             let hack = document.createElement("BR");
             hack.cmIgnore = true;
@@ -16260,7 +16550,9 @@ class dist_BlockWidgetView extends ContentView {
     split(at) {
         let len = this.length - at;
         this.length = at;
-        return new dist_BlockWidgetView(this.widget, len, this.type);
+        let end = new dist_BlockWidgetView(this.widget, len, this.type);
+        end.breakAfter = this.breakAfter;
+        return end;
     }
     get children() { return none$1; }
     sync() {
@@ -16297,6 +16589,9 @@ class dist_ContentBuilder {
         this.content = [];
         this.curLine = null;
         this.breakAtStart = 0;
+        this.pendingBuffer = 0 /* No */;
+        // Set to false directly after a widget that covers the position after it
+        this.atCursorPos = true;
         this.openStart = -1;
         this.openEnd = -1;
         this.text = "";
@@ -16311,22 +16606,30 @@ class dist_ContentBuilder {
         return !last.breakAfter && !(last instanceof dist_BlockWidgetView && last.type == BlockType.WidgetBefore);
     }
     getLine() {
-        if (!this.curLine)
+        if (!this.curLine) {
             this.content.push(this.curLine = new LineView);
+            this.atCursorPos = true;
+        }
         return this.curLine;
     }
-    addWidget(view) {
+    flushBuffer(active) {
+        if (this.pendingBuffer) {
+            this.curLine.append(wrapMarks(new dist_WidgetBufferView(-1), active), active.length);
+            this.pendingBuffer = 0 /* No */;
+        }
+    }
+    addBlockWidget(view) {
+        this.flushBuffer([]);
         this.curLine = null;
         this.content.push(view);
     }
-    finish() {
+    finish(openEnd) {
+        if (!openEnd)
+            this.flushBuffer([]);
+        else
+            this.pendingBuffer = 0 /* No */;
         if (!this.posCovered())
             this.getLine();
-    }
-    wrapMarks(view, active) {
-        for (let mark of active)
-            view = new MarkView(mark, [view], view.length);
-        return view;
     }
     buildText(length, active, openStart) {
         while (length > 0) {
@@ -16342,6 +16645,7 @@ class dist_ContentBuilder {
                         this.content[this.content.length - 1].breakAfter = 1;
                     else
                         this.breakAtStart = 1;
+                    this.flushBuffer([]);
                     this.curLine = null;
                     length--;
                     continue;
@@ -16352,7 +16656,9 @@ class dist_ContentBuilder {
                 }
             }
             let take = Math.min(this.text.length - this.textOff, length, 512 /* Chunk */);
-            this.getLine().append(this.wrapMarks(new TextView(this.text.slice(this.textOff, this.textOff + take)), active), openStart);
+            this.flushBuffer(active);
+            this.getLine().append(wrapMarks(new TextView(this.text.slice(this.textOff, this.textOff + take)), active), openStart);
+            this.atCursorPos = true;
             this.textOff += take;
             length -= take;
             openStart = 0;
@@ -16371,11 +16677,23 @@ class dist_ContentBuilder {
                 let { type } = deco;
                 if (type == BlockType.WidgetAfter && !this.posCovered())
                     this.getLine();
-                this.addWidget(new dist_BlockWidgetView(deco.widget || new NullWidget("div"), len, type));
+                this.addBlockWidget(new dist_BlockWidgetView(deco.widget || new NullWidget("div"), len, type));
             }
             else {
-                let widget = this.wrapMarks(dist_WidgetView.create(deco.widget || new NullWidget("span"), len, deco.startSide), active);
-                this.getLine().append(widget, openStart);
+                let view = dist_WidgetView.create(deco.widget || new NullWidget("span"), len, deco.startSide);
+                let cursorBefore = this.atCursorPos && !view.isEditable && openStart <= active.length && (from < to || deco.startSide > 0);
+                let cursorAfter = !view.isEditable && (from < to || deco.startSide <= 0);
+                let line = this.getLine();
+                if (this.pendingBuffer == 2 /* IfCursor */ && !cursorBefore)
+                    this.pendingBuffer = 0 /* No */;
+                this.flushBuffer(active);
+                if (cursorBefore) {
+                    line.append(wrapMarks(new dist_WidgetBufferView(1), active), openStart);
+                    openStart = active.length + Math.max(0, openStart - active.length);
+                }
+                line.append(wrapMarks(view, active), openStart);
+                this.atCursorPos = cursorAfter;
+                this.pendingBuffer = !cursorAfter ? 0 /* No */ : from < to ? 1 /* Yes */ : 2 /* IfCursor */;
             }
         }
         else if (this.doc.lineAt(this.pos).from == this.pos) { // Line decoration
@@ -16401,9 +16719,14 @@ class dist_ContentBuilder {
         builder.openEnd = RangeSet.spans(decorations, from, to, builder);
         if (builder.openStart < 0)
             builder.openStart = builder.openEnd;
-        builder.finish();
+        builder.finish(builder.openEnd);
         return builder;
     }
+}
+function wrapMarks(view, active) {
+    for (let mark of active)
+        view = new MarkView(mark, [view], view.length);
+    return view;
 }
 class NullWidget extends WidgetType {
     constructor(tag) {
@@ -16422,6 +16745,12 @@ const mouseSelectionStyle = /*@__PURE__*/Facet.define();
 const exceptionSink = /*@__PURE__*/Facet.define();
 const updateListener = /*@__PURE__*/Facet.define();
 const inputHandler = /*@__PURE__*/Facet.define();
+const scrollTo = /*@__PURE__*/StateEffect.define({
+    map: (range, changes) => range.map(changes)
+});
+const centerOn = /*@__PURE__*/StateEffect.define({
+    map: (range, changes) => range.map(changes)
+});
 /**
 Log or report an unhandled exception in client code. Should
 probably only be used by extension code that allows client code to
@@ -16632,11 +16961,17 @@ class PluginInstance {
     }
 }
 PluginInstance.dummy = /*@__PURE__*/new PluginInstance(/*@__PURE__*/ViewPlugin.define(() => ({})));
+function combineFacetAttrs(values) {
+    let result = {};
+    for (let i = values.length - 1; i >= 0; i--)
+        combineAttrs(values[i], result);
+    return result;
+}
 const editorAttributes = /*@__PURE__*/Facet.define({
-    combine: values => values.reduce((a, b) => combineAttrs(b, a), {})
+    combine: combineFacetAttrs
 });
 const contentAttributes = /*@__PURE__*/Facet.define({
-    combine: values => values.reduce((a, b) => combineAttrs(b, a), {})
+    combine: combineFacetAttrs
 });
 // Provide decorations
 const dist_decorations = /*@__PURE__*/Facet.define();
@@ -16734,7 +17069,9 @@ class dist_ViewUpdate {
             this.flags |= 2 /* Height */;
     }
     /**
-    Tells you whether the viewport changed in this update.
+    Tells you whether the [viewport](https://codemirror.net/6/docs/ref/#view.EditorView.viewport) or
+    [visible ranges](https://codemirror.net/6/docs/ref/#view.EditorView.visibleRanges) changed in this
+    update.
     */
     get viewportChanged() {
         return (this.flags & 4 /* Viewport */) > 0;
@@ -16750,7 +17087,7 @@ class dist_ViewUpdate {
     or the lines or characters within it has changed.
     */
     get geometryChanged() {
-        return this.docChanged || (this.flags & (16 /* Geometry */ | 2 /* Height */)) > 0;
+        return this.docChanged || (this.flags & (8 /* Geometry */ | 2 /* Height */)) > 0;
     }
     /**
     True when this update indicates a focus change.
@@ -16835,7 +17172,7 @@ class DocView extends ContentView {
         changedRanges = ChangedRange.extendWithRanges(changedRanges, decoDiff);
         let pointerSel = update.transactions.some(tr => tr.isUserEvent("select.pointer"));
         if (this.dirty == 0 /* Not */ && changedRanges.length == 0 &&
-            !(update.flags & (4 /* Viewport */ | 8 /* LineGaps */)) &&
+            !(update.flags & 4 /* Viewport */) &&
             update.state.selection.main.from >= this.view.viewport.from &&
             update.state.selection.main.to <= this.view.viewport.to) {
             this.updateSelection(forceSelection, pointerSel);
@@ -16845,6 +17182,14 @@ class DocView extends ContentView {
             this.updateInner(changedRanges, deco, update.startState.doc.length, forceSelection, pointerSel);
             return true;
         }
+    }
+    reset(sel) {
+        if (this.dirty) {
+            this.view.observer.ignore(() => this.view.docView.sync());
+            this.dirty = 0 /* Not */;
+        }
+        if (sel)
+            this.updateSelection();
     }
     // Used both by update and checkLayout do perform the actual DOM
     // update
@@ -16870,6 +17215,12 @@ class DocView extends ContentView {
             this.updateSelection(forceSelection, pointerSel);
             this.dom.style.height = "";
         });
+        let gaps = [];
+        if (this.view.viewport.from || this.view.viewport.to < this.view.state.doc.length)
+            for (let child of this.children)
+                if (child instanceof dist_BlockWidgetView && child.widget instanceof BlockGapWidget)
+                    gaps.push(child.dom);
+        observer.updateGaps(gaps);
     }
     updateChildren(changes, deco, oldLength) {
         let cursor = this.childCursor(oldLength);
@@ -16969,6 +17320,14 @@ class DocView extends ContentView {
             !isEquivalentPosition(anchor.node, anchor.offset, domSel.anchorNode, domSel.anchorOffset) ||
             !isEquivalentPosition(head.node, head.offset, domSel.focusNode, domSel.focusOffset)) {
             this.view.observer.ignore(() => {
+                // Chrome Android will hide the virtual keyboard when tapping
+                // inside an uneditable node, and not bring it back when we
+                // move the cursor to its proper position. This tries to
+                // restore the keyboard by cycling focus.
+                if (browser.android && browser.chrome && this.dom.contains(domSel.focusNode) && inUneditable(domSel.focusNode, this.dom)) {
+                    this.dom.blur();
+                    this.dom.focus({ preventScroll: true });
+                }
                 let rawSel = getSelection(this.root);
                 if (main.empty) {
                     // Work around https://bugzilla.mozilla.org/show_bug.cgi?id=1612076
@@ -17142,10 +17501,13 @@ class DocView extends ContentView {
             this.view.viewState.lineGapDeco
         ];
     }
-    scrollPosIntoView(pos, side) {
-        let rect = this.coordsAt(pos, side);
+    scrollIntoView({ range, center }) {
+        let rect = this.coordsAt(range.head, range.empty ? range.assoc : range.head > range.anchor ? -1 : 1), other;
         if (!rect)
             return;
+        if (!range.empty && (other = this.coordsAt(range.anchor, range.anchor > range.head ? -1 : 1)))
+            rect = { left: Math.min(rect.left, other.left), top: Math.min(rect.top, other.top),
+                right: Math.max(rect.right, other.right), bottom: Math.max(rect.bottom, other.bottom) };
         let mLeft = 0, mRight = 0, mTop = 0, mBottom = 0;
         for (let margins of this.view.pluginField(PluginField.scrollMargins))
             if (margins) {
@@ -17159,10 +17521,10 @@ class DocView extends ContentView {
                 if (bottom != null)
                     mBottom = Math.max(mBottom, bottom);
             }
-        scrollRectIntoView(this.dom, {
+        scrollRectIntoView(this.view.scrollDOM, {
             left: rect.left - mLeft, top: rect.top - mTop,
             right: rect.right + mRight, bottom: rect.bottom + mBottom
-        });
+        }, range.head < range.anchor ? -1 : 1, center);
     }
 }
 function betweenUneditable(pos) {
@@ -17272,6 +17634,14 @@ function findChangedDeco(a, b, diff) {
     let comp = new DecorationComparator$1;
     RangeSet.compare(a, b, diff, comp);
     return comp.changes;
+}
+function inUneditable(node, inside) {
+    for (let cur = node; cur && cur != inside; cur = cur.assignedSlot || cur.parentNode) {
+        if (cur.nodeType == 1 && cur.contentEditable == 'false') {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -17718,6 +18088,7 @@ function domPosInText(node, x, y) {
     return { node, offset: closestOffset > -1 ? closestOffset : generalSide > 0 ? node.nodeValue.length : 0 };
 }
 function posAtCoords(view, { x, y }, precise, bias = -1) {
+    var _a;
     let content = view.contentDOM.getBoundingClientRect(), block;
     let halfLine = view.defaultLineHeight / 2;
     for (let bounced = false;;) {
@@ -17735,25 +18106,27 @@ function posAtCoords(view, { x, y }, precise, bias = -1) {
         y = bias > 0 ? block.bottom + halfLine : block.top - halfLine;
     }
     let lineStart = block.from;
+    // Clip x to the viewport sides
     x = Math.max(content.left + 1, Math.min(content.right - 1, x));
     // If this is outside of the rendered viewport, we can't determine a position
     if (lineStart < view.viewport.from)
         return view.viewport.from == 0 ? 0 : posAtCoordsImprecise(view, content, block, x, y);
     if (lineStart > view.viewport.to)
         return view.viewport.to == view.state.doc.length ? view.state.doc.length : posAtCoordsImprecise(view, content, block, x, y);
-    // Clip x to the viewport sides
-    let root = view.root, element = root.elementFromPoint(x, y);
+    // Prefer ShadowRootOrDocument.elementFromPoint if present, fall back to document if not
+    let doc = view.dom.ownerDocument;
+    let element = (view.root.elementFromPoint ? view.root : doc).elementFromPoint(x, y);
     // There's visible editor content under the point, so we can try
     // using caret(Position|Range)FromPoint as a shortcut
     let node, offset = -1;
-    if (element && view.contentDOM.contains(element) && !(view.docView.nearest(element) instanceof dist_WidgetView)) {
-        if (root.caretPositionFromPoint) {
-            let pos = root.caretPositionFromPoint(x, y);
+    if (element && view.contentDOM.contains(element) && ((_a = view.docView.nearest(element)) === null || _a === void 0 ? void 0 : _a.isEditable) != false) {
+        if (doc.caretPositionFromPoint) {
+            let pos = doc.caretPositionFromPoint(x, y);
             if (pos)
                 ({ offsetNode: node, offset } = pos);
         }
-        else if (root.caretRangeFromPoint) {
-            let range = root.caretRangeFromPoint(x, y);
+        else if (doc.caretRangeFromPoint) {
+            let range = doc.caretRangeFromPoint(x, y);
             if (range) {
                 ({ startContainer: node, startOffset: offset } = range);
                 if (browser.safari && isSuspiciousCaretResult(node, offset, x))
@@ -17887,7 +18260,18 @@ class InputState {
     constructor(view) {
         this.lastKeyCode = 0;
         this.lastKeyTime = 0;
-        this.pendingIOSKey = null;
+        // On Chrome Android, backspace near widgets is just completely
+        // broken, and there are no key events, so we need to handle the
+        // beforeinput event. Deleting stuff will often create a flurry of
+        // events, and interrupting it before it is done just makes
+        // subsequent events even more broken, so again, we hold off doing
+        // anything until the browser is finished with whatever it is trying
+        // to do.
+        this.pendingAndroidKey = undefined;
+        // On iOS, some keys need to have their default behavior happen
+        // (after which we retroactively handle them and reset the DOM) to
+        // avoid messing up the virtual keyboard state.
+        this.pendingIOSKey = undefined;
         this.lastSelectionOrigin = null;
         this.lastSelectionTime = 0;
         this.lastEscPress = 0;
@@ -17996,20 +18380,39 @@ class InputState {
         // state. So we let it go through, and then, in
         // applyDOMChange, notify key handlers of it and reset to
         // the state they produce.
-        if (browser.ios && (event.keyCode == 13 || event.keyCode == 8) &&
+        let pending;
+        if (browser.ios && (pending = PendingKeys.find(key => key.keyCode == event.keyCode)) &&
             !(event.ctrlKey || event.altKey || event.metaKey) && !event.synthetic) {
-            this.pendingIOSKey = event.keyCode == 13 ? "enter" : "backspace";
+            this.pendingIOSKey = pending;
             setTimeout(() => this.flushIOSKey(view), 250);
             return true;
         }
         return false;
     }
     flushIOSKey(view) {
-        if (!this.pendingIOSKey)
+        let key = this.pendingIOSKey;
+        if (!key)
             return false;
-        let dom = view.contentDOM, key = this.pendingIOSKey;
-        this.pendingIOSKey = null;
-        return key == "enter" ? dispatchKey(dom, "Enter", 13) : dispatchKey(dom, "Backspace", 8);
+        this.pendingIOSKey = undefined;
+        return dispatchKey(view.contentDOM, key.key, key.keyCode);
+    }
+    // This causes the DOM observer to pause for a bit, and sets an
+    // animation frame (which seems the most reliable way to detect
+    // 'Chrome is done flailing about messing with the DOM') to fire a
+    // fake key event and re-sync the view again.
+    setPendingAndroidKey(view, pending) {
+        this.pendingAndroidKey = pending;
+        requestAnimationFrame(() => {
+            let key = this.pendingAndroidKey;
+            if (!key)
+                return;
+            this.pendingAndroidKey = undefined;
+            view.observer.processRecords();
+            let startState = view.state;
+            dispatchKey(view.contentDOM, key.key, key.keyCode);
+            if (view.state == startState)
+                view.docView.reset(true);
+        });
     }
     ignoreDuringComposition(event) {
         if (!/^key/.test(event.type))
@@ -18056,6 +18459,11 @@ class InputState {
             this.mouseSelection.destroy();
     }
 }
+const PendingKeys = [
+    { key: "Backspace", keyCode: 8, inputType: "deleteContentBackward" },
+    { key: "Enter", keyCode: 13, inputType: "insertParagraph" },
+    { key: "Delete", keyCode: 46, inputType: "deleteContentForward" }
+];
 // Key codes for modifier keys
 const modifierCodes = [16, 17, 18, 20, 91, 92, 224, 225];
 class dist_MouseSelection {
@@ -18172,7 +18580,7 @@ function capturePaste(view) {
 function doPaste(view, input) {
     let { state } = view, changes, i = 1, text = state.toText(input);
     let byLine = text.lines == state.selection.ranges.length;
-    let linewise = lastLinewiseCopy && state.selection.ranges.every(r => r.empty) && lastLinewiseCopy == text.toString();
+    let linewise = lastLinewiseCopy != null && state.selection.ranges.every(r => r.empty) && lastLinewiseCopy == text.toString();
     if (linewise) {
         let lastLine = -1;
         changes = state.changeByRange(range => {
@@ -18351,8 +18759,10 @@ function dropText(view, event, text, direct) {
     });
 }
 handlers.drop = (view, event) => {
-    if (!event.dataTransfer || !view.state.facet(editable))
+    if (!event.dataTransfer)
         return;
+    if (view.state.readOnly)
+        return event.preventDefault();
     let files = event.dataTransfer.files;
     if (files && files.length) { // For a file drop, read the file's text.
         event.preventDefault();
@@ -18377,13 +18787,12 @@ handlers.drop = (view, event) => {
     }
 };
 handlers.paste = (view, event) => {
-    if (!view.state.facet(editable))
-        return;
+    if (view.state.readOnly)
+        return event.preventDefault();
     view.observer.flush();
     let data = brokenClipboardAPI ? null : event.clipboardData;
-    let text = data && data.getData("text/plain");
-    if (text) {
-        doPaste(view, text);
+    if (data) {
+        doPaste(view, data.getData("text/plain"));
         event.preventDefault();
     }
     else {
@@ -18432,7 +18841,7 @@ function copiedRange(state) {
 let lastLinewiseCopy = null;
 handlers.copy = handlers.cut = (view, event) => {
     let { text, ranges, linewise } = copiedRange(view.state);
-    if (!text)
+    if (!text && !linewise)
         return;
     lastLinewiseCopy = linewise ? text : null;
     let data = brokenClipboardAPI ? null : event.clipboardData;
@@ -18444,7 +18853,7 @@ handlers.copy = handlers.cut = (view, event) => {
     else {
         captureCopy(view, text);
     }
-    if (event.type == "cut" && view.state.facet(editable))
+    if (event.type == "cut" && !view.state.readOnly)
         view.dispatch({
             changes: ranges,
             scrollIntoView: true,
@@ -18500,8 +18909,35 @@ handlers.compositionend = view => {
 handlers.contextmenu = view => {
     view.inputState.lastContextMenu = Date.now();
 };
+handlers.beforeinput = (view, event) => {
+    var _a;
+    // Because Chrome Android doesn't fire useful key events, use
+    // beforeinput to detect backspace (and possibly enter and delete,
+    // but those usually don't even seem to fire beforeinput events at
+    // the moment) and fake a key event for it.
+    //
+    // (preventDefault on beforeinput, though supported in the spec,
+    // seems to do nothing at all on Chrome).
+    let pending;
+    if (browser.chrome && browser.android && (pending = PendingKeys.find(key => key.inputType == event.inputType))) {
+        view.inputState.setPendingAndroidKey(view, pending);
+        if (pending.key == "Backspace" || pending.key == "Delete") {
+            let startViewHeight = ((_a = window.visualViewport) === null || _a === void 0 ? void 0 : _a.height) || 0;
+            setTimeout(() => {
+                var _a;
+                // Backspacing near uneditable nodes on Chrome Android sometimes
+                // closes the virtual keyboard. This tries to crudely detect
+                // that and refocus to get it back.
+                if ((((_a = window.visualViewport) === null || _a === void 0 ? void 0 : _a.height) || 0) > startViewHeight + 10 && view.hasFocus) {
+                    view.contentDOM.blur();
+                    view.focus();
+                }
+            }, 100);
+        }
+    }
+};
 
-const wrappingWhiteSpace = ["pre-wrap", "normal", "pre-line"];
+const wrappingWhiteSpace = ["pre-wrap", "normal", "pre-line", "break-spaces"];
 class dist_HeightOracle {
     constructor() {
         this.doc = Text.empty;
@@ -19147,18 +19583,20 @@ function visiblePixelRange(dom, paddingTop) {
     let rect = dom.getBoundingClientRect();
     let left = Math.max(0, rect.left), right = Math.min(innerWidth, rect.right);
     let top = Math.max(0, rect.top), bottom = Math.min(innerHeight, rect.bottom);
-    for (let parent = dom.parentNode; parent;) { // (Cast to any because TypeScript is useless with Node types)
+    let body = dom.ownerDocument.body;
+    for (let parent = dom.parentNode; parent && parent != body;) {
         if (parent.nodeType == 1) {
-            let style = window.getComputedStyle(parent);
-            if ((parent.scrollHeight > parent.clientHeight || parent.scrollWidth > parent.clientWidth) &&
+            let elt = parent;
+            let style = window.getComputedStyle(elt);
+            if ((elt.scrollHeight > elt.clientHeight || elt.scrollWidth > elt.clientWidth) &&
                 style.overflow != "visible") {
-                let parentRect = parent.getBoundingClientRect();
+                let parentRect = elt.getBoundingClientRect();
                 left = Math.max(left, parentRect.left);
                 right = Math.min(right, parentRect.right);
                 top = Math.max(top, parentRect.top);
                 bottom = Math.min(bottom, parentRect.bottom);
             }
-            parent = style.position == "absolute" || style.position == "fixed" ? parent.offsetParent : parent.parentNode;
+            parent = style.position == "absolute" || style.position == "fixed" ? elt.offsetParent : elt.parentNode;
         }
         else if (parent.nodeType == 11) { // Shadow root
             parent = parent.host;
@@ -19214,6 +19652,15 @@ class LineGapWidget extends WidgetType {
     }
     get estimatedHeight() { return this.vertical ? this.size : -1; }
 }
+class ScrollTarget {
+    constructor(range, center = false) {
+        this.range = range;
+        this.center = center;
+    }
+    map(changes) {
+        return changes.empty ? this : new ScrollTarget(this.range.map(changes), this.center);
+    }
+}
 class dist_ViewState {
     constructor(state) {
         this.state = state;
@@ -19226,7 +19673,7 @@ class dist_ViewState {
         this.heightOracle = new dist_HeightOracle;
         // See VP.MaxDOMHeight
         this.scaler = IdScaler;
-        this.scrollTo = null;
+        this.scrollTarget = null;
         // Briefly set to true when printing, to disable viewport limiting
         this.printing = false;
         this.visibleRanges = [];
@@ -19259,7 +19706,7 @@ class dist_ViewState {
         this.scaler = this.heightMap.height <= 7000000 /* MaxDOMHeight */ ? IdScaler :
             new BigScaler(this.heightOracle.doc, this.heightMap, this.viewports);
     }
-    update(update, scrollTo = null) {
+    update(update, scrollTarget = null) {
         let prev = this.state;
         this.state = update.state;
         let newDeco = this.state.facet(dist_decorations);
@@ -19270,30 +19717,33 @@ class dist_ViewState {
         if (this.heightMap.height != prevHeight)
             update.flags |= 2 /* Height */;
         let viewport = heightChanges.length ? this.mapViewport(this.viewport, update.changes) : this.viewport;
-        if (scrollTo && (scrollTo.head < viewport.from || scrollTo.head > viewport.to) || !this.viewportIsAppropriate(viewport))
-            viewport = this.getViewport(0, scrollTo);
-        if (!viewport.eq(this.viewport)) {
-            this.viewport = viewport;
-            update.flags |= 4 /* Viewport */;
-        }
+        if (scrollTarget && (scrollTarget.range.head < viewport.from || scrollTarget.range.head > viewport.to) ||
+            !this.viewportIsAppropriate(viewport))
+            viewport = this.getViewport(0, scrollTarget);
+        this.viewport = viewport;
         this.updateForViewport();
-        if (this.lineGaps.length || this.viewport.to - this.viewport.from > 15000 /* MinViewPort */)
-            update.flags |= this.updateLineGaps(this.ensureLineGaps(this.mapLineGaps(this.lineGaps, update.changes)));
-        this.computeVisibleRanges();
-        if (scrollTo)
-            this.scrollTo = scrollTo;
+        if (this.lineGaps.length || this.viewport.to - this.viewport.from > 4000 /* DoubleMargin */)
+            this.updateLineGaps(this.ensureLineGaps(this.mapLineGaps(this.lineGaps, update.changes)));
+        update.flags |= this.computeVisibleRanges();
+        if (scrollTarget)
+            this.scrollTarget = scrollTarget;
         if (!this.mustEnforceCursorAssoc && update.selectionSet && update.view.lineWrapping &&
             update.state.selection.main.empty && update.state.selection.main.assoc)
             this.mustEnforceCursorAssoc = true;
     }
     measure(docView, repeated) {
         let dom = docView.dom, whiteSpace = "", direction = Direction.LTR;
+        let result = 0;
         if (!repeated) {
             // Vertical padding
             let style = window.getComputedStyle(dom);
             whiteSpace = style.whiteSpace, direction = (style.direction == "rtl" ? Direction.RTL : Direction.LTR);
-            this.paddingTop = parseInt(style.paddingTop) || 0;
-            this.paddingBottom = parseInt(style.paddingBottom) || 0;
+            let paddingTop = parseInt(style.paddingTop) || 0, paddingBottom = parseInt(style.paddingBottom) || 0;
+            if (this.paddingTop != paddingTop || this.paddingBottom != paddingBottom) {
+                result |= 8 /* Geometry */;
+                this.paddingTop = paddingTop;
+                this.paddingBottom = paddingBottom;
+            }
         }
         // Pixel viewport
         let pixelViewport = this.printing ? { top: -1e8, bottom: 1e8, left: -1e8, right: 1e8 } : visiblePixelRange(dom, this.paddingTop);
@@ -19303,7 +19753,7 @@ class dist_ViewState {
         if (!this.inView)
             return 0;
         let lineHeights = docView.measureVisibleLineHeights();
-        let refresh = false, bias = 0, result = 0, oracle = this.heightOracle;
+        let refresh = false, bias = 0, oracle = this.heightOracle;
         if (!repeated) {
             let contentWidth = docView.dom.clientWidth;
             if (oracle.mustRefresh(lineHeights, whiteSpace, direction) ||
@@ -19312,12 +19762,12 @@ class dist_ViewState {
                 refresh = oracle.refresh(whiteSpace, direction, lineHeight, charWidth, contentWidth / charWidth, lineHeights);
                 if (refresh) {
                     docView.minWidth = 0;
-                    result |= 16 /* Geometry */;
+                    result |= 8 /* Geometry */;
                 }
             }
             if (this.contentWidth != contentWidth) {
                 this.contentWidth = contentWidth;
-                result |= 16 /* Geometry */;
+                result |= 8 /* Geometry */;
             }
             if (dTop > 0 && dBottom > 0)
                 bias = Math.max(dTop, dBottom);
@@ -19329,17 +19779,12 @@ class dist_ViewState {
         if (oracle.heightChanged)
             result |= 2 /* Height */;
         if (!this.viewportIsAppropriate(this.viewport, bias) ||
-            this.scrollTo && (this.scrollTo.head < this.viewport.from || this.scrollTo.head > this.viewport.to)) {
-            let newVP = this.getViewport(bias, this.scrollTo);
-            if (newVP.from != this.viewport.from || newVP.to != this.viewport.to) {
-                this.viewport = newVP;
-                result |= 4 /* Viewport */;
-            }
-        }
+            this.scrollTarget && (this.scrollTarget.range.head < this.viewport.from || this.scrollTarget.range.head > this.viewport.to))
+            this.viewport = this.getViewport(bias, this.scrollTarget);
         this.updateForViewport();
-        if (this.lineGaps.length || this.viewport.to - this.viewport.from > 15000 /* MinViewPort */)
-            result |= this.updateLineGaps(this.ensureLineGaps(refresh ? [] : this.lineGaps));
-        this.computeVisibleRanges();
+        if (this.lineGaps.length || this.viewport.to - this.viewport.from > 4000 /* DoubleMargin */)
+            this.updateLineGaps(this.ensureLineGaps(refresh ? [] : this.lineGaps));
+        result |= this.computeVisibleRanges();
         if (this.mustEnforceCursorAssoc) {
             this.mustEnforceCursorAssoc = false;
             // This is done in the read stage, because moving the selection
@@ -19352,22 +19797,25 @@ class dist_ViewState {
     }
     get visibleTop() { return this.scaler.fromDOM(this.pixelViewport.top, 0); }
     get visibleBottom() { return this.scaler.fromDOM(this.pixelViewport.bottom, 0); }
-    getViewport(bias, scrollTo) {
+    getViewport(bias, scrollTarget) {
         // This will divide VP.Margin between the top and the
         // bottom, depending on the bias (the change in viewport position
         // since the last update). It'll hold a number between 0 and 1
         let marginTop = 0.5 - Math.max(-0.5, Math.min(0.5, bias / 1000 /* Margin */ / 2));
         let map = this.heightMap, doc = this.state.doc, { visibleTop, visibleBottom } = this;
         let viewport = new Viewport(map.lineAt(visibleTop - marginTop * 1000 /* Margin */, QueryType.ByHeight, doc, 0, 0).from, map.lineAt(visibleBottom + (1 - marginTop) * 1000 /* Margin */, QueryType.ByHeight, doc, 0, 0).to);
-        // If scrollTo is given, make sure the viewport includes that position
-        if (scrollTo) {
-            if (scrollTo.head < viewport.from) {
-                let { top: newTop } = map.lineAt(scrollTo.head, QueryType.ByPos, doc, 0, 0);
-                viewport = new Viewport(map.lineAt(newTop - 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).from, map.lineAt(newTop + (visibleBottom - visibleTop) + 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).to);
-            }
-            else if (scrollTo.head > viewport.to) {
-                let { bottom: newBottom } = map.lineAt(scrollTo.head, QueryType.ByPos, doc, 0, 0);
-                viewport = new Viewport(map.lineAt(newBottom - (visibleBottom - visibleTop) - 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).from, map.lineAt(newBottom + 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).to);
+        // If scrollTarget is given, make sure the viewport includes that position
+        if (scrollTarget) {
+            let { head } = scrollTarget.range, viewHeight = visibleBottom - visibleTop;
+            if (head < viewport.from || head > viewport.to) {
+                let block = map.lineAt(head, QueryType.ByPos, doc, 0, 0), topPos;
+                if (scrollTarget.center)
+                    topPos = (block.top + block.bottom) / 2 - viewHeight / 2;
+                else if (head < viewport.from)
+                    topPos = block.top;
+                else
+                    topPos = block.bottom - viewHeight;
+                viewport = new Viewport(map.lineAt(topPos - 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).from, map.lineAt(topPos + viewHeight + 1000 /* Margin */ / 2, QueryType.ByHeight, doc, 0, 0).to);
             }
         }
         return viewport;
@@ -19409,61 +19857,57 @@ class dist_ViewState {
         if (this.heightOracle.direction != Direction.LTR)
             return gaps;
         this.heightMap.forEachLine(this.viewport.from, this.viewport.to, this.state.doc, 0, 0, line => {
-            if (line.length < 10000 /* Margin */)
+            if (line.length < 4000 /* DoubleMargin */)
                 return;
             let structure = lineStructure(line.from, line.to, this.state);
-            if (structure.total < 10000 /* Margin */)
+            if (structure.total < 4000 /* DoubleMargin */)
                 return;
             let viewFrom, viewTo;
             if (this.heightOracle.lineWrapping) {
-                if (line.from != this.viewport.from)
-                    viewFrom = line.from;
-                else
-                    viewFrom = findPosition(structure, (this.visibleTop - line.top) / line.height);
-                if (line.to != this.viewport.to)
-                    viewTo = line.to;
-                else
-                    viewTo = findPosition(structure, (this.visibleBottom - line.top) / line.height);
+                let marginHeight = (2000 /* Margin */ / this.heightOracle.lineLength) * this.heightOracle.lineHeight;
+                viewFrom = findPosition(structure, (this.visibleTop - line.top - marginHeight) / line.height);
+                viewTo = findPosition(structure, (this.visibleBottom - line.top + marginHeight) / line.height);
             }
             else {
                 let totalWidth = structure.total * this.heightOracle.charWidth;
-                viewFrom = findPosition(structure, this.pixelViewport.left / totalWidth);
-                viewTo = findPosition(structure, this.pixelViewport.right / totalWidth);
+                let marginWidth = 2000 /* Margin */ * this.heightOracle.charWidth;
+                viewFrom = findPosition(structure, (this.pixelViewport.left - marginWidth) / totalWidth);
+                viewTo = findPosition(structure, (this.pixelViewport.right + marginWidth) / totalWidth);
             }
+            let outside = [];
+            if (viewFrom > line.from)
+                outside.push({ from: line.from, to: viewFrom });
+            if (viewTo < line.to)
+                outside.push({ from: viewTo, to: line.to });
             let sel = this.state.selection.main;
-            // Make sure the gap doesn't cover a selection end
-            if (sel.from <= viewFrom && sel.to >= line.from)
-                viewFrom = sel.from;
-            if (sel.from <= line.to && sel.to >= viewTo)
-                viewTo = sel.to;
-            let gapTo = viewFrom - 10000 /* Margin */, gapFrom = viewTo + 10000 /* Margin */;
-            if (gapTo > line.from + 5000 /* HalfMargin */)
-                gaps.push(dist_find(current, gap => gap.from == line.from && gap.to > gapTo - 5000 /* HalfMargin */ && gap.to < gapTo + 5000 /* HalfMargin */) ||
-                    new LineGap(line.from, gapTo, this.gapSize(line, gapTo, true, structure)));
-            if (gapFrom < line.to - 5000 /* HalfMargin */)
-                gaps.push(dist_find(current, gap => gap.to == line.to && gap.from > gapFrom - 5000 /* HalfMargin */ &&
-                    gap.from < gapFrom + 5000 /* HalfMargin */) ||
-                    new LineGap(gapFrom, line.to, this.gapSize(line, gapFrom, false, structure)));
+            // Make sure the gaps don't cover a selection end
+            if (sel.from >= line.from && sel.from <= line.to)
+                cutRange(outside, sel.from - 10 /* SelectionMargin */, sel.from + 10 /* SelectionMargin */);
+            if (!sel.empty && sel.to >= line.from && sel.to <= line.to)
+                cutRange(outside, sel.to - 10 /* SelectionMargin */, sel.to + 10 /* SelectionMargin */);
+            for (let { from, to } of outside)
+                if (to - from > 1000 /* HalfMargin */) {
+                    gaps.push(dist_find(current, gap => gap.from >= line.from && gap.to <= line.to &&
+                        Math.abs(gap.from - from) < 1000 /* HalfMargin */ && Math.abs(gap.to - to) < 1000 /* HalfMargin */) ||
+                        new LineGap(from, to, this.gapSize(line, from, to, structure)));
+                }
         });
         return gaps;
     }
-    gapSize(line, pos, start, structure) {
+    gapSize(line, from, to, structure) {
+        let fraction = findFraction(structure, to) - findFraction(structure, from);
         if (this.heightOracle.lineWrapping) {
-            let height = line.height * findFraction(structure, pos);
-            return start ? height : line.height - height;
+            return line.height * fraction;
         }
         else {
-            let ratio = findFraction(structure, pos);
-            return structure.total * this.heightOracle.charWidth * (start ? ratio : 1 - ratio);
+            return structure.total * this.heightOracle.charWidth * fraction;
         }
     }
     updateLineGaps(gaps) {
         if (!LineGap.same(gaps, this.lineGaps)) {
             this.lineGaps = gaps;
             this.lineGapDeco = dist_Decoration.set(gaps.map(gap => gap.draw(this.heightOracle.lineWrapping)));
-            return 8 /* LineGaps */;
         }
-        return 0;
     }
     computeVisibleRanges() {
         let deco = this.state.facet(dist_decorations);
@@ -19474,7 +19918,10 @@ class dist_ViewState {
             span(from, to) { ranges.push({ from, to }); },
             point() { }
         }, 20);
+        let changed = ranges.length != this.visibleRanges.length ||
+            this.visibleRanges.some((r, i) => r.from != ranges[i].from || r.to != ranges[i].to);
         this.visibleRanges = ranges;
+        return changed ? 4 /* Viewport */ : 0;
     }
     lineAt(pos, editorTop) {
         editorTop += this.paddingTop;
@@ -19499,16 +19946,11 @@ class dist_ViewState {
         return this.scaler.toDOM(this.heightMap.height, this.paddingTop);
     }
 }
-/**
-Indicates the range of the document that is in the visible
-viewport.
-*/
 class Viewport {
     constructor(from, to) {
         this.from = from;
         this.to = to;
     }
-    eq(b) { return this.from == b.from && this.to == b.to; }
 }
 function lineStructure(from, to, state) {
     let ranges = [], pos = from, total = 0;
@@ -19551,6 +19993,20 @@ function findFraction(structure, pos) {
         counted += to - from;
     }
     return counted / structure.total;
+}
+function cutRange(ranges, from, to) {
+    for (let i = 0; i < ranges.length; i++) {
+        let r = ranges[i];
+        if (r.from < to && r.to > from) {
+            let pieces = [];
+            if (r.from < from)
+                pieces.push({ from: r.from, to: from });
+            if (r.to > to)
+                pieces.push({ from: to, to: r.to });
+            ranges.splice(i, 1, ...pieces);
+            i += pieces.length - 1;
+        }
+    }
 }
 function dist_find(array, f) {
     for (let val of array)
@@ -19634,7 +20090,7 @@ function buildTheme(main, spec, scopes) {
     });
 }
 const baseTheme = /*@__PURE__*/buildTheme("." + baseThemeID, {
-    "&": {
+    "&.cm-editor": {
         position: "relative !important",
         boxSizing: "border-box",
         "&.cm-focused": {
@@ -19670,10 +20126,14 @@ const baseTheme = /*@__PURE__*/buildTheme("." + baseThemeID, {
         wordWrap: "normal",
         boxSizing: "border-box",
         padding: "4px 0",
-        outline: "none"
+        outline: "none",
+        "&[contenteditable=true]": {
+            WebkitUserModify: "read-write-plaintext-only",
+        }
     },
     ".cm-lineWrapping": {
-        whiteSpace: "pre-wrap",
+        whiteSpace_fallback: "pre-wrap",
+        whiteSpace: "break-spaces",
         wordBreak: "break-word",
         overflowWrap: "anywhere"
     },
@@ -19801,6 +20261,8 @@ class DOMObserver {
         this.scrollTargets = [];
         this.intersection = null;
         this.intersecting = false;
+        this.gapIntersection = null;
+        this.gaps = [];
         // Used to work around a Safari Selection/shadow DOM bug (#414)
         this._selectionRange = null;
         // Timeout for scheduling check of the parents that need scroll handlers
@@ -19841,13 +20303,17 @@ class DOMObserver {
             this.intersection = new IntersectionObserver(entries => {
                 if (this.parentCheck < 0)
                     this.parentCheck = setTimeout(this.listenForScroll.bind(this), 1000);
-                if (entries[entries.length - 1].intersectionRatio > 0 != this.intersecting) {
+                if (entries.length > 0 && entries[entries.length - 1].intersectionRatio > 0 != this.intersecting) {
                     this.intersecting = !this.intersecting;
                     if (this.intersecting != this.view.inView)
                         this.onScrollChanged(document.createEvent("Event"));
                 }
             }, {});
             this.intersection.observe(this.dom);
+            this.gapIntersection = new IntersectionObserver(entries => {
+                if (entries.length > 0 && entries[entries.length - 1].intersectionRatio > 0)
+                    this.onScrollChanged(document.createEvent("Event"));
+            }, {});
         }
         this.listenForScroll();
     }
@@ -19855,6 +20321,14 @@ class DOMObserver {
         if (this.intersecting)
             this.flush();
         this.onScrollChanged(e);
+    }
+    updateGaps(gaps) {
+        if (this.gapIntersection && (gaps.length != this.gaps.length || this.gaps.some((g, i) => g != gaps[i]))) {
+            this.gapIntersection.disconnect();
+            for (let gap of gaps)
+                this.gapIntersection.observe(gap);
+            this.gaps = gaps;
+        }
     }
     onSelectionChange(event) {
         if (this.lastFlush < Date.now() - 50)
@@ -19971,20 +20445,12 @@ class DOMObserver {
             this.flush();
         }
     }
-    // Apply pending changes, if any
-    flush() {
-        if (this.delayedFlush >= 0)
-            return;
-        this.lastFlush = Date.now();
+    processRecords() {
         let records = this.queue;
         for (let mut of this.observer.takeRecords())
             records.push(mut);
         if (records.length)
             this.queue = [];
-        let selection = this.selectionRange;
-        let newSel = !this.ignoreSelection.eq(selection) && hasSelection(this.dom, selection);
-        if (records.length == 0 && !newSel)
-            return;
         let from = -1, to = -1, typeOver = false;
         for (let record of records) {
             let range = this.readMutation(record);
@@ -20000,17 +20466,26 @@ class DOMObserver {
                 to = Math.max(range.to, to);
             }
         }
+        return { from, to, typeOver };
+    }
+    // Apply pending changes, if any
+    flush() {
+        // Completely hold off flushing when pending keys are set—the code
+        // managing those will make sure processRecords is called and the
+        // view is resynchronized after
+        if (this.delayedFlush >= 0 || this.view.inputState.pendingAndroidKey)
+            return;
+        this.lastFlush = Date.now();
+        let { from, to, typeOver } = this.processRecords();
+        let selection = this.selectionRange;
+        let newSel = !this.ignoreSelection.eq(selection) && hasSelection(this.dom, selection);
+        if (from < 0 && !newSel)
+            return;
         let startState = this.view.state;
-        if (from > -1 || newSel)
-            this.onChange(from, to, typeOver);
-        if (this.view.state == startState) { // The view wasn't updated
-            if (this.view.docView.dirty) {
-                this.ignore(() => this.view.docView.sync());
-                this.view.docView.dirty = 0 /* Not */;
-            }
-            if (newSel)
-                this.view.docView.updateSelection();
-        }
+        this.onChange(from, to, typeOver);
+        // The view wasn't updated
+        if (this.view.state == startState)
+            this.view.docView.reset(newSel);
         this.clearSelection();
     }
     readMutation(rec) {
@@ -20037,6 +20512,8 @@ class DOMObserver {
         this.stop();
         if (this.intersection)
             this.intersection.disconnect();
+        if (this.gapIntersection)
+            this.gapIntersection.disconnect();
         for (let dom of this.scrollTargets)
             dom.removeEventListener("scroll", this.onScroll);
         window.removeEventListener("scroll", this.onScroll);
@@ -20083,8 +20560,11 @@ function safariSelectionRangeHack(view) {
 
 function applyDOMChange(view, start, end, typeOver) {
     let change, newSel;
-    let sel = view.state.selection.main, bounds;
-    if (start > -1 && (bounds = view.docView.domBoundsAround(start, end, 0))) {
+    let sel = view.state.selection.main;
+    if (start > -1) {
+        let bounds = view.docView.domBoundsAround(start, end, 0);
+        if (!bounds || view.state.readOnly)
+            return;
         let { from, to } = bounds;
         let selPoints = view.docView.impreciseHead || view.docView.impreciseAnchor ? [] : selectionPoints(view);
         let reader = new DOMReader(selPoints, view);
@@ -20138,15 +20618,7 @@ function applyDOMChange(view, start, end, typeOver) {
         // backspace, or delete. So this detects changes that look like
         // they're caused by those keys, and reinterprets them as key
         // events.
-        if (browser.android &&
-            ((change.from == sel.from && change.to == sel.to &&
-                change.insert.length == 1 && change.insert.lines == 2 &&
-                dispatchKey(view.contentDOM, "Enter", 13)) ||
-                (change.from == sel.from - 1 && change.to == sel.to && change.insert.length == 0 &&
-                    dispatchKey(view.contentDOM, "Backspace", 8)) ||
-                (change.from == sel.from && change.to == sel.to + 1 && change.insert.length == 0 &&
-                    dispatchKey(view.contentDOM, "Delete", 46))) ||
-            browser.ios && view.inputState.flushIOSKey(view))
+        if (browser.ios && view.inputState.flushIOSKey(view))
             return;
         let text = change.insert.toString();
         if (view.state.facet(inputHandler).some(h => h(view, change.from, change.to, text)))
@@ -20237,8 +20709,9 @@ class DOMReader {
             if (next == end)
                 break;
             let view = ContentView.get(cur), nextView = ContentView.get(next);
-            if ((view ? view.breakAfter : isBlockElement(cur)) ||
-                ((nextView ? nextView.breakAfter : isBlockElement(next)) && !(cur.nodeName == "BR" && !cur.cmIgnore)))
+            if (view && nextView ? view.breakAfter :
+                (view ? view.breakAfter : isBlockElement(cur)) ||
+                    (isBlockElement(next) && (cur.nodeName != "BR" || cur.cmIgnore)))
                 this.text += this.lineBreak;
             cur = next;
         }
@@ -20341,6 +20814,7 @@ class dist_EditorView {
         this.editorAttrs = {};
         this.contentAttrs = {};
         this.bidiCache = [];
+        this.destroyed = false;
         /**
         @internal
         */
@@ -20366,7 +20840,7 @@ class dist_EditorView {
         this.dom.appendChild(this.scrollDOM);
         this._dispatch = config.dispatch || ((tr) => this.update([tr]));
         this.dispatch = this.dispatch.bind(this);
-        this.root = (config.root || document);
+        this.root = (config.root || getRoot(config.parent) || document);
         this.viewState = new dist_ViewState(config.state || dist_EditorState.create());
         this.plugins = this.state.facet(viewPlugin).map(spec => new PluginInstance(spec).update(this));
         this.observer = new DOMObserver(this, (from, to, typeOver) => {
@@ -20439,15 +20913,32 @@ class dist_EditorView {
                 throw new RangeError("Trying to update state with a transaction that doesn't start from the previous state.");
             state = tr.state;
         }
+        if (this.destroyed) {
+            this.viewState.state = state;
+            return;
+        }
         // When the phrases change, redraw the editor
         if (state.facet(dist_EditorState.phrases) != this.state.facet(dist_EditorState.phrases))
             return this.setState(state);
         update = new dist_ViewUpdate(this, state, transactions);
-        let scrollTo;
+        let scrollTarget = null;
         try {
             this.updateState = 2 /* Updating */;
-            scrollTo = transactions.some(tr => tr.scrollIntoView) ? state.selection.main : null;
-            this.viewState.update(update, scrollTo);
+            for (let tr of transactions) {
+                if (scrollTarget)
+                    scrollTarget = scrollTarget.map(tr.changes);
+                if (tr.scrollIntoView) {
+                    let { main } = tr.state.selection;
+                    scrollTarget = new ScrollTarget(main.empty ? main : EditorSelection.cursor(main.head, main.head > main.anchor ? -1 : 1));
+                }
+                for (let e of tr.effects) {
+                    if (e.is(scrollTo))
+                        scrollTarget = new ScrollTarget(e.value);
+                    else if (e.is(centerOn))
+                        scrollTarget = new ScrollTarget(e.value, true);
+                }
+            }
+            this.viewState.update(update, scrollTarget);
             this.bidiCache = CachedOrder.update(this.bidiCache, update.changes);
             if (!update.empty) {
                 this.updatePlugins(update);
@@ -20462,7 +20953,7 @@ class dist_EditorView {
         finally {
             this.updateState = 0 /* Idle */;
         }
-        if (redrawn || scrollTo || this.viewState.mustEnforceCursorAssoc)
+        if (redrawn || scrollTarget || this.viewState.mustEnforceCursorAssoc)
             this.requestMeasure();
         if (!update.empty)
             for (let listener of this.state.facet(updateListener))
@@ -20478,6 +20969,10 @@ class dist_EditorView {
     setState(newState) {
         if (this.updateState != 0 /* Idle */)
             throw new Error("Calls to EditorView.setState are not allowed while an update is in progress");
+        if (this.destroyed) {
+            this.viewState.state = newState;
+            return;
+        }
         this.updateState = 2 /* Updating */;
         try {
             for (let plugin of this.plugins)
@@ -20527,6 +21022,8 @@ class dist_EditorView {
     @internal
     */
     measure(flush = true) {
+        if (this.destroyed)
+            return;
         if (this.measureScheduled > -1)
             cancelAnimationFrame(this.measureScheduled);
         this.measureScheduled = -1; // Prevent requestMeasure calls from scheduling another animation frame
@@ -20536,15 +21033,18 @@ class dist_EditorView {
         try {
             for (let i = 0;; i++) {
                 this.updateState = 1 /* Measuring */;
+                let oldViewport = this.viewport;
                 let changed = this.viewState.measure(this.docView, i > 0);
-                let measuring = this.measureRequests;
-                if (!changed && !measuring.length && this.viewState.scrollTo == null)
+                if (!changed && !this.measureRequests.length && this.viewState.scrollTarget == null)
                     break;
-                this.measureRequests = [];
                 if (i > 5) {
                     console.warn("Viewport failed to stabilize");
                     break;
                 }
+                let measuring = [];
+                // Only run measure requests in this cycle when the viewport didn't change
+                if (!(changed & 4 /* Viewport */))
+                    [this.measureRequests, measuring] = [measuring, this.measureRequests];
                 let measured = measuring.map(m => {
                     try {
                         return m.read(this);
@@ -20577,11 +21077,11 @@ class dist_EditorView {
                             logException(this.state, e);
                         }
                     }
-                if (this.viewState.scrollTo) {
-                    this.docView.scrollPosIntoView(this.viewState.scrollTo.head, this.viewState.scrollTo.assoc);
-                    this.viewState.scrollTo = null;
+                if (this.viewState.scrollTarget) {
+                    this.docView.scrollIntoView(this.viewState.scrollTarget);
+                    this.viewState.scrollTarget = null;
                 }
-                if (!(changed & 4 /* Viewport */) && this.measureRequests.length == 0)
+                if (this.viewport.from == oldViewport.from && this.viewport.to == oldViewport.to && this.measureRequests.length == 0)
                     break;
             }
         }
@@ -20607,16 +21107,20 @@ class dist_EditorView {
         });
         updateAttrs(this.dom, this.editorAttrs, editorAttrs);
         this.editorAttrs = editorAttrs;
-        let contentAttrs = combineAttrs(this.state.facet(contentAttributes), {
+        let contentAttrs = {
             spellcheck: "false",
             autocorrect: "off",
             autocapitalize: "off",
-            contenteditable: !this.state.facet(editable) ? "false" : contentEditablePlainTextSupported() ? "plaintext-only" : "true",
+            translate: "no",
+            contenteditable: !this.state.facet(editable) ? "false" : "true",
             class: "cm-content",
             style: `${browser.tabSize}: ${this.state.tabSize}`,
             role: "textbox",
             "aria-multiline": "true"
-        });
+        };
+        if (this.state.readOnly)
+            contentAttrs["aria-readonly"] = "true";
+        combineAttrs(this.state.facet(contentAttributes), contentAttrs);
         updateAttrs(this.contentDOM, this.contentAttrs, contentAttrs);
         this.contentAttrs = contentAttrs;
     }
@@ -20798,12 +21302,9 @@ class dist_EditorView {
     moveVertically(start, forward, distance) {
         return skipAtoms(this, start, moveVertically(this, start, forward, distance));
     }
-    /**
-    Scroll the given document position into view.
-    */
+    // FIXME remove on next major version
     scrollPosIntoView(pos) {
-        this.viewState.scrollTo = EditorSelection.cursor(pos);
-        this.requestMeasure();
+        this.dispatch({ effects: scrollTo.of(EditorSelection.cursor(pos)) });
     }
     /**
     Find the DOM parent node and offset (child offset if `node` is
@@ -20914,11 +21415,13 @@ class dist_EditorView {
     destroy() {
         for (let plugin of this.plugins)
             plugin.destroy(this);
+        this.plugins = [];
         this.inputState.destroy();
         this.dom.remove();
         this.observer.destroy();
         if (this.measureScheduled > -1)
             cancelAnimationFrame(this.measureScheduled);
+        this.destroyed = true;
     }
     /**
     Facet that can be used to add DOM event handlers. The value
@@ -20968,9 +21471,19 @@ class dist_EditorView {
     target editors with a dark or light theme.
     */
     static baseTheme(spec) {
-        return Prec.fallback(styleModule.of(buildTheme("." + baseThemeID, spec, lightDarkIDs)));
+        return Prec.lowest(styleModule.of(buildTheme("." + baseThemeID, spec, lightDarkIDs)));
     }
 }
+/**
+Effect that can be [added](https://codemirror.net/6/docs/ref/#state.TransactionSpec.effects) to a
+transaction to make it scroll the given range into view.
+*/
+dist_EditorView.scrollTo = scrollTo;
+/**
+Effect that makes the editor scroll the given range to the
+center of the visible view.
+*/
+dist_EditorView.centerOn = centerOn;
 /**
 Facet to add a [style
 module](https://github.com/marijnh/style-mod#documentation) to
@@ -21001,12 +21514,12 @@ every time the view updates.
 */
 dist_EditorView.updateListener = updateListener;
 /**
-Facet that controls whether the editor content is editable. When
-its highest-precedence value is `false`, editing is disabled,
-and the content element will no longer have its
-`contenteditable` attribute set to `true`. (Note that this
-doesn't affect API calls that change the editor content, even
-when those are bound to keys or buttons.)
+Facet that controls whether the editor content DOM is editable.
+When its highest-precedence value is `false`, the element will
+not longer have its `contenteditable` attribute set. (Note that
+this doesn't affect API calls that change the editor content,
+even when those are bound to keys or buttons. See the
+[`readOnly`](https://codemirror.net/6/docs/ref/#state.EditorState.readOnly) facet for that.)
 */
 dist_EditorView.editable = editable;
 /**
@@ -21101,11 +21614,7 @@ class CachedOrder {
     }
 }
 
-const currentPlatform = typeof navigator == "undefined" ? "key"
-    : /*@__PURE__*//Mac/.test(navigator.platform) ? "mac"
-        : /*@__PURE__*//Win/.test(navigator.platform) ? "win"
-            : /*@__PURE__*//Linux|X11/.test(navigator.platform) ? "linux"
-                : "key";
+const currentPlatform = browser.mac ? "mac" : browser.windows ? "win" : browser.linux ? "linux" : "key";
 function normalizeKeyName(name, platform) {
     const parts = name.split(/-(?!$)/);
     let result = parts[parts.length - 1];
@@ -21404,7 +21913,7 @@ const themeSpec = {
 };
 if (CanHidePrimary)
     themeSpec[".cm-line"].caretColor = "transparent !important";
-const hideNativeSelection = /*@__PURE__*/Prec.override(/*@__PURE__*/dist_EditorView.theme(themeSpec));
+const hideNativeSelection = /*@__PURE__*/Prec.highest(/*@__PURE__*/dist_EditorView.theme(themeSpec));
 function getBase(view) {
     let rect = view.scrollDOM.getBoundingClientRect();
     let left = view.textDirection == Direction.LTR ? rect.left : rect.right - view.scrollDOM.clientWidth;
@@ -21611,7 +22120,7 @@ class dist_MatchDecorator {
 }
 
 const UnicodeRegexpSupport = /x/.unicode != null ? "gu" : "g";
-const Specials = /*@__PURE__*/new RegExp("[\u0000-\u0008\u000a-\u001f\u007f-\u009f\u00ad\u061c\u200b\u200e\u200f\u2028\u2029\ufeff\ufff9-\ufffc]", UnicodeRegexpSupport);
+const Specials = /*@__PURE__*/new RegExp("[\u0000-\u0008\u000a-\u001f\u007f-\u009f\u00ad\u061c\u200b\u200e\u200f\u2028\u2029\u202d\u202e\ufeff\ufff9-\ufffc]", UnicodeRegexpSupport);
 const Names = {
     0: "null",
     7: "bell",
@@ -21626,6 +22135,8 @@ const Names = {
     8206: "left-to-right mark",
     8207: "right-to-left mark",
     8232: "line separator",
+    8237: "left-to-right override",
+    8238: "right-to-left override",
     8233: "paragraph separator",
     65279: "zero width no-break space",
     65532: "object replacement"
@@ -21792,7 +22303,7 @@ DOM class.
 function highlightActiveLine() {
     return activeLineHighlighter;
 }
-const lineDeco = /*@__PURE__*/dist_Decoration.line({ attributes: { class: "cm-activeLine" } });
+const lineDeco = /*@__PURE__*/dist_Decoration.line({ class: "cm-activeLine" });
 const activeLineHighlighter = /*@__PURE__*/ViewPlugin.fromClass(class {
     constructor(view) {
         this.decorations = this.getDeco(view);
@@ -22399,6 +22910,30 @@ function ensureSyntaxTree(state, upto, timeout = 50) {
     let parse = (_a = state.field(dist_Language.state, false)) === null || _a === void 0 ? void 0 : _a.context;
     return !parse ? null : parse.treeLen >= upto || parse.work(timeout, upto) ? parse.tree : null;
 }
+/**
+Queries whether there is a full syntax tree available up to the
+given document position. If there isn't, the background parse
+process _might_ still be working and update the tree further, but
+there is no guarantee of that—the parser will [stop
+working](https://codemirror.net/6/docs/ref/#language.syntaxParserStopped) when it has spent a
+certain amount of time or has moved beyond the visible viewport.
+Always returns false if no language has been enabled.
+*/
+function syntaxTreeAvailable(state, upto = state.doc.length) {
+    var _a;
+    return ((_a = state.field(dist_Language.state, false)) === null || _a === void 0 ? void 0 : _a.context.isDone(upto)) || false;
+}
+/**
+Tells you whether the language parser is planning to do more
+parsing work (in a `requestIdleCallback` pseudo-thread) or has
+stopped running, either because it parsed the entire document,
+because it spent too much time and was cut off, or because there
+is no language parser enabled.
+*/
+function syntaxParserRunning(view) {
+    var _a;
+    return ((_a = view.plugin(parseWorker)) === null || _a === void 0 ? void 0 : _a.isWorking()) || false;
+}
 // Lezer-style Input object for a Text document.
 class DocInput {
     constructor(doc, length = doc.length) {
@@ -22451,7 +22986,7 @@ class dist_ParseContext {
     The current editor viewport (or some overapproximation
     thereof). Intended to be used for opportunistically avoiding
     work (in which case
-    [`skipUntilInView`](https://codemirror.net/6/docs/ref/#language.EditorParseContext.skipUntilInView)
+    [`skipUntilInView`](https://codemirror.net/6/docs/ref/#language.ParseContext.skipUntilInView)
     should be called to make sure the parser is restarted when the
     skipped region becomes visible).
     */
@@ -22489,7 +23024,7 @@ class dist_ParseContext {
     work(time, upto) {
         if (upto != null && upto >= this.state.doc.length)
             upto = undefined;
-        if (this.tree != common_dist["f" /* Tree */].empty && (upto == null ? this.treeLen == this.state.doc.length : this.treeLen >= upto)) {
+        if (this.tree != common_dist["f" /* Tree */].empty && this.isDone(upto !== null && upto !== void 0 ? upto : this.state.doc.length)) {
             this.takeTree();
             return true;
         }
@@ -22575,6 +23110,8 @@ class dist_ParseContext {
     @internal
     */
     updateViewport(viewport) {
+        if (this.viewport.from == viewport.from && this.viewport.to == viewport.to)
+            return false;
         this.viewport = viewport;
         let startLen = this.skipped.length;
         for (let i = 0; i < this.skipped.length; i++) {
@@ -22584,7 +23121,10 @@ class dist_ParseContext {
                 this.skipped.splice(i--, 1);
             }
         }
-        return this.skipped.length < startLen;
+        if (this.skipped.length >= startLen)
+            return false;
+        this.reset();
+        return true;
     }
     /**
     @internal
@@ -22643,6 +23183,13 @@ class dist_ParseContext {
         return this.treeLen < pos && this.parse && this.parse.parsedPos >= pos;
     }
     /**
+    @internal
+    */
+    isDone(upto) {
+        let frags = this.fragments;
+        return this.treeLen >= upto && frags.length && frags[0].from == 0 && frags[0].to >= upto;
+    }
+    /**
     Get the context for the current parse, or `null` if no editor
     parse is in progress.
     */
@@ -22697,6 +23244,7 @@ const parseWorker = /*@__PURE__*/ViewPlugin.fromClass(class ParseWorker {
     constructor(view) {
         this.view = view;
         this.working = -1;
+        this.workScheduled = 0;
         // End of the current time chunk
         this.chunkEnd = -1;
         // Milliseconds of budget left for this chunk
@@ -22706,12 +23254,8 @@ const parseWorker = /*@__PURE__*/ViewPlugin.fromClass(class ParseWorker {
     }
     update(update) {
         let cx = this.view.state.field(dist_Language.state).context;
-        if (update.viewportChanged) {
-            if (cx.updateViewport(update.view.viewport))
-                cx.reset();
-            if (this.view.viewport.to > cx.treeLen)
-                this.scheduleWork();
-        }
+        if (cx.updateViewport(update.view.viewport) || this.view.viewport.to > cx.treeLen)
+            this.scheduleWork();
         if (update.docChanged) {
             if (this.view.hasFocus)
                 this.chunkBudget += 50 /* ChangeBonus */;
@@ -22722,11 +23266,9 @@ const parseWorker = /*@__PURE__*/ViewPlugin.fromClass(class ParseWorker {
     scheduleWork() {
         if (this.working > -1)
             return;
-        let { state } = this.view, field = state.field(dist_Language.state), frags = field.context.fragments;
-        if (field.tree == field.context.tree && field.context.treeLen >= state.doc.length &&
-            frags.length && frags[0].from == 0 && frags[0].to >= state.doc.length)
-            return;
-        this.working = requestIdle(this.work, { timeout: 500 /* Pause */ });
+        let { state } = this.view, field = state.field(dist_Language.state);
+        if (field.tree != field.context.tree || !field.context.isDone(state.doc.length))
+            this.working = requestIdle(this.work, { timeout: 500 /* Pause */ });
     }
     work(deadline) {
         this.working = -1;
@@ -22753,13 +23295,20 @@ const parseWorker = /*@__PURE__*/ViewPlugin.fromClass(class ParseWorker {
     }
     checkAsyncSchedule(cx) {
         if (cx.scheduleOn) {
-            cx.scheduleOn.then(() => this.scheduleWork());
+            this.workScheduled++;
+            cx.scheduleOn
+                .then(() => this.scheduleWork())
+                .catch(err => logException(this.view.state, err))
+                .then(() => this.workScheduled--);
             cx.scheduleOn = null;
         }
     }
     destroy() {
         if (this.working >= 0)
             cancelIdle(this.working);
+    }
+    isWorking() {
+        return this.working >= 0 || this.workScheduled > 0;
     }
 }, {
     eventHandlers: { focus() { this.scheduleWork(); } }
@@ -22823,16 +23372,17 @@ class LanguageDescription {
     Optional filename pattern that should be associated with this
     language.
     */
-    filename, loadFunc) {
+    filename, loadFunc, 
+    /**
+    If the language has been loaded, this will hold its value.
+    */
+    support = undefined) {
         this.name = name;
         this.alias = alias;
         this.extensions = extensions;
         this.filename = filename;
         this.loadFunc = loadFunc;
-        /**
-        If the language has been loaded, this will hold its value.
-        */
-        this.support = undefined;
+        this.support = support;
         this.loading = null;
     }
     /**
@@ -22847,7 +23397,13 @@ class LanguageDescription {
     Create a language description.
     */
     static of(spec) {
-        return new LanguageDescription(spec.name, (spec.alias || []).concat(spec.name).map(s => s.toLowerCase()), spec.extensions || [], spec.filename, spec.load);
+        let { load, support } = spec;
+        if (!load) {
+            if (!support)
+                throw new RangeError("Must pass either 'load' or 'support' to LanguageDescription.of");
+            load = () => Promise.resolve(support);
+        }
+        return new LanguageDescription(spec.name, (spec.alias || []).concat(spec.name).map(s => s.toLowerCase()), spec.extensions || [], spec.filename, load, support);
     }
     /**
     Look for a language in the given array of descriptions that
@@ -23057,24 +23613,7 @@ definitive indentation can be determined.
 const indentNodeProp = /*@__PURE__*/new common_dist["b" /* NodeProp */]();
 // Compute the indentation for a given position from the syntax tree.
 function syntaxIndentation(cx, ast, pos) {
-    let tree = ast.resolveInner(pos);
-    // Enter previous nodes that end in empty error terms, which means
-    // they were broken off by error recovery, so that indentation
-    // works even if the constructs haven't been finished.
-    for (let scan = tree, scanPos = pos;;) {
-        let last = scan.childBefore(scanPos);
-        if (!last)
-            break;
-        if (last.type.isError && last.from == last.to) {
-            tree = scan;
-            scanPos = last.from;
-        }
-        else {
-            scan = last;
-            scanPos = scan.to + 1;
-        }
-    }
-    return indentFrom(tree, pos, cx);
+    return indentFrom(ast.resolveInner(pos).enterUnfinishedNodesBefore(pos), pos, cx);
 }
 function ignoreClosed(cx) {
     return cx.pos == cx.options.simulateBreak && cx.options.simulateDoubleBreak;
@@ -23373,6 +23912,7 @@ const defaults = {
     elementStyle: "",
     markers: () => RangeSet.empty,
     lineMarker: () => null,
+    lineMarkerChange: null,
     initialSpacer: null,
     updateSpacer: null,
     domEventHandlers: {}
@@ -23407,7 +23947,7 @@ const dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
         flexDirection: "column",
         flexShrink: 0,
         boxSizing: "border-box",
-        height: "100%",
+        minHeight: "100%",
         overflow: "hidden"
     },
     ".cm-gutterElement": {
@@ -23454,6 +23994,7 @@ const gutterView = /*@__PURE__*/ViewPlugin.fromClass(class {
         this.dom = document.createElement("div");
         this.dom.className = "cm-gutters";
         this.dom.setAttribute("aria-hidden", "true");
+        this.dom.style.minHeight = this.view.contentHeight + "px";
         this.gutters = view.state.facet(activeGutters).map(conf => new dist_SingleGutterView(view, conf));
         for (let gutter of this.gutters)
             this.dom.appendChild(gutter.dom);
@@ -23470,6 +24011,12 @@ const gutterView = /*@__PURE__*/ViewPlugin.fromClass(class {
     update(update) {
         if (this.updateGutters(update))
             this.syncGutters();
+        if (update.geometryChanged)
+            this.dom.style.minHeight = this.view.contentHeight + "px";
+        if (this.view.state.facet(unfixGutters) != !this.fixed) {
+            this.fixed = !this.fixed;
+            this.dom.style.position = this.fixed ? "sticky" : "";
+        }
     }
     syncGutters() {
         let lineClasses = RangeSet.iter(this.view.state.facet(gutterLineClass), this.view.viewport.from);
@@ -23497,11 +24044,6 @@ const gutterView = /*@__PURE__*/ViewPlugin.fromClass(class {
         }, 0);
         for (let cx of contexts)
             cx.finish();
-        this.dom.style.minHeight = this.view.contentHeight + "px";
-        if (this.view.state.facet(unfixGutters) != !this.fixed) {
-            this.fixed = !this.fixed;
-            this.dom.style.position = this.fixed ? "sticky" : "";
-        }
     }
     updateGutters(update) {
         let prev = update.startState.facet(activeGutters), cur = update.state.facet(activeGutters);
@@ -23622,7 +24164,8 @@ class dist_SingleGutterView {
                 this.spacer.update(update.view, 0, 0, [updated]);
         }
         let vp = update.view.viewport;
-        return !RangeSet.eq(this.markers, prevMarkers, vp.from, vp.to);
+        return !RangeSet.eq(this.markers, prevMarkers, vp.from, vp.to) ||
+            (this.config.lineMarkerChange ? this.config.lineMarkerChange(update) : false);
     }
 }
 class GutterElement {
@@ -23685,33 +24228,37 @@ class NumberMarker extends dist_GutterMarker {
         this.number = number;
     }
     eq(other) { return this.number == other.number; }
-    toDOM(_view) { return document.createTextNode(this.number); }
+    toDOM() { return document.createTextNode(this.number); }
 }
 function formatNumber(view, number) {
     return view.state.facet(lineNumberConfig).formatNumber(number, view.state);
 }
-const lineNumberGutter = /*@__PURE__*/dist_gutter({
+const lineNumberGutter = /*@__PURE__*/activeGutters.compute([lineNumberConfig], state => ({
     class: "cm-lineNumbers",
+    renderEmptyElements: false,
     markers(view) { return view.state.facet(lineNumberMarkers); },
     lineMarker(view, line, others) {
         if (others.some(m => m.toDOM))
             return null;
         return new NumberMarker(formatNumber(view, view.state.doc.lineAt(line.from).number));
     },
+    lineMarkerChange: update => update.startState.facet(lineNumberConfig) != update.state.facet(lineNumberConfig),
     initialSpacer(view) {
         return new NumberMarker(formatNumber(view, maxLineNumber(view.state.doc.lines)));
     },
     updateSpacer(spacer, update) {
         let max = formatNumber(update.view, maxLineNumber(update.view.state.doc.lines));
         return max == spacer.number ? spacer : new NumberMarker(max);
-    }
-});
+    },
+    domEventHandlers: state.facet(lineNumberConfig).domEventHandlers
+}));
 /**
 Create a line number gutter extension.
 */
 function lineNumbers(config = {}) {
     return [
         lineNumberConfig.of(config),
+        gutters(),
         lineNumberGutter
     ];
 }
@@ -23726,7 +24273,6 @@ const activeLineGutterMarker = /*@__PURE__*/new class extends dist_GutterMarker 
         super(...arguments);
         this.elementClass = "cm-activeLineGutter";
     }
-    eq() { return true; }
 };
 const activeLineGutterHighlighter = /*@__PURE__*/gutterLineClass.compute(["selection"], state => {
     let marks = [], last = -1;
@@ -23931,20 +24477,21 @@ const foldWidget = /*@__PURE__*/dist_Decoration.replace({ widget: /*@__PURE__*/n
         ignoreEvents() { return false; }
         toDOM(view) {
             let { state } = view, conf = state.facet(foldConfig);
-            if (conf.placeholderDOM)
-                return conf.placeholderDOM();
-            let element = document.createElement("span");
-            element.textContent = conf.placeholderText;
-            element.setAttribute("aria-label", state.phrase("folded code"));
-            element.title = state.phrase("unfold");
-            element.className = "cm-foldPlaceholder";
-            element.onclick = event => {
+            let onclick = (event) => {
                 let line = view.visualLineAt(view.posAtDOM(event.target));
                 let folded = dist_foldInside(view.state, line.from, line.to);
                 if (folded)
                     view.dispatch({ effects: unfoldEffect.of(folded) });
                 event.preventDefault();
             };
+            if (conf.placeholderDOM)
+                return conf.placeholderDOM(view, onclick);
+            let element = document.createElement("span");
+            element.textContent = conf.placeholderText;
+            element.setAttribute("aria-label", state.phrase("folded code"));
+            element.title = state.phrase("unfold");
+            element.className = "cm-foldPlaceholder";
+            element.onclick = onclick;
             return element;
         }
     } });
@@ -24036,7 +24583,7 @@ const fold_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
         padding: "0 1px",
         cursor: "pointer"
     },
-    ".cm-foldGutter .cm-gutterElement": {
+    ".cm-foldGutter span": {
         padding: "0 1px",
         cursor: "pointer"
     }
@@ -24051,8 +24598,8 @@ const fold_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
 
 
 const matchbrackets_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
-    ".cm-matchingBracket": { color: "#0b0" },
-    ".cm-nonmatchingBracket": { color: "#a22" }
+    ".cm-matchingBracket": { backgroundColor: "#328c8252" },
+    ".cm-nonmatchingBracket": { backgroundColor: "#bb555544" }
 });
 const DefaultScanDist = 10000, DefaultBrackets = "()[]{}";
 const bracketMatchingConfig = /*@__PURE__*/Facet.define({
@@ -24123,11 +24670,13 @@ bracket was found at `pos`, or a match result otherwise.
 */
 function matchBrackets(state, pos, dir, config = {}) {
     let maxScanDistance = config.maxScanDistance || DefaultScanDist, brackets = config.brackets || DefaultBrackets;
-    let tree = syntaxTree(state), sub = tree.resolve(pos, dir), matches;
-    if (matches = matchingNodes(sub.type, dir, brackets))
-        return matchMarkedBrackets(state, pos, dir, sub, matches, brackets);
-    else
-        return matchPlainBrackets(state, pos, dir, tree, sub.type, maxScanDistance, brackets);
+    let tree = syntaxTree(state), node = tree.resolveInner(pos, dir);
+    for (let cur = node; cur; cur = cur.parent) {
+        let matches = matchingNodes(cur.type, dir, brackets);
+        if (matches && cur.from < cur.to)
+            return matchMarkedBrackets(state, pos, dir, cur, matches, brackets);
+    }
+    return matchPlainBrackets(state, pos, dir, tree, node.type, maxScanDistance, brackets);
 }
 function matchMarkedBrackets(_state, _pos, dir, token, matching, brackets) {
     let parent = token.parent, firstToken = { from: token.from, to: token.to };
@@ -24135,7 +24684,7 @@ function matchMarkedBrackets(_state, _pos, dir, token, matching, brackets) {
     if (cursor && (dir < 0 ? cursor.childBefore(token.from) : cursor.childAfter(token.to)))
         do {
             if (dir < 0 ? cursor.to <= token.from : cursor.from >= token.to) {
-                if (depth == 0 && matching.indexOf(cursor.type.name) > -1) {
+                if (depth == 0 && matching.indexOf(cursor.type.name) > -1 && cursor.from < cursor.to) {
                     return { start: firstToken, end: { from: cursor.from, to: cursor.to }, matched: true };
                 }
                 else if (matchingNodes(cursor.type, dir, brackets)) {
@@ -24144,7 +24693,11 @@ function matchMarkedBrackets(_state, _pos, dir, token, matching, brackets) {
                 else if (matchingNodes(cursor.type, -dir, brackets)) {
                     depth--;
                     if (depth == 0)
-                        return { start: firstToken, end: { from: cursor.from, to: cursor.to }, matched: false };
+                        return {
+                            start: firstToken,
+                            end: cursor.from == cursor.to ? undefined : { from: cursor.from, to: cursor.to },
+                            matched: false
+                        };
                 }
             }
         } while (dir < 0 ? cursor.prevSibling() : cursor.nextSibling());
@@ -24333,7 +24886,12 @@ Move the cursor over the next syntactic element to the right.
 */
 const cursorSyntaxRight = view => moveSel(view, range => moveBySyntax(view.state, range, view.textDirection == Direction.LTR));
 function cursorByLine(view, forward) {
-    return moveSel(view, range => range.empty ? view.moveVertically(range, forward) : rangeEnd(range, forward));
+    return moveSel(view, range => {
+        if (!range.empty)
+            return rangeEnd(range, forward);
+        let moved = view.moveVertically(range, forward);
+        return moved.head != range.head ? moved : view.moveToLineBoundary(range, forward);
+    });
 }
 /**
 Move the selection one line up.
@@ -24598,6 +25156,8 @@ const simplifySelection = ({ state, dispatch }) => {
     return true;
 };
 function deleteBy({ state, dispatch }, by) {
+    if (state.readOnly)
+        return false;
     let event = "delete.selection";
     let changes = state.changeByRange(range => {
         let { from, to } = range;
@@ -24617,6 +25177,15 @@ function deleteBy({ state, dispatch }, by) {
     dispatch(state.update(changes, { scrollIntoView: true, userEvent: event }));
     return true;
 }
+function skipAtomic(target, pos, forward) {
+    if (target instanceof dist_EditorView)
+        for (let ranges of target.pluginField(PluginField.atomicRanges))
+            ranges.between(pos, pos, (from, to) => {
+                if (from < pos && to > pos)
+                    pos = forward ? to : from;
+            });
+    return pos;
+}
 const deleteByChar = (target, forward) => deleteBy(target, pos => {
     let { state } = target, line = state.doc.lineAt(pos), before, targetPos;
     if (!forward && pos > line.from && pos < line.from + 200 &&
@@ -24633,12 +25202,7 @@ const deleteByChar = (target, forward) => deleteBy(target, pos => {
         if (targetPos == pos && line.number != (forward ? state.doc.lines : 1))
             targetPos += forward ? 1 : -1;
     }
-    if (target instanceof dist_EditorView)
-        for (let ranges of target.pluginField(PluginField.atomicRanges))
-            ranges.between(targetPos, targetPos, (from, to) => {
-                targetPos = forward ? to : from;
-            });
-    return targetPos;
+    return skipAtomic(target, targetPos, forward);
 });
 /**
 Delete the selection, or, for cursor selections, the character
@@ -24667,7 +25231,7 @@ const deleteByGroup = (target, forward) => deleteBy(target, start => {
             cat = nextCat;
         pos = next;
     }
-    return pos;
+    return skipAtomic(target, pos, forward);
 });
 /**
 Delete the selection or backward until the end of the next
@@ -24686,9 +25250,7 @@ line, delete the line break after it.
 */
 const deleteToLineEnd = view => deleteBy(view, pos => {
     let lineEnd = view.visualLineAt(pos).to;
-    if (pos < lineEnd)
-        return lineEnd;
-    return Math.min(view.state.doc.length, pos + 1);
+    return skipAtomic(view, pos < lineEnd ? lineEnd : Math.min(view.state.doc.length, pos + 1), true);
 });
 /**
 Delete the selection, or, if it is a cursor selection, delete to
@@ -24697,15 +25259,15 @@ line, delete the line break before it.
 */
 const deleteToLineStart = view => deleteBy(view, pos => {
     let lineStart = view.visualLineAt(pos).from;
-    if (pos > lineStart)
-        return lineStart;
-    return Math.max(0, pos - 1);
+    return skipAtomic(view, pos > lineStart ? lineStart : Math.max(0, pos - 1), false);
 });
 /**
 Delete all whitespace directly before a line end from the
 document.
 */
 const deleteTrailingWhitespace = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     let changes = [];
     for (let pos = 0, prev = "", iter = state.doc.iter();;) {
         iter.next();
@@ -24732,6 +25294,8 @@ Replace each selection range with a line break, leaving the cursor
 on the line before the break.
 */
 const splitLine = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     let changes = state.changeByRange(range => {
         return { changes: { from: range.from, to: range.to, insert: Text.of(["", ""]) },
             range: EditorSelection.cursor(range.from) };
@@ -24743,6 +25307,8 @@ const splitLine = ({ state, dispatch }) => {
 Flip the characters before and after the cursor(s).
 */
 const transposeChars = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     let changes = state.changeByRange(range => {
         if (!range.empty || range.from == 0 || range.from == state.doc.length)
             return { range };
@@ -24776,6 +25342,8 @@ function selectedLineBlocks(state) {
     return blocks;
 }
 function moveLine(state, dispatch, forward) {
+    if (state.readOnly)
+        return false;
     let changes = [], ranges = [];
     for (let block of selectedLineBlocks(state)) {
         if (forward ? block.to == state.doc.length : block.from == 0)
@@ -24812,6 +25380,8 @@ Move the selected lines down one line.
 */
 const moveLineDown = ({ state, dispatch }) => moveLine(state, dispatch, true);
 function copyLine(state, dispatch, forward) {
+    if (state.readOnly)
+        return false;
     let changes = [];
     for (let block of selectedLineBlocks(state)) {
         if (forward)
@@ -24834,6 +25404,8 @@ const copyLineDown = ({ state, dispatch }) => copyLine(state, dispatch, true);
 Delete selected lines.
 */
 const deleteLine = view => {
+    if (view.state.readOnly)
+        return false;
     let { state } = view, changes = state.changes(selectedLineBlocks(state).map(({ from, to }) => {
         if (from > 0)
             from--;
@@ -24870,29 +25442,40 @@ will also delete that whitespace. When the cursor is between
 matching brackets, an additional newline will be inserted after
 the cursor.
 */
-const insertNewlineAndIndent = ({ state, dispatch }) => {
-    let changes = state.changeByRange(({ from, to }) => {
-        let explode = from == to && isBetweenBrackets(state, from);
-        let cx = new dist_IndentContext(state, { simulateBreak: from, simulateDoubleBreak: !!explode });
-        let indent = getIndentation(cx, from);
-        if (indent == null)
-            indent = /^\s*/.exec(state.doc.lineAt(from).text)[0].length;
-        let line = state.doc.lineAt(from);
-        while (to < line.to && /\s/.test(line.text[to - line.from]))
-            to++;
-        if (explode)
-            ({ from, to } = explode);
-        else if (from > line.from && from < line.from + 100 && !/\S/.test(line.text.slice(0, from)))
-            from = line.from;
-        let insert = ["", indentString(state, indent)];
-        if (explode)
-            insert.push(indentString(state, cx.lineIndent(line.from, -1)));
-        return { changes: { from, to, insert: Text.of(insert) },
-            range: EditorSelection.cursor(from + 1 + insert[1].length) };
-    });
-    dispatch(state.update(changes, { scrollIntoView: true, userEvent: "input" }));
-    return true;
-};
+const insertNewlineAndIndent = /*@__PURE__*/newlineAndIndent(false);
+/**
+Create a blank, indented line below the current line.
+*/
+const insertBlankLine = /*@__PURE__*/newlineAndIndent(true);
+function newlineAndIndent(atEof) {
+    return ({ state, dispatch }) => {
+        if (state.readOnly)
+            return false;
+        let changes = state.changeByRange(range => {
+            let { from, to } = range, line = state.doc.lineAt(from);
+            let explode = !atEof && from == to && isBetweenBrackets(state, from);
+            if (atEof)
+                from = to = (to <= line.to ? line : state.doc.lineAt(to)).to;
+            let cx = new dist_IndentContext(state, { simulateBreak: from, simulateDoubleBreak: !!explode });
+            let indent = getIndentation(cx, from);
+            if (indent == null)
+                indent = /^\s*/.exec(state.doc.lineAt(from).text)[0].length;
+            while (to < line.to && /\s/.test(line.text[to - line.from]))
+                to++;
+            if (explode)
+                ({ from, to } = explode);
+            else if (from > line.from && from < line.from + 100 && !/\S/.test(line.text.slice(0, from)))
+                from = line.from;
+            let insert = ["", indentString(state, indent)];
+            if (explode)
+                insert.push(indentString(state, cx.lineIndent(line.from, -1)));
+            return { changes: { from, to, insert: Text.of(insert) },
+                range: EditorSelection.cursor(from + 1 + insert[1].length) };
+        });
+        dispatch(state.update(changes, { scrollIntoView: true, userEvent: "input" }));
+        return true;
+    };
+}
 function changeBySelectedLine(state, f) {
     let atLine = -1;
     return state.changeByRange(range => {
@@ -24916,6 +25499,8 @@ facet](https://codemirror.net/6/docs/ref/#language.indentService) as source for 
 information.
 */
 const indentSelection = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     let updated = Object.create(null);
     let context = new dist_IndentContext(state, { overrideIndentation: start => {
             let found = updated[start];
@@ -24943,6 +25528,8 @@ Add a [unit](https://codemirror.net/6/docs/ref/#language.indentUnit) of indentat
 lines.
 */
 const indentMore = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     dispatch(state.update(changeBySelectedLine(state, (line, changes) => {
         changes.push({ from: line.from, insert: state.facet(indentUnit) });
     }), { userEvent: "input.indent" }));
@@ -24953,6 +25540,8 @@ Remove a [unit](https://codemirror.net/6/docs/ref/#language.indentUnit) of inden
 selected lines.
 */
 const indentLess = ({ state, dispatch }) => {
+    if (state.readOnly)
+        return false;
     dispatch(state.update(changeBySelectedLine(state, (line, changes) => {
         let space = /^\s*/.exec(line.text)[0];
         if (!space)
@@ -25087,6 +25676,7 @@ The default keymap. Includes all bindings from
 - Shift-Alt-ArrowUp: [`copyLineUp`](https://codemirror.net/6/docs/ref/#commands.copyLineUp)
 - Shift-Alt-ArrowDown: [`copyLineDown`](https://codemirror.net/6/docs/ref/#commands.copyLineDown)
 - Escape: [`simplifySelection`](https://codemirror.net/6/docs/ref/#commands.simplifySelection)
+- Ctrl-Enter (Comd-Enter on macOS): [`insertBlankLine`](https://codemirror.net/6/docs/ref/#commands.insertBlankLine)
 - Alt-l (Ctrl-l on macOS): [`selectLine`](https://codemirror.net/6/docs/ref/#commands.selectLine)
 - Ctrl-i (Cmd-i on macOS): [`selectParentSyntax`](https://codemirror.net/6/docs/ref/#commands.selectParentSyntax)
 - Ctrl-[ (Cmd-[ on macOS): [`indentLess`](https://codemirror.net/6/docs/ref/#commands.indentLess)
@@ -25103,6 +25693,7 @@ const defaultKeymap = /*@__PURE__*/[
     { key: "Alt-ArrowDown", run: moveLineDown },
     { key: "Shift-Alt-ArrowDown", run: copyLineDown },
     { key: "Escape", run: simplifySelection },
+    { key: "Mod-Enter", run: insertBlankLine },
     { key: "Alt-l", mac: "Ctrl-l", run: selectLine },
     { key: "Mod-i", run: selectParentSyntax, preventDefault: true },
     { key: "Mod-[", run: indentLess },
@@ -25698,7 +26289,7 @@ class dist_SearchCursor {
     }
 }
 
-const empty = { from: -1, to: -1, match: /*@__PURE__*//.*/.exec("") };
+const dist_empty = { from: -1, to: -1, match: /*@__PURE__*//.*/.exec("") };
 const baseFlags = "gm" + (/x/.unicode == null ? "" : "u");
 /**
 This class is similar to [`SearchCursor`](https://codemirror.net/6/docs/ref/#search.SearchCursor)
@@ -25724,7 +26315,7 @@ class RegExpCursor {
         match object when [`next`](https://codemirror.net/6/docs/ref/#search.RegExpCursor.next)
         sucessfully finds a match.
         */
-        this.value = empty;
+        this.value = dist_empty;
         if (/\\[sWDnr]|\n|\r|\[\^/.test(query))
             return new MultilineRegExpCursor(text, query, options, from, to);
         this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
@@ -25815,7 +26406,7 @@ class MultilineRegExpCursor {
         this.text = text;
         this.to = to;
         this.done = false;
-        this.value = empty;
+        this.value = dist_empty;
         this.matchPos = from;
         this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
         this.flat = FlattenedDoc.get(text, from, this.chunkEnd(from + 5000 /* Base */));
@@ -26049,16 +26640,27 @@ const selectWord = ({ state, dispatch }) => {
 // Find next occurrence of query relative to last cursor. Wrap around
 // the document if there are no more matches.
 function findNextOccurrence(state, query) {
-    let { ranges } = state.selection;
-    let ahead = new dist_SearchCursor(state.doc, query, ranges[ranges.length - 1].to).next();
-    if (!ahead.done)
-        return ahead.value;
-    let cursor = new dist_SearchCursor(state.doc, query, 0, Math.max(0, ranges[ranges.length - 1].from - 1));
-    while (!cursor.next().done) {
-        if (!ranges.some(r => r.from === cursor.value.from))
+    let { main, ranges } = state.selection;
+    let word = state.wordAt(main.head), fullWord = word && word.from == main.from && word.to == main.to;
+    for (let cycled = false, cursor = new dist_SearchCursor(state.doc, query, ranges[ranges.length - 1].to);;) {
+        cursor.next();
+        if (cursor.done) {
+            if (cycled)
+                return null;
+            cursor = new dist_SearchCursor(state.doc, query, 0, Math.max(0, ranges[ranges.length - 1].from - 1));
+            cycled = true;
+        }
+        else {
+            if (cycled && ranges.some(r => r.from == cursor.value.from))
+                continue;
+            if (fullWord) {
+                let word = state.wordAt(cursor.value.from);
+                if (!word || word.from != cursor.value.from || word.to != cursor.value.to)
+                    continue;
+            }
             return cursor.value;
+        }
     }
-    return null;
 }
 /**
 Select next occurrence of the current selection.
@@ -26075,7 +26677,7 @@ const selectNextOccurrence = ({ state, dispatch }) => {
     if (!range)
         return false;
     dispatch(state.update({
-        selection: state.selection.addRange(EditorSelection.range(range.from, range.to)),
+        selection: state.selection.addRange(EditorSelection.range(range.from, range.to), false),
         scrollIntoView: true
     }));
     return true;
@@ -26338,6 +26940,8 @@ Replace the current match of the search query.
 */
 const replaceNext = /*@__PURE__*/searchCommand((view, { query }) => {
     let { state } = view, { from, to } = state.selection.main;
+    if (state.readOnly)
+        return false;
     let next = query.nextMatch(state.doc, from, from);
     if (!next)
         return false;
@@ -26363,6 +26967,8 @@ Replace all instances of the search query with the given
 replacement.
 */
 const replaceAll = /*@__PURE__*/searchCommand((view, { query }) => {
+    if (view.state.readOnly)
+        return false;
     let changes = query.matchAll(view.state.doc, 1e9).map(match => {
         let { from, to } = match;
         return { from, to, insert: query.getReplacement(match) };
@@ -26500,7 +27106,7 @@ function buildPanel(conf) {
         }
     }
     function button(name, onclick, content) {
-        return crelt("button", { class: "cm-button", name, onclick }, content);
+        return crelt("button", { class: "cm-button", name, onclick, type: "button" }, content);
     }
     let panel = crelt("div", { onkeydown: keydown, class: "cm-search" }, [
         searchField,
@@ -26513,7 +27119,7 @@ function buildPanel(conf) {
         replaceField,
         button("replace", () => replaceNext(conf.view), [phrase("replace")]),
         button("replaceAll", () => replaceAll(conf.view), [phrase("replace all")]),
-        crelt("button", { name: "close", onclick: () => closeSearchPanel(conf.view), "aria-label": phrase("close") }, ["×"])
+        crelt("button", { name: "close", onclick: () => closeSearchPanel(conf.view), "aria-label": phrase("close"), type: "button" }, ["×"])
     ]);
     return panel;
 }
@@ -26581,7 +27187,7 @@ const searchExtensions = [
 
 
 
-const ios = typeof navigator != "undefined" &&
+const dist_ios = typeof navigator != "undefined" &&
     !/*@__PURE__*//Edge\/(\d+)/.exec(navigator.userAgent) && /*@__PURE__*//Apple Computer/.test(navigator.vendor) &&
     (/*@__PURE__*//Mobile\/\w+/.test(navigator.userAgent) || navigator.maxTouchPoints > 2);
 const Outside = "-10000px";
@@ -26600,7 +27206,7 @@ class TooltipViewManager {
             for (let t of this.tooltipViews)
                 if (t.update)
                     t.update(update);
-            return { shouldMeasure: false };
+            return false;
         }
         let tooltipViews = [];
         for (let i = 0; i < tooltips.length; i++) {
@@ -26627,34 +27233,70 @@ class TooltipViewManager {
         this.input = input;
         this.tooltips = tooltips;
         this.tooltipViews = tooltipViews;
-        return { shouldMeasure: true };
+        return true;
     }
 }
 /**
 Return an extension that configures tooltip behavior.
 */
 function tooltips(config = {}) {
-    return config.position ? tooltipPositioning.of(config.position) : [];
+    return tooltipConfig.of(config);
 }
-const tooltipPositioning = /*@__PURE__*/Facet.define({
-    combine: values => ios ? "absolute" : values.length ? values[0] : "fixed"
+const tooltipConfig = /*@__PURE__*/Facet.define({
+    combine: values => {
+        var _a, _b;
+        return ({
+            position: dist_ios ? "absolute" : ((_a = values.find(conf => conf.position)) === null || _a === void 0 ? void 0 : _a.position) || "fixed",
+            parent: ((_b = values.find(conf => conf.parent)) === null || _b === void 0 ? void 0 : _b.parent) || null
+        });
+    }
 });
 const tooltipPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
     constructor(view) {
         this.view = view;
         this.inView = true;
-        this.position = view.state.facet(tooltipPositioning);
+        let config = view.state.facet(tooltipConfig);
+        this.position = config.position;
+        this.parent = config.parent;
+        this.classes = view.themeClasses;
+        this.createContainer();
         this.measureReq = { read: this.readMeasure.bind(this), write: this.writeMeasure.bind(this), key: this };
         this.manager = new TooltipViewManager(view, showTooltip, t => this.createTooltip(t));
+        this.maybeMeasure = this.maybeMeasure.bind(this);
+        window.addEventListener("resize", this.maybeMeasure);
+        this.maybeMeasure();
+    }
+    createContainer() {
+        if (this.parent) {
+            this.container = document.createElement("div");
+            this.container.style.position = "relative";
+            this.container.className = this.view.themeClasses;
+            this.parent.appendChild(this.container);
+        }
+        else {
+            this.container = this.view.dom;
+        }
     }
     update(update) {
-        let { shouldMeasure } = this.manager.update(update);
-        let newPosition = update.state.facet(tooltipPositioning);
-        if (newPosition != this.position) {
-            this.position = newPosition;
+        let shouldMeasure = this.manager.update(update) || update.geometryChanged;
+        let newConfig = update.state.facet(tooltipConfig);
+        if (newConfig.position != this.position) {
+            this.position = newConfig.position;
             for (let t of this.manager.tooltipViews)
-                t.dom.style.position = newPosition;
+                t.dom.style.position = this.position;
             shouldMeasure = true;
+        }
+        if (newConfig.parent != this.parent) {
+            if (this.parent)
+                this.container.remove();
+            this.parent = newConfig.parent;
+            this.createContainer();
+            for (let t of this.manager.tooltipViews)
+                this.container.appendChild(t.dom);
+            shouldMeasure = true;
+        }
+        else if (this.parent && this.view.themeClasses != this.classes) {
+            this.classes = this.container.className = this.view.themeClasses;
         }
         if (shouldMeasure)
             this.maybeMeasure();
@@ -26662,9 +27304,14 @@ const tooltipPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
     createTooltip(tooltip) {
         let tooltipView = tooltip.create(this.view);
         tooltipView.dom.classList.add("cm-tooltip");
+        if (tooltip.arrow && !tooltipView.dom.querySelector("cm-tooltip > cm-tooltip-arrow")) {
+            let arrow = document.createElement("div");
+            arrow.className = "cm-tooltip-arrow";
+            tooltipView.dom.appendChild(arrow);
+        }
         tooltipView.dom.style.position = this.position;
         tooltipView.dom.style.top = Outside;
-        this.view.dom.appendChild(tooltipView.dom);
+        this.container.appendChild(tooltipView.dom);
         if (tooltipView.mount)
             tooltipView.mount(this.view);
         return tooltipView;
@@ -26672,10 +27319,13 @@ const tooltipPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
     destroy() {
         for (let { dom } of this.manager.tooltipViews)
             dom.remove();
+        window.removeEventListener("resize", this.maybeMeasure);
     }
     readMeasure() {
+        let editor = this.view.dom.getBoundingClientRect();
         return {
-            editor: this.view.dom.getBoundingClientRect(),
+            editor,
+            parent: this.parent ? this.container.getBoundingClientRect() : editor,
             pos: this.manager.tooltips.map(t => this.view.coordsAtPos(t.pos)),
             size: this.manager.tooltipViews.map(({ dom }) => dom.getBoundingClientRect()),
             innerWidth: window.innerWidth,
@@ -26693,25 +27343,33 @@ const tooltipPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
                 dom.style.top = Outside;
                 continue;
             }
+            let arrow = tooltip.arrow ? tView.dom.querySelector(".cm-tooltip-arrow") : null;
+            let arrowHeight = arrow ? 7 /* Size */ : 0;
             let width = size.right - size.left, height = size.bottom - size.top;
-            let left = this.view.textDirection == Direction.LTR ? Math.min(pos.left, measured.innerWidth - width)
-                : Math.max(0, pos.left - width);
+            let offset = tView.offset || noOffset, ltr = this.view.textDirection == Direction.LTR;
+            let left = ltr
+                ? Math.min(pos.left - (arrow ? 14 /* Offset */ : 0) + offset.x, measured.innerWidth - width)
+                : Math.max(0, pos.left - width + (arrow ? 14 /* Offset */ : 0) - offset.x);
             let above = !!tooltip.above;
-            if (!tooltip.strictSide &&
-                (above ? pos.top - (size.bottom - size.top) < 0 : pos.bottom + (size.bottom - size.top) > measured.innerHeight))
+            if (!tooltip.strictSide && (above
+                ? pos.top - (size.bottom - size.top) - offset.y < 0
+                : pos.bottom + (size.bottom - size.top) + offset.y > measured.innerHeight))
                 above = !above;
-            let top = above ? pos.top - height : pos.bottom, right = left + width;
+            let top = above ? pos.top - height - arrowHeight - offset.y : pos.bottom + arrowHeight + offset.y;
+            let right = left + width;
             for (let r of others)
                 if (r.left < right && r.right > left && r.top < top + height && r.bottom > top)
-                    top = above ? r.top - height : r.bottom;
+                    top = above ? r.top - height - 2 - arrowHeight : r.bottom + arrowHeight + 2;
             if (this.position == "absolute") {
-                dom.style.top = (top - editor.top) + "px";
-                dom.style.left = (left - editor.left) + "px";
+                dom.style.top = (top - measured.parent.top) + "px";
+                dom.style.left = (left - measured.parent.left) + "px";
             }
             else {
                 dom.style.top = top + "px";
                 dom.style.left = left + "px";
             }
+            if (arrow)
+                arrow.style.left = `${pos.left + (ltr ? offset.x : -offset.x) - (left + 14 /* Offset */ - 7 /* Size */)}px`;
             others.push({ left, top, right, bottom: top + height });
             dom.classList.toggle("cm-tooltip-above", above);
             dom.classList.toggle("cm-tooltip-below", !above);
@@ -26741,17 +27399,63 @@ const tooltip_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
         zIndex: 100
     },
     "&light .cm-tooltip": {
-        border: "1px solid #ddd",
+        border: "1px solid #bbb",
         backgroundColor: "#f5f5f5"
     },
     "&light .cm-tooltip-section:not(:first-child)": {
-        borderTop: "1px solid #ddd",
+        borderTop: "1px solid #bbb",
     },
     "&dark .cm-tooltip": {
         backgroundColor: "#333338",
         color: "white"
+    },
+    ".cm-tooltip-arrow": {
+        height: `${7 /* Size */}px`,
+        width: `${7 /* Size */ * 2}px`,
+        position: "absolute",
+        zIndex: -1,
+        overflow: "hidden",
+        "&:before, &:after": {
+            content: "''",
+            position: "absolute",
+            width: 0,
+            height: 0,
+            borderLeft: `${7 /* Size */}px solid transparent`,
+            borderRight: `${7 /* Size */}px solid transparent`,
+        },
+        ".cm-tooltip-above &": {
+            bottom: `-${7 /* Size */}px`,
+            "&:before": {
+                borderTop: `${7 /* Size */}px solid #bbb`,
+            },
+            "&:after": {
+                borderTop: `${7 /* Size */}px solid #f5f5f5`,
+                bottom: "1px"
+            }
+        },
+        ".cm-tooltip-below &": {
+            top: `-${7 /* Size */}px`,
+            "&:before": {
+                borderBottom: `${7 /* Size */}px solid #bbb`,
+            },
+            "&:after": {
+                borderBottom: `${7 /* Size */}px solid #f5f5f5`,
+                top: "1px"
+            }
+        },
+    },
+    "&dark .cm-tooltip .cm-tooltip-arrow": {
+        "&:before": {
+            borderTopColor: "#333338",
+            borderBottomColor: "#333338"
+        },
+        "&:after": {
+            borderTopColor: "transparent",
+            borderBottomColor: "transparent"
+        }
     }
 });
+const noOffset = { x: 0, y: 0 };
 /**
 Behavior by which an extension can provide a tooltip to be shown.
 */
@@ -26804,7 +27508,8 @@ const showHoverTooltipHost = /*@__PURE__*/showTooltip.compute([showHoverTooltip]
         pos: Math.min(...tooltips.map(t => t.pos)),
         end: Math.max(...tooltips.filter(t => t.end != null).map(t => t.end)),
         create: HoverTooltipHost.create,
-        above: tooltips[0].above
+        above: tooltips[0].above,
+        arrow: tooltips.some(t => t.arrow),
     };
 });
 class dist_HoverPlugin {
@@ -26814,11 +27519,10 @@ class dist_HoverPlugin {
         this.field = field;
         this.setHover = setHover;
         this.hoverTime = hoverTime;
-        this.lastMouseMove = null;
-        this.lastMoveTime = 0;
         this.hoverTimeout = -1;
         this.restartTimeout = -1;
         this.pending = null;
+        this.lastMove = { x: 0, y: 0, target: view.dom, time: 0 };
         this.checkHover = this.checkHover.bind(this);
         view.dom.addEventListener("mouseleave", this.mouseleave = this.mouseleave.bind(this));
         view.dom.addEventListener("mousemove", this.mousemove = this.mousemove.bind(this));
@@ -26837,7 +27541,7 @@ class dist_HoverPlugin {
         this.hoverTimeout = -1;
         if (this.active)
             return;
-        let hovered = Date.now() - this.lastMoveTime;
+        let hovered = Date.now() - this.lastMove.time;
         if (hovered < this.hoverTime)
             this.hoverTimeout = setTimeout(this.checkHover, this.hoverTime - hovered);
         else
@@ -26846,20 +27550,18 @@ class dist_HoverPlugin {
     startHover() {
         var _a;
         clearTimeout(this.restartTimeout);
-        let lastMove = this.lastMouseMove;
-        let coords = { x: lastMove.clientX, y: lastMove.clientY };
-        let pos = this.view.contentDOM.contains(lastMove.target)
-            ? this.view.posAtCoords(coords) : null;
+        let { lastMove } = this;
+        let pos = this.view.contentDOM.contains(lastMove.target) ? this.view.posAtCoords(lastMove) : null;
         if (pos == null)
             return;
         let posCoords = this.view.coordsAtPos(pos);
-        if (posCoords == null || coords.y < posCoords.top || coords.y > posCoords.bottom ||
-            coords.x < posCoords.left - this.view.defaultCharacterWidth ||
-            coords.x > posCoords.right + this.view.defaultCharacterWidth)
+        if (posCoords == null || lastMove.y < posCoords.top || lastMove.y > posCoords.bottom ||
+            lastMove.x < posCoords.left - this.view.defaultCharacterWidth ||
+            lastMove.x > posCoords.right + this.view.defaultCharacterWidth)
             return;
         let bidi = this.view.bidiSpans(this.view.state.doc.lineAt(pos)).find(s => s.from <= pos && s.to >= pos);
         let rtl = bidi && bidi.dir == Direction.RTL ? -1 : 1;
-        let open = this.source(this.view, pos, (coords.x < posCoords.left ? -rtl : rtl));
+        let open = this.source(this.view, pos, (lastMove.x < posCoords.left ? -rtl : rtl));
         if ((_a = open) === null || _a === void 0 ? void 0 : _a.then) {
             let pending = this.pending = { pos };
             open.then(result => {
@@ -26876,14 +27578,13 @@ class dist_HoverPlugin {
     }
     mousemove(event) {
         var _a;
-        this.lastMouseMove = event;
-        this.lastMoveTime = Date.now();
+        this.lastMove = { x: event.clientX, y: event.clientY, target: event.target, time: Date.now() };
         if (this.hoverTimeout < 0)
             this.hoverTimeout = setTimeout(this.checkHover, this.hoverTime);
         let tooltip = this.active;
-        if (tooltip && !isInTooltip(event.target) || this.pending) {
+        if (tooltip && !isInTooltip(this.lastMove.target) || this.pending) {
             let { pos } = tooltip || this.pending, end = (_a = tooltip === null || tooltip === void 0 ? void 0 : tooltip.end) !== null && _a !== void 0 ? _a : pos;
-            if ((pos == end ? this.view.posAtCoords({ x: event.clientX, y: event.clientY }) != pos
+            if ((pos == end ? this.view.posAtCoords(this.lastMove) != pos
                 : !isOverRange(this.view, pos, end, event.clientX, event.clientY, 6 /* MaxDist */))) {
                 this.view.dispatch({ effects: this.setHover.of(null) });
                 this.pending = null;
@@ -26943,9 +27644,12 @@ function hoverTooltip(source, options = {}) {
         update(value, tr) {
             if (value && (options.hideOnChange && (tr.docChanged || tr.selection)))
                 return null;
-            for (let effect of tr.effects)
+            for (let effect of tr.effects) {
                 if (effect.is(setHover))
                     return effect.value;
+                if (effect.is(closeHoverTooltipEffect))
+                    return null;
+            }
             if (value && tr.docChanged) {
                 let newPos = tr.changes.mapPos(value.pos, -1, MapMode.TrackDel);
                 if (newPos == null)
@@ -26960,13 +27664,24 @@ function hoverTooltip(source, options = {}) {
         },
         provide: f => showHoverTooltip.from(f)
     });
-    let hoverTime = options.hoverTime || 750 /* Time */;
+    let hoverTime = options.hoverTime || 600 /* Time */;
     return [
         hoverState,
         ViewPlugin.define(view => new dist_HoverPlugin(view, source, hoverState, setHover, hoverTime)),
         showHoverTooltipHost
     ];
 }
+/**
+Returns true if any hover tooltips are currently active.
+*/
+function hasHoverTooltips(state) {
+    return state.facet(showHoverTooltip).some(x => x);
+}
+const closeHoverTooltipEffect = /*@__PURE__*/StateEffect.define();
+/**
+Transaction effect that closes all hover tooltips.
+*/
+const closeHoverTooltips = /*@__PURE__*/closeHoverTooltipEffect.of(null);
 
 
 
@@ -27119,6 +27834,11 @@ function ensureAnchor(expr, start) {
         return expr;
     return new RegExp(`${addStart ? "^" : ""}(?:${source})${addEnd ? "$" : ""}`, (_a = expr.flags) !== null && _a !== void 0 ? _a : (expr.ignoreCase ? "i" : ""));
 }
+/**
+This annotation is added to transactions that are produced by
+picking a completion.
+*/
+const pickedCompletion = /*@__PURE__*/Annotation.define();
 function applyCompletion(view, option) {
     let apply = option.completion.apply || option.completion.label;
     let result = option.source;
@@ -27126,7 +27846,8 @@ function applyCompletion(view, option) {
         view.dispatch({
             changes: { from: result.from, to: result.to, insert: apply },
             selection: { anchor: result.from + apply.length },
-            userEvent: "input.complete"
+            userEvent: "input.complete",
+            annotations: pickedCompletion.of(option.completion)
         });
     }
     else {
@@ -27220,7 +27941,7 @@ class dist_FuzzyMatcher {
                     if (next == chars[adjacentTo] || next == folded[adjacentTo]) {
                         if (adjacentTo == 0)
                             adjacentStart = i;
-                        adjacentEnd = i;
+                        adjacentEnd = i + 1;
                         adjacentTo++;
                     }
                     else {
@@ -27272,6 +27993,7 @@ const completionConfig = /*@__PURE__*/Facet.define({
             maxRenderedOptions: 100,
             defaultKeymap: true,
             optionClass: () => "",
+            aboveCursor: false,
             icons: true,
             addToOptions: []
         }, {
@@ -27285,105 +28007,6 @@ const completionConfig = /*@__PURE__*/Facet.define({
 function joinClass(a, b) {
     return a ? b ? a + " " + b : a : b;
 }
-
-const MaxInfoWidth = 300;
-const autocomplete_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
-    ".cm-tooltip.cm-tooltip-autocomplete": {
-        "& > ul": {
-            fontFamily: "monospace",
-            whiteSpace: "nowrap",
-            overflow: "auto",
-            maxWidth_fallback: "700px",
-            maxWidth: "min(700px, 95vw)",
-            maxHeight: "10em",
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-            "& > li": {
-                cursor: "pointer",
-                padding: "1px 1em 1px 3px",
-                lineHeight: 1.2
-            },
-            "& > li[aria-selected]": {
-                background_fallback: "#bdf",
-                backgroundColor: "Highlight",
-                color_fallback: "white",
-                color: "HighlightText"
-            }
-        }
-    },
-    ".cm-completionListIncompleteTop:before, .cm-completionListIncompleteBottom:after": {
-        content: '"···"',
-        opacity: 0.5,
-        display: "block",
-        textAlign: "center"
-    },
-    ".cm-tooltip.cm-completionInfo": {
-        position: "absolute",
-        padding: "3px 9px",
-        width: "max-content",
-        maxWidth: MaxInfoWidth + "px",
-    },
-    ".cm-completionInfo.cm-completionInfo-left": { right: "100%" },
-    ".cm-completionInfo.cm-completionInfo-right": { left: "100%" },
-    "&light .cm-snippetField": { backgroundColor: "#00000022" },
-    "&dark .cm-snippetField": { backgroundColor: "#ffffff22" },
-    ".cm-snippetFieldPosition": {
-        verticalAlign: "text-top",
-        width: 0,
-        height: "1.15em",
-        margin: "0 -0.7px -.7em",
-        borderLeft: "1.4px dotted #888"
-    },
-    ".cm-completionMatchedText": {
-        textDecoration: "underline"
-    },
-    ".cm-completionDetail": {
-        marginLeft: "0.5em",
-        fontStyle: "italic"
-    },
-    ".cm-completionIcon": {
-        fontSize: "90%",
-        width: ".8em",
-        display: "inline-block",
-        textAlign: "center",
-        paddingRight: ".6em",
-        opacity: "0.6"
-    },
-    ".cm-completionIcon-function, .cm-completionIcon-method": {
-        "&:after": { content: "'ƒ'" }
-    },
-    ".cm-completionIcon-class": {
-        "&:after": { content: "'○'" }
-    },
-    ".cm-completionIcon-interface": {
-        "&:after": { content: "'◌'" }
-    },
-    ".cm-completionIcon-variable": {
-        "&:after": { content: "'𝑥'" }
-    },
-    ".cm-completionIcon-constant": {
-        "&:after": { content: "'𝐶'" }
-    },
-    ".cm-completionIcon-type": {
-        "&:after": { content: "'𝑡'" }
-    },
-    ".cm-completionIcon-enum": {
-        "&:after": { content: "'∪'" }
-    },
-    ".cm-completionIcon-property": {
-        "&:after": { content: "'□'" }
-    },
-    ".cm-completionIcon-keyword": {
-        "&:after": { content: "'🔑\uFE0E'" } // Disable emoji rendering
-    },
-    ".cm-completionIcon-namespace": {
-        "&:after": { content: "'▢'" }
-    },
-    ".cm-completionIcon-text": {
-        "&:after": { content: "'abc'", fontSize: "50%", verticalAlign: "middle" }
-    }
-});
 
 function optionContent(config) {
     let content = config.addToOptions.slice();
@@ -27542,17 +28165,17 @@ class dist_CompletionTooltip {
     }
     measureInfo() {
         let sel = this.dom.querySelector("[aria-selected]");
-        if (!sel)
+        if (!sel || !this.info)
             return null;
-        let rect = this.dom.getBoundingClientRect();
-        let top = sel.getBoundingClientRect().top - rect.top;
+        let rect = this.dom.getBoundingClientRect(), infoRect = this.info.getBoundingClientRect();
+        let top = Math.min(sel.getBoundingClientRect().top, innerHeight - infoRect.height) - rect.top;
         if (top < 0 || top > this.list.clientHeight - 10)
             return null;
         let left = this.view.textDirection == Direction.RTL;
         let spaceLeft = rect.left, spaceRight = innerWidth - rect.right;
-        if (left && spaceLeft < Math.min(MaxInfoWidth, spaceRight))
+        if (left && spaceLeft < Math.min(infoRect.width, spaceRight))
             left = false;
-        else if (!left && spaceRight < Math.min(MaxInfoWidth, spaceLeft))
+        else if (!left && spaceRight < Math.min(infoRect.width, spaceLeft))
             left = true;
         return { top, left };
     }
@@ -27632,7 +28255,8 @@ function sortOptions(active, state) {
     for (let opt of options.sort(cmpOption)) {
         if (result.length == MaxOptions)
             break;
-        if (!prev || prev.label != opt.completion.label || prev.detail != opt.completion.detail)
+        if (!prev || prev.label != opt.completion.label || prev.detail != opt.completion.detail ||
+            prev.type != opt.completion.type || prev.apply != opt.completion.apply)
             result.push(opt);
         else if (dist_score(opt.completion) > dist_score(prev))
             result[result.length - 1] = opt;
@@ -27652,7 +28276,7 @@ class CompletionDialog {
         return selected == this.selected || selected >= this.options.length ? this
             : new CompletionDialog(this.options, makeAttrs(id, selected), this.tooltip, this.timestamp, selected);
     }
-    static build(active, state, id, prev) {
+    static build(active, state, id, prev, conf) {
         let options = sortOptions(active, state);
         if (!options.length)
             return null;
@@ -27666,7 +28290,8 @@ class CompletionDialog {
         }
         return new CompletionDialog(options, makeAttrs(id, selected), {
             pos: active.reduce((a, b) => b.hasResult() ? Math.min(a, b.from) : a, 1e8),
-            create: completionTooltip(completionState)
+            create: completionTooltip(completionState),
+            above: conf.aboveCursor,
         }, prev ? prev.timestamp : Date.now(), selected);
     }
     map(changes) {
@@ -27694,7 +28319,7 @@ class CompletionState {
         if (active.length == this.active.length && active.every((a, i) => a == this.active[i]))
             active = this.active;
         let open = tr.selection || active.some(a => a.hasResult() && tr.changes.touchesRange(a.from, a.to)) ||
-            !sameResults(active, this.active) ? CompletionDialog.build(active, state, this.id, this.open)
+            !sameResults(active, this.active) ? CompletionDialog.build(active, state, this.id, this.open, conf)
             : this.open && tr.docChanged ? this.open.map(tr.changes) : this.open;
         if (!open && active.every(a => a.state != 1 /* Pending */) && active.some(a => a.hasResult()))
             active = active.map(a => a.hasResult() ? new ActiveSource(a.source, 0 /* Inactive */) : a);
@@ -27849,7 +28474,7 @@ Accept the current completion.
 */
 const acceptCompletion = (view) => {
     let cState = view.state.field(completionState, false);
-    if (!cState || !cState.open || Date.now() - cState.open.timestamp < CompletionInteractMargin)
+    if (view.state.readOnly || !cState || !cState.open || Date.now() - cState.open.timestamp < CompletionInteractMargin)
         return false;
     applyCompletion(view, cState.open.options[cState.open.selected]);
     return true;
@@ -28025,6 +28650,109 @@ const completionPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
     }
 });
 
+const autocomplete_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
+    ".cm-tooltip.cm-tooltip-autocomplete": {
+        "& > ul": {
+            fontFamily: "monospace",
+            whiteSpace: "nowrap",
+            overflow: "hidden auto",
+            maxWidth_fallback: "700px",
+            maxWidth: "min(700px, 95vw)",
+            minWidth: "250px",
+            maxHeight: "10em",
+            listStyle: "none",
+            margin: 0,
+            padding: 0,
+            "& > li": {
+                overflowX: "hidden",
+                textOverflow: "ellipsis",
+                cursor: "pointer",
+                padding: "1px 3px",
+                lineHeight: 1.2
+            },
+        }
+    },
+    "&light .cm-tooltip-autocomplete ul li[aria-selected]": {
+        background: "#39e",
+        color: "white",
+    },
+    "&dark .cm-tooltip-autocomplete ul li[aria-selected]": {
+        background: "#347",
+        color: "white",
+    },
+    ".cm-completionListIncompleteTop:before, .cm-completionListIncompleteBottom:after": {
+        content: '"···"',
+        opacity: 0.5,
+        display: "block",
+        textAlign: "center"
+    },
+    ".cm-tooltip.cm-completionInfo": {
+        position: "absolute",
+        padding: "3px 9px",
+        width: "max-content",
+        maxWidth: "300px",
+    },
+    ".cm-completionInfo.cm-completionInfo-left": { right: "100%" },
+    ".cm-completionInfo.cm-completionInfo-right": { left: "100%" },
+    "&light .cm-snippetField": { backgroundColor: "#00000022" },
+    "&dark .cm-snippetField": { backgroundColor: "#ffffff22" },
+    ".cm-snippetFieldPosition": {
+        verticalAlign: "text-top",
+        width: 0,
+        height: "1.15em",
+        margin: "0 -0.7px -.7em",
+        borderLeft: "1.4px dotted #888"
+    },
+    ".cm-completionMatchedText": {
+        textDecoration: "underline"
+    },
+    ".cm-completionDetail": {
+        marginLeft: "0.5em",
+        fontStyle: "italic"
+    },
+    ".cm-completionIcon": {
+        fontSize: "90%",
+        width: ".8em",
+        display: "inline-block",
+        textAlign: "center",
+        paddingRight: ".6em",
+        opacity: "0.6"
+    },
+    ".cm-completionIcon-function, .cm-completionIcon-method": {
+        "&:after": { content: "'ƒ'" }
+    },
+    ".cm-completionIcon-class": {
+        "&:after": { content: "'○'" }
+    },
+    ".cm-completionIcon-interface": {
+        "&:after": { content: "'◌'" }
+    },
+    ".cm-completionIcon-variable": {
+        "&:after": { content: "'𝑥'" }
+    },
+    ".cm-completionIcon-constant": {
+        "&:after": { content: "'𝐶'" }
+    },
+    ".cm-completionIcon-type": {
+        "&:after": { content: "'𝑡'" }
+    },
+    ".cm-completionIcon-enum": {
+        "&:after": { content: "'∪'" }
+    },
+    ".cm-completionIcon-property": {
+        "&:after": { content: "'□'" }
+    },
+    ".cm-completionIcon-keyword": {
+        "&:after": { content: "'🔑\uFE0E'" } // Disable emoji rendering
+    },
+    ".cm-completionIcon-namespace": {
+        "&:after": { content: "'▢'" }
+    },
+    ".cm-completionIcon-text": {
+        "&:after": { content: "'abc'", fontSize: "50%", verticalAlign: "middle" }
+    }
+});
+
 class FieldPos {
     constructor(field, line, from, to) {
         this.field = field;
@@ -28070,7 +28798,7 @@ class dist_Snippet {
         let lines = [], positions = [], m;
         for (let line of template.split(/\r\n?|\n/)) {
             while (m = /[#$]\{(?:(\d+)(?::([^}]*))?|([^}]*))\}/.exec(line)) {
-                let seq = m[1] ? +m[1] : null, name = m[2] || m[3], found = -1;
+                let seq = m[1] ? +m[1] : null, name = m[2] || m[3] || "", found = -1;
                 for (let i = 0; i < fields.length; i++) {
                     if (seq != null ? fields[i].seq == seq : name ? fields[i].name == name : false)
                         found = i;
@@ -28079,7 +28807,7 @@ class dist_Snippet {
                     let i = 0;
                     while (i < fields.length && (seq == null || (fields[i].seq != null && fields[i].seq < seq)))
                         i++;
-                    fields.splice(i, 0, { seq, name: name || null });
+                    fields.splice(i, 0, { seq, name });
                     found = i;
                     for (let pos of positions)
                         if (pos.field >= found)
@@ -28175,8 +28903,7 @@ function dist_snippet(template) {
             let active = new dist_ActiveSnippet(ranges, 0);
             let effects = spec.effects = [setActive.of(active)];
             if (editor.state.field(snippetState, false) === undefined)
-                effects.push(StateEffect.appendConfig.of([snippetState.init(() => active), addSnippetKeymap,
-                    snippetPointerHandler, autocomplete_dist_baseTheme]));
+                effects.push(StateEffect.appendConfig.of([snippetState, addSnippetKeymap, snippetPointerHandler, autocomplete_dist_baseTheme]));
         }
         editor.dispatch(editor.state.update(spec));
     };
@@ -28226,7 +28953,7 @@ to [`clearSnippet`](https://codemirror.net/6/docs/ref/#autocomplete.clearSnippet
 const snippetKeymap = /*@__PURE__*/Facet.define({
     combine(maps) { return maps.length ? maps[0] : defaultSnippetKeymap; }
 });
-const addSnippetKeymap = /*@__PURE__*/Prec.override(/*@__PURE__*/keymap.compute([snippetKeymap], state => state.facet(snippetKeymap)));
+const addSnippetKeymap = /*@__PURE__*/Prec.highest(/*@__PURE__*/keymap.compute([snippetKeymap], state => state.facet(snippetKeymap)));
 /**
 Create a completion from a snippet. Returns an object with the
 properties from `completion`, plus an `apply` function that
@@ -28360,7 +29087,7 @@ const completionKeymap = [
     { key: "PageUp", run: /*@__PURE__*/moveCompletionSelection(false, "page") },
     { key: "Enter", run: acceptCompletion }
 ];
-const completionKeymapExt = /*@__PURE__*/Prec.override(/*@__PURE__*/keymap.computeN([completionConfig], state => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
+const completionKeymapExt = /*@__PURE__*/Prec.highest(/*@__PURE__*/keymap.computeN([completionConfig], state => state.facet(completionConfig).defaultKeymap ? [completionKeymap] : []));
 /**
 Get the current completion status. When completions are available,
 this will return `"active"`. When completions are pending (in the
@@ -28379,6 +29106,14 @@ function currentCompletions(state) {
     var _a;
     let open = (_a = state.field(completionState, false)) === null || _a === void 0 ? void 0 : _a.open;
     return open ? open.options.map(o => o.completion) : [];
+}
+/**
+Return the currently selected completion, if any.
+*/
+function selectedCompletion(state) {
+    var _a;
+    let open = (_a = state.field(completionState, false)) === null || _a === void 0 ? void 0 : _a.open;
+    return open ? open.options[open.selected].completion : null;
 }
 
 
@@ -28588,9 +29323,11 @@ function rectangleFor(state, a, b) {
         let startCol = Math.min(a.col, b.col), endCol = Math.max(a.col, b.col);
         for (let i = startLine; i <= endLine; i++) {
             let line = state.doc.line(i);
-            let start = findColumn(line.text, startCol, state.tabSize), end = findColumn(line.text, endCol, state.tabSize);
-            if (start < end)
+            let start = findColumn(line.text, startCol, state.tabSize, true);
+            if (start > -1) {
+                let end = findColumn(line.text, endCol, state.tabSize);
                 ranges.push(EditorSelection.range(line.from + start, line.from + end));
+            }
         }
     }
     return ranges;
@@ -28997,9 +29734,7 @@ class dist_HighlightStyle {
     }
 }
 /**
-Given a string of code and a language, parse the code in that
-language and run the tree highlighter over the resulting syntax
-tree.
+Run the tree highlighter over the given tree.
 */
 function highlightTree(tree, 
 /**
@@ -29014,8 +29749,16 @@ Assign styling to a region of the text. Will be called, in order
 of position, for any ranges where more than zero classes apply.
 `classes` is a space separated string of CSS classes.
 */
-putStyle) {
-    highlightTreeRange(tree, 0, tree.length, getStyle, putStyle);
+putStyle, 
+/**
+The start of the range to highlight.
+*/
+from = 0, 
+/**
+The end of the range.
+*/
+to = tree.length) {
+    highlightTreeRange(tree, from, to, getStyle, putStyle);
 }
 class dist_TreeHighlighter {
     constructor(view) {
@@ -29157,7 +29900,7 @@ function matchContext(context, stack, depth) {
     return true;
 }
 const t = Tag.define;
-const comment = /*@__PURE__*/t(), dist_name = /*@__PURE__*/t(), typeName = /*@__PURE__*/t(dist_name), literal = /*@__PURE__*/t(), dist_string = /*@__PURE__*/t(literal), number = /*@__PURE__*/t(literal), dist_content = /*@__PURE__*/t(), heading = /*@__PURE__*/t(dist_content), keyword = /*@__PURE__*/t(), operator = /*@__PURE__*/t(), punctuation = /*@__PURE__*/t(), dist_bracket = /*@__PURE__*/t(punctuation), meta = /*@__PURE__*/t();
+const comment = /*@__PURE__*/t(), dist_name = /*@__PURE__*/t(), typeName = /*@__PURE__*/t(dist_name), propertyName = /*@__PURE__*/t(dist_name), literal = /*@__PURE__*/t(), dist_string = /*@__PURE__*/t(literal), number = /*@__PURE__*/t(literal), dist_content = /*@__PURE__*/t(), heading = /*@__PURE__*/t(dist_content), keyword = /*@__PURE__*/t(), operator = /*@__PURE__*/t(), punctuation = /*@__PURE__*/t(), dist_bracket = /*@__PURE__*/t(punctuation), meta = /*@__PURE__*/t();
 /**
 The default set of highlighting [tags](https://codemirror.net/6/docs/ref/#highlight.Tag^define) used
 by regular language packages and themes.
@@ -29213,9 +29956,13 @@ const dist_tags = {
     */
     tagName: /*@__PURE__*/t(typeName),
     /**
-    A property, field, or attribute [name](https://codemirror.net/6/docs/ref/#highlight.tags.name).
+    A property or field [name](https://codemirror.net/6/docs/ref/#highlight.tags.name).
     */
-    propertyName: /*@__PURE__*/t(dist_name),
+    propertyName: propertyName,
+    /**
+    An attribute name (subtag of [`propertyName`](https://codemirror.net/6/docs/ref/#highlight.tags.propertyName)).
+    */
+    attributeName: /*@__PURE__*/t(propertyName),
     /**
     The [name](https://codemirror.net/6/docs/ref/#highlight.tags.name) of a class.
     */
@@ -29248,6 +29995,10 @@ const dist_tags = {
     A character literal (subtag of [string](https://codemirror.net/6/docs/ref/#highlight.tags.string)).
     */
     character: /*@__PURE__*/t(dist_string),
+    /**
+    An attribute value (subtag of [string](https://codemirror.net/6/docs/ref/#highlight.tags.string)).
+    */
+    attributeValue: /*@__PURE__*/t(dist_string),
     /**
     A number [literal](https://codemirror.net/6/docs/ref/#highlight.tags.literal).
     */
@@ -29660,6 +30411,8 @@ const classHighlightStyle = /*@__PURE__*/dist_HighlightStyle.define([
 
 
 
+
+
 class SelectedDiagnostic {
     constructor(from, to, diagnostic) {
         this.from = from;
@@ -29673,17 +30426,18 @@ class dist_LintState {
         this.panel = panel;
         this.selected = selected;
     }
-    static init(diagnostics, panel) {
+    static init(diagnostics, panel, state) {
         let ranges = dist_Decoration.set(diagnostics.map((d) => {
-            return d.from < d.to
-                ? dist_Decoration.mark({
-                    attributes: { class: "cm-lintRange cm-lintRange-" + d.severity },
-                    diagnostic: d
-                }).range(d.from, d.to)
-                : dist_Decoration.widget({
+            // For zero-length ranges or ranges covering only a line break, create a widget
+            return d.from == d.to || (d.from == d.to - 1 && state.doc.lineAt(d.from).to == d.from)
+                ? dist_Decoration.widget({
                     widget: new dist_DiagnosticWidget(d),
                     diagnostic: d
-                }).range(d.from);
+                }).range(d.from)
+                : dist_Decoration.mark({
+                    attributes: { class: "cm-lintRange cm-lintRange-" + d.severity },
+                    diagnostic: d
+                }).range(d.from, d.to);
         }), true);
         return new dist_LintState(ranges, panel, findDiagnostic(ranges));
     }
@@ -29698,9 +30452,9 @@ function findDiagnostic(diagnostics, diagnostic = null, after = 0) {
     });
     return found;
 }
-function maybeEnableLint(state, effects, getState) {
+function maybeEnableLint(state, effects) {
     return state.field(lintState, false) ? effects : effects.concat(StateEffect.appendConfig.of([
-        lintState.init(getState),
+        lintState,
         dist_EditorView.decorations.compute([lintState], state => {
             let { selected, panel } = state.field(lintState);
             return !selected || !panel || selected.from == selected.to ? dist_Decoration.none : dist_Decoration.set([
@@ -29713,13 +30467,18 @@ function maybeEnableLint(state, effects, getState) {
 }
 /**
 Returns a transaction spec which updates the current set of
-diagnostics.
+diagnostics, and enables the lint extension if if wasn't already
+active.
 */
 function setDiagnostics(state, diagnostics) {
     return {
-        effects: maybeEnableLint(state, [setDiagnosticsEffect.of(diagnostics)], () => dist_LintState.init(diagnostics, null))
+        effects: maybeEnableLint(state, [setDiagnosticsEffect.of(diagnostics)])
     };
 }
+/**
+The state effect that updates the set of active diagnostics. Can
+be useful when writing an extension that needs to track these.
+*/
 const setDiagnosticsEffect = /*@__PURE__*/StateEffect.define();
 const dist_togglePanel = /*@__PURE__*/StateEffect.define();
 const movePanelSelection = /*@__PURE__*/StateEffect.define();
@@ -29738,7 +30497,7 @@ const lintState = /*@__PURE__*/StateField.define({
         }
         for (let effect of tr.effects) {
             if (effect.is(setDiagnosticsEffect)) {
-                value = dist_LintState.init(effect.value, value.panel);
+                value = dist_LintState.init(effect.value, value.panel, tr.state);
             }
             else if (effect.is(dist_togglePanel)) {
                 value = new dist_LintState(value.diagnostics, effect.value ? dist_LintPanel.open : null, value.selected);
@@ -29752,6 +30511,13 @@ const lintState = /*@__PURE__*/StateField.define({
     provide: f => [showPanel.from(f, val => val.panel),
         dist_EditorView.decorations.from(f, s => s.diagnostics)]
 });
+/**
+Returns the number of active lint diagnostics in the given state.
+*/
+function diagnosticCount(state) {
+    let lint = state.field(lintState, false);
+    return lint ? lint.diagnostics.size : 0;
+}
 const activeMark = /*@__PURE__*/dist_Decoration.mark({ class: "cm-lintRange cm-lintRange-active" });
 function lintTooltip(view, pos, side) {
     let { diagnostics } = view.state.field(lintState);
@@ -29771,9 +30537,12 @@ function lintTooltip(view, pos, side) {
         end: stackEnd,
         above: view.state.doc.lineAt(stackStart).to < stackEnd,
         create() {
-            return { dom: crelt("ul", { class: "cm-tooltip-lint" }, found.map(d => renderDiagnostic(view, d, false))) };
+            return { dom: diagnosticsTooltip(view, found) };
         }
     };
+}
+function diagnosticsTooltip(view, diagnostics) {
+    return crelt("ul", { class: "cm-tooltip-lint" }, diagnostics.map(d => renderDiagnostic(view, d, false)));
 }
 /**
 Command to open and focus the lint panel.
@@ -29781,7 +30550,7 @@ Command to open and focus the lint panel.
 const openLintPanel = (view) => {
     let field = view.state.field(lintState, false);
     if (!field || !field.panel)
-        view.dispatch({ effects: maybeEnableLint(view.state, [dist_togglePanel.of(true)], () => dist_LintState.init([], dist_LintPanel.open)) });
+        view.dispatch({ effects: maybeEnableLint(view.state, [dist_togglePanel.of(true)]) });
     let panel = getPanel(view, dist_LintPanel.open);
     if (panel)
         panel.dom.querySelector(".cm-panel-lint ul").focus();
@@ -29851,12 +30620,12 @@ const lintPlugin = /*@__PURE__*/ViewPlugin.fromClass(class {
         }
     }
     update(update) {
-        if (update.docChanged) {
-            let { delay } = update.state.facet(lintSource);
-            this.lintTime = Date.now() + delay;
+        let source = update.state.facet(lintSource);
+        if (update.docChanged || source != update.startState.facet(lintSource)) {
+            this.lintTime = Date.now() + source.delay;
             if (!this.set) {
                 this.set = true;
-                this.timeout = setTimeout(this.run, delay);
+                this.timeout = setTimeout(this.run, source.delay);
             }
         }
     }
@@ -29924,6 +30693,7 @@ function renderDiagnostic(view, diagnostic, inPanel) {
             crelt("u", name.slice(keyIndex, keyIndex + 1)),
             name.slice(keyIndex + 1)];
         return crelt("button", {
+            type: "button",
             class: "cm-diagnosticAction",
             onclick: click,
             onmousedown: click,
@@ -30002,6 +30772,7 @@ class dist_LintPanel {
             onclick
         });
         this.dom = crelt("div", { class: "cm-panel-lint" }, this.list, crelt("button", {
+            type: "button",
             name: "close",
             "aria-label": this.view.state.phrase("close"),
             onclick: () => closeLintPanel(this.view)
@@ -30116,13 +30887,11 @@ class dist_LintPanel {
     }
     static open(view) { return new dist_LintPanel(view); }
 }
+function svg(content, attrs = `viewBox="0 0 40 40"`) {
+    return `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" ${attrs}>${encodeURIComponent(content)}</svg>')`;
+}
 function underline(color) {
-    if (typeof btoa != "function")
-        return "none";
-    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="6" height="3">
-    <path d="m0 3 l2 -2 l1 0 l2 2 l1 0" stroke="${color}" fill="none" stroke-width=".7"/>
-  </svg>`;
-    return `url('data:image/svg+xml;base64,${btoa(svg)}')`;
+    return svg(`<path d="m0 2.5 l2 -1.5 l1 0 l2 1.5 l1 0" stroke="${color}" fill="none" stroke-width=".7"/>`, `width="6" height="3"`);
 }
 const lint_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
     ".cm-diagnostic": {
@@ -30149,7 +30918,8 @@ const lint_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
     },
     ".cm-lintRange": {
         backgroundPosition: "left bottom",
-        backgroundRepeat: "repeat-x"
+        backgroundRepeat: "repeat-x",
+        paddingBottom: "0.7px",
     },
     ".cm-lintRange-error": { backgroundImage: /*@__PURE__*/underline("#d11") },
     ".cm-lintRange-warning": { backgroundImage: /*@__PURE__*/underline("orange") },
@@ -30208,6 +30978,138 @@ const lint_dist_baseTheme = /*@__PURE__*/dist_EditorView.baseTheme({
         }
     }
 });
+class dist_LintGutterMarker extends dist_GutterMarker {
+    constructor(diagnostics) {
+        super();
+        this.diagnostics = diagnostics;
+        this.severity = diagnostics.reduce((max, d) => {
+            let s = d.severity;
+            return s == "error" || s == "warning" && max == "info" ? s : max;
+        }, "info");
+    }
+    toDOM(view) {
+        let elt = document.createElement("div");
+        elt.className = "cm-lint-marker cm-lint-marker-" + this.severity;
+        elt.onmouseover = () => gutterMarkerMouseOver(view, elt, this.diagnostics);
+        return elt;
+    }
+}
+function trackHoverOn(view, marker) {
+    let mousemove = (event) => {
+        let rect = marker.getBoundingClientRect();
+        if (event.clientX > rect.left - 10 /* Margin */ && event.clientX < rect.right + 10 /* Margin */ &&
+            event.clientY > rect.top - 10 /* Margin */ && event.clientY < rect.bottom + 10 /* Margin */)
+            return;
+        for (let target = event.target; target; target = target.parentNode) {
+            if (target.nodeType == 1 && target.classList.contains("cm-tooltip-lint"))
+                return;
+        }
+        window.removeEventListener("mousemove", mousemove);
+        if (view.state.field(lintGutterTooltip))
+            view.dispatch({ effects: setLintGutterTooltip.of(null) });
+    };
+    window.addEventListener("mousemove", mousemove);
+}
+function gutterMarkerMouseOver(view, marker, diagnostics) {
+    function hovered() {
+        let line = view.visualLineAtHeight(marker.getBoundingClientRect().top + 5);
+        const linePos = view.coordsAtPos(line.from), markerRect = marker.getBoundingClientRect();
+        if (linePos) {
+            view.dispatch({ effects: setLintGutterTooltip.of({
+                    pos: line.from,
+                    above: false,
+                    create() {
+                        return {
+                            dom: diagnosticsTooltip(view, diagnostics),
+                            offset: { x: markerRect.left - linePos.left, y: 0 }
+                        };
+                    }
+                }) });
+        }
+        marker.onmouseout = marker.onmousemove = null;
+        trackHoverOn(view, marker);
+    }
+    let hoverTimeout = setTimeout(hovered, 600 /* Time */);
+    marker.onmouseout = () => {
+        clearTimeout(hoverTimeout);
+        marker.onmouseout = marker.onmousemove = null;
+    };
+    marker.onmousemove = () => {
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(hovered, 600 /* Time */);
+    };
+}
+function markersForDiagnostics(doc, diagnostics) {
+    let byLine = Object.create(null);
+    for (let diagnostic of diagnostics) {
+        let line = doc.lineAt(diagnostic.from);
+        (byLine[line.from] || (byLine[line.from] = [])).push(diagnostic);
+    }
+    let markers = [];
+    for (let line in byLine) {
+        markers.push(new dist_LintGutterMarker(byLine[line]).range(+line));
+    }
+    return RangeSet.of(markers, true);
+}
+const lintGutterExtension = /*@__PURE__*/dist_gutter({
+    class: "cm-gutter-lint",
+    markers: view => view.state.field(lintGutterMarkers),
+});
+const lintGutterMarkers = /*@__PURE__*/StateField.define({
+    create() {
+        return RangeSet.empty;
+    },
+    update(markers, tr) {
+        markers = markers.map(tr.changes);
+        for (let effect of tr.effects)
+            if (effect.is(setDiagnosticsEffect)) {
+                markers = markersForDiagnostics(tr.state.doc, effect.value);
+            }
+        return markers;
+    }
+});
+const setLintGutterTooltip = /*@__PURE__*/StateEffect.define();
+const lintGutterTooltip = /*@__PURE__*/StateField.define({
+    create() { return null; },
+    update(tooltip, tr) {
+        if (tooltip && tr.docChanged)
+            tooltip = Object.assign(Object.assign({}, tooltip), { pos: tr.changes.mapPos(tooltip.pos) });
+        return tr.effects.reduce((t, e) => e.is(setLintGutterTooltip) ? e.value : t, tooltip);
+    },
+    provide: field => showTooltip.from(field)
+});
+const lintGutterTheme = /*@__PURE__*/dist_EditorView.baseTheme({
+    ".cm-gutter-lint": {
+        width: "1.4em",
+        "& .cm-gutterElement": {
+            padding: "0 .2em",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+        }
+    },
+    ".cm-lint-marker": {
+        width: "1em",
+        height: "1em",
+    },
+    ".cm-lint-marker-info": {
+        content: /*@__PURE__*/svg(`<path fill="#aaf" stroke="#77e" stroke-width="6" stroke-linejoin="round" d="M5 5L35 5L35 35L5 35Z"/>`)
+    },
+    ".cm-lint-marker-warning": {
+        content: /*@__PURE__*/svg(`<path fill="#fe8" stroke="#fd7" stroke-width="6" stroke-linejoin="round" d="M20 6L37 35L3 35Z"/>`),
+    },
+    ".cm-lint-marker-error:before": {
+        content: /*@__PURE__*/svg(`<circle cx="20" cy="20" r="15" fill="#f87" stroke="#f43" stroke-width="6"/>`)
+    },
+});
+/**
+Returns an extension that installs a gutter showing markers for
+each line that has diagnostics, which can be hovered over to see
+the diagnostics.
+*/
+function lintGutter() {
+    return [lintGutterMarkers, lintGutterExtension, lintGutterTheme, lintGutterTooltip];
+}
 
 
 
@@ -30594,10 +31496,11 @@ function configureNesting(tags) {
 
 
 // This file was generated by lezer-generator. You probably shouldn't edit it.
-const descendantOp = 92,
+const descendantOp = 93,
   Unit = 1,
-  callee = 93,
-  identifier = 94;
+  callee = 94,
+  identifier = 95,
+  VariableName = 2;
 
 /* Hand-written tokenizers for CSS tokens that can't be
    expressed by Lezer's built-in tokenizer. */
@@ -30611,15 +31514,16 @@ function isAlpha(ch) { return ch >= 65 && ch <= 90 || ch >= 97 && ch <= 122 || c
 
 function isDigit(ch) { return ch >= 48 && ch <= 57 }
 
-const identifiers = new lr_dist["b" /* ExternalTokenizer */](input => {
-  for (let inside = false, i = 0;; i++) {
+const identifiers = new lr_dist["b" /* ExternalTokenizer */]((input, stack) => {
+  for (let inside = false, dashes = 0, i = 0;; i++) {
     let {next} = input;
     if (isAlpha(next) || next == dash || next == underscore || (inside && isDigit(next))) {
       if (!inside && (next != dash || i > 0)) inside = true;
+      if (dashes === i && next == dash) dashes++;
       input.advance();
     } else {
       if (inside)
-        input.acceptToken(next == parenL ? callee : identifier);
+        input.acceptToken(next == parenL ? callee : dashes == 2 && stack.canShift(VariableName) ? VariableName : identifier);
       break
     }
   }
@@ -30646,27 +31550,27 @@ const unitToken = new lr_dist["b" /* ExternalTokenizer */](input => {
 });
 
 // This file was generated by lezer-generator. You probably shouldn't edit it.
-const spec_callee = {__proto__:null,lang:30, "nth-child":30, "nth-last-child":30, "nth-of-type":30, dir:30, url:58, "url-prefix":58, domain:58, regexp:58, selector:132};
-const spec_AtKeyword = {__proto__:null,"@import":112, "@media":136, "@charset":140, "@namespace":144, "@keyframes":150, "@supports":162};
-const spec_identifier = {__proto__:null,not:126, only:126, from:156, to:158};
+const spec_callee = {__proto__:null,lang:32, "nth-child":32, "nth-last-child":32, "nth-of-type":32, dir:32, url:60, "url-prefix":60, domain:60, regexp:60, selector:134};
+const spec_AtKeyword = {__proto__:null,"@import":114, "@media":138, "@charset":142, "@namespace":146, "@keyframes":152, "@supports":164};
+const spec_identifier = {__proto__:null,not:128, only:128, from:158, to:160};
 const dist_index_es_parser = lr_dist["c" /* LRParser */].deserialize({
   version: 13,
-  states: "7WOYQ[OOOOQP'#Cc'#CcOOQP'#Cb'#CbO!ZQ[O'#CeO!}QXO'#C`O#UQ[O'#CgO#aQ[O'#DOO#fQ[O'#DSOOQP'#Eb'#EbO#kQdO'#DdO$SQ[O'#DqO#kQdO'#DsO$eQ[O'#DuO$pQ[O'#DxO$uQ[O'#EOO%TQ[O'#EQOOQS'#Ea'#EaOOQS'#ER'#ERQYQ[OOOOQP'#Cf'#CfOOQP,59P,59PO!ZQ[O,59PO%[Q[O'#EUO%vQWO,58zO&OQ[O,59RO#aQ[O,59jO#fQ[O,59nO%[Q[O,59rO%[Q[O,59tO%[Q[O,59uO'[Q[O'#D_OOQS,58z,58zOOQP'#Cj'#CjOOQO'#C|'#C|OOQP,59R,59RO'cQWO,59RO'hQWO,59ROOQP'#DQ'#DQOOQP,59j,59jOOQO'#DU'#DUO'mQ`O,59nOOQS'#Co'#CoO#kQdO'#CpO'uQvO'#CrO(|QtO,5:OOOQO'#Cw'#CwO'cQWO'#CvO)bQWO'#CxOOQS'#Ee'#EeOOQO'#Dg'#DgO)gQ[O'#DnO)uQWO'#EhO$uQ[O'#DlO*TQWO'#DoOOQO'#Ei'#EiO%yQWO,5:]O*YQpO,5:_OOQS'#Dw'#DwO*bQWO,5:aO*gQ[O,5:aOOQO'#Dz'#DzO*oQWO,5:dO*tQWO,5:jO*|QWO,5:lOOQS-E8P-E8POOQP1G.k1G.kO+pQXO,5:pOOQO-E8S-E8SOOQS1G.f1G.fOOQP1G.m1G.mO'cQWO1G.mO'hQWO1G.mOOQP1G/U1G/UO+}Q`O1G/YO,hQXO1G/^O-OQXO1G/`O-fQXO1G/aO-|QXO'#CcO.qQWO'#D`OOQS,59y,59yO.vQWO,59yO/OQ[O,59yO/VQdO'#CnO/^Q[O'#C}OOQP1G/Y1G/YO#kQdO1G/YO/eQpO,59[OOQS,59^,59^O#kQdO,59`O/mQWO1G/jOOQS,59b,59bO/rQ!bO,59dO/zQWO'#DgO0VQWO,5:SO0[QWO,5:YO$uQ[O,5:UO$uQ[O'#EXO0dQWO,5;SO0oQWO,5:WO%[Q[O,5:ZOOQS1G/w1G/wOOQS1G/y1G/yOOQS1G/{1G/{O1QQWO1G/{O1VQdO'#D{OOQS1G0O1G0OOOQS1G0U1G0UOOQS1G0W1G0WOOQP7+$X7+$XOOQP7+$t7+$tO#kQdO7+$tO#kQdO,59zO1eQ[O'#EWO1oQWO1G/eOOQS1G/e1G/eO1oQWO1G/eO1wQtO'#ESO2iQdO'#EdO2sQWO,59YO2xQXO'#EgO3PQWO,59iO3UQpO7+$tOOQS1G.v1G.vOOQS1G.z1G.zOOQS7+%U7+%UO3^QWO1G/OO#kQdO1G/nOOQO1G/t1G/tOOQO1G/p1G/pO3cQWO,5:sOOQO-E8V-E8VO3qQXO1G/uOOQS7+%g7+%gO3xQYO'#CrO%yQWO'#EYO4QQdO,5:gOOQS,5:g,5:gO4`QpO<<H`O4hQtO1G/fOOQO,5:r,5:rO4{Q[O,5:rOOQO-E8U-E8UOOQS7+%P7+%PO5VQWO7+%POOQS-E8Q-E8QO#kQdO'#ETO5_QWO,5;OOOQT1G.t1G.tO5gQWO,5;ROOQP1G/T1G/TOOQP<<H`<<H`OOQS7+$j7+$jO5oQdO7+%YOOQO7+%a7+%aOOQS,5:t,5:tOOQS-E8W-E8WOOQS1G0R1G0ROOQPAN=zAN=zO5vQtO'#EVO#kQdO'#EVO6nQdO7+%QOOQO7+%Q7+%QOOQO1G0^1G0^OOQS<<Hk<<HkO7OQdO,5:oOOQO-E8R-E8ROOQO<<Ht<<HtO7YQtO,5:qOOQS-E8T-E8TOOQO<<Hl<<Hl",
-  stateData: "8W~O#SOSQOS~OTWOWWO[TO]TOsUOwVO!X_O!YXO!fYO!hZO!j[O!m]O!s^O#QPO#VRO~O#QcO~O[hO]hOofOsiOwjO{kO!OmO#OlO#VeO~O!QnO~P!`O_sO#PqO#QpO~O#QuO~O#QwO~OazOe!QOg!QOm!PO#P}O#QyO#Y{O~Oa!SO!a!UO!d!VO#Q!RO!Q#[P~Og![Om!PO#Q!ZO~O#Q!^O~Oa!SO!a!UO!d!VO#Q!RO~O!V#[P~P$SOTWOWWO[TO]TOsUOwVO#QPO#VRO~OofO!QnO~O_!hO#PqO#QpO~OTWOWWO[TO]TOsUOwVO!X_O!YXO!fYO!hZO!j[O!m]O!s^O#Q!oO#VRO~O!P!qO~P&ZOa!tO~Oa!uO~Ou!vOy!wO~OP!yOafXifX!VfX!afX!dfX#QfX`fXefXgfXmfXofX#PfX#YfXufX!PfX!UfX~Oa!SOi!zO!a!UO!d!VO#Q!RO!V#[P~Oa!}O~Oa!SO!a!UO!d!VO#Q#OO~Oo#SO!_#RO!Q#[X!V#[X~Oa#VO~Oi!zO!V#XO~O!V#YO~Og#ZOm!PO~O!Q#[O~O!QnO!_#RO~O!QnO!V#_O~O[hO]hOsiOwjO{kO!OmO#OlO#VeO~Oo!xa!Q!xa`!xa~P+UOu#aOy#bO~O[hO]hOsiOwjO#VeO~Oozi{zi!Ozi!Qzi#Ozi`zi~P,VOo|i{|i!O|i!Q|i#O|i`|i~P,VOo}i{}i!O}i!Q}i#O}i`}i~P,VO[VX[!TX]VXoVXsVXwVX{VX!OVX!QVX#OVX#VVX~O[#cO~O!P#fO!V#dO~O!P#fO~P&ZO`#WP~P#kO`#ZP~P%[O`#nOi!zO~O!V#pO~Og#qOn#qO~O[!]X`!ZX!_!ZX~O[#rO~O`#sO!_#RO~Oo#SO!Q#[a!V#[a~O!_#ROo!`a!Q!`a!V!`a`!`a~O!V#xO~O!P#|O!p#zO!q#zO#Y#yO~O!P!zX!V!zX~P&ZO!P$SO!V#dO~Oi!zO`!vXa!vXe!vXg!vXm!vXo!vX#P!vX#Q!vX#Y!vX~Oo$VO`#WX~P#kO`$XO~O`#ZX~P!`O`$ZO~Oi!zOu$[O~O`$]O~O!_#ROo!{a!Q!{a!V!{a~O`$_O~P+UOP!yO!QfX~O!P$bO!p#zO!q#zO#Y#yO~Oi!zOu$cO~Oi!zOo$eO!U$gO!P!Si!V!Si~P#kO!P!za!V!za~P&ZO!P$iO!V#dO~Oo$VO`#Wa~OofO`#Za~O`$lO~P#kOi!zOa!yXe!yXg!yXm!yXo!yX!P!yX!U!yX!V!yX#P!yX#Q!yX#Y!yX~Oo$eO!U$oO!P!Sq!V!Sq~P#kO`!wao!wa~P#kOi!zOa!yae!yag!yam!yao!ya!P!ya!U!ya!V!ya#P!ya#Q!ya#Y!ya~On#Yi!Oi~",
-  goto: "+}#^PPPP#_P#g#uP#g$T#gPP$ZPPP$a$j$jP$|P$jP$j%d%vPPP&`&f#gP&lP#gP&rP#gP#g#gPPP&x'['hPP#_PP'n'n'x'nP'nP'n'nP#_P#_P#_P'{#_P(O(RPP#_P#_(U(d(r(x)S)Y)d)jPPPPPP)p)xP*d*gP+]+`+i]`Obn!s#d$QiWObfklmn!s!u#V#d$QiQObfklmn!s!u#V#d$QQdRR!ceQrTR!ghQ!gsQ!|!OR#`!hq!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jp!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jT#z#[#{q!OXZz!t!w!z#b#c#i#r$O$V$^$e$f$jp!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jQ![[R#Z!]QtTR!ihQ!gtR#`!iQvUR!jiQxVR!kjQoSQ!fgQ#W!XQ#^!`Q#_!aR$`#zQ!rnQ#g!sQ$P#dR$h$QX!pn!s#d$Qa!WY^_|!S!U#R#SR#P!SR!][R!_]R#]!_QbOU!bb!s$QQ!snR$Q#dQ#i!tU$U#i$^$jQ$^#rR$j$VQ$W#iR$k$WQgSS!eg$YR$Y#kQ$f$OR$n$fQ#e!rS$R#e$TR$T#gQ#T!TR#v#TQ#{#[R$a#{]aObn!s#d$Q[SObn!s#d$QQ!dfQ!lkQ!mlQ!nmQ#k!uR#w#VR#j!tQ|XQ!YZQ!xz[#h!t#i#r$V$^$jQ#m!wQ#o!zQ#}#bQ$O#cS$d$O$fR$m$eR#l!uQ!XYQ!a_R!{|U!TY_|Q!`^Q#Q!SQ#U!UQ#t#RR#u#S",
-  nodeNames: "⚠ Unit Comment StyleSheet RuleSet UniversalSelector TagSelector TagName NestingSelector ClassSelector ClassName PseudoClassSelector : :: PseudoClassName PseudoClassName ) ( ArgList ValueName ParenthesizedValue ColorLiteral NumberLiteral StringLiteral BinaryExpression BinOp CallExpression Callee CallLiteral CallTag ParenthesizedContent , PseudoClassName ArgList IdSelector # IdName ] AttributeSelector [ AttributeName MatchOp ChildSelector ChildOp DescendantSelector SiblingSelector SiblingOp } { Block Declaration PropertyName Important ; ImportStatement AtKeyword import KeywordQuery FeatureQuery FeatureName BinaryQuery LogicOp UnaryQuery UnaryQueryOp ParenthesizedQuery SelectorQuery callee MediaStatement media CharsetStatement charset NamespaceStatement namespace NamespaceName KeyframesStatement keyframes KeyframeName KeyframeList from to SupportsStatement supports AtRule",
-  maxTerm: 105,
+  states: "7WOYQ[OOOOQP'#Cd'#CdOOQP'#Cc'#CcO!ZQ[O'#CfO!}QXO'#CaO#UQ[O'#ChO#aQ[O'#DPO#fQ[O'#DTOOQP'#Ec'#EcO#kQdO'#DeO$VQ[O'#DrO#kQdO'#DtO$hQ[O'#DvO$sQ[O'#DyO$xQ[O'#EPO%WQ[O'#EROOQS'#Eb'#EbOOQS'#ES'#ESQYQ[OOOOQP'#Cg'#CgOOQP,59Q,59QO!ZQ[O,59QO%_Q[O'#EVO%yQWO,58{O&RQ[O,59SO#aQ[O,59kO#fQ[O,59oO%_Q[O,59sO%_Q[O,59uO%_Q[O,59vO'bQ[O'#D`OOQS,58{,58{OOQP'#Ck'#CkOOQO'#C}'#C}OOQP,59S,59SO'iQWO,59SO'nQWO,59SOOQP'#DR'#DROOQP,59k,59kOOQO'#DV'#DVO'sQ`O,59oOOQS'#Cp'#CpO#kQdO'#CqO'{QvO'#CsO)VQtO,5:POOQO'#Cx'#CxO'iQWO'#CwO)kQWO'#CyOOQS'#Ef'#EfOOQO'#Dh'#DhO)pQ[O'#DoO*OQWO'#EiO$xQ[O'#DmO*^QWO'#DpOOQO'#Ej'#EjO%|QWO,5:^O*cQpO,5:`OOQS'#Dx'#DxO*kQWO,5:bO*pQ[O,5:bOOQO'#D{'#D{O*xQWO,5:eO*}QWO,5:kO+VQWO,5:mOOQS-E8Q-E8QOOQP1G.l1G.lO+yQXO,5:qOOQO-E8T-E8TOOQS1G.g1G.gOOQP1G.n1G.nO'iQWO1G.nO'nQWO1G.nOOQP1G/V1G/VO,WQ`O1G/ZO,qQXO1G/_O-XQXO1G/aO-oQXO1G/bO.VQXO'#CdO.zQWO'#DaOOQS,59z,59zO/PQWO,59zO/XQ[O,59zO/`QdO'#CoO/gQ[O'#DOOOQP1G/Z1G/ZO#kQdO1G/ZO/nQpO,59]OOQS,59_,59_O#kQdO,59aO/vQWO1G/kOOQS,59c,59cO/{Q!bO,59eO0TQWO'#DhO0`QWO,5:TO0eQWO,5:ZO$xQ[O,5:VO$xQ[O'#EYO0mQWO,5;TO0xQWO,5:XO%_Q[O,5:[OOQS1G/x1G/xOOQS1G/z1G/zOOQS1G/|1G/|O1ZQWO1G/|O1`QdO'#D|OOQS1G0P1G0POOQS1G0V1G0VOOQS1G0X1G0XOOQP7+$Y7+$YOOQP7+$u7+$uO#kQdO7+$uO#kQdO,59{O1nQ[O'#EXO1xQWO1G/fOOQS1G/f1G/fO1xQWO1G/fO2QQtO'#ETO2uQdO'#EeO3PQWO,59ZO3UQXO'#EhO3]QWO,59jO3bQpO7+$uOOQS1G.w1G.wOOQS1G.{1G.{OOQS7+%V7+%VO3jQWO1G/PO#kQdO1G/oOOQO1G/u1G/uOOQO1G/q1G/qO3oQWO,5:tOOQO-E8W-E8WO3}QXO1G/vOOQS7+%h7+%hO4UQYO'#CsO%|QWO'#EZO4^QdO,5:hOOQS,5:h,5:hO4lQpO<<HaO4tQtO1G/gOOQO,5:s,5:sO5XQ[O,5:sOOQO-E8V-E8VOOQS7+%Q7+%QO5cQWO7+%QOOQS-E8R-E8RO#kQdO'#EUO5kQWO,5;POOQT1G.u1G.uO5sQWO,5;SOOQP1G/U1G/UOOQP<<Ha<<HaOOQS7+$k7+$kO5{QdO7+%ZOOQO7+%b7+%bOOQS,5:u,5:uOOQS-E8X-E8XOOQS1G0S1G0SOOQPAN={AN={O6SQtO'#EWO#kQdO'#EWO6}QdO7+%ROOQO7+%R7+%ROOQO1G0_1G0_OOQS<<Hl<<HlO7_QdO,5:pOOQO-E8S-E8SOOQO<<Hu<<HuO7iQtO,5:rOOQS-E8U-E8UOOQO<<Hm<<Hm",
+  stateData: "8j~O#TOSROS~OUWOXWO]TO^TOtUOxVO!Y_O!ZXO!gYO!iZO!k[O!n]O!t^O#RPO#WRO~O#RcO~O]hO^hOpfOtiOxjO|kO!PmO#PlO#WeO~O!RnO~P!`O`sO#QqO#RpO~O#RuO~O#RwO~OQ!QObzOf!QOh!QOn!PO#Q}O#RyO#Z{O~Ob!SO!b!UO!e!VO#R!RO!R#]P~Oh![On!PO#R!ZO~O#R!^O~Ob!SO!b!UO!e!VO#R!RO~O!W#]P~P$VOUWOXWO]TO^TOtUOxVO#RPO#WRO~OpfO!RnO~O`!hO#QqO#RpO~OQ!pOUWOXWO]TO^TOtUOxVO!Y_O!ZXO!gYO!iZO!k[O!n]O!t^O#R!oO#WRO~O!Q!qO~P&^Ob!tO~Ob!uO~Ov!vOz!wO~OP!yObgXjgX!WgX!bgX!egX#RgXagXQgXfgXhgXngXpgX#QgX#ZgXvgX!QgX!VgX~Ob!SOj!zO!b!UO!e!VO#R!RO!W#]P~Ob!}O~Ob!SO!b!UO!e!VO#R#OO~Op#SO!`#RO!R#]X!W#]X~Ob#VO~Oj!zO!W#XO~O!W#YO~Oh#ZOn!PO~O!R#[O~O!RnO!`#RO~O!RnO!W#_O~O]hO^hOtiOxjO|kO!PmO#PlO#WeO~Op!ya!R!yaa!ya~P+_Ov#aOz#bO~O]hO^hOtiOxjO#WeO~Op{i|{i!P{i!R{i#P{ia{i~P,`Op}i|}i!P}i!R}i#P}ia}i~P,`Op!Oi|!Oi!P!Oi!R!Oi#P!Oia!Oi~P,`O]WX]!UX^WXpWXtWXxWX|WX!PWX!RWX#PWX#WWX~O]#cO~O!Q#fO!W#dO~O!Q#fO~P&^Oa#XP~P#kOa#[P~P%_Oa#nOj!zO~O!W#pO~Oh#qOo#qO~O]!^Xa![X!`![X~O]#rO~Oa#sO!`#RO~Op#SO!R#]a!W#]a~O!`#ROp!aa!R!aa!W!aaa!aa~O!W#xO~O!Q#|O!q#zO!r#zO#Z#yO~O!Q!{X!W!{X~P&^O!Q$SO!W#dO~Oj!zOQ!wXa!wXb!wXf!wXh!wXn!wXp!wX#Q!wX#R!wX#Z!wX~Op$VOa#XX~P#kOa$XO~Oa#[X~P!`Oa$ZO~Oj!zOv$[O~Oa$]O~O!`#ROp!|a!R!|a!W!|a~Oa$_O~P+_OP!yO!RgX~O!Q$bO!q#zO!r#zO#Z#yO~Oj!zOv$cO~Oj!zOp$eO!V$gO!Q!Ti!W!Ti~P#kO!Q!{a!W!{a~P&^O!Q$iO!W#dO~Op$VOa#Xa~OpfOa#[a~Oa$lO~P#kOj!zOQ!zXb!zXf!zXh!zXn!zXp!zX!Q!zX!V!zX!W!zX#Q!zX#R!zX#Z!zX~Op$eO!V$oO!Q!Tq!W!Tq~P#kOa!xap!xa~P#kOj!zOQ!zab!zaf!zah!zan!zap!za!Q!za!V!za!W!za#Q!za#R!za#Z!za~Oo#Zj!Pj~",
+  goto: ",O#_PPPPP#`P#h#vP#h$U#hPP$[PPP$b$k$kP$}P$kP$k%e%wPPP&a&g#hP&mP#hP&sP#hP#h#hPPP&y']'iPP#`PP'o'o'y'oP'oP'o'oP#`P#`P#`P'|#`P(P(SPP#`P#`(V(e(s(y)T)Z)e)kPPPPPP)q)yP*e*hP+^+a+j]`Obn!s#d$QiWObfklmn!s!u#V#d$QiQObfklmn!s!u#V#d$QQdRR!ceQrTR!ghQ!gsQ!|!OR#`!hq!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jp!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jT#z#[#{q!OXZz!t!w!z#b#c#i#r$O$V$^$e$f$jp!QXZz!t!w!z#b#c#i#r$O$V$^$e$f$jQ![[R#Z!]QtTR!ihQ!gtR#`!iQvUR!jiQxVR!kjQoSQ!fgQ#W!XQ#^!`Q#_!aR$`#zQ!rnQ#g!sQ$P#dR$h$QX!pn!s#d$Qa!WY^_|!S!U#R#SR#P!SR!][R!_]R#]!_QbOU!bb!s$QQ!snR$Q#dQ#i!tU$U#i$^$jQ$^#rR$j$VQ$W#iR$k$WQgSS!eg$YR$Y#kQ$f$OR$n$fQ#e!rS$R#e$TR$T#gQ#T!TR#v#TQ#{#[R$a#{]aObn!s#d$Q[SObn!s#d$QQ!dfQ!lkQ!mlQ!nmQ#k!uR#w#VR#j!tQ|XQ!YZQ!xz[#h!t#i#r$V$^$jQ#m!wQ#o!zQ#}#bQ$O#cS$d$O$fR$m$eR#l!uQ!XYQ!a_R!{|U!TY_|Q!`^Q#Q!SQ#U!UQ#t#RR#u#S",
+  nodeNames: "⚠ Unit VariableName Comment StyleSheet RuleSet UniversalSelector TagSelector TagName NestingSelector ClassSelector ClassName PseudoClassSelector : :: PseudoClassName PseudoClassName ) ( ArgList ValueName ParenthesizedValue ColorLiteral NumberLiteral StringLiteral BinaryExpression BinOp CallExpression Callee CallLiteral CallTag ParenthesizedContent , PseudoClassName ArgList IdSelector # IdName ] AttributeSelector [ AttributeName MatchOp ChildSelector ChildOp DescendantSelector SiblingSelector SiblingOp } { Block Declaration PropertyName Important ; ImportStatement AtKeyword import KeywordQuery FeatureQuery FeatureName BinaryQuery LogicOp UnaryQuery UnaryQueryOp ParenthesizedQuery SelectorQuery selector MediaStatement media CharsetStatement charset NamespaceStatement namespace NamespaceName KeyframesStatement keyframes KeyframeName KeyframeList from to SupportsStatement supports AtRule",
+  maxTerm: 106,
   nodeProps: [
-    [common_dist["b" /* NodeProp */].openedBy, 16,"(",47,"{"],
-    [common_dist["b" /* NodeProp */].closedBy, 17,")",48,"}"]
+    [common_dist["b" /* NodeProp */].openedBy, 17,"(",48,"{"],
+    [common_dist["b" /* NodeProp */].closedBy, 18,")",49,"}"]
   ],
-  skippedNodes: [0,2],
+  skippedNodes: [0,3],
   repeatNodeCount: 8,
-  tokenData: "Ay~R![OX$wX^%]^p$wpq%]qr(crs+}st,otu2Uuv$wvw2rwx2}xy3jyz3uz{3z{|4_|}8U}!O8a!O!P8x!P!Q9Z!Q![;e![!]<Y!]!^<x!^!_$w!_!`=T!`!a=`!a!b$w!b!c>O!c!}$w!}#O?[#O#P$w#P#Q?g#Q#R2U#R#T$w#T#U?r#U#c$w#c#d@q#d#o$w#o#pAQ#p#q2U#q#rA]#r#sAh#s#y$w#y#z%]#z$f$w$f$g%]$g#BY$w#BY#BZ%]#BZ$IS$w$IS$I_%]$I_$I|$w$I|$JO%]$JO$JT$w$JT$JU%]$JU$KV$w$KV$KW%]$KW&FU$w&FU&FV%]&FV~$wW$zQOy%Qz~%QW%VQnWOy%Qz~%Q~%bf#S~OX%QX^&v^p%Qpq&vqy%Qz#y%Q#y#z&v#z$f%Q$f$g&v$g#BY%Q#BY#BZ&v#BZ$IS%Q$IS$I_&v$I_$I|%Q$I|$JO&v$JO$JT%Q$JT$JU&v$JU$KV%Q$KV$KW&v$KW&FU%Q&FU&FV&v&FV~%Q~&}f#S~nWOX%QX^&v^p%Qpq&vqy%Qz#y%Q#y#z&v#z$f%Q$f$g&v$g#BY%Q#BY#BZ&v#BZ$IS%Q$IS$I_&v$I_$I|%Q$I|$JO&v$JO$JT%Q$JT$JU&v$JU$KV%Q$KV$KW&v$KW&FU%Q&FU&FV&v&FV~%Q^(fSOy%Qz#]%Q#]#^(r#^~%Q^(wSnWOy%Qz#a%Q#a#b)T#b~%Q^)YSnWOy%Qz#d%Q#d#e)f#e~%Q^)kSnWOy%Qz#c%Q#c#d)w#d~%Q^)|SnWOy%Qz#f%Q#f#g*Y#g~%Q^*_SnWOy%Qz#h%Q#h#i*k#i~%Q^*pSnWOy%Qz#T%Q#T#U*|#U~%Q^+RSnWOy%Qz#b%Q#b#c+_#c~%Q^+dSnWOy%Qz#h%Q#h#i+p#i~%Q^+wQ!UUnWOy%Qz~%Q~,QUOY+}Zr+}rs,ds#O+}#O#P,i#P~+}~,iOg~~,lPO~+}_,tWsPOy%Qz!Q%Q!Q![-^![!c%Q!c!i-^!i#T%Q#T#Z-^#Z~%Q^-cWnWOy%Qz!Q%Q!Q![-{![!c%Q!c!i-{!i#T%Q#T#Z-{#Z~%Q^.QWnWOy%Qz!Q%Q!Q![.j![!c%Q!c!i.j!i#T%Q#T#Z.j#Z~%Q^.qWeUnWOy%Qz!Q%Q!Q![/Z![!c%Q!c!i/Z!i#T%Q#T#Z/Z#Z~%Q^/bWeUnWOy%Qz!Q%Q!Q![/z![!c%Q!c!i/z!i#T%Q#T#Z/z#Z~%Q^0PWnWOy%Qz!Q%Q!Q![0i![!c%Q!c!i0i!i#T%Q#T#Z0i#Z~%Q^0pWeUnWOy%Qz!Q%Q!Q![1Y![!c%Q!c!i1Y!i#T%Q#T#Z1Y#Z~%Q^1_WnWOy%Qz!Q%Q!Q![1w![!c%Q!c!i1w!i#T%Q#T#Z1w#Z~%Q^2OQeUnWOy%Qz~%QY2XSOy%Qz!_%Q!_!`2e!`~%QY2lQyQnWOy%Qz~%QX2wQWPOy%Qz~%Q~3QUOY2}Zw2}wx,dx#O2}#O#P3d#P~2}~3gPO~2}_3oQaVOy%Qz~%Q~3zO`~_4RSTPiSOy%Qz!_%Q!_!`2e!`~%Q_4fUiS!OPOy%Qz!O%Q!O!P4x!P!Q%Q!Q![7_![~%Q^4}SnWOy%Qz!Q%Q!Q![5Z![~%Q^5bWnW#YUOy%Qz!Q%Q!Q![5Z![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%Q^6PWnWOy%Qz{%Q{|6i|}%Q}!O6i!O!Q%Q!Q![6z![~%Q^6nSnWOy%Qz!Q%Q!Q![6z![~%Q^7RSnW#YUOy%Qz!Q%Q!Q![6z![~%Q^7fYnW#YUOy%Qz!O%Q!O!P5Z!P!Q%Q!Q![7_![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%Q_8ZQoVOy%Qz~%Q^8fUiSOy%Qz!O%Q!O!P4x!P!Q%Q!Q![7_![~%Q_8}S#VPOy%Qz!Q%Q!Q![5Z![~%Q~9`RiSOy%Qz{9i{~%Q~9nSnWOy9iyz9zz{:o{~9i~9}ROz9zz{:W{~9z~:ZTOz9zz{:W{!P9z!P!Q:j!Q~9z~:oOQ~~:tUnWOy9iyz9zz{:o{!P9i!P!Q;W!Q~9i~;_QQ~nWOy%Qz~%Q^;jY#YUOy%Qz!O%Q!O!P5Z!P!Q%Q!Q![7_![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%QX<_S[POy%Qz![%Q![!]<k!]~%QX<rQ]PnWOy%Qz~%Q_<}Q!VVOy%Qz~%QY=YQyQOy%Qz~%QX=eS{POy%Qz!`%Q!`!a=q!a~%QX=xQ{PnWOy%Qz~%QX>RUOy%Qz!c%Q!c!}>e!}#T%Q#T#o>e#o~%QX>lY!XPnWOy%Qz}%Q}!O>e!O!Q%Q!Q![>e![!c%Q!c!}>e!}#T%Q#T#o>e#o~%QX?aQwPOy%Qz~%Q^?lQuUOy%Qz~%QX?uSOy%Qz#b%Q#b#c@R#c~%QX@WSnWOy%Qz#W%Q#W#X@d#X~%QX@kQ!_PnWOy%Qz~%QX@tSOy%Qz#f%Q#f#g@d#g~%QXAVQ!QPOy%Qz~%Q_AbQ!PVOy%Qz~%QZAmS!OPOy%Qz!_%Q!_!`2e!`~%Q",
+  tokenData: "Ay~R![OX$wX^%]^p$wpq%]qr(crs+}st,otu2Uuv$wvw2rwx2}xy3jyz3uz{3z{|4_|}8U}!O8a!O!P8x!P!Q9Z!Q![;e![!]<Y!]!^<x!^!_$w!_!`=T!`!a=`!a!b$w!b!c>O!c!}$w!}#O?[#O#P$w#P#Q?g#Q#R2U#R#T$w#T#U?r#U#c$w#c#d@q#d#o$w#o#pAQ#p#q2U#q#rA]#r#sAh#s#y$w#y#z%]#z$f$w$f$g%]$g#BY$w#BY#BZ%]#BZ$IS$w$IS$I_%]$I_$I|$w$I|$JO%]$JO$JT$w$JT$JU%]$JU$KV$w$KV$KW%]$KW&FU$w&FU&FV%]&FV~$wW$zQOy%Qz~%QW%VQoWOy%Qz~%Q~%bf#T~OX%QX^&v^p%Qpq&vqy%Qz#y%Q#y#z&v#z$f%Q$f$g&v$g#BY%Q#BY#BZ&v#BZ$IS%Q$IS$I_&v$I_$I|%Q$I|$JO&v$JO$JT%Q$JT$JU&v$JU$KV%Q$KV$KW&v$KW&FU%Q&FU&FV&v&FV~%Q~&}f#T~oWOX%QX^&v^p%Qpq&vqy%Qz#y%Q#y#z&v#z$f%Q$f$g&v$g#BY%Q#BY#BZ&v#BZ$IS%Q$IS$I_&v$I_$I|%Q$I|$JO&v$JO$JT%Q$JT$JU&v$JU$KV%Q$KV$KW&v$KW&FU%Q&FU&FV&v&FV~%Q^(fSOy%Qz#]%Q#]#^(r#^~%Q^(wSoWOy%Qz#a%Q#a#b)T#b~%Q^)YSoWOy%Qz#d%Q#d#e)f#e~%Q^)kSoWOy%Qz#c%Q#c#d)w#d~%Q^)|SoWOy%Qz#f%Q#f#g*Y#g~%Q^*_SoWOy%Qz#h%Q#h#i*k#i~%Q^*pSoWOy%Qz#T%Q#T#U*|#U~%Q^+RSoWOy%Qz#b%Q#b#c+_#c~%Q^+dSoWOy%Qz#h%Q#h#i+p#i~%Q^+wQ!VUoWOy%Qz~%Q~,QUOY+}Zr+}rs,ds#O+}#O#P,i#P~+}~,iOh~~,lPO~+}_,tWtPOy%Qz!Q%Q!Q![-^![!c%Q!c!i-^!i#T%Q#T#Z-^#Z~%Q^-cWoWOy%Qz!Q%Q!Q![-{![!c%Q!c!i-{!i#T%Q#T#Z-{#Z~%Q^.QWoWOy%Qz!Q%Q!Q![.j![!c%Q!c!i.j!i#T%Q#T#Z.j#Z~%Q^.qWfUoWOy%Qz!Q%Q!Q![/Z![!c%Q!c!i/Z!i#T%Q#T#Z/Z#Z~%Q^/bWfUoWOy%Qz!Q%Q!Q![/z![!c%Q!c!i/z!i#T%Q#T#Z/z#Z~%Q^0PWoWOy%Qz!Q%Q!Q![0i![!c%Q!c!i0i!i#T%Q#T#Z0i#Z~%Q^0pWfUoWOy%Qz!Q%Q!Q![1Y![!c%Q!c!i1Y!i#T%Q#T#Z1Y#Z~%Q^1_WoWOy%Qz!Q%Q!Q![1w![!c%Q!c!i1w!i#T%Q#T#Z1w#Z~%Q^2OQfUoWOy%Qz~%QY2XSOy%Qz!_%Q!_!`2e!`~%QY2lQzQoWOy%Qz~%QX2wQXPOy%Qz~%Q~3QUOY2}Zw2}wx,dx#O2}#O#P3d#P~2}~3gPO~2}_3oQbVOy%Qz~%Q~3zOa~_4RSUPjSOy%Qz!_%Q!_!`2e!`~%Q_4fUjS!PPOy%Qz!O%Q!O!P4x!P!Q%Q!Q![7_![~%Q^4}SoWOy%Qz!Q%Q!Q![5Z![~%Q^5bWoW#ZUOy%Qz!Q%Q!Q![5Z![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%Q^6PWoWOy%Qz{%Q{|6i|}%Q}!O6i!O!Q%Q!Q![6z![~%Q^6nSoWOy%Qz!Q%Q!Q![6z![~%Q^7RSoW#ZUOy%Qz!Q%Q!Q![6z![~%Q^7fYoW#ZUOy%Qz!O%Q!O!P5Z!P!Q%Q!Q![7_![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%Q_8ZQpVOy%Qz~%Q^8fUjSOy%Qz!O%Q!O!P4x!P!Q%Q!Q![7_![~%Q_8}S#WPOy%Qz!Q%Q!Q![5Z![~%Q~9`RjSOy%Qz{9i{~%Q~9nSoWOy9iyz9zz{:o{~9i~9}ROz9zz{:W{~9z~:ZTOz9zz{:W{!P9z!P!Q:j!Q~9z~:oOR~~:tUoWOy9iyz9zz{:o{!P9i!P!Q;W!Q~9i~;_QR~oWOy%Qz~%Q^;jY#ZUOy%Qz!O%Q!O!P5Z!P!Q%Q!Q![7_![!g%Q!g!h5z!h#X%Q#X#Y5z#Y~%QX<_S]POy%Qz![%Q![!]<k!]~%QX<rQ^PoWOy%Qz~%Q_<}Q!WVOy%Qz~%QY=YQzQOy%Qz~%QX=eS|POy%Qz!`%Q!`!a=q!a~%QX=xQ|PoWOy%Qz~%QX>RUOy%Qz!c%Q!c!}>e!}#T%Q#T#o>e#o~%QX>lY!YPoWOy%Qz}%Q}!O>e!O!Q%Q!Q![>e![!c%Q!c!}>e!}#T%Q#T#o>e#o~%QX?aQxPOy%Qz~%Q^?lQvUOy%Qz~%QX?uSOy%Qz#b%Q#b#c@R#c~%QX@WSoWOy%Qz#W%Q#W#X@d#X~%QX@kQ!`PoWOy%Qz~%QX@tSOy%Qz#f%Q#f#g@d#g~%QXAVQ!RPOy%Qz~%Q_AbQ!QVOy%Qz~%QZAmS!PPOy%Qz!_%Q!_!`2e!`~%Q",
   tokenizers: [descendant, unitToken, identifiers, 0, 1, 2, 3],
-  topRules: {"StyleSheet":[0,3]},
-  specialized: [{term: 93, get: value => spec_callee[value] || -1},{term: 55, get: value => spec_AtKeyword[value] || -1},{term: 94, get: value => spec_identifier[value] || -1}],
-  tokenPrec: 1060
+  topRules: {"StyleSheet":[0,4]},
+  specialized: [{term: 94, get: value => spec_callee[value] || -1},{term: 56, get: value => spec_AtKeyword[value] || -1},{term: 95, get: value => spec_identifier[value] || -1}],
+  tokenPrec: 1078
 });
 
 
@@ -30792,7 +31696,10 @@ const lang_css_dist_tags = /*@__PURE__*/[
     "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "tr", "u", "ul"
 ].map(name => ({ type: "type", label: name }));
 const dist_span = /^[\w-]*/;
-const completeCSS = context => {
+/**
+CSS property and value keyword completion source.
+*/
+const cssCompletionSource = context => {
     let { state, pos } = context, node = syntaxTree(state).resolveInner(pos, -1);
     if (node.name == "PropertyName")
         return { from: node.from, options: dist_properties(), span: dist_span };
@@ -30835,21 +31742,21 @@ const cssLanguage = /*@__PURE__*/LRLanguage.define({
             /*@__PURE__*/styleTags({
                 "import charset namespace keyframes": dist_tags.definitionKeyword,
                 "media supports": dist_tags.controlKeyword,
-                "from to": dist_tags.keyword,
+                "from to selector": dist_tags.keyword,
                 NamespaceName: dist_tags.namespace,
                 KeyframeName: dist_tags.labelName,
-                TagName: dist_tags.typeName,
+                TagName: dist_tags.tagName,
                 ClassName: dist_tags.className,
                 PseudoClassName: /*@__PURE__*/dist_tags.constant(dist_tags.className),
-                not: dist_tags.operatorKeyword,
                 IdName: dist_tags.labelName,
-                "FeatureName PropertyName AttributeName": dist_tags.propertyName,
+                "FeatureName PropertyName": dist_tags.propertyName,
+                AttributeName: dist_tags.attributeName,
                 NumberLiteral: dist_tags.number,
                 KeywordQuery: dist_tags.keyword,
                 UnaryQueryOp: dist_tags.operatorKeyword,
-                callee: dist_tags.keyword,
                 "CallTag ValueName": dist_tags.atom,
-                Callee: dist_tags.variableName,
+                VariableName: dist_tags.variableName,
+                Callee: dist_tags.operatorKeyword,
                 Unit: dist_tags.unit,
                 "UniversalSelector NestingSelector": dist_tags.definitionOperator,
                 AtKeyword: dist_tags.keyword,
@@ -30872,13 +31779,12 @@ const cssLanguage = /*@__PURE__*/LRLanguage.define({
     }),
     languageData: {
         commentTokens: { block: { open: "/*", close: "*/" } },
-        indentOnInput: /^\s*\}$/
+        indentOnInput: /^\s*\}$/,
+        wordChars: "-"
     }
 });
-/**
-CSS property and value keyword completion.
-*/
-const cssCompletion = /*@__PURE__*/cssLanguage.data.of({ autocomplete: completeCSS });
+// FIXME remove on next major version
+const cssCompletion = /*@__PURE__*/cssLanguage.data.of({ autocomplete: cssCompletionSource });
 /**
 Language support for CSS.
 */
@@ -30893,16 +31799,16 @@ function dist_css() {
 
 
 // This file was generated by lezer-generator. You probably shouldn't edit it.
-const noSemi = 271,
+const noSemi = 274,
   incdec = 1,
   incdecPrefix = 2,
-  templateContent = 272,
-  templateDollarBrace = 273,
-  templateEnd = 274,
-  insertSemi = 275,
+  templateContent = 275,
+  templateDollarBrace = 276,
+  templateEnd = 277,
+  insertSemi = 278,
   TSExtends = 3,
-  spaces = 277,
-  newline = 278,
+  spaces = 280,
+  newline = 281,
   LineComment = 4,
   BlockComment = 5,
   Dialect_ts = 1;
@@ -30982,31 +31888,31 @@ function tsExtends(value, stack) {
 }
 
 // This file was generated by lezer-generator. You probably shouldn't edit it.
-const index_es_spec_identifier = {__proto__:null,export:16, as:21, from:25, default:30, async:35, function:36, this:46, true:54, false:54, void:60, typeof:64, null:78, super:80, new:114, await:131, yield:133, delete:134, class:144, extends:146, public:183, private:183, protected:183, readonly:185, in:204, instanceof:206, const:208, import:240, keyof:291, unique:295, infer:301, is:335, abstract:355, implements:357, type:359, let:362, var:364, interface:371, enum:375, namespace:381, module:383, declare:387, global:391, for:412, of:421, while:424, with:428, do:432, if:436, else:438, switch:442, case:448, try:454, catch:456, finally:458, return:462, throw:466, break:470, continue:474, debugger:478};
-const spec_word = {__proto__:null,async:101, get:103, set:105, public:153, private:153, protected:153, static:155, abstract:157, readonly:161, new:339};
+const index_es_spec_identifier = {__proto__:null,export:16, as:21, from:25, default:30, async:35, function:36, this:46, true:54, false:54, void:60, typeof:64, null:78, super:80, new:114, await:131, yield:133, delete:134, class:144, extends:146, public:187, private:187, protected:187, readonly:189, in:210, instanceof:212, const:214, import:246, keyof:297, unique:301, infer:307, is:341, abstract:361, implements:363, type:365, let:368, var:370, interface:377, enum:381, namespace:387, module:389, declare:393, global:397, for:418, of:427, while:430, with:434, do:438, if:442, else:444, switch:448, case:454, try:460, catch:462, finally:464, return:468, throw:472, break:476, continue:480, debugger:484};
+const spec_word = {__proto__:null,async:101, get:103, set:105, public:153, private:153, protected:153, static:155, abstract:157, override:159, readonly:165, new:345};
 const spec_LessThan = {__proto__:null,"<":121};
 const javascript_dist_index_es_parser = lr_dist["c" /* LRParser */].deserialize({
   version: 13,
-  states: "$-tO`QYOOO&}Q!LdO'#CgO'UOSO'#DSO)^QYO'#DXO)nQYO'#DdO)uQYO'#DnO-lQYO'#DtOOQO'#EU'#EUO.PQWO'#ETO.UQWO'#ETO0TQ!LdO'#ImO2kQ!LdO'#InO3XQWO'#ErO3^QpO'#FXOOQ!LS'#Ez'#EzO3fO!bO'#EzO3tQWO'#F`O5RQWO'#F_OOQ!LS'#In'#InOOQ!LQ'#Im'#ImOOQQ'#JV'#JVO5WQWO'#HfO5]Q!LYO'#HgOOQQ'#I_'#I_OOQQ'#Hh'#HhQ`QYOOO)uQYO'#DfO5eQWO'#GSO5jQ#tO'#ClO5xQWO'#ESO6TQ#tO'#EyO6oQWO'#GSO6tQWO'#GWO7PQWO'#GWO7_QWO'#GZO7_QWO'#G[O7_QWO'#G^O5eQWO'#GaO8OQWO'#GdO9^QWO'#CcO9nQWO'#GqO9vQWO'#GwO9vQWO'#GyO`QYO'#G{O9vQWO'#G}O9vQWO'#HQO9{QWO'#HWO:QQ!LZO'#H[O)uQYO'#H^O:]Q!LZO'#H`O:hQ!LZO'#HbO5]Q!LYO'#HdO)uQYO'#IoOOOS'#Hj'#HjO:sOSO,59nOOQ!LS,59n,59nO=UQbO'#CgO=`QYO'#HkO=mQWO'#IpO?lQbO'#IpO'aQYO'#IpO?sQWO,59sO@ZQ&jO'#D^OASQWO'#EUOAaQWO'#IzOAlQWO'#IyOAtQWO,5:rOAyQWO'#IxOBQQWO'#DuO5jQ#tO'#ESOB`QWO'#ESOBkQ`O'#EyOOQ!LS,5:O,5:OOBsQYO,5:OODqQ!LdO,5:YOE_QWO,5:`OExQ!LYO'#IwO6tQWO'#IvOFPQWO'#IvOFXQWO,5:qOF^QWO'#IvOFlQYO,5:oOHiQWO'#EQOIsQWO,5:oOKSQWO'#DhOKZQYO'#DmOKeQ&jO,5:xO)uQYO,5:xOOQQ'#Ej'#EjOOQQ'#El'#ElO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yO)uQYO,5:yOOQQ'#Ep'#EpOKjQYO,5;ZOOQ!LS,5;`,5;`OOQ!LS,5;a,5;aOMgQWO,5;aOOQ!LS,5;b,5;bO)uQYO'#HuOMlQ!LYO,5;{ONWQWO,5:yO)uQYO,5;^ONpQpO'#JOON_QpO'#JOONwQpO'#JOO! YQpO,5;iOOQO,5;s,5;sO! hQYO'#FZOOOO'#Ht'#HtO3fO!bO,5;fO! oQpO'#F]OOQ!LS,5;f,5;fO!!]Q,UO'#CqOOQ!LS'#Ct'#CtO!!pQWO'#CtO!!uOSO'#CxO!#cQ#tO,5;xO!#jQWO,5;zO!$vQWO'#FjO!%TQWO'#FkO!%YQWO'#FoO!&[Q&jO'#FsO!&}Q,UO'#IhOOQ!LS'#Ih'#IhO!'XQWO'#IgO!'gQWO'#IfOOQ!LS'#Cr'#CrOOQ!LS'#Cy'#CyO!'oQWO'#C{OIxQWO'#FbOIxQWO'#FdO!'tQWO'#FfO!'yQWO'#FgO!(OQWO'#FmOIxQWO'#FrO!(TQWO'#EVO!(lQWO,5;yO`QYO,5>QOOQQ'#Ib'#IbOOQQ,5>R,5>ROOQQ-E;f-E;fO!*hQ!LdO,5:QOOQ!LQ'#Co'#CoO!+XQ#tO,5<nOOQO'#Ce'#CeO!+jQWO'#CpO!+rQ!LYO'#IcO5RQWO'#IcO9{QWO,59WO!,QQpO,59WO!,YQ#tO,59WO5jQ#tO,59WO!,eQWO,5:oO!,mQWO'#GpO!,uQWO'#JZO)uQYO,5;cOKeQ&jO,5;eO!,}QWO,5=ZO!-SQWO,5=ZO!-XQWO,5=ZO5]Q!LYO,5=ZO5eQWO,5<nO!-gQWO'#EWO!-xQ&jO'#EXOOQ!LQ'#Ix'#IxO!.ZQ!LYO'#JWO5]Q!LYO,5<rO7_QWO,5<xOOQO'#Cq'#CqO!.fQpO,5<uO!.nQ#tO,5<vO!.yQWO,5<xO!/OQ`O,5<{O9{QWO'#GfO5eQWO'#GhO!/WQWO'#GhO5jQ#tO'#GkO!/]QWO'#GkOOQQ,5=O,5=OO!/bQWO'#GlO!/jQWO'#ClO!/oQWO,58}O!/yQWO,58}O!1xQYO,58}OOQQ,58},58}O!2VQ!LYO,58}O)uQYO,58}O!2bQYO'#GsOOQQ'#Gt'#GtOOQQ'#Gu'#GuO`QYO,5=]O!2rQWO,5=]O)uQYO'#DtO`QYO,5=cO`QYO,5=eO!2wQWO,5=gO`QYO,5=iO!2|QWO,5=lO!3RQYO,5=rOOQQ,5=v,5=vO)uQYO,5=vO5]Q!LYO,5=xOOQQ,5=z,5=zO!7PQWO,5=zOOQQ,5=|,5=|O!7PQWO,5=|OOQQ,5>O,5>OO!7UQ`O,5?ZOOOS-E;h-E;hOOQ!LS1G/Y1G/YO!7ZQbO,5>VO)uQYO,5>VOOQO-E;i-E;iO!7eQWO,5?[O!7mQbO,5?[O!7tQWO,5?eOOQ!LS1G/_1G/_O!7|QpO'#DQOOQO'#Ir'#IrO)uQYO'#IrO!8kQpO'#IrO!9YQpO'#D_O!9kQ&jO'#D_O!;sQYO'#D_O!;zQWO'#IqO!<SQWO,59xO!<XQWO'#EYO!<gQWO'#I{O!<oQWO,5:sO!=VQ&jO'#D_O)uQYO,5?fO!=aQWO'#HpO!7tQWO,5?eOOQ!LQ1G0^1G0^O!>gQ&jO'#DxOOQ!LS,5:a,5:aO)uQYO,5:aOHiQWO,5:aO!>nQWO,5:aO9{QWO,5:nO!,QQpO,5:nO!,YQ#tO,5:nO5jQ#tO,5:nOOQ!LS1G/j1G/jOOQ!LS1G/z1G/zOOQ!LQ'#EP'#EPO)uQYO,5?cO!>yQ!LYO,5?cO!?[Q!LYO,5?cO!?cQWO,5?bO!?kQWO'#HrO!?cQWO,5?bOOQ!LQ1G0]1G0]O6tQWO,5?bOOQ!LS1G0Z1G0ZO!@VQ!LdO1G0ZO!@vQ!LbO,5:lOOQ!LS'#Fi'#FiO!AdQ!LdO'#IhOFlQYO1G0ZO!CcQ#tO'#IsO!CmQWO,5:SO!CrQbO'#ItO)uQYO'#ItO!C|QWO,5:XOOQ!LS'#DQ'#DQOOQ!LS1G0d1G0dO!DRQWO1G0dO!FdQ!LdO1G0eO!FkQ!LdO1G0eO!IOQ!LdO1G0eO!IVQ!LdO1G0eO!K^Q!LdO1G0eO!KqQ!LdO1G0eO!NbQ!LdO1G0eO!NiQ!LdO1G0eO#!|Q!LdO1G0eO##TQ!LdO1G0eO#$xQ!LdO1G0eO#'rQ7^O'#CgO#)mQ7^O1G0uO#+hQ7^O'#InOOQ!LS1G0{1G0{O#+{Q!LdO,5>aOOQ!LQ-E;s-E;sO#,lQ!LdO1G0eOOQ!LS1G0e1G0eO#.nQ!LdO1G0xO#/_QpO,5;kO#/dQpO,5;lO#/iQpO'#FSO#/}QWO'#FROOQO'#JP'#JPOOQO'#Hs'#HsO#0SQpO1G1TOOQ!LS1G1T1G1TOOQO1G1^1G1^O#0bQ7^O'#ImO#0lQWO,5;uOKjQYO,5;uOOOO-E;r-E;rOOQ!LS1G1Q1G1QOOQ!LS,5;w,5;wO#0qQpO,5;wOOQ!LS,59`,59`OHiQWO'#IjOOOS'#Hi'#HiO#0vOSO,59dOOQ!LS,59d,59dO)uQYO1G1dOKeQ&jO'#HwO#1RQWO,5<]OOQ!LS,5<Y,5<YOOQO'#F}'#F}OIxQWO,5<hOOQO'#GP'#GPOIxQWO,5<jOIxQWO,5<lOOQO1G1f1G1fO#1^Q`O'#CoO#1qQ`O,5<UO#1xQWO'#JSO5eQWO'#JSO#2WQWO,5<WOIxQWO,5<VO#2]Q`O'#FiO#2jQ`O'#JTO#2tQWO'#JTOHiQWO'#JTO#2yQWO,5<ZOOQ!LQ'#Dc'#DcO#3OQWO'#FlO#3ZQpO'#FtO!&VQ&jO'#FtO!&VQ&jO'#FvO#3lQWO'#FwO!(OQWO'#FzOOQO'#Hy'#HyO#3qQ&jO,5<_OOQ!LS,5<_,5<_O#3xQ&jO'#FtO#4WQ&jO'#FuO#4`Q&jO'#FuOOQ!LS,5<m,5<mOIxQWO,5?ROIxQWO,5?RO#4eQWO'#HzO#4pQWO,5?QOOQ!LS'#Cg'#CgO#5dQ#tO,59gOOQ!LS,59g,59gO#6VQ#tO,5;|O#6xQ#tO,5<OO#7SQWO,5<QOOQ!LS,5<R,5<RO#7XQWO,5<XO#7^Q#tO,5<^OFlQYO1G1eO#7nQWO1G1eOOQQ1G3l1G3lOOQ!LS1G/l1G/lOMgQWO1G/lOOQQ1G2Y1G2YOHiQWO1G2YO)uQYO1G2YOHiQWO1G2YO#7sQWO1G2YO#8RQWO,59[O#9[QWO'#EQOOQ!LQ,5>},5>}O#9fQ!LYO,5>}OOQQ1G.r1G.rO9{QWO1G.rO!,QQpO1G.rO!,YQ#tO1G.rO#9tQWO1G0ZO#9yQWO'#CgO#:UQWO'#J[O#:^QWO,5=[O#:cQWO'#J[O#:hQWO'#ISO#:vQWO,5?uO#;OQbO1G0}OOQ!LS1G1P1G1PO5eQWO1G2uO#;VQWO1G2uO#;[QWO1G2uO#;aQWO1G2uOOQQ1G2u1G2uO#;fQ#tO1G2YO6tQWO'#IyO6tQWO'#EYO6tQWO'#H|O#;wQ!LYO,5?rOOQQ1G2^1G2^O!.yQWO1G2dOHiQWO1G2aO#<SQWO1G2aOOQQ1G2b1G2bOHiQWO1G2bO#<XQWO1G2bO#<aQ&jO'#G`OOQQ1G2d1G2dO!&VQ&jO'#IOO!/OQ`O1G2gOOQQ1G2g1G2gOOQQ,5=Q,5=QO#<iQ#tO,5=SO5eQWO,5=SO#3lQWO,5=VO5RQWO,5=VO!,QQpO,5=VO!,YQ#tO,5=VO5jQ#tO,5=VO#<zQWO'#JYO#=VQWO,5=WOOQQ1G.i1G.iO#=[Q!LYO1G.iO#=gQWO1G.iO!'oQWO1G.iO5]Q!LYO1G.iO#=lQbO,5?wO#=vQWO,5?wO#>RQYO,5=_O#>YQWO,5=_O6tQWO,5?wOOQQ1G2w1G2wO`QYO1G2wOOQQ1G2}1G2}OOQQ1G3P1G3PO9vQWO1G3RO#>_QYO1G3TO#BVQYO'#HSOOQQ1G3W1G3WO9{QWO1G3^O#BdQWO1G3^O5]Q!LYO1G3bOOQQ1G3d1G3dOOQ!LQ'#Fp'#FpO5]Q!LYO1G3fO5]Q!LYO1G3hOOOS1G4u1G4uO#BlQ`O,5;{O#BtQbO1G3qO#COQWO1G4vO#CWQWO1G5PO#C`QWO,5?^OKjQYO,5:tO6tQWO,5:tO9{QWO,59yOKjQYO,59yO!,QQpO,59yO#CeQ7^O,59yOOQO,5:t,5:tO#CoQ&jO'#HlO#DVQWO,5?]OOQ!LS1G/d1G/dO#D_Q&jO'#HqO#DsQWO,5?gOOQ!LQ1G0_1G0_O!9kQ&jO,59yO#D{QbO1G5QOOQO,5>[,5>[O6tQWO,5>[OOQO-E;n-E;nO#EVQ!LrO'#D}O!&VQ&jO'#DyOOQO'#Ho'#HoO#EqQ&jO,5:dOOQ!LS,5:d,5:dO#ExQ&jO'#DyO#FWQ&jO'#D}O#FlQ&jO'#D}O!&VQ&jO'#D}O#FvQWO1G/{O#F{Q`O1G/{OOQ!LS1G/{1G/{O)uQYO1G/{OHiQWO1G/{OOQ!LS1G0Y1G0YO9{QWO1G0YO!,QQpO1G0YO!,YQ#tO1G0YO#GSQ!LdO1G4}O)uQYO1G4}O#GdQ!LYO1G4}O#GuQWO1G4|O6tQWO,5>^OOQO,5>^,5>^O#G}QWO,5>^OOQO-E;p-E;pO#GuQWO1G4|O#H]Q!LdO,59gO#J[Q!LdO,5;|O#L^Q!LdO,5<OO#N`Q!LdO,5<^OOQ!LS7+%u7+%uO$!hQ!LdO7+%uO$#XQWO'#HmO$#cQWO,5?_OOQ!LS1G/n1G/nO$#kQYO'#HnO$#xQWO,5?`O$$QQbO,5?`OOQ!LS1G/s1G/sOOQ!LS7+&O7+&OO$$[Q7^O,5:YO)uQYO7+&aO$$fQ7^O,5:QOOQO1G1V1G1VOOQO1G1W1G1WO$$sQMhO,5;nOKjQYO,5;mOOQO-E;q-E;qOOQ!LS7+&o7+&oOOQO7+&x7+&xOOOO1G1a1G1aO$%OQWO1G1aOOQ!LS1G1c1G1cO$%TQ`O,5?UOOOS-E;g-E;gOOQ!LS1G/O1G/OO$%[Q!LdO7+'OOOQ!LS,5>c,5>cO$%{QWO,5>cOOQ!LS1G1w1G1wP$&QQWO'#HwPOQ!LS-E;u-E;uO$&qQ#tO1G2SO$'dQ#tO1G2UO$'nQ#tO1G2WOOQ!LS1G1p1G1pO$'uQWO'#HvO$(TQWO,5?nO$(TQWO,5?nO$(]QWO,5?nO$(hQWO,5?nOOQO1G1r1G1rO$(vQ#tO1G1qO$)WQWO'#HxO$)hQWO,5?oOHiQWO,5?oO$)pQ`O,5?oOOQ!LS1G1u1G1uO5]Q!LYO,5<`O5]Q!LYO,5<aO$)zQWO,5<aO#3gQWO,5<aO!,QQpO,5<`O$*PQWO,5<bO5]Q!LYO,5<cO$)zQWO,5<fOOQO-E;w-E;wOOQ!LS1G1y1G1yO!&VQ&jO,5<`O$*XQWO,5<aO!&VQ&jO,5<bO!&VQ&jO,5<aO$*dQ#tO1G4mO$*nQ#tO1G4mOOQO,5>f,5>fOOQO-E;x-E;xOKeQ&jO,59iO)uQYO,59iO$*{QWO1G1lOIxQWO1G1sO$+QQ!LdO7+'POOQ!LS7+'P7+'POFlQYO7+'POOQ!LS7+%W7+%WO$+qQ`O'#JUO#FvQWO7+'tO$+{QWO7+'tO$,TQ`O7+'tOOQQ7+'t7+'tOHiQWO7+'tO)uQYO7+'tOHiQWO7+'tOOQO1G.v1G.vO$,_Q!LbO'#CgO$,oQ!LbO,5<dO$-^QWO,5<dOOQ!LQ1G4i1G4iOOQQ7+$^7+$^O9{QWO7+$^O!,QQpO7+$^OFlQYO7+%uO$-cQWO'#IRO$-nQWO,5?vOOQO1G2v1G2vO5eQWO,5?vOOQO,5>n,5>nOOQO-E<Q-E<QOOQ!LS7+&i7+&iO$-vQWO7+(aO5]Q!LYO7+(aO5eQWO7+(aO$-{QWO7+(aO$.QQWO7+'tOOQ!LQ,5>h,5>hOOQ!LQ-E;z-E;zOOQQ7+(O7+(OO$.`Q!LbO7+'{OHiQWO7+'{O$.jQ`O7+'|OOQQ7+'|7+'|OHiQWO7+'|O$.qQWO'#JXO$.|QWO,5<zOOQO,5>j,5>jOOQO-E;|-E;|OOQQ7+(R7+(RO$/sQ&jO'#GiOOQQ1G2n1G2nOHiQWO1G2nO)uQYO1G2nOHiQWO1G2nO$/zQWO1G2nO$0YQ#tO1G2nO5]Q!LYO1G2qO#3lQWO1G2qO5RQWO1G2qO!,QQpO1G2qO!,YQ#tO1G2qO$0kQWO'#IQO$0vQWO,5?tO$1OQ&jO,5?tOOQ!LQ1G2r1G2rOOQQ7+$T7+$TO$1TQWO7+$TO5]Q!LYO7+$TO$1YQWO7+$TO)uQYO1G5cO)uQYO1G5dO$1_QYO1G2yO$1fQWO1G2yO$1kQYO1G2yO$1rQ!LYO1G5cOOQQ7+(c7+(cO5]Q!LYO7+(mO`QYO7+(oOOQQ'#J_'#J_OOQQ'#IT'#ITO$1|QYO,5=nOOQQ,5=n,5=nO)uQYO'#HTO$2ZQWO'#HVOOQQ7+(x7+(xO$2`QYO7+(xO6tQWO7+(xOOQQ7+(|7+(|OOQQ7+)Q7+)QOOQQ7+)S7+)SOOQO1G4x1G4xO$6ZQ7^O1G0`O$6eQWO1G0`OOQO1G/e1G/eO$6pQ7^O1G/eO9{QWO1G/eOKjQYO'#D_OOQO,5>W,5>WOOQO-E;j-E;jOOQO,5>],5>]OOQO-E;o-E;oO!,QQpO1G/eOOQO1G3v1G3vO9{QWO,5:eOOQO,5:i,5:iO)uQYO,5:iO$6zQ!LYO,5:iO$7VQ!LYO,5:iO!,QQpO,5:eOOQO-E;m-E;mOOQ!LS1G0O1G0OO!&VQ&jO,5:eO$7eQ!LrO,5:iO$8PQ&jO,5:eO!&VQ&jO,5:iO$8_Q&jO,5:iO$8sQ!LYO,5:iOOQ!LS7+%g7+%gO#FvQWO7+%gO#F{Q`O7+%gOOQ!LS7+%t7+%tO9{QWO7+%tO!,QQpO7+%tO$9XQ!LdO7+*iO)uQYO7+*iOOQO1G3x1G3xO6tQWO1G3xO$9iQWO7+*hO$9qQ!LdO1G2SO$;sQ!LdO1G2UO$=uQ!LdO1G1qO$?}Q#tO,5>XOOQO-E;k-E;kO$@XQbO,5>YO)uQYO,5>YOOQO-E;l-E;lO$@cQWO1G4zO$@kQ7^O1G0ZO$BrQ7^O1G0eO$ByQ7^O1G0eO$DzQ7^O1G0eO$ERQ7^O1G0eO$FvQ7^O1G0eO$GZQ7^O1G0eO$IhQ7^O1G0eO$IoQ7^O1G0eO$KpQ7^O1G0eO$KwQ7^O1G0eO$MlQ7^O1G0eO$NPQ!LdO<<I{O$NpQ7^O1G0eO%!`Q7^O'#IhO%$]Q7^O1G0xOKjQYO'#FUOOQO'#JQ'#JQOOQO1G1Y1G1YO%$jQWO1G1XO%$oQ7^O,5>aOOOO7+&{7+&{OOOS1G4p1G4pOOQ!LS1G3}1G3}OIxQWO7+'rO%$yQWO,5>bO5eQWO,5>bOOQO-E;t-E;tO%%XQWO1G5YO%%XQWO1G5YO%%aQWO1G5YO%%lQ`O,5>dO%%vQWO,5>dOHiQWO,5>dOOQO-E;v-E;vO%%{Q`O1G5ZO%&VQWO1G5ZOOQO1G1z1G1zOOQO1G1{1G1{O5]Q!LYO1G1{O$)zQWO1G1{O5]Q!LYO1G1zO%&_QWO1G1|OHiQWO1G1|OOQO1G1}1G1}O5]Q!LYO1G2QO!,QQpO1G1zO#3gQWO1G1{O%&dQWO1G1|O%&lQWO1G1{OIxQWO7+*XOOQ!LS1G/T1G/TO%&wQWO1G/TOOQ!LS7+'W7+'WO%&|Q#tO7+'_O%'^Q!LdO<<JkOOQ!LS<<Jk<<JkOHiQWO'#H{O%'}QWO,5?pOOQQ<<K`<<K`OHiQWO<<K`O#FvQWO<<K`O%(VQWO<<K`O%(_Q`O<<K`OHiQWO1G2OOOQQ<<Gx<<GxO9{QWO<<GxO%(iQ!LdO<<IaOOQ!LS<<Ia<<IaOOQO,5>m,5>mO%)YQWO,5>mOOQO-E<P-E<PO%)_QWO1G5bO%)gQWO<<K{OOQQ<<K{<<K{O%)lQWO<<K{O5]Q!LYO<<K{O)uQYO<<K`OHiQWO<<K`OOQQ<<Kg<<KgO$.`Q!LbO<<KgOOQQ<<Kh<<KhO$.jQ`O<<KhO%)qQ&jO'#H}O%)|QWO,5?sOKjQYO,5?sOOQQ1G2f1G2fO#EVQ!LrO'#D}O!&VQ&jO'#GjOOQO'#IP'#IPO%*UQ&jO,5=TOOQQ,5=T,5=TO#4WQ&jO'#D}O%*]Q&jO'#D}O%*qQ&jO'#D}O%*{Q&jO'#GjO%+ZQWO7+(YO%+`QWO7+(YO%+hQ`O7+(YOOQQ7+(Y7+(YOHiQWO7+(YO)uQYO7+(YOHiQWO7+(YO%+rQWO7+(YOOQQ7+(]7+(]O5]Q!LYO7+(]O#3lQWO7+(]O5RQWO7+(]O!,QQpO7+(]O%,QQWO,5>lOOQO-E<O-E<OOOQO'#Gm'#GmO%,]QWO1G5`O5]Q!LYO<<GoOOQQ<<Go<<GoO%,eQWO<<GoO%,jQWO7+*}O%,oQWO7++OOOQQ7+(e7+(eO%,tQWO7+(eO%,yQYO7+(eO%-QQWO7+(eO)uQYO7+*}O)uQYO7++OOOQQ<<LX<<LXOOQQ<<LZ<<LZOOQQ-E<R-E<ROOQQ1G3Y1G3YO%-VQWO,5=oOOQQ,5=q,5=qO9{QWO<<LdO%-[QWO<<LdOKjQYO7+%zOOQO7+%P7+%PO%-aQ7^O1G5QO9{QWO7+%POOQO1G0P1G0PO%-kQ!LdO1G0TOOQO1G0T1G0TO)uQYO1G0TO%-uQ!LYO1G0TO9{QWO1G0PO!,QQpO1G0PO%.QQ!LYO1G0TO!&VQ&jO1G0PO%.`Q!LYO1G0TO%.tQ!LrO1G0TO%/OQ&jO1G0PO!&VQ&jO1G0TOOQ!LS<<IR<<IROOQ!LS<<I`<<I`O9{QWO<<I`O%/^Q!LdO<<NTOOQO7+)d7+)dO%/nQ!LdO7+'_O%1vQbO1G3tO%2QQ7^O7+%uO%2_Q7^O,59gO%4[Q7^O,5;|O%6XQ7^O,5<OO%8UQ7^O,5<^O%9tQ7^O7+'OO%:RQ7^O7+'PO%:`QWO,5;pOOQO7+&s7+&sO%:eQ#tO<<K^OOQO1G3|1G3|O%:uQWO1G3|O%;QQWO1G3|O%;`QWO7+*tO%;`QWO7+*tOHiQWO1G4OO%;hQ`O1G4OO%;rQWO7+*uOOQO7+'g7+'gO5]Q!LYO7+'gOOQO7+'f7+'fO$)zQWO7+'hO%;zQ`O7+'hOOQO7+'l7+'lO5]Q!LYO7+'fO$)zQWO7+'gO%<RQWO7+'hOHiQWO7+'hO#3gQWO7+'gO%<WQ#tO<<MsOOQ!LS7+$o7+$oO%<bQ`O,5>gOOQO-E;y-E;yO#FvQWOAN@zOOQQAN@zAN@zOHiQWOAN@zO%<lQ!LbO7+'jOOQQAN=dAN=dO5eQWO1G4XO%<yQWO7+*|O5]Q!LYOANAgO%=RQWOANAgOOQQANAgANAgO%=WQWOAN@zO%=`Q`OAN@zOOQQANARANAROOQQANASANASO%=jQWO,5>iOOQO-E;{-E;{O%=uQ7^O1G5_O#3lQWO,5=UO5RQWO,5=UO!,QQpO,5=UOOQO-E;}-E;}OOQQ1G2o1G2oO$7eQ!LrO,5:iO!&VQ&jO,5=UO%>PQ&jO,5=UO%>_Q&jO,5:iOOQQ<<Kt<<KtOHiQWO<<KtO%+ZQWO<<KtO%>sQWO<<KtO%>{Q`O<<KtO)uQYO<<KtOHiQWO<<KtOOQQ<<Kw<<KwO5]Q!LYO<<KwO#3lQWO<<KwO5RQWO<<KwO%?VQ&jO1G4WO%?[QWO7+*zOOQQAN=ZAN=ZO5]Q!LYOAN=ZOOQQ<<Ni<<NiOOQQ<<Nj<<NjOOQQ<<LP<<LPO%?dQWO<<LPO%?iQYO<<LPO%?pQWO<<NiO%?uQWO<<NjOOQQ1G3Z1G3ZOOQQANBOANBOO9{QWOANBOO%?zQ7^O<<IfOOQO<<Hk<<HkOOQO7+%o7+%oO%-kQ!LdO7+%oO)uQYO7+%oOOQO7+%k7+%kO9{QWO7+%kO%@UQ!LYO7+%oO!,QQpO7+%kO%@aQ!LYO7+%oO!&VQ&jO7+%kO%@oQ!LYO7+%oOOQ!LSAN>zAN>zO%ATQ!LdO<<K^O%C]Q7^O<<I{O%CjQ7^O1G1qO%EYQ7^O1G2SO%GVQ7^O1G2UO%ISQ7^O<<JkO%IaQ7^O<<IaOOQO1G1[1G1[OOQO7+)h7+)hO%InQWO7+)hO%IyQWO<<N`O%JRQ`O7+)jOOQO<<KR<<KRO5]Q!LYO<<KSO$)zQWO<<KSOOQO<<KQ<<KQO5]Q!LYO<<KRO%J]Q`O<<KSO$)zQWO<<KROOQQG26fG26fO#FvQWOG26fOOQO7+)s7+)sOOQQG27RG27RO5]Q!LYOG27ROHiQWOG26fOKjQYO1G4TO%JdQWO7+*yO5]Q!LYO1G2pO#3lQWO1G2pO5RQWO1G2pO!,QQpO1G2pO!&VQ&jO1G2pO%.tQ!LrO1G0TO%JlQ&jO1G2pO%+ZQWOANA`OOQQANA`ANA`OHiQWOANA`O%JzQWOANA`O%KSQ`OANA`OOQQANAcANAcO5]Q!LYOANAcO#3lQWOANAcOOQO'#Gn'#GnOOQO7+)r7+)rOOQQG22uG22uOOQQANAkANAkO%K^QWOANAkOOQQANDTANDTOOQQANDUANDUO%KcQYOG27jOOQO<<IZ<<IZO%-kQ!LdO<<IZOOQO<<IV<<IVO)uQYO<<IZO9{QWO<<IVO& ^Q!LYO<<IZO!,QQpO<<IVO& iQ!LYO<<IZO& wQ7^O7+'_OOQO<<MS<<MSOOQOAN@nAN@nO5]Q!LYOAN@nOOQOAN@mAN@mO$)zQWOAN@nO5]Q!LYOAN@mOOQQLD,QLD,QOOQQLD,mLD,mO#FvQWOLD,QO&#gQ7^O7+)oOOQO7+([7+([O5]Q!LYO7+([O#3lQWO7+([O5RQWO7+([O!,QQpO7+([O!&VQ&jO7+([OOQQG26zG26zO%+ZQWOG26zOHiQWOG26zOOQQG26}G26}O5]Q!LYOG26}OOQQG27VG27VO9{QWOLD-UOOQOAN>uAN>uO%-kQ!LdOAN>uOOQOAN>qAN>qO)uQYOAN>uO9{QWOAN>qO&#qQ!LYOAN>uO&#|Q7^O<<K^OOQOG26YG26YO5]Q!LYOG26YOOQOG26XG26XOOQQ!$( l!$( lOOQO<<Kv<<KvO5]Q!LYO<<KvO#3lQWO<<KvO5RQWO<<KvO!,QQpO<<KvOOQQLD,fLD,fO%+ZQWOLD,fOOQQLD,iLD,iOOQQ!$(!p!$(!pOOQOG24aG24aO%-kQ!LdOG24aOOQOG24]G24]O)uQYOG24aOOQOLD+tLD+tOOQOANAbANAbO5]Q!LYOANAbO#3lQWOANAbO5RQWOANAbOOQQ!$(!Q!$(!QOOQOLD){LD){O%-kQ!LdOLD){OOQOG26|G26|O5]Q!LYOG26|O#3lQWOG26|OOQO!$'Mg!$'MgOOQOLD,hLD,hO5]Q!LYOLD,hOOQO!$(!S!$(!SOKjQYO'#DnO&%lQbO'#ImOKjQYO'#DfO&%sQ!LdO'#CgO&&^QbO'#CgO&&nQYO,5:oOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO,5:yOKjQYO'#HuO&(kQWO,5;{O&)}QWO,5:yOKjQYO,5;^O!'oQWO'#C{O!'oQWO'#C{OHiQWO'#FbO&(sQWO'#FbOHiQWO'#FdO&(sQWO'#FdOHiQWO'#FrO&(sQWO'#FrOKjQYO,5?fO&&nQYO1G0ZO&*UQ7^O'#CgOKjQYO1G1dOHiQWO,5<hO&(sQWO,5<hOHiQWO,5<jO&(sQWO,5<jOHiQWO,5<VO&(sQWO,5<VO&&nQYO1G1eOKjQYO7+&aOHiQWO1G1sO&(sQWO1G1sO&&nQYO7+'PO&&nQYO7+%uOHiQWO7+'rO&(sQWO7+'rO&*`QWO'#ETO&*eQWO'#ETO&*mQWO'#ErO&*rQWO'#IzO&*}QWO'#IxO&+YQWO,5:oO&+_Q#tO,5;xO&+fQWO'#FkO&+kQWO'#FkO&+pQWO,5;yO&+xQWO,5:oO&,QQ7^O1G0uO&,XQWO,5<XO&,^QWO,5<XO&,cQWO1G1eO&,hQWO1G0ZO&,mQ#tO1G2WO&,tQ#tO1G2WO3tQWO'#F`O5RQWO'#F_OB`QWO'#ESOKjQYO,5;ZO!(OQWO'#FmO!(OQWO'#FmOIxQWO,5<lOIxQWO,5<l",
-  stateData: "&-p~O'POS'QOSSOSTOS~OPTOQTOWwO]bO^gOamOblOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!PSO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!jkO#[qO#lnO#p]O$woO$yrO${pO$|pO%PsO%RtO%UuO%VuO%XvO%fxO%lyO%nzO%p{O%r|O%u}O%{!OO&P!PO&R!QO&T!RO&V!SO&X!TO'SPO']QO'u`O~OPZXYZX^ZXiZXrZXsZXuZX}ZX!]ZX!^ZX!`ZX!fZX!uZX#PcX#SZX#TZX#UZX#VZX#WZX#XZX#YZX#ZZX#]ZX#_ZX#aZX#bZX#gZX&}ZX']ZX'iZX'pZX'qZX~O!X$dX~P$wO&z!VO&{!UO&|!XO~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#l!iO#p]O'S!YO']QO'u`O~O|!^O}!ZOz'dPz'mP~P'aO!O!jO~P`OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#l!iO#p]O'S8lO']QO'u`O~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#l!iO#p]O']QO'u`O~O|!oO!}!rO#O!oO'S8mO!_'jP~P+rO#P!sO~O!X!tO#P!sO~OP#ZOY#aOi#OOr!xOs!xOu!yO}#_O!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO#_#TO#a#VO#b#WO']QO'i#XO'p!zO'q!{O~O^'aX&}'aX!_'aXz'aX!P'aX$x'aX!X'aX~P.^O!u#bO#g#bOP'bXY'bX^'bXi'bXr'bXs'bXu'bX}'bX!]'bX!^'bX!`'bX!f'bX#S'bX#T'bX#U'bX#V'bX#W'bX#X'bX#Z'bX#]'bX#_'bX#a'bX#b'bX']'bX'i'bX'p'bX'q'bX~O#Y'bX&}'bXz'bX!_'bX'_'bX!P'bX$x'bX!X'bX~P0nO!u#bO~O#r#cO#y#gO~O!P#hO#p]O#|#iO$O#kO~O]#nOg#{Oi#oOj#nOk#nOn#|Op#}Ou#uO!P#vO!Z$SO!`#sO#O$TO#l$QO$V$OO$X$PO$[$RO'S#mO']#pO'W'YP~O!`$UO~O!X$WO~O^$XO&}$XO~O'S$]O~O!`$UO'S$]O'T$_O'X$`O~Ob$fO!`$UO'S$]O~O]$oOr$kO!P$hO!`$jO$y$nO'S$]O'T$_O['}P~O!j$pO~Ou$qO!P$rO'S$]O~Ou$qO!P$rO%R$vO'S$]O~O'S$wO~O#[qO$yrO${pO$|pO%PsO%RtO%UuO%VuO~Oa%QOb%PO!j$}O$w%OO%Z$|O~P7dOa%TOblO!P%SO!jkO#[qO$woO${pO$|pO%PsO%RtO%UuO%VuO%XvO~O_%WO!u%ZO$y%UO'T$_O~P8cO!`%[O!c%`O~O!`%aO~O!PSO~O^$XO&y%iO&}$XO~O^$XO&y%lO&}$XO~O^$XO&y%nO&}$XO~O&z!VO&{!UO&|%rO~OPZXYZXiZXrZXsZXuZX}ZX}cX!]ZX!^ZX!`ZX!fZX!uZX!ucX#PcX#SZX#TZX#UZX#VZX#WZX#XZX#YZX#ZZX#]ZX#_ZX#aZX#bZX#gZX']ZX'iZX'pZX'qZX~OzZXzcX~P;OO|%tOz&_X}&_X~P)uO}!ZOz'dX~OP#ZOY#aOi#OOr!xOs!xOu!yO}!ZO!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO#_#TO#a#VO#b#WO']QO'i#XO'p!zO'q!{O~Oz'dX~P=uOz%yO~Ou%|O!S&WO!T&PO!U&PO'T$_O~O]%}Oj%}O|&QO'`%zO!O'eP!O'oP~P?xOz'lX}'lX!X'lX!_'lX'i'lX~O!u'lX#P!xX!O'lX~P@qO!u&XOz'nX}'nX~O}&YOz'mX~Oz&[O~O!u#bO~P@qOR&`O!P&]O!k&_O'S$]O~Ob&eO!`$UO'S$]O~Or$kO!`$jO~O!O&fO~P`Or!xOs!xOu!yO!^!vO!`!wO']QOP!baY!bai!ba}!ba!]!ba!f!ba#S!ba#T!ba#U!ba#V!ba#W!ba#X!ba#Y!ba#Z!ba#]!ba#_!ba#a!ba#b!ba'i!ba'p!ba'q!ba~O^!ba&}!baz!ba!_!ba'_!ba!P!ba$x!ba!X!ba~PBzO!_&gO~O!X!tO!u&iO'i&hO}'kX^'kX&}'kX~O!_'kX~PEdO}&mO!_'jX~O!_&oO~Ou$qO!P$rO#O&pO'S$]O~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!PSO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#l!iO#p]O'S8lO']QO'u`O~O]#nOg#{Oi#oOj#nOk#nOn#|Op9OOu#uO!P#vO!Z:QO!`#sO#O9UO#l$QO$V9QO$X9SO$[$RO'S&tO']#pO~O#P&vO~O]#nOg#{Oi#oOj#nOk#nOn#|Op#}Ou#uO!P#vO!Z$SO!`#sO#O$TO#l$QO$V$OO$X$PO$[$RO'S&tO']#pO~O'W'gP~PIxO|&zO!_'hP~P)uO'`&|O~OP8iOQ8iO]bOa:OOb!gOgbOi8iOjbOkbOn8iOp8iOuROwbOxbOybO!P!`O!Z8kO!`UO!c8iO!d8iO!e8iO!f8iO!g8iO!j!fO#l!iO#p]O'S'[O']QO'u9|O~O!`!wO~O}#_O^$Ta&}$Ta!_$Taz$Ta!P$Ta$x$Ta!X$Ta~O#['cO~PHiO!X'eO!P'rX#o'rX#r'rX#y'rX~Or'fO~PN_Or'fO!P'rX#o'rX#r'rX#y'rX~O!P'hO#o'lO#r'gO#y'mO~O|'pO~PKjO#r#cO#y'sO~Or$]Xu$]X!^$]X'i$]X'p$]X'q$]X~OReX}eX!ueX'WeX'W$]X~P! wOj'uO~O&z'wO&{'vO&|'yO~Or'{Ou'|O'i#XO'p(OO'q(QO~O'W'zO~P!#QO'W(TO~O]#nOg#{Oi#oOj#nOk#nOn#|Op9OOu#uO!P#vO!Z:QO!`#sO#O9UO#l$QO$V9QO$X9SO$[$RO']#pO~O|(XO'S(UO!_'vP~P!#oO#P(ZO~O|(_O'S([Oz'wP~P!#oO^(hOi(mOu(eO!S(kO!T(dO!U(dO!`(bO!r(lO$o(gO'T$_O'`(aO~O!O(jO~P!%gO!^!vOr'[Xu'[X'i'[X'p'[X'q'[X}'[X!u'[X~O'W'[X#e'[X~P!&cOR(pO!u(oO}'ZX'W'ZX~O}(qO'W'YX~O'S(sO~O!`(xO~O'S&tO~O!`(bO~Ou$qO|!oO!P$rO!}!rO#O!oO'S$]O!_'jP~O!X!tO#P(|O~OP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO#_#TO#a#VO#b#WO']QO'i#XO'p!zO'q!{O~O^!Ya}!Ya&}!Yaz!Ya!_!Ya'_!Ya!P!Ya$x!Ya!X!Ya~P!(tOR)UO!P&]O!k)TO$x)SO'X$`O~O'S$wO'W'YP~O!X)XO!P'VX^'VX&}'VX~O!`$UO'X$`O~O!`$UO'S$]O'X$`O~O!X!tO#P&vO~O'S)aO!O(OP~O})eO['}X~OY)iO~O[)jO~O!P$hO'S$]O'T$_O['}P~Ou$qO|)oO!P$rO'S$]Oz'mP~O]&TOj&TO|)pO'`&|O!O'oP~O})qO^'zX&}'zX~O!u)uO'X$`O~OR)xO!P#vO'X$`O~O!P)zO~Or)|O!PSO~O!j*RO~Ob*WO~O'S(sO!O'|P~Ob$fO~O$yrO'S$wO~P8cOY*^O[*]O~OPTOQTO]bOamOblOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!jkO#p]O$woO']QO'u`O~O!P!`O#l!iO'S8lO~P!0RO[*]O^$XO&}$XO~O^*bO#[*dO${*dO$|*dO~P)uO!`%[O~O%l*iO~O!P*kO~O%|*nO%}*mOP%zaQ%zaW%za]%za^%zaa%zab%zag%zai%zaj%zak%zan%zap%zau%zaw%zax%zay%za!P%za!Z%za!`%za!c%za!d%za!e%za!f%za!g%za!j%za#[%za#l%za#p%za$w%za$y%za${%za$|%za%P%za%R%za%U%za%V%za%X%za%f%za%l%za%n%za%p%za%r%za%u%za%{%za&P%za&R%za&T%za&V%za&X%za&x%za'S%za']%za'u%za!O%za%s%za_%za%x%za~O'S*qO~O'_*tO~Oz&_a}&_a~P!(tO}!ZOz'da~Oz'da~P=uO}&YOz'ma~O}tX}!VX!OtX!O!VX!XtX!X!VX!`!VX!utX'X!VX~O!X*{O!u*zO}!|X}'fX!O!|X!O'fX!X'fX!`'fX'X'fX~O!X*}O!`$UO'X$`O}!RX!O!RX~O]%{Oj%{Ou%|O'`(aO~OP8iOQ8iO]bOa:OOb!gOgbOi8iOjbOkbOn8iOp8iOuROwbOxbOybO!P!`O!Z8kO!`UO!c8iO!d8iO!e8iO!f8iO!g8iO!j!fO#l!iO#p]O']QO'u9|O~O'S9YO~P!9yO}+RO!O'eX~O!O+TO~O!X*{O!u*zO}!|X!O!|X~O}+UO!O'oX~O!O+WO~O]%{Oj%{Ou%|O'T$_O'`(aO~O!T+XO!U+XO~P!<tOu$qO|+[O!P$rO'S$]Oz&dX}&dX~O^+`O!S+cO!T+_O!U+_O!n+eO!o+dO!p+dO!r+fO'T$_O'`(aO~O!O+bO~P!=uOR+kO!P&]O!k+jO~O!u+qO}'ka!_'ka^'ka&}'ka~O!X!tO~P!>yO}&mO!_'ja~Ou$qO|+tO!P$rO!}+vO#O+tO'S$]O}&fX!_&fX~O^!wi}!wi&}!wiz!wi!_!wi'_!wi!P!wi$x!wi!X!wi~P!(tO#P!ta}!ta!_!ta!u!ta!P!ta^!ta&}!taz!ta~P!#QO#P'[XP'[XY'[X^'[Xi'[Xs'[X!]'[X!`'[X!f'[X#S'[X#T'[X#U'[X#V'[X#W'[X#X'[X#Y'[X#Z'[X#]'[X#_'[X#a'[X#b'[X&}'[X']'[X!_'[Xz'[X!P'[X'_'[X$x'[X!X'[X~P!&cO},PO'W'gX~P!#QO'W,RO~O},SO!_'hX~P!(tO!_,VO~Oz,WO~OP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO']QOY#Ri^#Rii#Ri}#Ri!]#Ri#T#Ri#U#Ri#V#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri&}#Ri'i#Ri'p#Ri'q#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~O#S#Ri~P!DWO#S!|O~P!DWOP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O']QOY#Ri^#Ri}#Ri!]#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri&}#Ri'i#Ri'p#Ri'q#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~Oi#Ri~P!FrOi#OO~P!FrOP#ZOi#OOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO']QO^#Ri}#Ri#]#Ri#_#Ri#a#Ri#b#Ri&}#Ri'i#Ri'p#Ri'q#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~OY#Ri!]#Ri#X#Ri#Y#Ri#Z#Ri~P!I^OY#aO!]#QO#X#QO#Y#QO#Z#QO~P!I^OP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO']QO^#Ri}#Ri#_#Ri#a#Ri#b#Ri&}#Ri'i#Ri'q#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~O'p#Ri~P!LUO'p!zO~P!LUOP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO#_#TO']QO'p!zO^#Ri}#Ri#a#Ri#b#Ri&}#Ri'i#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~O'q#Ri~P!NpO'q!{O~P!NpOP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#S!|O#T!}O#U!}O#V!}O#W#PO#X#QO#Y#QO#Z#QO#]#RO#_#TO#a#VO']QO'p!zO'q!{O~O^#Ri}#Ri#b#Ri&}#Ri'i#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~P##[OPZXYZXiZXrZXsZXuZX!]ZX!^ZX!`ZX!fZX!uZX#PcX#SZX#TZX#UZX#VZX#WZX#XZX#YZX#ZZX#]ZX#_ZX#aZX#bZX#gZX']ZX'iZX'pZX'qZX}ZX!OZX~O#eZX~P#%oOP#ZOY8|Oi8qOr!xOs!xOu!yO!]8sO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO#W8rO#X8sO#Y8sO#Z8sO#]8tO#_8vO#a8xO#b8yO']QO'i#XO'p!zO'q!{O~O#e,YO~P#'yOP'bXY'bXi'bXr'bXs'bXu'bX!]'bX!^'bX!`'bX!f'bX#S'bX#T'bX#U'bX#V'bX#W'bX#X'bX#Z'bX#]'bX#_'bX#a'bX#b'bX']'bX'i'bX'p'bX'q'bX}'bX~O!u8}O#g8}O#Y'bX#e'bX!O'bX~P#)tO^&ia}&ia&}&ia!_&ia'_&iaz&ia!P&ia$x&ia!X&ia~P!(tOP#RiY#Ri^#Rii#Ris#Ri}#Ri!]#Ri!^#Ri!`#Ri!f#Ri#S#Ri#T#Ri#U#Ri#V#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri&}#Ri']#Riz#Ri!_#Ri'_#Ri!P#Ri$x#Ri!X#Ri~P!#QO^#fi}#fi&}#fiz#fi!_#fi'_#fi!P#fi$x#fi!X#fi~P!(tO#r,[O~O#r,]O~O!X'eO!u,^O!P#vX#o#vX#r#vX#y#vX~O|,_O~O!P'hO#o,aO#r'gO#y,bO~O}8zO!O'aX~P#'yO!O,cO~O#y,eO~O&z'wO&{'vO&|,hO~O],kOj,kOz,lO~O}cX!XcX!_cX!_$]X'icX~P! wO!_,rO~P!#QO},sO!X!tO'i&hO!_'vX~O!_,xO~Oz$]X}$]X!X$dX~P! wO},zOz'wX~P!#QO!X,|O~Oz-OO~O|(XO'S$]O!_'vP~Oi-SO!X!tO!`$UO'X$`O'i&hO~O!X)XO~O!O-YO~P!%gO!T-ZO!U-ZO'T$_O'`(aO~Ou-]O'`(aO~O!r-^O~O'S$wO}&nX'W&nX~O}(qO'W'Ya~Or-cOs-cOu-dO'ioa'poa'qoa}oa!uoa~O'Woa#eoa~P#4xOr'{Ou'|O'i$Ua'p$Ua'q$Ua}$Ua!u$Ua~O'W$Ua#e$Ua~P#5nOr'{Ou'|O'i$Wa'p$Wa'q$Wa}$Wa!u$Wa~O'W$Wa#e$Wa~P#6aO]-eO~O#P-fO~O'W$fa}$fa#e$fa!u$fa~P!#QO#P-iO~OR-rO!P&]O!k-qO$x-pO~O'W-sO~O]#nOi#oOj#nOk#nOn#|Op9OOu#uO!P#vO!Z:QO!`#sO#O9UO#l$QO$V9QO$X9SO$[$RO']#pO~Og-uO'S-tO~P#8WO!X)XO!P'Va^'Va&}'Va~O#P-{O~OYZX}cX!OcX~O}-|O!O(OX~O!O.OO~OY.PO~O!P$hO'S$]O[&vX}&vX~O})eO['}a~O!_.SO~P!(tO].UO~OY.VO~O[.WO~OR-rO!P&]O!k-qO$x-pO'X$`O~O})qO^'za&}'za~O!u.^O~OR.aO!P#vO~O'`&|O!O'{P~OR.kO!P.gO!k.jO$x.iO'X$`O~OY.uO}.sO!O'|X~O!O.vO~O[.xO^$XO&}$XO~O].yO~O#Y.{O%j.|O~P0nO!u#bO#Y.{O%j.|O~O^.}O~P)uO^/PO~O%s/TOP%qiQ%qiW%qi]%qi^%qia%qib%qig%qii%qij%qik%qin%qip%qiu%qiw%qix%qiy%qi!P%qi!Z%qi!`%qi!c%qi!d%qi!e%qi!f%qi!g%qi!j%qi#[%qi#l%qi#p%qi$w%qi$y%qi${%qi$|%qi%P%qi%R%qi%U%qi%V%qi%X%qi%f%qi%l%qi%n%qi%p%qi%r%qi%u%qi%{%qi&P%qi&R%qi&T%qi&V%qi&X%qi&x%qi'S%qi']%qi'u%qi!O%qi_%qi%x%qi~O_/ZO!O/XO%x/YO~P`O!PSO!`/^O~O}#_O'_$Ta~Oz&_i}&_i~P!(tO}!ZOz'di~O}&YOz'mi~Oz/bO~O}!Ra!O!Ra~P#'yO]%{Oj%{O|/hO'`(aO}&`X!O&`X~P?xO}+RO!O'ea~O]&TOj&TO|)pO'`&|O}&eX!O&eX~O}+UO!O'oa~Oz'ni}'ni~P!(tO^$XO!X!tO!`$UO!f/sO!u/qO&}$XO'X$`O'i&hO~O!O/vO~P!=uO!T/wO!U/wO'T$_O'`(aO~O!S/yO!T/wO!U/wO!r/zO'T$_O'`(aO~O!o/{O!p/{O~P#FWO!P&]O~O!P&]O~P!#QO}'ki!_'ki^'ki&}'ki~P!(tO!u0UO}'ki!_'ki^'ki&}'ki~O}&mO!_'ji~Ou$qO!P$rO#O0WO'S$]O~O#PoaPoaYoa^oaioa!]oa!^oa!`oa!foa#Soa#Toa#Uoa#Voa#Woa#Xoa#Yoa#Zoa#]oa#_oa#aoa#boa&}oa']oa!_oazoa!Poa'_oa$xoa!Xoa~P#4xO#P$UaP$UaY$Ua^$Uai$Uas$Ua!]$Ua!^$Ua!`$Ua!f$Ua#S$Ua#T$Ua#U$Ua#V$Ua#W$Ua#X$Ua#Y$Ua#Z$Ua#]$Ua#_$Ua#a$Ua#b$Ua&}$Ua']$Ua!_$Uaz$Ua!P$Ua'_$Ua$x$Ua!X$Ua~P#5nO#P$WaP$WaY$Wa^$Wai$Was$Wa!]$Wa!^$Wa!`$Wa!f$Wa#S$Wa#T$Wa#U$Wa#V$Wa#W$Wa#X$Wa#Y$Wa#Z$Wa#]$Wa#_$Wa#a$Wa#b$Wa&}$Wa']$Wa!_$Waz$Wa!P$Wa'_$Wa$x$Wa!X$Wa~P#6aO#P$faP$faY$fa^$fai$fas$fa}$fa!]$fa!^$fa!`$fa!f$fa#S$fa#T$fa#U$fa#V$fa#W$fa#X$fa#Y$fa#Z$fa#]$fa#_$fa#a$fa#b$fa&}$fa']$fa!_$faz$fa!P$fa!u$fa'_$fa$x$fa!X$fa~P!#QO^!wq}!wq&}!wqz!wq!_!wq'_!wq!P!wq$x!wq!X!wq~P!(tO}&aX'W&aX~PIxO},PO'W'ga~O|0`O}&bX!_&bX~P)uO},SO!_'ha~O},SO!_'ha~P!(tO#e!ba!O!ba~PBzO#e!Ya}!Ya!O!Ya~P#'yO!P0sO#p]O#w0tO~O!O0xO~O'_0yO~P!#QO^$Qq}$Qq&}$Qqz$Qq!_$Qq'_$Qq!P$Qq$x$Qq!X$Qq~P!(tOz0zO~O],kOj,kO~Or'{Ou'|O'q(QO'i$pi'p$pi}$pi!u$pi~O'W$pi#e$pi~P$&YOr'{Ou'|O'i$ri'p$ri'q$ri}$ri!u$ri~O'W$ri#e$ri~P$&{O#e0{O~P!#QO|0}O'S$]O}&jX!_&jX~O},sO!_'va~O},sO!X!tO!_'va~O},sO!X!tO'i&hO!_'va~O'W$_i}$_i#e$_i!u$_i~P!#QO|1UO'S([Oz&lX}&lX~P!#oO},zOz'wa~O},zOz'wa~P!#QO!X!tO~O!X!tO#Y1`O~Oi1dO!X!tO'i&hO~O}'Zi'W'Zi~P!#QO!u1gO}'Zi'W'Zi~P!#QO!_1jO~O^$Rq}$Rq&}$Rqz$Rq!_$Rq'_$Rq!P$Rq$x$Rq!X$Rq~P!(tO}1nO!P'xX~P!#QO!P&]O$x1qO~O!P&]O$x1qO~P!#QO!P$]X$mZX^$]X&}$]X~P! wO$m1uOrfXufX!PfX'ifX'pfX'qfX^fX&}fX~O$m1uO~O'S)aO}&uX!O&uX~O}-|O!O(Oa~O[2OO~O]2RO~OR2TO!P&]O!k2SO$x1qO~O^$XO&}$XO~P!#QO!P#vO~P!#QO}2YO!u2[O!O'{X~O!O2]O~Ou(eO!S2fO!T2_O!U2_O!n2eO!o2dO!p2dO!r2cO'T$_O'`(aO~O!O2bO~P$/ROR2mO!P.gO!k2lO$x2kO~OR2mO!P.gO!k2lO$x2kO'X$`O~O'S(sO}&tX!O&tX~O}.sO!O'|a~O'`2vO~O]2xO~O[2zO~O!_2}O~P)uO^3PO~O^3PO~P)uO#Y3RO%j3SO~PEdO_/ZO!O3WO%x/YO~P`O!X3YO~O%}3ZOP%zqQ%zqW%zq]%zq^%zqa%zqb%zqg%zqi%zqj%zqk%zqn%zqp%zqu%zqw%zqx%zqy%zq!P%zq!Z%zq!`%zq!c%zq!d%zq!e%zq!f%zq!g%zq!j%zq#[%zq#l%zq#p%zq$w%zq$y%zq${%zq$|%zq%P%zq%R%zq%U%zq%V%zq%X%zq%f%zq%l%zq%n%zq%p%zq%r%zq%u%zq%{%zq&P%zq&R%zq&T%zq&V%zq&X%zq&x%zq'S%zq']%zq'u%zq!O%zq%s%zq_%zq%x%zq~O}!|i!O!|i~P#'yO!u3]O}!|i!O!|i~O}!Ri!O!Ri~P#'yO^$XO!u3dO&}$XO~O^$XO!X!tO!u3dO&}$XO~O^$XO!X!tO!`$UO!f3hO!u3dO&}$XO'X$`O'i&hO~O!T3iO!U3iO'T$_O'`(aO~O!S3lO!T3iO!U3iO!r3mO'T$_O'`(aO~O^$XO!X!tO!f3hO!u3dO&}$XO'i&hO~O}'kq!_'kq^'kq&}'kq~P!(tO}&mO!_'jq~O#P$piP$piY$pi^$pii$pis$pi!]$pi!^$pi!`$pi!f$pi#S$pi#T$pi#U$pi#V$pi#W$pi#X$pi#Y$pi#Z$pi#]$pi#_$pi#a$pi#b$pi&}$pi']$pi!_$piz$pi!P$pi'_$pi$x$pi!X$pi~P$&YO#P$riP$riY$ri^$rii$ris$ri!]$ri!^$ri!`$ri!f$ri#S$ri#T$ri#U$ri#V$ri#W$ri#X$ri#Y$ri#Z$ri#]$ri#_$ri#a$ri#b$ri&}$ri']$ri!_$riz$ri!P$ri'_$ri$x$ri!X$ri~P$&{O#P$_iP$_iY$_i^$_ii$_is$_i}$_i!]$_i!^$_i!`$_i!f$_i#S$_i#T$_i#U$_i#V$_i#W$_i#X$_i#Y$_i#Z$_i#]$_i#_$_i#a$_i#b$_i&}$_i']$_i!_$_iz$_i!P$_i!u$_i'_$_i$x$_i!X$_i~P!#QO}&aa'W&aa~P!#QO}&ba!_&ba~P!(tO},SO!_'hi~O#e!wi}!wi!O!wi~P#'yOP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO']QOY#Rii#Ri!]#Ri#T#Ri#U#Ri#V#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri#e#Ri'i#Ri'p#Ri'q#Ri}#Ri!O#Ri~O#S#Ri~P$@xO#S8oO~P$@xOP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO']QOY#Ri!]#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri#e#Ri'i#Ri'p#Ri'q#Ri}#Ri!O#Ri~Oi#Ri~P$CQOi8qO~P$CQOP#ZOi8qOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO#W8rO']QO#]#Ri#_#Ri#a#Ri#b#Ri#e#Ri'i#Ri'p#Ri'q#Ri}#Ri!O#Ri~OY#Ri!]#Ri#X#Ri#Y#Ri#Z#Ri~P$EYOY8|O!]8sO#X8sO#Y8sO#Z8sO~P$EYOP#ZOY8|Oi8qOr!xOs!xOu!yO!]8sO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO#W8rO#X8sO#Y8sO#Z8sO#]8tO']QO#_#Ri#a#Ri#b#Ri#e#Ri'i#Ri'q#Ri}#Ri!O#Ri~O'p#Ri~P$GnO'p!zO~P$GnOP#ZOY8|Oi8qOr!xOs!xOu!yO!]8sO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO#W8rO#X8sO#Y8sO#Z8sO#]8tO#_8vO']QO'p!zO#a#Ri#b#Ri#e#Ri'i#Ri}#Ri!O#Ri~O'q#Ri~P$IvO'q!{O~P$IvOP#ZOY8|Oi8qOr!xOs!xOu!yO!]8sO!^!vO!`!wO!f#ZO#S8oO#T8pO#U8pO#V8pO#W8rO#X8sO#Y8sO#Z8sO#]8tO#_8vO#a8xO']QO'p!zO'q!{O~O#b#Ri#e#Ri'i#Ri}#Ri!O#Ri~P$LOO^#cy}#cy&}#cyz#cy!_#cy'_#cy!P#cy$x#cy!X#cy~P!(tOP#RiY#Rii#Ris#Ri!]#Ri!^#Ri!`#Ri!f#Ri#S#Ri#T#Ri#U#Ri#V#Ri#W#Ri#X#Ri#Y#Ri#Z#Ri#]#Ri#_#Ri#a#Ri#b#Ri#e#Ri']#Ri}#Ri!O#Ri~P!#QO!^!vOP'[XY'[Xi'[Xr'[Xs'[Xu'[X!]'[X!`'[X!f'[X#S'[X#T'[X#U'[X#V'[X#W'[X#X'[X#Y'[X#Z'[X#]'[X#_'[X#a'[X#b'[X#e'[X']'[X'i'[X'p'[X'q'[X}'[X!O'[X~O#e#fi}#fi!O#fi~P#'yO!O3}O~O}&ia!O&ia~P#'yO!X!tO'i&hO}&ja!_&ja~O},sO!_'vi~O},sO!X!tO!_'vi~Oz&la}&la~P!#QO!X4UO~O},zOz'wi~P!#QO},zOz'wi~Oz4[O~O!X!tO#Y4bO~Oi4cO!X!tO'i&hO~Oz4eO~O'W$aq}$aq#e$aq!u$aq~P!#QO^$Ry}$Ry&}$Ryz$Ry!_$Ry'_$Ry!P$Ry$x$Ry!X$Ry~P!(tO}1nO!P'xa~O!P&]O$x4jO~O!P&]O$x4jO~P!#QO^!wy}!wy&}!wyz!wy!_!wy'_!wy!P!wy$x!wy!X!wy~P!(tOY4mO~O}-|O!O(Oi~O]4oO~O[4pO~O'`&|O}&qX!O&qX~O}2YO!O'{a~O!O4}O~P$/RO!S5QO!T5PO!U5PO!r/zO'T$_O'`(aO~O!o5RO!p5RO~P%*]O!T5PO!U5PO'T$_O'`(aO~O!P.gO~O!P.gO$x5TO~O!P.gO$x5TO~P!#QOR5YO!P.gO!k5XO$x5TO~OY5_O}&ta!O&ta~O}.sO!O'|i~O]5bO~O!_5cO~O!_5dO~O!_5eO~O!_5eO~P)uO^5gO~O!X5jO~O!_5lO~O}'ni!O'ni~P#'yO^$XO&}$XO~P!(tO^$XO!u5qO&}$XO~O^$XO!X!tO!u5qO&}$XO~O^$XO!X!tO!f5vO!u5qO&}$XO'i&hO~O!`$UO'X$`O~P%.`O!T5wO!U5wO'T$_O'`(aO~O}'ky!_'ky^'ky&}'ky~P!(tO#P$aqP$aqY$aq^$aqi$aqs$aq}$aq!]$aq!^$aq!`$aq!f$aq#S$aq#T$aq#U$aq#V$aq#W$aq#X$aq#Y$aq#Z$aq#]$aq#_$aq#a$aq#b$aq&}$aq']$aq!_$aqz$aq!P$aq!u$aq'_$aq$x$aq!X$aq~P!#QO}&bi!_&bi~P!(tO#e!wq}!wq!O!wq~P#'yOr-cOs-cOu-dOPoaYoaioa!]oa!^oa!`oa!foa#Soa#Toa#Uoa#Voa#Woa#Xoa#Yoa#Zoa#]oa#_oa#aoa#boa#eoa']oa'ioa'poa'qoa}oa!Ooa~Or'{Ou'|OP$UaY$Uai$Uas$Ua!]$Ua!^$Ua!`$Ua!f$Ua#S$Ua#T$Ua#U$Ua#V$Ua#W$Ua#X$Ua#Y$Ua#Z$Ua#]$Ua#_$Ua#a$Ua#b$Ua#e$Ua']$Ua'i$Ua'p$Ua'q$Ua}$Ua!O$Ua~Or'{Ou'|OP$WaY$Wai$Was$Wa!]$Wa!^$Wa!`$Wa!f$Wa#S$Wa#T$Wa#U$Wa#V$Wa#W$Wa#X$Wa#Y$Wa#Z$Wa#]$Wa#_$Wa#a$Wa#b$Wa#e$Wa']$Wa'i$Wa'p$Wa'q$Wa}$Wa!O$Wa~OP$faY$fai$fas$fa!]$fa!^$fa!`$fa!f$fa#S$fa#T$fa#U$fa#V$fa#W$fa#X$fa#Y$fa#Z$fa#]$fa#_$fa#a$fa#b$fa#e$fa']$fa}$fa!O$fa~P!#QO#e$Qq}$Qq!O$Qq~P#'yO#e$Rq}$Rq!O$Rq~P#'yO!O6RO~O'W$ty}$ty#e$ty!u$ty~P!#QO!X!tO}&ji!_&ji~O!X!tO'i&hO}&ji!_&ji~O},sO!_'vq~Oz&li}&li~P!#QO},zOz'wq~Oz6YO~P!#QOz6YO~O}'Zy'W'Zy~P!#QO}&oa!P&oa~P!#QO!P$lq^$lq&}$lq~P!#QO}-|O!O(Oq~O]6cO~O!P&]O$x6dO~O!P&]O$x6dO~P!#QO!u6eO}&qa!O&qa~O}2YO!O'{i~P#'yO!T6kO!U6kO'T$_O'`(aO~O!S6mO!T6kO!U6kO!r3mO'T$_O'`(aO~O!P.gO$x6pO~O!P.gO$x6pO~P!#QO'`6vO~O}.sO!O'|q~O!_6yO~O!_6yO~P)uO!_6{O~O!_6|O~O}!|y!O!|y~P#'yO^$XO!u7RO&}$XO~O^$XO!X!tO!u7RO&}$XO~O^$XO!X!tO!f7VO!u7RO&}$XO'i&hO~O#P$tyP$tyY$ty^$tyi$tys$ty}$ty!]$ty!^$ty!`$ty!f$ty#S$ty#T$ty#U$ty#V$ty#W$ty#X$ty#Y$ty#Z$ty#]$ty#_$ty#a$ty#b$ty&}$ty']$ty!_$tyz$ty!P$ty!u$ty'_$ty$x$ty!X$ty~P!#QO#e#cy}#cy!O#cy~P#'yOP$_iY$_ii$_is$_i!]$_i!^$_i!`$_i!f$_i#S$_i#T$_i#U$_i#V$_i#W$_i#X$_i#Y$_i#Z$_i#]$_i#_$_i#a$_i#b$_i#e$_i']$_i}$_i!O$_i~P!#QOr'{Ou'|O'q(QOP$piY$pii$pis$pi!]$pi!^$pi!`$pi!f$pi#S$pi#T$pi#U$pi#V$pi#W$pi#X$pi#Y$pi#Z$pi#]$pi#_$pi#a$pi#b$pi#e$pi']$pi'i$pi'p$pi}$pi!O$pi~Or'{Ou'|OP$riY$rii$ris$ri!]$ri!^$ri!`$ri!f$ri#S$ri#T$ri#U$ri#V$ri#W$ri#X$ri#Y$ri#Z$ri#]$ri#_$ri#a$ri#b$ri#e$ri']$ri'i$ri'p$ri'q$ri}$ri!O$ri~O#e$Ry}$Ry!O$Ry~P#'yO#e!wy}!wy!O!wy~P#'yO!X!tO}&jq!_&jq~O},sO!_'vy~Oz&lq}&lq~P!#QOz7]O~P!#QO}2YO!O'{q~O!T7hO!U7hO'T$_O'`(aO~O!P.gO$x7kO~O!P.gO$x7kO~P!#QO!_7nO~O%}7oOP%z!ZQ%z!ZW%z!Z]%z!Z^%z!Za%z!Zb%z!Zg%z!Zi%z!Zj%z!Zk%z!Zn%z!Zp%z!Zu%z!Zw%z!Zx%z!Zy%z!Z!P%z!Z!Z%z!Z!`%z!Z!c%z!Z!d%z!Z!e%z!Z!f%z!Z!g%z!Z!j%z!Z#[%z!Z#l%z!Z#p%z!Z$w%z!Z$y%z!Z${%z!Z$|%z!Z%P%z!Z%R%z!Z%U%z!Z%V%z!Z%X%z!Z%f%z!Z%l%z!Z%n%z!Z%p%z!Z%r%z!Z%u%z!Z%{%z!Z&P%z!Z&R%z!Z&T%z!Z&V%z!Z&X%z!Z&x%z!Z'S%z!Z']%z!Z'u%z!Z!O%z!Z%s%z!Z_%z!Z%x%z!Z~O^$XO!u7sO&}$XO~O^$XO!X!tO!u7sO&}$XO~OP$aqY$aqi$aqs$aq!]$aq!^$aq!`$aq!f$aq#S$aq#T$aq#U$aq#V$aq#W$aq#X$aq#Y$aq#Z$aq#]$aq#_$aq#a$aq#b$aq#e$aq']$aq}$aq!O$aq~P!#QO}&qq!O&qq~P#'yO^$XO!u8XO&}$XO~OP$tyY$tyi$tys$ty!]$ty!^$ty!`$ty!f$ty#S$ty#T$ty#U$ty#V$ty#W$ty#X$ty#Y$ty#Z$ty#]$ty#_$ty#a$ty#b$ty#e$ty']$ty}$ty!O$ty~P!#QO'_'aX~P.^O'_ZXzZX!_ZX%jZX!PZX$xZX!XZX~P$wO!XcX!_ZX!_cX'icX~P;OOP8iOQ8iO]bOa:OOb!gOgbOi8iOjbOkbOn8iOp8iOuROwbOxbOybO!PSO!Z8kO!`UO!c8iO!d8iO!e8iO!f8iO!g8iO!j!fO#l!iO#p]O'S'[O']QO'u9|O~O}8zO!O$Ta~O]#nOg#{Oi#oOj#nOk#nOn#|Op9POu#uO!P#vO!Z:RO!`#sO#O9VO#l$QO$V9RO$X9TO$[$RO'S&tO']#pO~O#['cO~P&(sO!OZX!OcX~P;OO#P8nO~O!X!tO#P8nO~O!u8}O~O!u9WO}'nX!O'nX~O!u8}O}'lX!O'lX~O#P9XO~O'W9ZO~P!#QO#P9`O~O#P9aO~O!X!tO#P9bO~O!X!tO#P9XO~O#e9cO~P#'yO#P9dO~O#P9eO~O#P9fO~O#P9gO~O#e9hO~P!#QO#e9iO~P!#QO#p~!^!n!p!}#O'u$V$X$[$m$w$x$y%P%R%U%V%X%Z~TS#p'u#Ty'P'Q#r'P'S'`~",
-  goto: "#=a(SPPPPPPP(TP(eP*QPPPP-aPP-v2z4m5QP5QPPP5Q5QP5QP6nPP6sP7[PPPP;kPPPP;k>ZPPP>a@dP;kPBwPPPPDo;kPPPPPFh;kPPIgJdPPPJhPJpKqP;k;kNx!#q!(a!(a!+nPPP!+u;kPPPPPPPPPP!.iP!/zPP;k!1XP;kP;k;k;k;kP;k!3lPP!6cP!9U!9^!9b!9bP!6`P!9f!9fP!<XP!<];k;k!<c!?T5QP5QP5Q5QP!@W5Q5Q!A{5Q5Q5Q!C}5Q5Q!Dk!Fe!Fe!Fi!Fe!FqP!FeP5Q!Gm5Q!Hw5Q5Q-aPPP!JUPP!Jn!JnP!JnP!KT!JnPP!KZP!KQP!KQ!KmJl!KQ!L[!Lb!Le(T!Lh(TP!Lo!Lo!LoP(TP(TP(TP(TPP(TP!Lu!LxP!Lx(TPPP(TP(TP(TP(TP(TP(T(T!L|!MW!M^!Md!Mr!Mx!NO!NY!N`!Nj!Np# O# U# [# j#!P##c##q##w##}#$T#$Z#$e#$k#$q#${#%V#%]PPPPPPPPP#%cPP#&V#*TPP#+h#+o#+wP#0TPP#0X#2l#8f#8j#8m#8p#8{#9OP#9R#9V#9t#:i#:m#;PPP#;T#;Z#;_P#;b#;f#;i#<X#<o#<t#<w#<z#=Q#=T#=X#=]mgOSi{!k$W%_%b%c%e*f*k/T/WQ$elQ$lnQ%VwS&P!`+RQ&d!gS(d#v(iQ)_$fQ)k$nQ*V%PQ+X&WS+_&]+aQ+o&eQ-Z(kQ.r*WU/w+c+d+eS2_.g2aS3i/y/{U5P2d2e2fQ5w3lS6k5Q5RR7h6m$lZORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8X!j'^#Y#h&Q'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PQ(t#}Q)d$hQ*X%SQ*`%[Q+y9OQ-v)XQ.z*^Q1{-|Q2t.sR3v9PpdOSiw{!k$W%U%_%b%c%e*f*k/T/WR*Z%W&WVOSTijm{!Q!U!Z!h!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:O:PW!aRU!^&QQ$^kQ$dlS$in$nv$spq!o!r$U$q&Y&m&p)o)p)q*d*{+[+t+v/^0WQ${uQ&a!fQ&c!gS(W#s(bS)^$e$fQ)b$hQ)n$pQ*Q$}Q*U%PS+n&d&eQ,w(XQ-z)_Q.Q)eQ.T)iQ.m*RS.q*V*WQ0S+oQ0|,sQ1z-|Q1}.PQ2Q.VQ2s.rQ4R0}R6a4m!W$bl!g$d$e$f&O&c&d&e(c)^)_+O+^+n+o-T-z/m/t/x0S1c3g3k5u7UQ)V$^Q)v$xQ)y$yQ*T%PQ.X)nQ.l*QU.p*U*V*WQ2n.mS2r.q.rQ4z2^Q5^2sS6i4{5OS7f6j6lQ8O7gR8^8PW#y`$`(q9|S$xr%UQ$ysQ$ztR)t$v$V#x`!t!v#a#s#u$O$P$T&`'v(P(R(S(Z(_(o(p)S)U)X)u)x+k,P,z,|-f-p-r.^.a.i.k0{1U1`1g1n1q1u2T2k2m4U4b4j5T5Y6d6p7k8|9Q9R9S9T9U9V9[9]9^9_9`9a9d9e9h9i9|:S:TV(u#}9O9PU&T!`$r+UQ&}!xQ)h$kQ,j'{Q.b)zQ1h-cR4v2Y&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:P$]#^Y!]!l$[%s%w&r&y'P'Q'R'S'T'U'V'W'X'Y'Z']'`'d'n)g*v+P+Y+p,O,U,X,Z,i-g/c/f0T0_0c0d0e0f0g0h0i0j0k0l0m0n0o0r0w1l1x3_3b3q3t3u3z3{4x5m5p5{6P6Q7P7b7q8V8a8j9u&ZbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PQ&R!`R/i+RY%{!`&P&W+R+XS(c#v(iS+^&]+aS-T(d(kQ-U(eQ-[(lQ.d)|S/t+_+cS/x+d+eS/|+f2cQ1c-ZQ1e-]Q1f-^S2^.g2aS3g/w/yQ3j/zQ3k/{S4{2_2fS5O2d2eS5u3i3lQ5x3mS6j5P5QQ6l5RQ7U5wS7g6k6mR8P7hlgOSi{!k$W%_%b%c%e*f*k/T/WQ%g!OS&q!s8nQ)[$cQ*O${Q*P$|Q+l&bS+}&v9XS-h(|9bQ-x)]Q.f)}Q/[*mQ/]*nQ/e*|Q0Q+mS1m-i9fQ1v-yS1y-{9gQ3^/gQ3a/oQ3o0RQ4l1wQ5k3ZQ5n3`Q5r3fQ5y3pQ6}5lQ7Q5sQ7r7SQ8T7oR8W7t$W#]Y!]!l%s%w&r&y'P'Q'R'S'T'U'V'W'X'Y'Z']'`'d'n)g*v+P+Y+p,O,U,X,i-g/c/f0T0_0c0d0e0f0g0h0i0j0k0l0m0n0o0r0w1l1x3_3b3q3t3u3z3{4x5m5p5{6P6Q7P7b7q8V8a8j9uU(n#w&u0qT)Q$[,Z$W#[Y!]!l%s%w&r&y'P'Q'R'S'T'U'V'W'X'Y'Z']'`'d'n)g*v+P+Y+p,O,U,X,i-g/c/f0T0_0c0d0e0f0g0h0i0j0k0l0m0n0o0r0w1l1x3_3b3q3t3u3z3{4x5m5p5{6P6Q7P7b7q8V8a8j9uQ'_#]S)P$[,ZR-j)Q&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PQ%byQ%czQ%e|Q%f}R/S*iQ&^!fQ)R$^Q+i&aS-o)V)nS/}+g+hW1p-l-m-n.XS3n0O0PU4i1r1s1tU6_4h4r4sQ7_6`R7z7aT+`&]+aS+`&]+aT2`.g2aS&k!n/QQ,v(WQ-R(cS/s+^2^Q1R,wS1]-S-[U3h/x/|5OQ4Q0|S4`1d1fU5v3j3k6lQ6T4RQ6^4cR7V5xQ!uXS&j!n/QQ(}$VQ)Y$aQ)`$gQ+r&kQ,u(WQ-Q(cQ-V(fQ-w)ZQ.n*SS/r+^2^S1Q,v,wS1[-R-[Q1_-UQ1b-WQ2p.oW3e/s/x/|5OQ4P0|Q4T1RS4Y1]1fQ4a1eQ5[2qW5t3h3j3k6lS6S4Q4RQ6X4[Q6[4`Q6g4yQ6t5]S7T5v5xQ7X6TQ7Z6YQ7^6^Q7d6hQ7m6uQ7u7VQ7x7]Q7|7eQ8[7}Q8c8]Q8g8dQ9o9kQ9x9sR9y9t$nWORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8XS!um!h!j9j#Y#h&Q'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PR9o:O$nXORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8XQ$Va!W$al!g$d$e$f&O&c&d&e(c)^)_+O+^+n+o-T-z/m/t/x0S1c3g3k5u7US$gm!hQ)Z$bQ*S%PW.o*T*U*V*WU2q.p.q.rQ4y2^S5]2r2sU6h4z4{5OQ6u5^U7e6i6j6lS7}7f7gS8]8O8PQ8d8^!j9k#Y#h&Q'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PQ9s9}R9t:O$f[OSTij{!Q!U!Z!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8XU!eRU!^v$spq!o!r$U$q&Y&m&p)o)p)q*d*{+[+t+v/^0WQ*a%[!h9l#Y#h'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PR9n&QS&U!`$rR/k+U$lZORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8X!j'^#Y#h&Q'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PR*`%[!h#SY!]$[%s%w&r&y'W'X'Y'Z'`'d)g*v+Y+p,O,U,i-g0T0_0o1l1x3b3q3t5p7P7q8V8a8j!R8u']'n+P,Z/c/f0c0k0l0m0n0r0w3_3u3z3{4x5m5{6P6Q7b9u!d#UY!]$[%s%w&r&y'Y'Z'`'d)g*v+Y+p,O,U,i-g0T0_0o1l1x3b3q3t5p7P7q8V8a8j}8w']'n+P,Z/c/f0c0m0n0r0w3_3u3z3{4x5m5{6P6Q7b9u!`#YY!]$[%s%w&r&y'`'d)g*v+Y+p,O,U,i-g0T0_0o1l1x3b3q3t5p7P7q8V8a8jl(S#q&w({,q,y-_-`0]1k4O4d9p9z9{x:P']'n+P,Z/c/f0c0r0w3_3u3z3{4x5m5{6P6Q7b9u!`:S&s'b(V(]+h+|,f,}-k-n.]._0P0[1S1W1t2V2X2i3s4V4]4f4k4s5W5z6V6]6rZ:T0p3y5|7W7v&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PS#i_#jR0t,^&a^ORSTU_ij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h#j$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,^,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PS#d]#kT'g#f'kT#e]#kT'i#f'k&a_ORSTU_ij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h#j$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'p'z(|)T*b*f*k*z*}+j+q,S,Y,^,_-d-i-q-{.j.{.|.}/P/T/W/Y/h/q0U0`0s2S2[2l3P3R3S3]3d5X5g5q6e7R7s8X8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:PT#i_#jQ#l_R'r#j$naORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'z(|)T*b*f*k+j+q,S,Y-d-i-q-{.j.{.|.}/P/T/W/Y/q0U0`2S2l3P3R3S3d5X5g5q7R7s8X!k9}#Y#h&Q'p*z*},_/h0s2[3]6e8i8k8n8o8p8q8r8s8t8u8v8w8x8y8z8}9W9X9Z9b9c9f9g:P#RcOSUi{!Q!U!k!y#h$W%W%Z%[%_%a%b%c%e%i%|&_'p)T*b*f*k+j,_-d-q.j.{.|.}/P/T/W/Y0s2S2l3P3R3S5X5gt#w`!v$O$P$T(P(R(S(Z(o(p,P-f0{1g9|:S:T!|&u!t#a#s#u&`'v(_)S)U)X)u)x+k,z,|-p-r.^.a.i.k1U1`1n1q1u2T2k2m4U4b4j5T5Y6d6p7k9Q9S9U9[9^9`9d9hQ(y$Rc0q8|9R9T9V9]9_9a9e9it#t`!v$O$P$T(P(R(S(Z(o(p,P-f0{1g9|:S:TS(f#v(iQ(z$SQ-W(g!|9q!t#a#s#u&`'v(_)S)U)X)u)x+k,z,|-p-r.^.a.i.k1U1`1n1q1u2T2k2m4U4b4j5T5Y6d6p7k9Q9S9U9[9^9`9d9hb9r8|9R9T9V9]9_9a9e9iQ9v:QR9w:RleOSi{!k$W%_%b%c%e*f*k/T/WQ(^#uQ*r%lQ*s%nR1T,z$U#x`!t!v#a#s#u$O$P$T&`'v(P(R(S(Z(_(o(p)S)U)X)u)x+k,P,z,|-f-p-r.^.a.i.k0{1U1`1g1n1q1u2T2k2m4U4b4j5T5Y6d6p7k8|9Q9R9S9T9U9V9[9]9^9_9`9a9d9e9h9i9|:S:TQ)w$yQ.`)yQ2W._R4u2XT(h#v(iS(h#v(iT2`.g2aQ)Y$aQ-V(fQ-w)ZQ.n*SQ2p.oQ5[2qQ6g4yQ6t5]Q7d6hQ7m6uQ7|7eQ8[7}Q8c8]R8g8dl(P#q&w({,q,y-_-`0]1k4O4d9p9z9{!`9[&s'b(V(]+h+|,f,}-k-n.]._0P0[1S1W1t2V2X2i3s4V4]4f4k4s5W5z6V6]6rZ9]0p3y5|7W7vn(R#q&w({,o,q,y-_-`0]1k4O4d9p9z9{!b9^&s'b(V(]+h+|,f,}-k-n.]._0P0Y0[1S1W1t2V2X2i3s4V4]4f4k4s5W5z6V6]6r]9_0p3y5|5}7W7vpdOSiw{!k$W%U%_%b%c%e*f*k/T/WQ%RvR*b%[pdOSiw{!k$W%U%_%b%c%e*f*k/T/WR%RvQ){$zR.[)tqdOSiw{!k$W%U%_%b%c%e*f*k/T/WQ.h*QS2j.l.mW5S2g2h2i2nU6o5U5V5WU7i6n6q6rQ8Q7jR8_8RQ%YwR*[%UR2w.uR6w5_S$in$nR.Q)eQ%_xR*f%`R*l%fT/U*k/WQiOQ!kST$Zi!kQ'x#pR,g'xQ!WQR%q!WQ![RU%u![%v*wQ%v!]R*w%wQ+S&RR/j+SQ,Q&wR0^,QQ,T&yS0a,T0bR0b,UQ+a&]R/u+aQ&Z!cQ*x%xT+]&Z*xQ+V&UR/l+VQ&n!pQ+s&lU+w&n+s0XR0X+xQ'k#fR,`'kQ#j_R'q#jQ#`YU'a#`*u8{Q*u8jR8{'nQ,t(WW1O,t1P4S6UU1P,u,v,wS4S1Q1RR6U4T#q'}#q&s&w'b(V(](v(w({+h+z+{+|,f,o,p,q,y,}-_-`-k-n.]._0P0Y0Z0[0]0p1S1W1k1t2V2X2i3s3w3x3y4O4V4]4d4f4k4s5W5z5|5}6O6V6]6r7W7v9p9z9{Q,{(]U1V,{1X4WQ1X,}R4W1WQ(i#vR-X(iQ(r#zR-b(rQ1o-kR4g1oQ)r$tR.Z)rQ2Z.bS4w2Z6fR6f4xQ)}${R.e)}Q2a.gR4|2aQ.t*XS2u.t5`R5`2wQ-})bS1|-}4nR4n1}Q)f$iR.R)fQ/W*kR3V/WWhOSi!kQ%d{Q)O$WQ*e%_Q*g%bQ*h%cQ*j%eQ/R*fS/U*k/WR3U/TQ$YfQ%h!PQ%k!RQ%m!SQ%o!TQ)m$oQ)s$uQ*Z%YQ*p%jS.w*[*_Q/_*oQ/`*rQ/a*sS/p+^2^Q1Y-PQ1Z-QQ1a-VQ2P.UQ2U.]Q2o.nQ2y.yQ3T/SY3c/r/s/x/|5OQ4X1[Q4Z1^Q4^1bQ4q2RQ4t2VQ5Z2pQ5a2x[5o3b3e3h3j3k6lQ6W4YQ6Z4_Q6b4oQ6s5[Q6x5bW7O5p5t5v5xQ7Y6XQ7[6[Q7`6cQ7c6gQ7l6tU7p7P7T7VQ7w7ZQ7y7^Q7{7dQ8S7mS8U7q7uQ8Y7xQ8Z7|Q8`8VQ8b8[Q8e8aQ8f8cR8h8gQ$clQ&b!gU)]$d$e$fQ*|&OU+m&c&d&eQ-P(cS-y)^)_Q/g+OQ/o+^S0R+n+oQ1^-TQ1w-zQ3`/mS3f/t/xQ3p0SQ4_1cS5s3g3kQ7S5uR7t7US#r`9|R)W$`U#z`$`9|R-a(qQ#q`S&s!t)XQ&w!vQ'b#aQ(V#sQ(]#uQ(v$OQ(w$PQ({$TQ+h&`Q+z9QQ+{9SQ+|9UQ,f'vQ,o(PQ,p(RQ,q(SQ,y(ZQ,}(_Q-_(oQ-`(pd-k)S-p.i1q2k4j5T6d6p7kQ-n)UQ.])uQ._)xQ0P+kQ0Y9[Q0Z9^Q0[9`Q0],PQ0p8|Q1S,zQ1W,|Q1k-fQ1t-rQ2V.^Q2X.aQ2i.kQ3s9dQ3w9RQ3x9TQ3y9VQ4O0{Q4V1UQ4]1`Q4d1gQ4f1nQ4k1uQ4s2TQ5W2mQ5z9hQ5|9aQ5}9]Q6O9_Q6V4UQ6]4bQ6r5YQ7W9eQ7v9iQ9p9|Q9z:SR9{:TT'w#p'xlfOSi{!k$W%_%b%c%e*f*k/T/WS!mU%aQ%j!QQ%p!UQ'O!yQ'o#hS*_%W%ZQ*c%[Q*o%iQ*y%|Q+g&_Q,d'pQ-m)TQ/O*bQ0O+jQ0v,_Q1i-dQ1s-qQ2h.jQ2{.{Q2|.|Q3O.}Q3Q/PQ3X/YQ3|0sQ4r2SQ5V2lQ5f3PQ5h3RQ5i3SQ6q5XR6z5g!vYOSUi{!Q!k!y$W%W%Z%[%_%a%b%c%e%i%|&_)T*b*f*k+j-d-q.j.{.|.}/P/T/W/Y2S2l3P3R3S5X5gQ!]RQ!lTQ$[jQ%s!ZQ%w!^Q&r!sQ&y!wQ'P!|Q'Q!}Q'R#OQ'S#PQ'T#QQ'U#RQ'V#SQ'W#TQ'X#UQ'Y#VQ'Z#WQ']#YQ'`#_Q'd#bW'n#h'p,_0sQ)g$jQ*v%tS+P&Q/hQ+Y&XQ+p&iQ,O&vQ,U&zQ,X8iQ,Z8kQ,i'zQ-g(|Q/c*zQ/f*}Q0T+qQ0_,SQ0c8nQ0d8oQ0e8pQ0f8qQ0g8rQ0h8sQ0i8tQ0j8uQ0k8vQ0l8wQ0m8xQ0n8yQ0o,YQ0r8}Q0w8zQ1l-iQ1x-{Q3_9WQ3b/qQ3q0UQ3t0`Q3u9XQ3z9ZQ3{9bQ4x2[Q5m3]Q5p3dQ5{9cQ6P9fQ6Q9gQ7P5qQ7b6eQ7q7RQ8V7sQ8a8XQ8j!UR9u:PT!VQ!WR!_RR&S!`S&O!`+RS+O&P&WR/m+XR&x!vR&{!wT!qU$US!pU$UU$tpq*dS&l!o!rQ+u&mQ+x&pQ.Y)qS0V+t+vR3r0W[!bR!^$q&Y)o+[h!nUpq!o!r$U&m&p)q+t+v0WQ/Q*dQ/d*{Q3[/^T9m&Q)pT!dR$qS!cR$qS%x!^)oS+Q&Q)pQ+Z&YR/n+[T&V!`$rQ#f]R't#kT'j#f'kR0u,^T(Y#s(bR(`#uQ-l)SQ1r-pQ2g.iQ4h1qQ5U2kQ6`4jQ6n5TQ7a6dQ7j6pR8R7klgOSi{!k$W%_%b%c%e*f*k/T/WQ%XwR*Z%UV$upq*dR.c)zR*Y%SQ$mnR)l$nR)c$hT%]x%`T%^x%`T/V*k/W",
-  nodeNames: "⚠ ArithOp ArithOp extends LineComment BlockComment Script ExportDeclaration export Star as VariableName from String ; default FunctionDeclaration async function VariableDefinition TypeParamList TypeDefinition ThisType this LiteralType ArithOp Number BooleanLiteral TemplateType VoidType void TypeofType typeof MemberExpression . ?. PropertyName [ TemplateString null super RegExp ] ArrayExpression Spread , } { ObjectExpression Property async get set PropertyNameDefinition Block : NewExpression new TypeArgList CompareOp < ) ( ArgList UnaryExpression await yield delete LogicOp BitOp ParenthesizedExpression ClassExpression class extends ClassBody MethodDeclaration Privacy static abstract PropertyDeclaration readonly Optional TypeAnnotation Equals FunctionExpression ArrowFunction ParamList ParamList ArrayPattern ObjectPattern PatternProperty Privacy readonly Arrow MemberExpression BinaryExpression ArithOp ArithOp ArithOp ArithOp BitOp CompareOp in instanceof const CompareOp BitOp BitOp BitOp LogicOp LogicOp ConditionalExpression LogicOp LogicOp AssignmentExpression UpdateOp PostfixExpression CallExpression TaggedTemplatExpression DynamicImport import ImportMeta JSXElement JSXSelfCloseEndTag JSXStartTag JSXSelfClosingTag JSXIdentifier JSXNamespacedName JSXMemberExpression JSXSpreadAttribute JSXAttribute JSXAttributeValue JSXEscape JSXEndTag JSXOpenTag JSXFragmentTag JSXText JSXEscape JSXStartCloseTag JSXCloseTag PrefixCast ArrowFunction TypeParamList SequenceExpression KeyofType keyof UniqueType unique ImportType InferredType infer TypeName ParenthesizedType FunctionSignature ParamList NewSignature IndexedType TupleType Label ArrayType ReadonlyType ObjectType MethodType PropertyType IndexSignature CallSignature TypePredicate is NewSignature new UnionType LogicOp IntersectionType LogicOp ConditionalType ParameterizedType ClassDeclaration abstract implements type VariableDeclaration let var TypeAliasDeclaration InterfaceDeclaration interface EnumDeclaration enum EnumBody NamespaceDeclaration namespace module AmbientDeclaration declare GlobalDeclaration global ClassDeclaration ClassBody MethodDeclaration AmbientFunctionDeclaration ExportGroup VariableName VariableName ImportDeclaration ImportGroup ForStatement for ForSpec ForInSpec ForOfSpec of WhileStatement while WithStatement with DoStatement do IfStatement if else SwitchStatement switch SwitchBody CaseLabel case DefaultLabel TryStatement try catch finally ReturnStatement return ThrowStatement throw BreakStatement break ContinueStatement continue DebuggerStatement debugger LabeledStatement ExpressionStatement",
-  maxTerm: 325,
+  states: "$0nO`QYOOO&}Q!LdO'#CgO'UOSO'#DSO)^QYO'#DXO)nQYO'#DdO)uQYO'#DnO-lQYO'#DtOOQO'#EW'#EWO.PQWO'#EVO.UQWO'#EVO0TQ!LdO'#IpO2kQ!LdO'#IqO3XQWO'#EuO3^QpO'#F[OOQ!LS'#E}'#E}O3fO!bO'#E}O3tQWO'#FcO5RQWO'#FbOOQ!LS'#Iq'#IqOOQ!LQ'#Ip'#IpOOQQ'#JZ'#JZO5WQWO'#HiO5]Q!LYO'#HjOOQQ'#Ib'#IbOOQQ'#Hk'#HkQ`QYOOO)uQYO'#DfO5eQWO'#GVO5jQ#tO'#ClO5xQWO'#EUO6TQ#tO'#E|O6oQWO'#GVO6tQWO'#GZO7PQWO'#GZO7_QWO'#G^O7_QWO'#G_O7_QWO'#GaO5eQWO'#GdO8OQWO'#GgO9^QWO'#CcO9nQWO'#GtO9vQWO'#GzO9vQWO'#G|O`QYO'#HOO9vQWO'#HQO9vQWO'#HTO9{QWO'#HZO:QQ!LZO'#H_O)uQYO'#HaO:]Q!LZO'#HcO:hQ!LZO'#HeO5]Q!LYO'#HgO)uQYO'#IrOOOS'#Hm'#HmO:sOSO,59nOOQ!LS,59n,59nO=UQbO'#CgO=`QYO'#HnO=mQWO'#IsO?lQbO'#IsO'aQYO'#IsO?sQWO,59sO@ZQ&jO'#D^OASQWO'#EWOAaQWO'#JOOAlQWO'#I}OAtQWO,5:tOAyQWO'#I|OBQQWO'#DuO5jQ#tO'#EUOB`QWO'#EUOBkQ`O'#E|OOQ!LS,5:O,5:OOBsQYO,5:OODqQ!LdO,5:YOE_QWO,5:`OExQ!LYO'#I{O6tQWO'#IzOFPQWO'#IzOFXQWO,5:sOF^QWO'#IzOFlQYO,5:qOHiQWO'#ESOIsQWO,5:qOKSQWO'#DhOKZQYO'#DmOKeQ&jO,5:zO)uQYO,5:zOOQQ'#Em'#EmOOQQ'#Eo'#EoO)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|O)uQYO,5:|OOQQ'#Es'#EsOKmQYO,5;^OOQ!LS,5;c,5;cOOQ!LS,5;d,5;dOMjQWO,5;dOOQ!LS,5;e,5;eO)uQYO'#HxOMoQ!LYO,5<OONZQWO,5:|O)uQYO,5;aONsQpO'#JSONbQpO'#JSONzQpO'#JSO! ]QpO,5;lOOOO,5;v,5;vO! kQYO'#F^OOOO'#Hw'#HwO3fO!bO,5;iO! rQpO'#F`OOQ!LS,5;i,5;iO!!`Q,UO'#CqOOQ!LS'#Ct'#CtO!!sQWO'#CtO!!xOSO'#CxO!#fQ#tO,5;{O!#mQWO,5;}O!$yQWO'#FmO!%WQWO'#FnO!%]QWO'#FrO!&_Q&jO'#FvO!'QQ,UO'#IkOOQ!LS'#Ik'#IkO!'[QWO'#IjO!'jQWO'#IiOOQ!LS'#Cr'#CrOOQ!LS'#Cy'#CyO!'rQWO'#C{OIxQWO'#FeOIxQWO'#FgO!'wQWO'#FiO!'|QWO'#FjO!(RQWO'#FpOIxQWO'#FuO!(WQWO'#EXO!(oQWO,5;|O`QYO,5>TOOQQ'#Ie'#IeOOQQ,5>U,5>UOOQQ-E;i-E;iO!*kQ!LdO,5:QOOQ!LQ'#Co'#CoO!+[Q#tO,5<qOOQO'#Ce'#CeO!+mQWO'#CpO!+uQ!LYO'#IfO5RQWO'#IfO9{QWO,59WO!,TQpO,59WO!,]Q#tO,59WO5jQ#tO,59WO!,hQWO,5:qO!,pQWO'#GsO!,{QWO'#J_O)uQYO,5;fO!-TQ&jO,5;hO!-YQWO,5=^O!-_QWO,5=^O!-dQWO,5=^O5]Q!LYO,5=^O5eQWO,5<qO!-rQWO'#EYO!.TQ&jO'#EZOOQ!LQ'#I|'#I|O!.fQ!LYO'#J[O5]Q!LYO,5<uO7_QWO,5<{OOQO'#Cq'#CqO!.qQpO,5<xO!.yQ#tO,5<yO!/UQWO,5<{O!/ZQ`O,5=OO9{QWO'#GiO5eQWO'#GkO!/cQWO'#GkO5jQ#tO'#GnO!/hQWO'#GnOOQQ,5=R,5=RO!/mQWO'#GoO!/uQWO'#ClO!/zQWO,58}O!0UQWO,58}O!2TQYO,58}OOQQ,58},58}O!2bQ!LYO,58}O)uQYO,58}O!2mQYO'#GvOOQQ'#Gw'#GwOOQQ'#Gx'#GxO`QYO,5=`O!2}QWO,5=`O)uQYO'#DtO`QYO,5=fO`QYO,5=hO!3SQWO,5=jO`QYO,5=lO!3XQWO,5=oO!3^QYO,5=uOOQQ,5=y,5=yO)uQYO,5=yO5]Q!LYO,5={OOQQ,5=},5=}O!7[QWO,5=}OOQQ,5>P,5>PO!7[QWO,5>POOQQ,5>R,5>RO!7aQ`O,5?^OOOS-E;k-E;kOOQ!LS1G/Y1G/YO!7fQbO,5>YO)uQYO,5>YOOQO-E;l-E;lO!7pQWO,5?_O!7xQbO,5?_O!8PQWO,5?iOOQ!LS1G/_1G/_O!8XQpO'#DQOOQO'#Iu'#IuO)uQYO'#IuO!8vQpO'#IuO!9eQpO'#D_O!9vQ&jO'#D_O!<OQYO'#D_O!<VQWO'#ItO!<_QWO,59xO!<dQWO'#E[O!<rQWO'#JPO!<zQWO,5:uO!=bQ&jO'#D_O)uQYO,5?jO!=lQWO'#HsO!8PQWO,5?iOOQ!LQ1G0`1G0`O!>xQ&jO'#DxOOQ!LS,5:a,5:aO)uQYO,5:aOHiQWO,5:aO!?PQWO,5:aO9{QWO,5:pO!,TQpO,5:pO!,]Q#tO,5:pO5jQ#tO,5:pOOQ!LS1G/j1G/jOOQ!LS1G/z1G/zOOQ!LQ'#ER'#ERO)uQYO,5?gO!?[Q!LYO,5?gO!?mQ!LYO,5?gO!?tQWO,5?fO!?|QWO'#HuO!?tQWO,5?fOOQ!LQ1G0_1G0_O6tQWO,5?fOOQ!LS1G0]1G0]O!@hQ!LdO1G0]O!AXQ!LbO,5:nOOQ!LS'#Fl'#FlO!AuQ!LdO'#IkOFlQYO1G0]O!CtQ#tO'#IvO!DOQWO,5:SO!DTQbO'#IwO)uQYO'#IwO!D_QWO,5:XOOQ!LS'#DQ'#DQOOQ!LS'#Ea'#EaOOQ!LS1G0f1G0fO!DdQWO1G0fO!FuQ!LdO1G0hO!F|Q!LdO1G0hO!IaQ!LdO1G0hO!IhQ!LdO1G0hO!KoQ!LdO1G0hO!LSQ!LdO1G0hO!NsQ!LdO1G0hO!NzQ!LdO1G0hO##_Q!LdO1G0hO##fQ!LdO1G0hO#%ZQ!LdO1G0hO#(TQ7^O'#CgO#*OQ7^O1G0xO#+yQ7^O'#IqOOQ!LS1G1O1G1OO#,^Q!LdO,5>dOOQ!LQ-E;v-E;vO#,}Q!LdO1G0hOOQ!LS1G0h1G0hO#/PQ!LdO1G0{O#/pQpO,5;nO#/uQpO,5;oO#/zQpO'#FVO#0`QWO'#FUOOQO'#JT'#JTOOQO'#Hv'#HvO#0eQpO1G1WOOQ!LS1G1W1G1WOOOO1G1a1G1aO#0sQ7^O'#IpO#0}QWO,5;xOKmQYO,5;xOOOO-E;u-E;uOOQ!LS1G1T1G1TOOQ!LS,5;z,5;zO#1SQpO,5;zOOQ!LS,59`,59`OHiQWO'#ImOOOS'#Hl'#HlO#1XOSO,59dOOQ!LS,59d,59dO)uQYO1G1gO!'|QWO'#HzO#1dQWO,5<`OOQ!LS,5<],5<]OOQO'#GQ'#GQOIxQWO,5<kOOQO'#GS'#GSOIxQWO,5<mOIxQWO,5<oOOQO1G1i1G1iO#1oQ`O'#CoO#2SQ`O,5<XO#2ZQWO'#JWO5eQWO'#JWO#2iQWO,5<ZOIxQWO,5<YO#2nQ`O'#FlO#2{Q`O'#JXO#3VQWO'#JXOHiQWO'#JXO#3[QWO,5<^OOQ!LQ'#Dc'#DcO#3aQWO'#FoO#3lQpO'#FwO!&YQ&jO'#FwO!&YQ&jO'#FyO#3}QWO'#FzO!(RQWO'#F}OOQO'#H|'#H|O#4SQ&jO,5<bOOQ!LS,5<b,5<bO#4ZQ&jO'#FwO#4iQ&jO'#FxO#4qQ&jO'#FxOOQ!LS,5<p,5<pOIxQWO,5?UOIxQWO,5?UO#4vQWO'#H}O#5RQWO,5?TOOQ!LS'#Cg'#CgO#5uQ#tO,59gOOQ!LS,59g,59gO#6hQ#tO,5<PO#7ZQ#tO,5<RO#7eQWO,5<TOOQ!LS,5<U,5<UO#7jQWO,5<[O#7oQ#tO,5<aOFlQYO1G1hO#8PQWO1G1hOOQQ1G3o1G3oOOQ!LS1G/l1G/lOMjQWO1G/lOOQQ1G2]1G2]OHiQWO1G2]O)uQYO1G2]OHiQWO1G2]O#8UQWO1G2]O#8dQWO,59[O#9mQWO'#ESOOQ!LQ,5?Q,5?QO#9wQ!LYO,5?QOOQQ1G.r1G.rO9{QWO1G.rO!,TQpO1G.rO!,]Q#tO1G.rO#:VQWO1G0]O#:[QWO'#CgO#:gQWO'#J`O#:oQWO,5=_O#:tQWO'#J`O#:yQWO'#J`O#;OQWO'#IVO#;^QWO,5?yO#;fQbO1G1QOOQ!LS1G1S1G1SO5eQWO1G2xO#;mQWO1G2xO#;rQWO1G2xO#;wQWO1G2xOOQQ1G2x1G2xO#;|Q#tO1G2]O6tQWO'#I}O6tQWO'#E[O6tQWO'#IPO#<_Q!LYO,5?vOOQQ1G2a1G2aO!/UQWO1G2gOHiQWO1G2dO#<jQWO1G2dOOQQ1G2e1G2eOHiQWO1G2eO#<oQWO1G2eO#<wQ&jO'#GcOOQQ1G2g1G2gO!&YQ&jO'#IRO!/ZQ`O1G2jOOQQ1G2j1G2jOOQQ,5=T,5=TO#=PQ#tO,5=VO5eQWO,5=VO#3}QWO,5=YO5RQWO,5=YO!,TQpO,5=YO!,]Q#tO,5=YO5jQ#tO,5=YO#=bQWO'#J^O#=mQWO,5=ZOOQQ1G.i1G.iO#=rQ!LYO1G.iO#=}QWO1G.iO!'rQWO1G.iO5]Q!LYO1G.iO#>SQbO,5?{O#>^QWO,5?{O#>iQYO,5=bO#>pQWO,5=bO6tQWO,5?{OOQQ1G2z1G2zO`QYO1G2zOOQQ1G3Q1G3QOOQQ1G3S1G3SO9vQWO1G3UO#>uQYO1G3WO#BmQYO'#HVOOQQ1G3Z1G3ZO9{QWO1G3aO#BzQWO1G3aO5]Q!LYO1G3eOOQQ1G3g1G3gOOQ!LQ'#Fs'#FsO5]Q!LYO1G3iO5]Q!LYO1G3kOOOS1G4x1G4xO#CSQ`O,5<OO#C[QbO1G3tO#CfQWO1G4yO#CnQWO1G5TO#CvQWO,5?aOKmQYO,5:vO6tQWO,5:vO9{QWO,59yOKmQYO,59yO!,TQpO,59yO#C{Q7^O,59yOOQO,5:v,5:vO#DVQ&jO'#HoO#DmQWO,5?`OOQ!LS1G/d1G/dO#DuQ&jO'#HtO#EZQWO,5?kOOQ!LQ1G0a1G0aO!9vQ&jO,59yO#EcQbO1G5UOOQO,5>_,5>_O6tQWO,5>_OOQO-E;q-E;qOOQ!LQ'#EO'#EOO#EmQ!LrO'#EPO!>pQ&jO'#DyOOQO'#Hr'#HrO#FXQ&jO,5:dOOQ!LS,5:d,5:dO#F`Q&jO'#DyO#FqQ&jO'#DyO#FxQ&jO'#EPO#GVQ&jO'#EPO!>pQ&jO'#EPO#GjQWO1G/{O#GoQ`O1G/{OOQ!LS1G/{1G/{O)uQYO1G/{OHiQWO1G/{OOQ!LS1G0[1G0[O9{QWO1G0[O!,TQpO1G0[O!,]Q#tO1G0[O#GvQ!LdO1G5RO)uQYO1G5RO#HWQ!LYO1G5RO#HiQWO1G5QO6tQWO,5>aOOQO,5>a,5>aO#HqQWO,5>aOOQO-E;s-E;sO#HiQWO1G5QO#IPQ!LdO,59gO#KOQ!LdO,5<PO#MQQ!LdO,5<RO$ SQ!LdO,5<aOOQ!LS7+%w7+%wO$#[Q!LdO7+%wO$#{QWO'#HpO$$VQWO,5?bOOQ!LS1G/n1G/nO$$_QYO'#HqO$$lQWO,5?cO$$tQbO,5?cOOQ!LS1G/s1G/sOOQ!LS7+&Q7+&QO$%OQ7^O,5:YO)uQYO7+&dO$%YQ7^O,5:QOOQO1G1Y1G1YOOQO1G1Z1G1ZO$%gQMhO,5;qOKmQYO,5;pOOQO-E;t-E;tOOQ!LS7+&r7+&rOOOO7+&{7+&{OOOO1G1d1G1dO$%rQWO1G1dOOQ!LS1G1f1G1fO$%wQ`O,5?XOOOS-E;j-E;jOOQ!LS1G/O1G/OO$&OQ!LdO7+'ROOQ!LS,5>f,5>fO$&oQWO,5>fOOQ!LS1G1z1G1zP$&tQWO'#HzPOQ!LS-E;x-E;xO$'eQ#tO1G2VO$(WQ#tO1G2XO$(bQ#tO1G2ZOOQ!LS1G1s1G1sO$(iQWO'#HyO$(wQWO,5?rO$(wQWO,5?rO$)PQWO,5?rO$)[QWO,5?rOOQO1G1u1G1uO$)jQ#tO1G1tO$)zQWO'#H{O$*[QWO,5?sOHiQWO,5?sO$*dQ`O,5?sOOQ!LS1G1x1G1xO5]Q!LYO,5<cO5]Q!LYO,5<dO$*nQWO,5<dO#3xQWO,5<dO!,TQpO,5<cO$*sQWO,5<eO5]Q!LYO,5<fO$*nQWO,5<iOOQO-E;z-E;zOOQ!LS1G1|1G1|O!&YQ&jO,5<cO$*{QWO,5<dO!&YQ&jO,5<eO!&YQ&jO,5<dO$+WQ#tO1G4pO$+bQ#tO1G4pOOQO,5>i,5>iOOQO-E;{-E;{O!-TQ&jO,59iO)uQYO,59iO$+oQWO1G1oOIxQWO1G1vO$+tQ!LdO7+'SOOQ!LS7+'S7+'SOFlQYO7+'SOOQ!LS7+%W7+%WO$,eQ`O'#JYO#GjQWO7+'wO$,oQWO7+'wO$,wQ`O7+'wOOQQ7+'w7+'wOHiQWO7+'wO)uQYO7+'wOHiQWO7+'wOOQO1G.v1G.vO$-RQ!LbO'#CgO$-cQ!LbO,5<gO$.QQWO,5<gOOQ!LQ1G4l1G4lOOQQ7+$^7+$^O9{QWO7+$^O!,TQpO7+$^OFlQYO7+%wO$.VQWO'#IUO$.eQWO,5?zOOQO1G2y1G2yO5eQWO,5?zO$.eQWO,5?zO$.mQWO,5?zOOQO,5>q,5>qOOQO-E<T-E<TOOQ!LS7+&l7+&lO$.rQWO7+(dO5]Q!LYO7+(dO5eQWO7+(dO$.wQWO7+(dO$.|QWO7+'wOOQ!LQ,5>k,5>kOOQ!LQ-E;}-E;}OOQQ7+(R7+(RO$/[Q!LbO7+(OOHiQWO7+(OO$/fQ`O7+(POOQQ7+(P7+(POHiQWO7+(PO$/mQWO'#J]O$/xQWO,5<}OOQO,5>m,5>mOOQO-E<P-E<POOQQ7+(U7+(UO$0rQ&jO'#GlOOQQ1G2q1G2qOHiQWO1G2qO)uQYO1G2qOHiQWO1G2qO$0yQWO1G2qO$1XQ#tO1G2qO5]Q!LYO1G2tO#3}QWO1G2tO5RQWO1G2tO!,TQpO1G2tO!,]Q#tO1G2tO$1jQWO'#ITO$1uQWO,5?xO$1}Q&jO,5?xOOQ!LQ1G2u1G2uOOQQ7+$T7+$TO$2SQWO7+$TO5]Q!LYO7+$TO$2XQWO7+$TO)uQYO1G5gO)uQYO1G5hO$2^QYO1G2|O$2eQWO1G2|O$2jQYO1G2|O$2qQ!LYO1G5gOOQQ7+(f7+(fO5]Q!LYO7+(pO`QYO7+(rOOQQ'#Jc'#JcOOQQ'#IW'#IWO$2{QYO,5=qOOQQ,5=q,5=qO)uQYO'#HWO$3YQWO'#HYOOQQ7+({7+({O$3_QYO7+({O6tQWO7+({OOQQ7+)P7+)POOQQ7+)T7+)TOOQQ7+)V7+)VOOQO1G4{1G4{O$7YQ7^O1G0bO$7dQWO1G0bOOQO1G/e1G/eO$7oQ7^O1G/eO9{QWO1G/eOKmQYO'#D_OOQO,5>Z,5>ZOOQO-E;m-E;mOOQO,5>`,5>`OOQO-E;r-E;rO!,TQpO1G/eOOQO1G3y1G3yO9{QWO,5:eOOQO,5:k,5:kO)uQYO,5:kO$7yQ!LYO,5:kO$8UQ!LYO,5:kO!,TQpO,5:eOOQO-E;p-E;pOOQ!LS1G0O1G0OO!>pQ&jO,5:eO$8dQ&jO,5:eO$8uQ!LrO,5:kO$9aQ&jO,5:eO!>pQ&jO,5:kO$9hQ&jO,5:kO$9uQ!LYO,5:kOOQ!LS7+%g7+%gO#GjQWO7+%gO#GoQ`O7+%gOOQ!LS7+%v7+%vO9{QWO7+%vO!,TQpO7+%vO$:ZQ!LdO7+*mO)uQYO7+*mOOQO1G3{1G3{O6tQWO1G3{O$:kQWO7+*lO$:sQ!LdO1G2VO$<uQ!LdO1G2XO$>wQ!LdO1G1tO$APQ#tO,5>[OOQO-E;n-E;nO$AZQbO,5>]O)uQYO,5>]OOQO-E;o-E;oO$AeQWO1G4}O$AmQ7^O1G0]O$CtQ7^O1G0hO$C{Q7^O1G0hO$E|Q7^O1G0hO$FTQ7^O1G0hO$GxQ7^O1G0hO$H]Q7^O1G0hO$JjQ7^O1G0hO$JqQ7^O1G0hO$LrQ7^O1G0hO$LyQ7^O1G0hO$NnQ7^O1G0hO% RQ!LdO<<JOO% rQ7^O1G0hO%#bQ7^O'#IkO%%_Q7^O1G0{OKmQYO'#FXOOQO'#JU'#JUOOQO1G1]1G1]O%%lQWO1G1[O%%qQ7^O,5>dOOOO7+'O7+'OOOOS1G4s1G4sOOQ!LS1G4Q1G4QOIxQWO7+'uO%%{QWO,5>eO5eQWO,5>eOOQO-E;w-E;wO%&ZQWO1G5^O%&ZQWO1G5^O%&cQWO1G5^O%&nQ`O,5>gO%&xQWO,5>gOHiQWO,5>gOOQO-E;y-E;yO%&}Q`O1G5_O%'XQWO1G5_OOQO1G1}1G1}OOQO1G2O1G2OO5]Q!LYO1G2OO$*nQWO1G2OO5]Q!LYO1G1}O%'aQWO1G2POHiQWO1G2POOQO1G2Q1G2QO5]Q!LYO1G2TO!,TQpO1G1}O#3xQWO1G2OO%'fQWO1G2PO%'nQWO1G2OOIxQWO7+*[OOQ!LS1G/T1G/TO%'yQWO1G/TOOQ!LS7+'Z7+'ZO%(OQ#tO7+'bO%(`Q!LdO<<JnOOQ!LS<<Jn<<JnOHiQWO'#IOO%)PQWO,5?tOOQQ<<Kc<<KcOHiQWO<<KcO#GjQWO<<KcO%)XQWO<<KcO%)aQ`O<<KcOHiQWO1G2ROOQQ<<Gx<<GxO9{QWO<<GxO%)kQ!LdO<<IcOOQ!LS<<Ic<<IcOOQO,5>p,5>pO%*[QWO,5>pO#:yQWO,5>pOOQO-E<S-E<SO%*aQWO1G5fO%*aQWO1G5fO5eQWO1G5fO%*iQWO<<LOOOQQ<<LO<<LOO%*nQWO<<LOO5]Q!LYO<<LOO)uQYO<<KcOHiQWO<<KcOOQQ<<Kj<<KjO$/[Q!LbO<<KjOOQQ<<Kk<<KkO$/fQ`O<<KkO%*sQ&jO'#IQO%+OQWO,5?wOKmQYO,5?wOOQQ1G2i1G2iO#EmQ!LrO'#EPO!>pQ&jO'#GmOOQO'#IS'#ISO%+WQ&jO,5=WOOQQ,5=W,5=WO%+_Q&jO'#EPO%+jQ&jO'#EPO%,RQ&jO'#EPO%,]Q&jO'#GmO%,nQWO7+(]O%,sQWO7+(]O%,{Q`O7+(]OOQQ7+(]7+(]OHiQWO7+(]O)uQYO7+(]OHiQWO7+(]O%-VQWO7+(]OOQQ7+(`7+(`O5]Q!LYO7+(`O#3}QWO7+(`O5RQWO7+(`O!,TQpO7+(`O%-eQWO,5>oOOQO-E<R-E<ROOQO'#Gp'#GpO%-pQWO1G5dO5]Q!LYO<<GoOOQQ<<Go<<GoO%-xQWO<<GoO%-}QWO7++RO%.SQWO7++SOOQQ7+(h7+(hO%.XQWO7+(hO%.^QYO7+(hO%.eQWO7+(hO)uQYO7++RO)uQYO7++SOOQQ<<L[<<L[OOQQ<<L^<<L^OOQQ-E<U-E<UOOQQ1G3]1G3]O%.jQWO,5=rOOQQ,5=t,5=tO9{QWO<<LgO%.oQWO<<LgOKmQYO7+%|OOQO7+%P7+%PO%.tQ7^O1G5UO9{QWO7+%POOQO1G0P1G0PO%/OQ!LdO1G0VOOQO1G0V1G0VO)uQYO1G0VO%/YQ!LYO1G0VO9{QWO1G0PO!,TQpO1G0PO!>pQ&jO1G0PO%/eQ!LYO1G0VO%/sQ&jO1G0PO%0UQ!LYO1G0VO%0jQ!LrO1G0VO%0tQ&jO1G0PO!>pQ&jO1G0VOOQ!LS<<IR<<IROOQ!LS<<Ib<<IbO9{QWO<<IbO%0{Q!LdO<<NXOOQO7+)g7+)gO%1]Q!LdO7+'bO%3eQbO1G3wO%3oQ7^O7+%wO%3|Q7^O,59gO%5yQ7^O,5<PO%7vQ7^O,5<RO%9sQ7^O,5<aO%;cQ7^O7+'RO%;pQ7^O7+'SO%;}QWO,5;sOOQO7+&v7+&vO%<SQ#tO<<KaOOQO1G4P1G4PO%<dQWO1G4PO%<oQWO1G4PO%<}QWO7+*xO%<}QWO7+*xOHiQWO1G4RO%=VQ`O1G4RO%=aQWO7+*yOOQO7+'j7+'jO5]Q!LYO7+'jOOQO7+'i7+'iO$*nQWO7+'kO%=iQ`O7+'kOOQO7+'o7+'oO5]Q!LYO7+'iO$*nQWO7+'jO%=pQWO7+'kOHiQWO7+'kO#3xQWO7+'jO%=uQ#tO<<MvOOQ!LS7+$o7+$oO%>PQ`O,5>jOOQO-E;|-E;|O#GjQWOAN@}OOQQAN@}AN@}OHiQWOAN@}O%>ZQ!LbO7+'mOOQQAN=dAN=dO5eQWO1G4[OOQO1G4[1G4[O%>hQWO1G4[O%>mQWO7++QO%>mQWO7++QO5]Q!LYOANAjO%>uQWOANAjOOQQANAjANAjO%>zQWOAN@}O%?SQ`OAN@}OOQQANAUANAUOOQQANAVANAVO%?^QWO,5>lOOQO-E<O-E<OO%?iQ7^O1G5cO#3}QWO,5=XO5RQWO,5=XO!,TQpO,5=XOOQO-E<Q-E<QOOQQ1G2r1G2rO$8uQ!LrO,5:kO!>pQ&jO,5=XO%?sQ&jO,5=XO%@UQ&jO,5:kOOQQ<<Kw<<KwOHiQWO<<KwO%,nQWO<<KwO%@`QWO<<KwO%@hQ`O<<KwO)uQYO<<KwOHiQWO<<KwOOQQ<<Kz<<KzO5]Q!LYO<<KzO#3}QWO<<KzO5RQWO<<KzO%@rQ&jO1G4ZO%@wQWO7++OOOQQAN=ZAN=ZO5]Q!LYOAN=ZOOQQ<<Nm<<NmOOQQ<<Nn<<NnOOQQ<<LS<<LSO%APQWO<<LSO%AUQYO<<LSO%A]QWO<<NmO%AbQWO<<NnOOQQ1G3^1G3^OOQQANBRANBRO9{QWOANBRO%AgQ7^O<<IhOOQO<<Hk<<HkOOQO7+%q7+%qO%/OQ!LdO7+%qO)uQYO7+%qOOQO7+%k7+%kO9{QWO7+%kO!,TQpO7+%kO%AqQ!LYO7+%qO!>pQ&jO7+%kO%A|Q!LYO7+%qO%B[Q&jO7+%kO%BmQ!LYO7+%qOOQ!LSAN>|AN>|O%CRQ!LdO<<KaO%EZQ7^O<<JOO%EhQ7^O1G1tO%GWQ7^O1G2VO%ITQ7^O1G2XO%KQQ7^O<<JnO%K_Q7^O<<IcOOQO1G1_1G1_OOQO7+)k7+)kO%KlQWO7+)kO%KwQWO<<NdO%LPQ`O7+)mOOQO<<KU<<KUO5]Q!LYO<<KVO$*nQWO<<KVOOQO<<KT<<KTO5]Q!LYO<<KUO%LZQ`O<<KVO$*nQWO<<KUOOQQG26iG26iO#GjQWOG26iOOQO7+)v7+)vO5eQWO7+)vO%LbQWO<<NlOOQQG27UG27UO5]Q!LYOG27UOHiQWOG26iOKmQYO1G4WO%LjQWO7+*}O5]Q!LYO1G2sO#3}QWO1G2sO5RQWO1G2sO!,TQpO1G2sO!>pQ&jO1G2sO%0jQ!LrO1G0VO%LrQ&jO1G2sO%,nQWOANAcOOQQANAcANAcOHiQWOANAcO%MTQWOANAcO%M]Q`OANAcOOQQANAfANAfO5]Q!LYOANAfO#3}QWOANAfOOQO'#Gq'#GqOOQO7+)u7+)uOOQQG22uG22uOOQQANAnANAnO%MgQWOANAnOOQQANDXANDXOOQQANDYANDYO%MlQYOG27mOOQO<<I]<<I]O%/OQ!LdO<<I]OOQO<<IV<<IVO9{QWO<<IVO)uQYO<<I]O!,TQpO<<IVO&#gQ!LYO<<I]O!>pQ&jO<<IVO&#rQ!LYO<<I]O&$QQ7^O7+'bOOQO<<MV<<MVOOQOAN@qAN@qO5]Q!LYOAN@qOOQOAN@pAN@pO$*nQWOAN@qO5]Q!LYOAN@pOOQQLD,TLD,TOOQO<<Mb<<MbOOQQLD,pLD,pO#GjQWOLD,TO&%pQ7^O7+)rOOQO7+(_7+(_O5]Q!LYO7+(_O#3}QWO7+(_O5RQWO7+(_O!,TQpO7+(_O!>pQ&jO7+(_OOQQG26}G26}O%,nQWOG26}OHiQWOG26}OOQQG27QG27QO5]Q!LYOG27QOOQQG27YG27YO9{QWOLD-XOOQOAN>wAN>wOOQOAN>qAN>qO%/OQ!LdOAN>wO9{QWOAN>qO)uQYOAN>wO!,TQpOAN>qO&%zQ!LYOAN>wO&&VQ7^O<<KaOOQOG26]G26]O5]Q!LYOG26]OOQOG26[G26[OOQQ!$( o!$( oOOQO<<Ky<<KyO5]Q!LYO<<KyO#3}QWO<<KyO5RQWO<<KyO!,TQpO<<KyOOQQLD,iLD,iO%,nQWOLD,iOOQQLD,lLD,lOOQQ!$(!s!$(!sOOQOG24cG24cOOQOG24]G24]O%/OQ!LdOG24cO9{QWOG24]O)uQYOG24cOOQOLD+wLD+wOOQOANAeANAeO5]Q!LYOANAeO#3}QWOANAeO5RQWOANAeOOQQ!$(!T!$(!TOOQOLD)}LD)}OOQOLD)wLD)wO%/OQ!LdOLD)}OOQOG27PG27PO5]Q!LYOG27PO#3}QWOG27POOQO!$'Mi!$'MiOOQOLD,kLD,kO5]Q!LYOLD,kOOQO!$(!V!$(!VOKmQYO'#DnO&'uQbO'#IpOKmQYO'#DfO&'|Q!LdO'#CgO&(gQbO'#CgO&(wQYO,5:qOKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO,5:|OKmQYO'#HxO&*tQWO,5<OO&,WQWO,5:|OKmQYO,5;aO!'rQWO'#C{O!'rQWO'#C{OHiQWO'#FeO&*|QWO'#FeOHiQWO'#FgO&*|QWO'#FgOHiQWO'#FuO&*|QWO'#FuOKmQYO,5?jO&(wQYO1G0]O&,_Q7^O'#CgOKmQYO1G1gOHiQWO,5<kO&*|QWO,5<kOHiQWO,5<mO&*|QWO,5<mOHiQWO,5<YO&*|QWO,5<YO&(wQYO1G1hOKmQYO7+&dOHiQWO1G1vO&*|QWO1G1vO&(wQYO7+'SO&(wQYO7+%wOHiQWO7+'uO&*|QWO7+'uO&,iQWO'#EVO&,nQWO'#EVO&,vQWO'#EuO&,{QWO'#JOO&-WQWO'#I|O&-cQWO,5:qO&-hQ#tO,5;{O&-oQWO'#FnO&-tQWO'#FnO&-yQWO,5;|O&.RQWO,5:qO&.ZQ7^O1G0xO&.bQWO,5<[O&.gQWO,5<[O&.lQWO1G1hO&.qQWO1G0]O&.vQ#tO1G2ZO&.}Q#tO1G2ZO3tQWO'#FcO5RQWO'#FbOB`QWO'#EUOKmQYO,5;^O!(RQWO'#FpO!(RQWO'#FpOIxQWO,5<oOIxQWO,5<o",
+  stateData: "&/z~O'SOS'TOSSOSTOS~OPTOQTOWwO]bO^gOamOblOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!PSO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!jkO#_qO#onO#s]O$zoO$|rO%OpO%PpO%SsO%UtO%XuO%YuO%[vO%ixO%oyO%qzO%s{O%u|O%x}O&O!OO&S!PO&U!QO&W!RO&Y!SO&[!TO'VPO'`QO'y`O~OPZXYZX^ZXiZXrZXsZXuZX}ZX!]ZX!^ZX!`ZX!fZX!wZX#RcX#VZX#WZX#XZX#YZX#ZZX#[ZX#]ZX#^ZX#`ZX#bZX#dZX#eZX#jZX'QZX'`ZX'mZX'tZX'uZX~O!X$gX~P$wO&}!VO'O!UO'P!XO~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#o!iO#s]O'V!YO'`QO'y`O~O|!^O}!ZOz'gPz'qP~P'aO!O!jO~P`OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#o!iO#s]O'V9SO'`QO'y`O~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!P!`O!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#o!iO#s]O'`QO'y`O~O|!oO#P!rO#Q!oO'V9TO!_'nP~P+rO#R!sO~O!X!tO#R!sO~OP#ZOY#aOi#OOr!xOs!xOu!yO}#_O!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO#b#TO#d#VO#e#WO'`QO'm#XO't!zO'u!{O~O^'dX'Q'dX!_'dXz'dX!P'dX${'dX!X'dX~P.^O!w#bO#j#bOP'eXY'eX^'eXi'eXr'eXs'eXu'eX}'eX!]'eX!^'eX!`'eX!f'eX#V'eX#W'eX#X'eX#Y'eX#Z'eX#['eX#^'eX#`'eX#b'eX#d'eX#e'eX'`'eX'm'eX't'eX'u'eX~O#]'eX'Q'eXz'eX!_'eX'b'eX!P'eX${'eX!X'eX~P0nO!w#bO~O#u#cO#|#gO~O!P#hO#s]O$P#iO$R#kO~O]#nOg#{Oi#oOj#nOk#nOn#|Op#}Ou#uO!P#vO!Z$SO!`#sO#Q$TO#o$QO$Y$OO$[$PO$_$RO'V#mO'`#pO'Z']P~O!`$UO~O!X$WO~O^$XO'Q$XO~O'V$]O~O!`$UO'V$]O'W$_O'[$`O~Ob$fO!`$UO'V$]O~O]$oOr$kO!P$hO!`$jO$|$nO'V$]O'W$_O[(RP~O!j$pO~Ou$qO!P$rO'V$]O~Ou$qO!P$rO%U$vO'V$]O~O'V$wO~O#_qO$|rO%OpO%PpO%SsO%UtO%XuO%YuO~Oa%QOb%PO!j$}O$z%OO%^$|O~P7dOa%TOblO!P%SO!jkO#_qO$zoO%OpO%PpO%SsO%UtO%XuO%YuO%[vO~O_%WO!w%ZO$|%UO'W$_O~P8cO!`%[O!c%`O~O!`%aO~O!PSO~O^$XO&|%iO'Q$XO~O^$XO&|%lO'Q$XO~O^$XO&|%nO'Q$XO~O&}!VO'O!UO'P%rO~OPZXYZXiZXrZXsZXuZX}ZX}cX!]ZX!^ZX!`ZX!fZX!wZX!wcX#RcX#VZX#WZX#XZX#YZX#ZZX#[ZX#]ZX#^ZX#`ZX#bZX#dZX#eZX#jZX'`ZX'mZX'tZX'uZX~OzZXzcX~P;OO|%tOz&bX}&bX~P)uO}!ZOz'gX~OP#ZOY#aOi#OOr!xOs!xOu!yO}!ZO!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO#b#TO#d#VO#e#WO'`QO'm#XO't!zO'u!{O~Oz'gX~P=uOz%yO~Ou%|O!S&WO!T&PO!U&PO'W$_O~O]%}Oj%}O|&QO'c%zO!O'hP!O'sP~P?xOz'pX}'pX!X'pX!_'pX'm'pX~O!w'pX#R!zX!O'pX~P@qO!w&XOz'rX}'rX~O}&YOz'qX~Oz&[O~O!w#bO~P@qOR&`O!P&]O!k&_O'V$]O~Ob&eO!`$UO'V$]O~Or$kO!`$jO~O!O&fO~P`Or!xOs!xOu!yO!^!vO!`!wO'`QOP!baY!bai!ba}!ba!]!ba!f!ba#V!ba#W!ba#X!ba#Y!ba#Z!ba#[!ba#]!ba#^!ba#`!ba#b!ba#d!ba#e!ba'm!ba't!ba'u!ba~O^!ba'Q!baz!ba!_!ba'b!ba!P!ba${!ba!X!ba~PBzO!_&gO~O!X!tO!w&iO'm&hO}'oX^'oX'Q'oX~O!_'oX~PEdO}&mO!_'nX~O!_&oO~Ou$qO!P$rO#Q&pO'V$]O~OPTOQTO]bOa!hOb!gOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!PSO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!j!fO#o!iO#s]O'V9SO'`QO'y`O~O]#nOg#{Oi#oOj#nOk#nOn#|Op9fOu#uO!P#vO!Z:hO!`#sO#Q9lO#o$QO$Y9hO$[9jO$_$RO'V&tO'`#pO~O#R&vO~O]#nOg#{Oi#oOj#nOk#nOn#|Op#}Ou#uO!P#vO!Z$SO!`#sO#Q$TO#o$QO$Y$OO$[$PO$_$RO'V&tO'`#pO~O'Z'jP~PIxO|&zO!_'kP~P)uO'c&|O'l&}O~OP9POQ9PO]bOa:fOb!gOgbOi9POjbOkbOn9POp9POuROwbOxbOybO!P!`O!Z9RO!`UO!c9PO!d9PO!e9PO!f9PO!g9PO!j!fO#o!iO#s]O'V']O'`QO'y:dO~O!`!wO~O}#_O^$Wa'Q$Wa!_$Waz$Wa!P$Wa${$Wa!X$Wa~O#_'dO~PHiO!X'fO!P'vX#r'vX#u'vX#|'vX~Or'gO~PNbOr'gO!P'vX#r'vX#u'vX#|'vX~O!P'iO#r'mO#u'hO#|'nO~O|'qO~PKmO#u#cO#|'tO~Or$`Xu$`X!^$`X'm$`X't$`X'u$`X~OReX}eX!weX'ZeX'Z$`X~P! zOj'vO~O&}'xO'O'wO'P'zO~Or'|Ou'}O'm#XO't(PO'u(RO~O'Z'{O~P!#TO'Z(UO~O]#nOg#{Oi#oOj#nOk#nOn#|Op9fOu#uO!P#vO!Z:hO!`#sO#Q9lO#o$QO$Y9hO$[9jO$_$RO'`#pO~O|(YO'V(VO!_'zP~P!#rO#R([O~O|(`O'V(]Oz'{P~P!#rO^(iOi(nOu(fO!S(lO!T(eO!U(eO!`(cO!t(mO$r(hO'W$_O'c(bO~O!O(kO~P!%jO!^!vOr'_Xu'_X'm'_X't'_X'u'_X}'_X!w'_X~O'Z'_X#h'_X~P!&fOR(qO!w(pO}'^X'Z'^X~O}(rO'Z']X~O'V(tO~O!`(yO~O'V&tO~O!`(cO~Ou$qO|!oO!P$rO#P!rO#Q!oO'V$]O!_'nP~O!X!tO#R(}O~OP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO#b#TO#d#VO#e#WO'`QO'm#XO't!zO'u!{O~O^!Ya}!Ya'Q!Yaz!Ya!_!Ya'b!Ya!P!Ya${!Ya!X!Ya~P!(wOR)VO!P&]O!k)UO${)TO'[$`O~O'V$wO'Z']P~O!X)YO!P'YX^'YX'Q'YX~O!`$UO'[$`O~O!`$UO'V$]O'[$`O~O!X!tO#R&vO~O$|)fO'V)bO!O(SP~O})gO[(RX~O'c&|O~OY)kO~O[)lO~O!P$hO'V$]O'W$_O[(RP~Ou$qO|)qO!P$rO'V$]Oz'qP~O]&TOj&TO|)rO'c&|O!O'sP~O})sO^(OX'Q(OX~O!w)wO'[$`O~OR)zO!P#vO'[$`O~O!P)|O~Or*OO!PSO~O!j*TO~Ob*YO~O'V(tO!O(QP~Ob$fO~O$|rO'V$wO~P8cOY*`O[*_O~OPTOQTO]bOamOblOgbOiTOjbOkbOnTOpTOuROwbOxbOybO!ZjO!`UO!cTO!dTO!eTO!fTO!gTO!jkO#s]O$zoO'`QO'y`O~O!P!`O#o!iO'V9SO~P!0^O[*_O^$XO'Q$XO~O^*dO#_*fO%O*fO%P*fO~P)uO!`%[O~O%o*kO~O!P*mO~O&P*pO&Q*oOP%}aQ%}aW%}a]%}a^%}aa%}ab%}ag%}ai%}aj%}ak%}an%}ap%}au%}aw%}ax%}ay%}a!P%}a!Z%}a!`%}a!c%}a!d%}a!e%}a!f%}a!g%}a!j%}a#_%}a#o%}a#s%}a$z%}a$|%}a%O%}a%P%}a%S%}a%U%}a%X%}a%Y%}a%[%}a%i%}a%o%}a%q%}a%s%}a%u%}a%x%}a&O%}a&S%}a&U%}a&W%}a&Y%}a&[%}a&{%}a'V%}a'`%}a'y%}a!O%}a%v%}a_%}a%{%}a~O'V*sO~O'b*vO~Oz&ba}&ba~P!(wO}!ZOz'ga~Oz'ga~P=uO}&YOz'qa~O}tX}!VX!OtX!O!VX!XtX!X!VX!`!VX!wtX'[!VX~O!X*}O!w*|O}#OX}'iX!O#OX!O'iX!X'iX!`'iX'['iX~O!X+PO!`$UO'[$`O}!RX!O!RX~O]%{Oj%{Ou%|O'c(bO~OP9POQ9PO]bOa:fOb!gOgbOi9POjbOkbOn9POp9POuROwbOxbOybO!P!`O!Z9RO!`UO!c9PO!d9PO!e9PO!f9PO!g9PO!j!fO#o!iO#s]O'`QO'y:dO~O'V9pO~P!:UO}+TO!O'hX~O!O+VO~O!X*}O!w*|O}#OX!O#OX~O}+WO!O'sX~O!O+YO~O]%{Oj%{Ou%|O'W$_O'c(bO~O!T+ZO!U+ZO~P!=POu$qO|+^O!P$rO'V$]Oz&gX}&gX~O^+cO!S+fO!T+bO!U+bO!n+iO!o+hO!p+hO!q+gO!t+jO'W$_O'c(bO'l+`O~O!O+eO~P!>QOR+oO!P&]O!k+nO~O!w+uO}'oa!_'oa^'oa'Q'oa~O!X!tO~P!?[O}&mO!_'na~Ou$qO|+xO!P$rO#P+zO#Q+xO'V$]O}&iX!_&iX~O^!yi}!yi'Q!yiz!yi!_!yi'b!yi!P!yi${!yi!X!yi~P!(wO#R!va}!va!_!va!w!va!P!va^!va'Q!vaz!va~P!#TO#R'_XP'_XY'_X^'_Xi'_Xs'_X!]'_X!`'_X!f'_X#V'_X#W'_X#X'_X#Y'_X#Z'_X#['_X#]'_X#^'_X#`'_X#b'_X#d'_X#e'_X'Q'_X'`'_X!_'_Xz'_X!P'_X'b'_X${'_X!X'_X~P!&fO},TO'Z'jX~P!#TO'Z,VO~O},WO!_'kX~P!(wO!_,ZO~Oz,[O~OP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO'`QOY#Ui^#Uii#Ui}#Ui!]#Ui#W#Ui#X#Ui#Y#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui'Q#Ui'm#Ui't#Ui'u#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~O#V#Ui~P!DiO#V!|O~P!DiOP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O'`QOY#Ui^#Ui}#Ui!]#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui'Q#Ui'm#Ui't#Ui'u#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~Oi#Ui~P!GTOi#OO~P!GTOP#ZOi#OOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO'`QO^#Ui}#Ui#`#Ui#b#Ui#d#Ui#e#Ui'Q#Ui'm#Ui't#Ui'u#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~OY#Ui!]#Ui#[#Ui#]#Ui#^#Ui~P!IoOY#aO!]#QO#[#QO#]#QO#^#QO~P!IoOP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO'`QO^#Ui}#Ui#b#Ui#d#Ui#e#Ui'Q#Ui'm#Ui'u#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~O't#Ui~P!LgO't!zO~P!LgOP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO#b#TO'`QO't!zO^#Ui}#Ui#d#Ui#e#Ui'Q#Ui'm#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~O'u#Ui~P# RO'u!{O~P# ROP#ZOY#aOi#OOr!xOs!xOu!yO!]#QO!^!vO!`!wO!f#ZO#V!|O#W!}O#X!}O#Y!}O#Z#PO#[#QO#]#QO#^#QO#`#RO#b#TO#d#VO'`QO't!zO'u!{O~O^#Ui}#Ui#e#Ui'Q#Ui'm#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~P##mOPZXYZXiZXrZXsZXuZX!]ZX!^ZX!`ZX!fZX!wZX#RcX#VZX#WZX#XZX#YZX#ZZX#[ZX#]ZX#^ZX#`ZX#bZX#dZX#eZX#jZX'`ZX'mZX'tZX'uZX}ZX!OZX~O#hZX~P#&QOP#ZOY9dOi9XOr!xOs!xOu!yO!]9ZO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO#Z9YO#[9ZO#]9ZO#^9ZO#`9[O#b9^O#d9`O#e9aO'`QO'm#XO't!zO'u!{O~O#h,^O~P#([OP'eXY'eXi'eXr'eXs'eXu'eX!]'eX!^'eX!`'eX!f'eX#V'eX#W'eX#X'eX#Y'eX#Z'eX#['eX#^'eX#`'eX#b'eX#d'eX#e'eX'`'eX'm'eX't'eX'u'eX}'eX~O!w9eO#j9eO#]'eX#h'eX!O'eX~P#*VO^&la}&la'Q&la!_&la'b&laz&la!P&la${&la!X&la~P!(wOP#UiY#Ui^#Uii#Uis#Ui}#Ui!]#Ui!^#Ui!`#Ui!f#Ui#V#Ui#W#Ui#X#Ui#Y#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui'Q#Ui'`#Uiz#Ui!_#Ui'b#Ui!P#Ui${#Ui!X#Ui~P!#TO^#ii}#ii'Q#iiz#ii!_#ii'b#ii!P#ii${#ii!X#ii~P!(wO#u,`O~O#u,aO~O!X'fO!w,bO!P#yX#r#yX#u#yX#|#yX~O|,cO~O!P'iO#r,eO#u'hO#|,fO~O}9bO!O'dX~P#([O!O,gO~O#|,iO~O&}'xO'O'wO'P,lO~O],oOj,oOz,pO~O}cX!XcX!_cX!_$`X'mcX~P! zO!_,vO~P!#TO},wO!X!tO'm&hO!_'zX~O!_,|O~Oz$`X}$`X!X$gX~P! zO}-OOz'{X~P!#TO!X-QO~Oz-SO~O|(YO'V$]O!_'zP~Oi-WO!X!tO!`$UO'[$`O'm&hO~O!X)YO~O!O-^O~P!%jO!T-_O!U-_O'W$_O'c(bO~Ou-aO'c(bO~O!t-bO~O'V$wO}&qX'Z&qX~O}(rO'Z']a~Or-gOs-gOu-hO'moa'toa'uoa}oa!woa~O'Zoa#hoa~P#5ZOr'|Ou'}O'm$Xa't$Xa'u$Xa}$Xa!w$Xa~O'Z$Xa#h$Xa~P#6POr'|Ou'}O'm$Za't$Za'u$Za}$Za!w$Za~O'Z$Za#h$Za~P#6rO]-iO~O#R-jO~O'Z$ia}$ia#h$ia!w$ia~P!#TO#R-mO~OR-vO!P&]O!k-uO${-tO~O'Z-wO~O]#nOi#oOj#nOk#nOn#|Op9fOu#uO!P#vO!Z:hO!`#sO#Q9lO#o$QO$Y9hO$[9jO$_$RO'`#pO~Og-yO'V-xO~P#8iO!X)YO!P'Ya^'Ya'Q'Ya~O#R.PO~OYZX}cX!OcX~O}.QO!O(SX~O!O.SO~OY.TO~O'V)bO~O!P$hO'V$]O[&yX}&yX~O})gO[(Ra~O!_.YO~P!(wO].[O~OY.]O~O[.^O~OR-vO!P&]O!k-uO${-tO'[$`O~O})sO^(Oa'Q(Oa~O!w.dO~OR.gO!P#vO~O'c&|O!O(PP~OR.qO!P.mO!k.pO${.oO'[$`O~OY.{O}.yO!O(QX~O!O.|O~O[/OO^$XO'Q$XO~O]/PO~O#]/RO%m/SO~P0nO!w#bO#]/RO%m/SO~O^/TO~P)uO^/VO~O%v/ZOP%tiQ%tiW%ti]%ti^%tia%tib%tig%tii%tij%tik%tin%tip%tiu%tiw%tix%tiy%ti!P%ti!Z%ti!`%ti!c%ti!d%ti!e%ti!f%ti!g%ti!j%ti#_%ti#o%ti#s%ti$z%ti$|%ti%O%ti%P%ti%S%ti%U%ti%X%ti%Y%ti%[%ti%i%ti%o%ti%q%ti%s%ti%u%ti%x%ti&O%ti&S%ti&U%ti&W%ti&Y%ti&[%ti&{%ti'V%ti'`%ti'y%ti!O%ti_%ti%{%ti~O_/aO!O/_O%{/`O~P`O!PSO!`/dO~O}#_O'b$Wa~Oz&bi}&bi~P!(wO}!ZOz'gi~O}&YOz'qi~Oz/hO~O}!Ra!O!Ra~P#([O]%{Oj%{O|/nO'c(bO}&cX!O&cX~P?xO}+TO!O'ha~O]&TOj&TO|)rO'c&|O}&hX!O&hX~O}+WO!O'sa~Oz'ri}'ri~P!(wO^$XO!X!tO!`$UO!f/yO!w/wO'Q$XO'[$`O'm&hO~O!O/|O~P!>QO!T/}O!U/}O'W$_O'c(bO'l+`O~O!S0OO~P#F`O!S0OO!q0QO!t0RO~P#F`O!S0OO!o0SO!p0SO!q0QO!t0RO~P#F`O!P&]O~O!P&]O~P!#TO}'oi!_'oi^'oi'Q'oi~P!(wO!w0]O}'oi!_'oi^'oi'Q'oi~O}&mO!_'ni~Ou$qO!P$rO#Q0_O'V$]O~O#RoaPoaYoa^oaioa!]oa!^oa!`oa!foa#Voa#Woa#Xoa#Yoa#Zoa#[oa#]oa#^oa#`oa#boa#doa#eoa'Qoa'`oa!_oazoa!Poa'boa${oa!Xoa~P#5ZO#R$XaP$XaY$Xa^$Xai$Xas$Xa!]$Xa!^$Xa!`$Xa!f$Xa#V$Xa#W$Xa#X$Xa#Y$Xa#Z$Xa#[$Xa#]$Xa#^$Xa#`$Xa#b$Xa#d$Xa#e$Xa'Q$Xa'`$Xa!_$Xaz$Xa!P$Xa'b$Xa${$Xa!X$Xa~P#6PO#R$ZaP$ZaY$Za^$Zai$Zas$Za!]$Za!^$Za!`$Za!f$Za#V$Za#W$Za#X$Za#Y$Za#Z$Za#[$Za#]$Za#^$Za#`$Za#b$Za#d$Za#e$Za'Q$Za'`$Za!_$Zaz$Za!P$Za'b$Za${$Za!X$Za~P#6rO#R$iaP$iaY$ia^$iai$ias$ia}$ia!]$ia!^$ia!`$ia!f$ia#V$ia#W$ia#X$ia#Y$ia#Z$ia#[$ia#]$ia#^$ia#`$ia#b$ia#d$ia#e$ia'Q$ia'`$ia!_$iaz$ia!P$ia!w$ia'b$ia${$ia!X$ia~P!#TO^!yq}!yq'Q!yqz!yq!_!yq'b!yq!P!yq${!yq!X!yq~P!(wO}&dX'Z&dX~PIxO},TO'Z'ja~O|0gO}&eX!_&eX~P)uO},WO!_'ka~O},WO!_'ka~P!(wO#h!ba!O!ba~PBzO#h!Ya}!Ya!O!Ya~P#([O!P0zO#s]O#z0{O~O!O1PO~O'b1QO~P!#TO^$Tq}$Tq'Q$Tqz$Tq!_$Tq'b$Tq!P$Tq${$Tq!X$Tq~P!(wOz1RO~O],oOj,oO~Or'|Ou'}O'u(RO'm$si't$si}$si!w$si~O'Z$si#h$si~P$&|Or'|Ou'}O'm$ui't$ui'u$ui}$ui!w$ui~O'Z$ui#h$ui~P$'oO#h1SO~P!#TO|1UO'V$]O}&mX!_&mX~O},wO!_'za~O},wO!X!tO!_'za~O},wO!X!tO'm&hO!_'za~O'Z$bi}$bi#h$bi!w$bi~P!#TO|1]O'V(]Oz&oX}&oX~P!#rO}-OOz'{a~O}-OOz'{a~P!#TO!X!tO~O!X!tO#]1gO~Oi1kO!X!tO'm&hO~O}'^i'Z'^i~P!#TO!w1nO}'^i'Z'^i~P!#TO!_1qO~O^$Uq}$Uq'Q$Uqz$Uq!_$Uq'b$Uq!P$Uq${$Uq!X$Uq~P!(wO}1uO!P'|X~P!#TO!P&]O${1xO~O!P&]O${1xO~P!#TO!P$`X$pZX^$`X'Q$`X~P! zO$p1|OrfXufX!PfX'mfX'tfX'ufX^fX'QfX~O$p1|O~O$|2TO'V)bO}&xX!O&xX~O}.QO!O(Sa~OY2XO~O[2YO~O]2]O~OR2_O!P&]O!k2^O${1xO~O^$XO'Q$XO~P!#TO!P#vO~P!#TO}2dO!w2fO!O(PX~O!O2gO~Ou(fO!S2pO!T2iO!U2iO!n2oO!o2nO!p2nO!t2mO'W$_O'c(bO'l+`O~O!O2lO~P$/}OR2wO!P.mO!k2vO${2uO~OR2wO!P.mO!k2vO${2uO'[$`O~O'V(tO}&wX!O&wX~O}.yO!O(Qa~O'c3QO~O]3SO~O[3UO~O!_3XO~P)uO^3ZO~O^3ZO~P)uO#]3]O%m3^O~PEdO_/aO!O3bO%{/`O~P`O!X3dO~O&Q3eOP%}qQ%}qW%}q]%}q^%}qa%}qb%}qg%}qi%}qj%}qk%}qn%}qp%}qu%}qw%}qx%}qy%}q!P%}q!Z%}q!`%}q!c%}q!d%}q!e%}q!f%}q!g%}q!j%}q#_%}q#o%}q#s%}q$z%}q$|%}q%O%}q%P%}q%S%}q%U%}q%X%}q%Y%}q%[%}q%i%}q%o%}q%q%}q%s%}q%u%}q%x%}q&O%}q&S%}q&U%}q&W%}q&Y%}q&[%}q&{%}q'V%}q'`%}q'y%}q!O%}q%v%}q_%}q%{%}q~O}#Oi!O#Oi~P#([O!w3gO}#Oi!O#Oi~O}!Ri!O!Ri~P#([O^$XO!w3nO'Q$XO~O^$XO!X!tO!w3nO'Q$XO~O!T3rO!U3rO'W$_O'c(bO'l+`O~O^$XO!X!tO!`$UO!f3sO!w3nO'Q$XO'[$`O'm&hO~O!S3tO~P$8dO!S3tO!q3wO!t3xO~P$8dO^$XO!X!tO!f3sO!w3nO'Q$XO'm&hO~O}'oq!_'oq^'oq'Q'oq~P!(wO}&mO!_'nq~O#R$siP$siY$si^$sii$sis$si!]$si!^$si!`$si!f$si#V$si#W$si#X$si#Y$si#Z$si#[$si#]$si#^$si#`$si#b$si#d$si#e$si'Q$si'`$si!_$siz$si!P$si'b$si${$si!X$si~P$&|O#R$uiP$uiY$ui^$uii$uis$ui!]$ui!^$ui!`$ui!f$ui#V$ui#W$ui#X$ui#Y$ui#Z$ui#[$ui#]$ui#^$ui#`$ui#b$ui#d$ui#e$ui'Q$ui'`$ui!_$uiz$ui!P$ui'b$ui${$ui!X$ui~P$'oO#R$biP$biY$bi^$bii$bis$bi}$bi!]$bi!^$bi!`$bi!f$bi#V$bi#W$bi#X$bi#Y$bi#Z$bi#[$bi#]$bi#^$bi#`$bi#b$bi#d$bi#e$bi'Q$bi'`$bi!_$biz$bi!P$bi!w$bi'b$bi${$bi!X$bi~P!#TO}&da'Z&da~P!#TO}&ea!_&ea~P!(wO},WO!_'ki~O#h!yi}!yi!O!yi~P#([OP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO'`QOY#Uii#Ui!]#Ui#W#Ui#X#Ui#Y#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui#h#Ui'm#Ui't#Ui'u#Ui}#Ui!O#Ui~O#V#Ui~P$AzO#V9VO~P$AzOP#ZOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO'`QOY#Ui!]#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui#h#Ui'm#Ui't#Ui'u#Ui}#Ui!O#Ui~Oi#Ui~P$DSOi9XO~P$DSOP#ZOi9XOr!xOs!xOu!yO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO#Z9YO'`QO#`#Ui#b#Ui#d#Ui#e#Ui#h#Ui'm#Ui't#Ui'u#Ui}#Ui!O#Ui~OY#Ui!]#Ui#[#Ui#]#Ui#^#Ui~P$F[OY9dO!]9ZO#[9ZO#]9ZO#^9ZO~P$F[OP#ZOY9dOi9XOr!xOs!xOu!yO!]9ZO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO#Z9YO#[9ZO#]9ZO#^9ZO#`9[O'`QO#b#Ui#d#Ui#e#Ui#h#Ui'm#Ui'u#Ui}#Ui!O#Ui~O't#Ui~P$HpO't!zO~P$HpOP#ZOY9dOi9XOr!xOs!xOu!yO!]9ZO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO#Z9YO#[9ZO#]9ZO#^9ZO#`9[O#b9^O'`QO't!zO#d#Ui#e#Ui#h#Ui'm#Ui}#Ui!O#Ui~O'u#Ui~P$JxO'u!{O~P$JxOP#ZOY9dOi9XOr!xOs!xOu!yO!]9ZO!^!vO!`!wO!f#ZO#V9VO#W9WO#X9WO#Y9WO#Z9YO#[9ZO#]9ZO#^9ZO#`9[O#b9^O#d9`O'`QO't!zO'u!{O~O#e#Ui#h#Ui'm#Ui}#Ui!O#Ui~P$MQO^#fy}#fy'Q#fyz#fy!_#fy'b#fy!P#fy${#fy!X#fy~P!(wOP#UiY#Uii#Uis#Ui!]#Ui!^#Ui!`#Ui!f#Ui#V#Ui#W#Ui#X#Ui#Y#Ui#Z#Ui#[#Ui#]#Ui#^#Ui#`#Ui#b#Ui#d#Ui#e#Ui#h#Ui'`#Ui}#Ui!O#Ui~P!#TO!^!vOP'_XY'_Xi'_Xr'_Xs'_Xu'_X!]'_X!`'_X!f'_X#V'_X#W'_X#X'_X#Y'_X#Z'_X#['_X#]'_X#^'_X#`'_X#b'_X#d'_X#e'_X#h'_X'`'_X'm'_X't'_X'u'_X}'_X!O'_X~O#h#ii}#ii!O#ii~P#([O!O4YO~O}&la!O&la~P#([O!X!tO'm&hO}&ma!_&ma~O},wO!_'zi~O},wO!X!tO!_'zi~Oz&oa}&oa~P!#TO!X4aO~O}-OOz'{i~P!#TO}-OOz'{i~Oz4gO~O!X!tO#]4mO~Oi4nO!X!tO'm&hO~Oz4pO~O'Z$dq}$dq#h$dq!w$dq~P!#TO^$Uy}$Uy'Q$Uyz$Uy!_$Uy'b$Uy!P$Uy${$Uy!X$Uy~P!(wO}1uO!P'|a~O!P&]O${4uO~O!P&]O${4uO~P!#TO^!yy}!yy'Q!yyz!yy!_!yy'b!yy!P!yy${!yy!X!yy~P!(wOY4xO~O}.QO!O(Si~O]4}O~O[5OO~O'c&|O}&tX!O&tX~O}2dO!O(Pa~O!O5]O~P$/}Ou-aO'c(bO'l+`O~O!S5`O!T5_O!U5_O!t0RO'W$_O'c(bO'l+`O~O!o5aO!p5aO~P%+jO!T5_O!U5_O'W$_O'c(bO'l+`O~O!P.mO~O!P.mO${5cO~O!P.mO${5cO~P!#TOR5hO!P.mO!k5gO${5cO~OY5mO}&wa!O&wa~O}.yO!O(Qi~O]5pO~O!_5qO~O!_5rO~O!_5sO~O!_5sO~P)uO^5uO~O!X5xO~O!_5zO~O}'ri!O'ri~P#([O^$XO'Q$XO~P!(wO^$XO!w6PO'Q$XO~O^$XO!X!tO!w6PO'Q$XO~O!T6UO!U6UO'W$_O'c(bO'l+`O~O^$XO!X!tO!f6VO!w6PO'Q$XO'm&hO~O!`$UO'[$`O~P%0UO!S6WO~P%/sO}'oy!_'oy^'oy'Q'oy~P!(wO#R$dqP$dqY$dq^$dqi$dqs$dq}$dq!]$dq!^$dq!`$dq!f$dq#V$dq#W$dq#X$dq#Y$dq#Z$dq#[$dq#]$dq#^$dq#`$dq#b$dq#d$dq#e$dq'Q$dq'`$dq!_$dqz$dq!P$dq!w$dq'b$dq${$dq!X$dq~P!#TO}&ei!_&ei~P!(wO#h!yq}!yq!O!yq~P#([Or-gOs-gOu-hOPoaYoaioa!]oa!^oa!`oa!foa#Voa#Woa#Xoa#Yoa#Zoa#[oa#]oa#^oa#`oa#boa#doa#eoa#hoa'`oa'moa'toa'uoa}oa!Ooa~Or'|Ou'}OP$XaY$Xai$Xas$Xa!]$Xa!^$Xa!`$Xa!f$Xa#V$Xa#W$Xa#X$Xa#Y$Xa#Z$Xa#[$Xa#]$Xa#^$Xa#`$Xa#b$Xa#d$Xa#e$Xa#h$Xa'`$Xa'm$Xa't$Xa'u$Xa}$Xa!O$Xa~Or'|Ou'}OP$ZaY$Zai$Zas$Za!]$Za!^$Za!`$Za!f$Za#V$Za#W$Za#X$Za#Y$Za#Z$Za#[$Za#]$Za#^$Za#`$Za#b$Za#d$Za#e$Za#h$Za'`$Za'm$Za't$Za'u$Za}$Za!O$Za~OP$iaY$iai$ias$ia!]$ia!^$ia!`$ia!f$ia#V$ia#W$ia#X$ia#Y$ia#Z$ia#[$ia#]$ia#^$ia#`$ia#b$ia#d$ia#e$ia#h$ia'`$ia}$ia!O$ia~P!#TO#h$Tq}$Tq!O$Tq~P#([O#h$Uq}$Uq!O$Uq~P#([O!O6bO~O'Z$wy}$wy#h$wy!w$wy~P!#TO!X!tO}&mi!_&mi~O!X!tO'm&hO}&mi!_&mi~O},wO!_'zq~Oz&oi}&oi~P!#TO}-OOz'{q~Oz6iO~P!#TOz6iO~O}'^y'Z'^y~P!#TO}&ra!P&ra~P!#TO!P$oq^$oq'Q$oq~P!#TOY6qO~O}.QO!O(Sq~O]6tO~O!P&]O${6uO~O!P&]O${6uO~P!#TO!w6vO}&ta!O&ta~O}2dO!O(Pi~P#([O!T6|O!U6|O'W$_O'c(bO'l+`O~O!S7OO!t3xO~P%?sO!P.mO${7RO~O!P.mO${7RO~P!#TO'c7XO~O}.yO!O(Qq~O!_7[O~O!_7[O~P)uO!_7^O~O!_7_O~O}#Oy!O#Oy~P#([O^$XO!w7eO'Q$XO~O^$XO!X!tO!w7eO'Q$XO~O!T7hO!U7hO'W$_O'c(bO'l+`O~O^$XO!X!tO!f7iO!w7eO'Q$XO'm&hO~O#R$wyP$wyY$wy^$wyi$wys$wy}$wy!]$wy!^$wy!`$wy!f$wy#V$wy#W$wy#X$wy#Y$wy#Z$wy#[$wy#]$wy#^$wy#`$wy#b$wy#d$wy#e$wy'Q$wy'`$wy!_$wyz$wy!P$wy!w$wy'b$wy${$wy!X$wy~P!#TO#h#fy}#fy!O#fy~P#([OP$biY$bii$bis$bi!]$bi!^$bi!`$bi!f$bi#V$bi#W$bi#X$bi#Y$bi#Z$bi#[$bi#]$bi#^$bi#`$bi#b$bi#d$bi#e$bi#h$bi'`$bi}$bi!O$bi~P!#TOr'|Ou'}O'u(ROP$siY$sii$sis$si!]$si!^$si!`$si!f$si#V$si#W$si#X$si#Y$si#Z$si#[$si#]$si#^$si#`$si#b$si#d$si#e$si#h$si'`$si'm$si't$si}$si!O$si~Or'|Ou'}OP$uiY$uii$uis$ui!]$ui!^$ui!`$ui!f$ui#V$ui#W$ui#X$ui#Y$ui#Z$ui#[$ui#]$ui#^$ui#`$ui#b$ui#d$ui#e$ui#h$ui'`$ui'm$ui't$ui'u$ui}$ui!O$ui~O#h$Uy}$Uy!O$Uy~P#([O#h!yy}!yy!O!yy~P#([O!X!tO}&mq!_&mq~O},wO!_'zy~Oz&oq}&oq~P!#TOz7oO~P!#TO}.QO!O(Sy~O}2dO!O(Pq~O!T7{O!U7{O'W$_O'c(bO'l+`O~O!P.mO${8OO~O!P.mO${8OO~P!#TO!_8RO~O&Q8SOP%}!ZQ%}!ZW%}!Z]%}!Z^%}!Za%}!Zb%}!Zg%}!Zi%}!Zj%}!Zk%}!Zn%}!Zp%}!Zu%}!Zw%}!Zx%}!Zy%}!Z!P%}!Z!Z%}!Z!`%}!Z!c%}!Z!d%}!Z!e%}!Z!f%}!Z!g%}!Z!j%}!Z#_%}!Z#o%}!Z#s%}!Z$z%}!Z$|%}!Z%O%}!Z%P%}!Z%S%}!Z%U%}!Z%X%}!Z%Y%}!Z%[%}!Z%i%}!Z%o%}!Z%q%}!Z%s%}!Z%u%}!Z%x%}!Z&O%}!Z&S%}!Z&U%}!Z&W%}!Z&Y%}!Z&[%}!Z&{%}!Z'V%}!Z'`%}!Z'y%}!Z!O%}!Z%v%}!Z_%}!Z%{%}!Z~O^$XO!w8XO'Q$XO~O^$XO!X!tO!w8XO'Q$XO~OP$dqY$dqi$dqs$dq!]$dq!^$dq!`$dq!f$dq#V$dq#W$dq#X$dq#Y$dq#Z$dq#[$dq#]$dq#^$dq#`$dq#b$dq#d$dq#e$dq#h$dq'`$dq}$dq!O$dq~P!#TO}&tq!O&tq~P#([O^$XO!w8nO'Q$XO~OP$wyY$wyi$wys$wy!]$wy!^$wy!`$wy!f$wy#V$wy#W$wy#X$wy#Y$wy#Z$wy#[$wy#]$wy#^$wy#`$wy#b$wy#d$wy#e$wy#h$wy'`$wy}$wy!O$wy~P!#TO'b'dX~P.^O'bZXzZX!_ZX%mZX!PZX${ZX!XZX~P$wO!XcX!_ZX!_cX'mcX~P;OOP9POQ9PO]bOa:fOb!gOgbOi9POjbOkbOn9POp9POuROwbOxbOybO!PSO!Z9RO!`UO!c9PO!d9PO!e9PO!f9PO!g9PO!j!fO#o!iO#s]O'V']O'`QO'y:dO~O}9bO!O$Wa~O]#nOg#{Oi#oOj#nOk#nOn#|Op9gOu#uO!P#vO!Z:iO!`#sO#Q9mO#o$QO$Y9iO$[9kO$_$RO'V&tO'`#pO~O#_'dO~P&*|O!OZX!OcX~P;OO#R9UO~O!X!tO#R9UO~O!w9eO~O!w9nO}'rX!O'rX~O!w9eO}'pX!O'pX~O#R9oO~O'Z9qO~P!#TO#R9vO~O#R9wO~O!X!tO#R9xO~O!X!tO#R9oO~O#h9yO~P#([O#R9zO~O#R9{O~O#R9|O~O#R9}O~O#h:OO~P!#TO#h:PO~P!#TO#s~!^!n!p!q#P#Q'y$Y$[$_$p$z${$|%S%U%X%Y%[%^~TS#s'y#Wy'S'T#u'S'V'c~",
+  goto: "#Ar(WPPPPPPP(XP(iP*[PPPP-qPP.W3h5[5oP5oPPP5o5oP5oP7]PP7bP7vPPPP<VPPPP<V>uPPP>{AVP<VPCmPPPPEe<VPPPPPG^<VPPJ]KYPPPPK^LuPL}NOP<V<V!#V!&O!*o!*o!-|PPP!.T!0w<VPPPPPPPPPP!0zP!2]PP<V!3jP<VP<V<V<V<VP<V!5}PP!8tP!;g!;o!;s!;sP!8qP!;w!;wP!>jP!>n<V<V!>t!Af5oP5oP5o5oP!Bi5o5o!Da5o!Fc5o!HT5o5o!Hq!Jk!Jk!Jo!Jk!JwP!JkP5o!Ks5o!L}5o5o-qPPP!N[PP!Nt!NtP!NtP# Z!NtPP# aP# WP# W# sLy# W#!b#!h#!k(X#!n(XP#!u#!u#!uP(XP(XP(XP(XPP(XP#!{##OP##O(XPPP(XP(XP(XP(XP(XP(X(X##S##^##d##j##x#$O#$U#$`#$f#$p#$v#%U#%[#%b#%p#&V#'i#'w#'}#(T#(Z#(a#(k#(q#(w#)R#)e#)kPPPPPPPPP#)qPP#*e#.cPP#/y#0Q#0YP#4fPP#4j#6}#<w#<{#=O#=R#=^#=aPP#=d#=h#>V#>z#?O#?bPP#?f#?l#?pP#?s#?w#?z#@j#AQ#AV#AY#A]#Ac#Af#Aj#AnmgOSi{!k$W%_%b%c%e*h*m/Z/^Q$elQ$lnQ%VwS&P!`+TQ&d!gS(e#v(jQ)`$fQ)m$nQ*X%PQ+Z&WS+b&]+dQ+s&eQ-_(lQ.x*YW/}+f+g+h+iS2i.m2kU3r0O0Q0SU5_2n2o2pS6U3t3wS6|5`5aQ7h6WR7{7O$lZORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8n!j'_#Y#h&Q'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gQ(u#}Q)e$hQ*Z%SQ*b%[Q+}9fQ-z)YQ.V)fQ/Q*`Q2S.QQ3O.yQ4R9gR4z2TpdOSiw{!k$W%U%_%b%c%e*h*m/Z/^R*]%W&WVOSTijm{!Q!U!Z!h!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:f:gW!aRU!^&QQ$^kQ$dlS$in$nv$spq!o!r$U$q&Y&m&p)q)r)s*f*}+^+x+z/d0_Q${uQ&a!fQ&c!gS(X#s(cS)_$e$fQ)c$hQ)p$pQ*S$}Q*W%PS+r&d&eQ,{(YQ.O)`Q.U)fQ.W)gQ.Z)kQ.s*TS.w*X*YQ0Z+sQ1T,wQ2R.QQ2V.TQ2[.]Q2}.xQ4^1UQ4y2TQ4|2XQ6p4xR7r6q!Y$bl!g$d$e$f&O&c&d&e(d)_)`+Q+a+r+s-X.O/s/z0P0Z1j3q3v6S7f8YQ)W$^Q)x$xQ){$yQ*V%PQ._)pQ.r*SU.v*W*X*YQ2x.sS2|.w.xQ5Y2hQ5l2}S6z5Z5^S7y6{6}Q8d7zR8s8eW#y`$`(r:dS$xr%UQ$ysQ$ztR)v$v$V#x`!t!v#a#s#u$O$P$T&`'w(Q(S(T([(`(p(q)T)V)Y)w)z+o,T-O-Q-j-t-v.d.g.o.q1S1]1g1n1u1x1|2_2u2w4a4m4u5c5h6u7R8O9d9h9i9j9k9l9m9r9s9t9u9v9w9z9{:O:P:d:j:kV(v#}9f9gU&T!`$r+WQ'O!xQ)j$kQ.h)|Q1o-gR5U2d&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:g$]#^Y!]!l$[%s%w&r&y'Q'R'S'T'U'V'W'X'Y'Z'['^'a'e'o)i*x+R+[+t,S,Y,],_,m-k/i/l0[0f0j0k0l0m0n0o0p0q0r0s0t0u0v0y1O1s2P3i3l3|4P4Q4V4W5W5{6O6[6`6a7b7u8V8l8w9Q:]&ZbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gQ&R!`R/o+TY%{!`&P&W+T+ZS(d#v(jS+a&]+dS-X(e(lQ-Y(fQ-`(mQ.j*OU/z+b+f+gS0P+h+iS0T+j2mQ1j-_Q1l-aQ1m-bS2h.m2kU3q/}0O0QQ3u0RQ3v0SS5Z2i2pS5^2n2oU6S3r3t3wQ6X3xS6{5_5`Q6}5aS7f6U6WS7z6|7OQ8Y7hR8e7{lgOSi{!k$W%_%b%c%e*h*m/Z/^Q%g!OS&q!s9UQ)]$cQ*Q${Q*R$|Q+p&bS,R&v9oS-l(}9xQ-|)^Q.l*PQ/b*oQ/c*pQ/k+OQ0X+qS1t-m9|Q1}-}S2Q.P9}Q3h/mQ3k/uQ3z0YQ4w2OQ5y3eQ5|3jQ6Q3pQ6Y3{Q7`5zQ7c6RQ8U7dQ8i8SQ8k8WR8v8m$W#]Y!]!l%s%w&r&y'Q'R'S'T'U'V'W'X'Y'Z'['^'a'e'o)i*x+R+[+t,S,Y,],m-k/i/l0[0f0j0k0l0m0n0o0p0q0r0s0t0u0v0y1O1s2P3i3l3|4P4Q4V4W5W5{6O6[6`6a7b7u8V8l8w9Q:]U(o#w&u0xT)R$[,_$W#[Y!]!l%s%w&r&y'Q'R'S'T'U'V'W'X'Y'Z'['^'a'e'o)i*x+R+[+t,S,Y,],m-k/i/l0[0f0j0k0l0m0n0o0p0q0r0s0t0u0v0y1O1s2P3i3l3|4P4Q4V4W5W5{6O6[6`6a7b7u8V8l8w9Q:]Q'`#]S)Q$[,_R-n)R&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gQ%byQ%czQ%e|Q%f}R/Y*kQ&^!fQ)S$^Q+m&aS-s)W)pS0U+k+lW1w-p-q-r._S3y0V0WU4t1y1z1{U6n4s5Q5RQ7q6oR8`7tT+c&]+dS+a&]+dU/z+b+f+gS0P+h+iS0T+j2mS2h.m2kU3q/}0O0QQ3u0RQ3v0SS5Z2i2pS5^2n2oU6S3r3t3wQ6X3xS6{5_5`Q6}5aS7f6U6WS7z6|7OQ8Y7hR8e7{S+c&]+dT2j.m2kS&k!n/WQ,z(XQ-V(dS/y+a2hQ1Y,{S1d-W-`U3s0P0T5^Q4]1TS4k1k1mU6V3u3v6}Q6d4^Q6m4nR7i6XQ!uXS&j!n/WQ)O$VQ)Z$aQ)a$gQ+v&kQ,y(XQ-U(dQ-Z(gQ-{)[Q.t*US/x+a2hS1X,z,{S1c-V-`Q1f-YQ1i-[Q2z.uW3o/y0P0T5^Q4[1TQ4`1YS4e1d1mQ4l1lQ5j2{W6T3s3u3v6}S6c4]4^Q6h4gQ6k4kQ6x5XQ7V5kS7g6V6XQ7k6dQ7m6iQ7p6mQ7w6yQ8Q7WQ8Z7iQ8^7oQ8b7xQ8q8cQ8y8rQ8}8zQ:V:RQ:`:ZR:a:[$nWORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8nS!um!h!j:Q#Y#h&Q'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gR:V:f$nXORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8nQ$Va!Y$al!g$d$e$f&O&c&d&e(d)_)`+Q+a+r+s-X.O/s/z0P0Z1j3q3v6S7f8YS$gm!hQ)[$bQ*U%PW.u*V*W*X*YU2{.v.w.xQ5X2hS5k2|2}U6y5Y5Z5^Q7W5lU7x6z6{6}S8c7y7zS8r8d8eQ8z8s!j:R#Y#h&Q'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gQ:Z:eR:[:f$f[OSTij{!Q!U!Z!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8nU!eRU!^v$spq!o!r$U$q&Y&m&p)q)r)s*f*}+^+x+z/d0_Q*c%[!h:S#Y#h'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gR:U&QS&U!`$rR/q+W$lZORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8n!j'_#Y#h&Q'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gR*b%[R'O!x!h#SY!]$[%s%w&r&y'X'Y'Z'['a'e)i*x+[+t,S,Y,m-k0[0f0v1s2P3l3|4P6O7b8V8l8w9Q!R9]'^'o+R,_/i/l0j0r0s0t0u0y1O3i4Q4V4W5W5{6[6`6a7u:]!d#UY!]$[%s%w&r&y'Z'['a'e)i*x+[+t,S,Y,m-k0[0f0v1s2P3l3|4P6O7b8V8l8w9Q}9_'^'o+R,_/i/l0j0t0u0y1O3i4Q4V4W5W5{6[6`6a7u:]!`#YY!]$[%s%w&r&y'a'e)i*x+[+t,S,Y,m-k0[0f0v1s2P3l3|4P6O7b8V8l8w9Ql(T#q&w(|,u,}-c-d0d1r4Z4o:W:b:cx:g'^'o+R,_/i/l0j0y1O3i4Q4V4W5W5{6[6`6a7u:]!`:j&s'c(W(^+l,Q,j-R-o-r.c.e0W0c1Z1_1{2a2c2s4O4b4h4q4v5R5f6Z6f6l7TZ:k0w4U6]7j8[&YbORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gS#i_#jR0{,b&a^ORSTU_ij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h#j$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,b,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gS#d]#kT'h#f'lT#e]#kT'j#f'l&a_ORSTU_ij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#Y#_#b#h#j$W$j%W%Z%[%_%a%b%c%e%i%t%|&Q&X&_&i&v&z'q'{(})U*d*h*m*|+P+n+u,W,^,b,c-h-m-u.P.p/R/S/T/V/Z/^/`/n/w0]0g0z2^2f2v3Z3]3^3g3n5g5u6P6v7e8X8n9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:gT#i_#jQ#l_R's#j$naORSTUij{!Q!U!Z!^!k!s!w!y!|!}#O#P#Q#R#S#T#U#V#W#_#b$W$j%W%Z%[%_%a%b%c%e%i%t%|&X&_&i&v&z'{(})U*d*h*m+n+u,W,^-h-m-u.P.p/R/S/T/V/Z/^/`/w0]0g2^2v3Z3]3^3n5g5u6P7e8X8n!k:e#Y#h&Q'q*|+P,c/n0z2f3g6v9P9R9U9V9W9X9Y9Z9[9]9^9_9`9a9b9e9n9o9q9x9y9|9}:g#RcOSUi{!Q!U!k!y#h$W%W%Z%[%_%a%b%c%e%i%|&_'q)U*d*h*m+n,c-h-u.p/R/S/T/V/Z/^/`0z2^2v3Z3]3^5g5ut#w`!v$O$P$T(Q(S(T([(p(q,T-j1S1n:d:j:k!|&u!t#a#s#u&`'w(`)T)V)Y)w)z+o-O-Q-t-v.d.g.o.q1]1g1u1x1|2_2u2w4a4m4u5c5h6u7R8O9h9j9l9r9t9v9z:OQ(z$RQ,n'|c0x9d9i9k9m9s9u9w9{:Pt#t`!v$O$P$T(Q(S(T([(p(q,T-j1S1n:d:j:kS(g#v(jQ({$SQ-[(h!|:X!t#a#s#u&`'w(`)T)V)Y)w)z+o-O-Q-t-v.d.g.o.q1]1g1u1x1|2_2u2w4a4m4u5c5h6u7R8O9h9j9l9r9t9v9z:Ob:Y9d9i9k9m9s9u9w9{:PQ:^:hR:_:it#w`!v$O$P$T(Q(S(T([(p(q,T-j1S1n:d:j:k!|&u!t#a#s#u&`'w(`)T)V)Y)w)z+o-O-Q-t-v.d.g.o.q1]1g1u1x1|2_2u2w4a4m4u5c5h6u7R8O9h9j9l9r9t9v9z:Oc0x9d9i9k9m9s9u9w9{:PleOSi{!k$W%_%b%c%e*h*m/Z/^Q(_#uQ*t%lQ*u%nR1[-O$U#x`!t!v#a#s#u$O$P$T&`'w(Q(S(T([(`(p(q)T)V)Y)w)z+o,T-O-Q-j-t-v.d.g.o.q1S1]1g1n1u1x1|2_2u2w4a4m4u5c5h6u7R8O9d9h9i9j9k9l9m9r9s9t9u9v9w9z9{:O:P:d:j:kQ)y$yQ.f){Q2b.eR5T2cT(i#v(jS(i#v(jT2j.m2kQ)Z$aQ-Z(gQ-{)[Q.t*UQ2z.uQ5j2{Q6x5XQ7V5kQ7w6yQ8Q7WQ8b7xQ8q8cQ8y8rR8}8zl(Q#q&w(|,u,}-c-d0d1r4Z4o:W:b:c!`9r&s'c(W(^+l,Q,j-R-o-r.c.e0W0c1Z1_1{2a2c2s4O4b4h4q4v5R5f6Z6f6l7TZ9s0w4U6]7j8[n(S#q&w(|,s,u,}-c-d0d1r4Z4o:W:b:c!b9t&s'c(W(^+l,Q,j-R-o-r.c.e0W0a0c1Z1_1{2a2c2s4O4b4h4q4v5R5f6Z6f6l7T]9u0w4U6]6^7j8[pdOSiw{!k$W%U%_%b%c%e*h*m/Z/^Q%RvR*d%[pdOSiw{!k$W%U%_%b%c%e*h*m/Z/^R%RvQ)}$zR.b)vqdOSiw{!k$W%U%_%b%c%e*h*m/Z/^Q.n*SS2t.r.sW5b2q2r2s2xU7Q5d5e5fU7|7P7S7TQ8f7}R8t8gQ%YwR*^%UR3R.{R7Y5mS$in$nR.W)gQ%_xR*h%`R*n%fT/[*m/^QiOQ!kST$Zi!kQ'y#pR,k'yQ!WQR%q!WQ![RU%u![%v*yQ%v!]R*y%wQ+U&RR/p+UQ,U&wR0e,UQ,X&yS0h,X0iR0i,YQ+d&]R/{+dQ&Z!cQ*z%xT+_&Z*zQ+X&UR/r+XQ&n!pQ+w&lU+{&n+w0`R0`+|Q'l#fR,d'lQ#j_R'r#jQ#`YU'b#`*w9cQ*w9QR9c'oQ,x(XW1V,x1W4_6eU1W,y,z,{S4_1X1YR6e4`#q(O#q&s&w'c(W(^(w(x(|+l,O,P,Q,j,s,t,u,}-R-c-d-o-r.c.e0W0a0b0c0d0w1Z1_1r1{2a2c2s4O4S4T4U4Z4b4h4o4q4v5R5f6Z6]6^6_6f6l7T7j8[:W:b:cQ-P(^U1^-P1`4cQ1`-RR4c1_Q(j#vR-](jQ(s#zR-f(sQ1v-oR4r1vQ)t$tR.a)tQ2e.hS5V2e6wR6w5WQ*P${R.k*PQ2k.mR5[2kQ.z*ZS3P.z5nR5n3RQ.R)cW2U.R2W4{6rQ2W.UQ4{2VR6r4|Q)h$iR.X)hQ/^*mR3a/^WhOSi!kQ%d{Q)P$WQ*g%_Q*i%bQ*j%cQ*l%eQ/X*hS/[*m/^R3`/ZQ$YfQ%h!PQ%k!RQ%m!SQ%o!TQ)o$oQ)u$uQ*]%YQ*r%jS.}*^*aQ/e*qQ/f*tQ/g*uS/v+a2hQ1a-TQ1b-UQ1h-ZQ2Z.[Q2`.cQ2y.tQ3T/PQ3_/YY3m/x/y0P0T5^Q4d1cQ4f1eQ4i1iQ5P2]Q5S2aQ5i2zQ5o3S[5}3l3o3s3u3v6}Q6g4eQ6j4jQ6s4}Q7U5jQ7Z5pW7a6O6T6V6XQ7l6hQ7n6kQ7s6tQ7v6xQ8P7VU8T7b7g7iQ8]7mQ8_7pQ8a7wQ8h8QS8j8V8ZQ8o8^Q8p8bQ8u8lQ8x8qQ8{8wQ8|8yR9O8}Q$clQ&b!gU)^$d$e$fQ+O&OU+q&c&d&eQ-T(dS-})_)`Q/m+QQ/u+aS0Y+r+sQ1e-XQ2O.OQ3j/sS3p/z0PQ3{0ZQ4j1jS6R3q3vQ7d6SQ8W7fR8m8YS#r`:dR)X$`U#z`$`:dR-e(rQ#q`S&s!t)YQ&w!vQ'c#aQ(W#sQ(^#uQ(w$OQ(x$PQ(|$TQ+l&`Q,O9hQ,P9jQ,Q9lQ,j'wQ,s(QQ,t(SQ,u(TQ,}([Q-R(`Q-c(pQ-d(qd-o)T-t.o1x2u4u5c6u7R8OQ-r)VQ.c)wQ.e)zQ0W+oQ0a9rQ0b9tQ0c9vQ0d,TQ0w9dQ1Z-OQ1_-QQ1r-jQ1{-vQ2a.dQ2c.gQ2s.qQ4O9zQ4S9iQ4T9kQ4U9mQ4Z1SQ4b1]Q4h1gQ4o1nQ4q1uQ4v1|Q5R2_Q5f2wQ6Z:OQ6]9wQ6^9sQ6_9uQ6f4aQ6l4mQ7T5hQ7j9{Q8[:PQ:W:dQ:b:jR:c:kT'x#p'ylfOSi{!k$W%_%b%c%e*h*m/Z/^S!mU%aQ%j!QQ%p!UQ'P!yQ'p#hS*a%W%ZQ*e%[Q*q%iQ*{%|Q+k&_Q,h'qQ-q)UQ/U*dQ0V+nQ0},cQ1p-hQ1z-uQ2r.pQ3V/RQ3W/SQ3Y/TQ3[/VQ3c/`Q4X0zQ5Q2^Q5e2vQ5t3ZQ5v3]Q5w3^Q7S5gR7]5u!vYOSUi{!Q!k!y$W%W%Z%[%_%a%b%c%e%i%|&_)U*d*h*m+n-h-u.p/R/S/T/V/Z/^/`2^2v3Z3]3^5g5uQ!]RQ!lTQ$[jQ%s!ZQ%w!^Q&r!sQ&y!wQ'Q!|Q'R!}Q'S#OQ'T#PQ'U#QQ'V#RQ'W#SQ'X#TQ'Y#UQ'Z#VQ'[#WQ'^#YQ'a#_Q'e#bW'o#h'q,c0zQ)i$jQ*x%tS+R&Q/nQ+[&XQ+t&iQ,S&vQ,Y&zQ,]9PQ,_9RQ,m'{Q-k(}Q/i*|Q/l+PQ0[+uQ0f,WQ0j9UQ0k9VQ0l9WQ0m9XQ0n9YQ0o9ZQ0p9[Q0q9]Q0r9^Q0s9_Q0t9`Q0u9aQ0v,^Q0y9eQ1O9bQ1s-mQ2P.PQ3i9nQ3l/wQ3|0]Q4P0gQ4Q9oQ4V9qQ4W9xQ5W2fQ5{3gQ6O3nQ6[9yQ6`9|Q6a9}Q7b6PQ7u6vQ8V7eQ8l8XQ8w8nQ9Q!UR:]:gT!VQ!WR!_RR&S!`S&O!`+TS+Q&P&WR/s+ZR&x!vR&{!wT!qU$US!pU$UU$tpq*fS&l!o!rQ+y&mQ+|&pQ.`)sS0^+x+zR3}0_[!bR!^$q&Y)q+^h!nUpq!o!r$U&m&p)s+x+z0_Q/W*fQ/j*}Q3f/dT:T&Q)rT!dR$qS!cR$qS%x!^)qS+S&Q)rQ+]&YR/t+^T&V!`$rQ#f]R'u#kT'k#f'lR0|,bT(Z#s(cR(a#uQ-p)TQ1y-tQ2q.oQ4s1xQ5d2uQ6o4uQ7P5cQ7t6uQ7}7RR8g8OlgOSi{!k$W%_%b%c%e*h*m/Z/^Q%XwR*]%UV$upq*fR.i)|R*[%SQ$mnR)n$nR)d$hT%]x%`T%^x%`T/]*m/^",
+  nodeNames: "⚠ ArithOp ArithOp extends LineComment BlockComment Script ExportDeclaration export Star as VariableName from String ; default FunctionDeclaration async function VariableDefinition TypeParamList TypeDefinition ThisType this LiteralType ArithOp Number BooleanLiteral TemplateType VoidType void TypeofType typeof MemberExpression . ?. PropertyName [ TemplateString null super RegExp ] ArrayExpression Spread , } { ObjectExpression Property async get set PropertyDefinition Block : NewExpression new TypeArgList CompareOp < ) ( ArgList UnaryExpression await yield delete LogicOp BitOp ParenthesizedExpression ClassExpression class extends ClassBody MethodDeclaration Privacy static abstract override PrivatePropertyDefinition PropertyDeclaration readonly Optional TypeAnnotation Equals FunctionExpression ArrowFunction ParamList ParamList ArrayPattern ObjectPattern PatternProperty Privacy readonly Arrow MemberExpression PrivatePropertyName BinaryExpression ArithOp ArithOp ArithOp ArithOp BitOp CompareOp in instanceof const CompareOp BitOp BitOp BitOp LogicOp LogicOp ConditionalExpression LogicOp LogicOp AssignmentExpression UpdateOp PostfixExpression CallExpression TaggedTemplatExpression DynamicImport import ImportMeta JSXElement JSXSelfCloseEndTag JSXStartTag JSXSelfClosingTag JSXIdentifier JSXNamespacedName JSXMemberExpression JSXSpreadAttribute JSXAttribute JSXAttributeValue JSXEscape JSXEndTag JSXOpenTag JSXFragmentTag JSXText JSXEscape JSXStartCloseTag JSXCloseTag PrefixCast ArrowFunction TypeParamList SequenceExpression KeyofType keyof UniqueType unique ImportType InferredType infer TypeName ParenthesizedType FunctionSignature ParamList NewSignature IndexedType TupleType Label ArrayType ReadonlyType ObjectType MethodType PropertyType IndexSignature CallSignature TypePredicate is NewSignature new UnionType LogicOp IntersectionType LogicOp ConditionalType ParameterizedType ClassDeclaration abstract implements type VariableDeclaration let var TypeAliasDeclaration InterfaceDeclaration interface EnumDeclaration enum EnumBody NamespaceDeclaration namespace module AmbientDeclaration declare GlobalDeclaration global ClassDeclaration ClassBody MethodDeclaration AmbientFunctionDeclaration ExportGroup VariableName VariableName ImportDeclaration ImportGroup ForStatement for ForSpec ForInSpec ForOfSpec of WhileStatement while WithStatement with DoStatement do IfStatement if else SwitchStatement switch SwitchBody CaseLabel case DefaultLabel TryStatement try catch finally ReturnStatement return ThrowStatement throw BreakStatement break ContinueStatement continue DebuggerStatement debugger LabeledStatement ExpressionStatement",
+  maxTerm: 329,
   context: trackNewline,
   nodeProps: [
-    [common_dist["b" /* NodeProp */].group, -26,7,14,16,54,176,180,183,184,186,189,192,203,205,211,213,215,217,220,226,230,232,234,236,238,240,241,"Statement",-30,11,13,23,26,27,38,39,40,41,43,48,56,64,70,71,84,85,94,95,111,114,116,117,118,119,121,122,140,141,143,"Expression",-22,22,24,28,29,31,144,146,148,149,151,152,153,155,156,157,159,160,161,170,172,174,175,"Type",-2,75,79,"ClassItem"],
-    [common_dist["b" /* NodeProp */].closedBy, 37,"]",47,"}",62,")",124,"JSXSelfCloseEndTag JSXEndTag",138,"JSXEndTag"],
-    [common_dist["b" /* NodeProp */].openedBy, 42,"[",46,"{",61,"(",123,"JSXStartTag",133,"JSXStartTag JSXStartCloseTag"]
+    [common_dist["b" /* NodeProp */].group, -26,7,14,16,54,179,183,186,187,189,192,195,206,208,214,216,218,220,223,229,233,235,237,239,241,243,244,"Statement",-30,11,13,23,26,27,38,39,40,41,43,48,56,64,70,71,86,87,96,98,114,117,119,120,121,122,124,125,143,144,146,"Expression",-22,22,24,28,29,31,147,149,151,152,154,155,156,158,159,160,162,163,164,173,175,177,178,"Type",-2,75,81,"ClassItem"],
+    [common_dist["b" /* NodeProp */].closedBy, 37,"]",47,"}",62,")",127,"JSXSelfCloseEndTag JSXEndTag",141,"JSXEndTag"],
+    [common_dist["b" /* NodeProp */].openedBy, 42,"[",46,"{",61,"(",126,"JSXStartTag",136,"JSXStartTag JSXStartCloseTag"]
   ],
   skippedNodes: [0,4,5],
   repeatNodeCount: 28,
-  tokenData: "!As~R!`OX%TXY%cYZ'RZ[%c[]%T]^'R^p%Tpq%cqr'crs(kst%Ttu0huv2xvw3mwx4kxy;Ryz;cz{;s{|<s|}=W}!O<s!O!P=h!P!QAt!Q!R!.d!R![!/y![!]!5i!]!^!5{!^!_!6]!_!`!7Y!`!a!8Q!a!b!9w!b!c%T!c!}0h!}#O!;Y#O#P%T#P#Q!;j#Q#R!;z#R#S0h#S#T!<_#T#o0h#o#p!<o#p#q!<t#q#r!=[#r#s!=n#s$f%T$f$g%c$g#BY0h#BY#BZ!>O#BZ$IS0h$IS$I_!>O$I_$I|0h$I|$I}!@g$I}$JO!@g$JO$JT0h$JT$JU!>O$JU$KV0h$KV$KW!>O$KW&FU0h&FU&FV!>O&FV?HT0h?HT?HU!>O?HU~0hW%YR#|WO!^%T!_#o%T#p~%T,T%jg#|W'P+{OX%TXY%cYZ%TZ[%c[p%Tpq%cq!^%T!_#o%T#p$f%T$f$g%c$g#BY%T#BY#BZ%c#BZ$IS%T$IS$I_%c$I_$JT%T$JT$JU%c$JU$KV%T$KV$KW%c$KW&FU%T&FU&FV%c&FV?HT%T?HT?HU%c?HU~%T,T'YR#|W'Q+{O!^%T!_#o%T#p~%T$T'jS#|W!f#{O!^%T!_!`'v!`#o%T#p~%T$O'}S#]#v#|WO!^%T!_!`(Z!`#o%T#p~%T$O(bR#]#v#|WO!^%T!_#o%T#p~%T'u(rZ#|W]!ROY(kYZ)eZr(krs*rs!^(k!^!_+U!_#O(k#O#P-b#P#o(k#o#p+U#p~(k&r)jV#|WOr)ers*Ps!^)e!^!_*a!_#o)e#o#p*a#p~)e&r*WR#w&j#|WO!^%T!_#o%T#p~%T&j*dROr*ars*ms~*a&j*rO#w&j'u*{R#w&j#|W]!RO!^%T!_#o%T#p~%T'm+ZV]!ROY+UYZ*aZr+Urs+ps#O+U#O#P+w#P~+U'm+wO#w&j]!R'm+zROr+Urs,Ts~+U'm,[U#w&j]!ROY,nZr,nrs-Vs#O,n#O#P-[#P~,n!R,sU]!ROY,nZr,nrs-Vs#O,n#O#P-[#P~,n!R-[O]!R!R-_PO~,n'u-gV#|WOr(krs-|s!^(k!^!_+U!_#o(k#o#p+U#p~(k'u.VZ#w&j#|W]!ROY.xYZ%TZr.xrs/rs!^.x!^!_,n!_#O.x#O#P0S#P#o.x#o#p,n#p~.x!Z/PZ#|W]!ROY.xYZ%TZr.xrs/rs!^.x!^!_,n!_#O.x#O#P0S#P#o.x#o#p,n#p~.x!Z/yR#|W]!RO!^%T!_#o%T#p~%T!Z0XT#|WO!^.x!^!_,n!_#o.x#o#p,n#p~.x&i0s_#|W#rS'S%k'`pOt%Ttu0hu}%T}!O1r!O!Q%T!Q![0h![!^%T!_!c%T!c!}0h!}#R%T#R#S0h#S#T%T#T#o0h#p$g%T$g~0h[1y_#|W#rSOt%Ttu1ru}%T}!O1r!O!Q%T!Q![1r![!^%T!_!c%T!c!}1r!}#R%T#R#S1r#S#T%T#T#o1r#p$g%T$g~1r$O3PS#U#v#|WO!^%T!_!`3]!`#o%T#p~%T$O3dR#|W#g#vO!^%T!_#o%T#p~%T%r3tU'q%j#|WOv%Tvw4Ww!^%T!_!`3]!`#o%T#p~%T$O4_S#|W#a#vO!^%T!_!`3]!`#o%T#p~%T'u4rZ#|W]!ROY4kYZ5eZw4kwx*rx!^4k!^!_6]!_#O4k#O#P8]#P#o4k#o#p6]#p~4k&r5jV#|WOw5ewx*Px!^5e!^!_6P!_#o5e#o#p6P#p~5e&j6SROw6Pwx*mx~6P'm6bV]!ROY6]YZ6PZw6]wx+px#O6]#O#P6w#P~6]'m6zROw6]wx7Tx~6]'m7[U#w&j]!ROY7nZw7nwx-Vx#O7n#O#P8V#P~7n!R7sU]!ROY7nZw7nwx-Vx#O7n#O#P8V#P~7n!R8YPO~7n'u8bV#|WOw4kwx8wx!^4k!^!_6]!_#o4k#o#p6]#p~4k'u9QZ#w&j#|W]!ROY9sYZ%TZw9swx/rx!^9s!^!_7n!_#O9s#O#P:m#P#o9s#o#p7n#p~9s!Z9zZ#|W]!ROY9sYZ%TZw9swx/rx!^9s!^!_7n!_#O9s#O#P:m#P#o9s#o#p7n#p~9s!Z:rT#|WO!^9s!^!_7n!_#o9s#o#p7n#p~9s%V;YR!`$}#|WO!^%T!_#o%T#p~%TZ;jR!_R#|WO!^%T!_#o%T#p~%T%R;|U'T!R#V#v#|WOz%Tz{<`{!^%T!_!`3]!`#o%T#p~%T$O<gS#S#v#|WO!^%T!_!`3]!`#o%T#p~%T$u<zSi$m#|WO!^%T!_!`3]!`#o%T#p~%T&i=_R}&a#|WO!^%T!_#o%T#p~%T&i=oVr%n#|WO!O%T!O!P>U!P!Q%T!Q![>z![!^%T!_#o%T#p~%Ty>ZT#|WO!O%T!O!P>j!P!^%T!_#o%T#p~%Ty>qR|q#|WO!^%T!_#o%T#p~%Ty?RZ#|WjqO!Q%T!Q![>z![!^%T!_!g%T!g!h?t!h#R%T#R#S>z#S#X%T#X#Y?t#Y#o%T#p~%Ty?yZ#|WO{%T{|@l|}%T}!O@l!O!Q%T!Q![AW![!^%T!_#R%T#R#SAW#S#o%T#p~%Ty@qV#|WO!Q%T!Q![AW![!^%T!_#R%T#R#SAW#S#o%T#p~%TyA_V#|WjqO!Q%T!Q![AW![!^%T!_#R%T#R#SAW#S#o%T#p~%T,TA{`#|W#T#vOYB}YZ%TZzB}z{Ht{!PB}!P!Q!+m!Q!^B}!^!_EQ!_!`!,f!`!a!-e!a!}B}!}#OFy#O#PHY#P#oB}#o#pEQ#p~B}XCU[#|WyPOYB}YZ%TZ!PB}!P!QCz!Q!^B}!^!_EQ!_!}B}!}#OFy#O#PHY#P#oB}#o#pEQ#p~B}XDR_#|WyPO!^%T!_#Z%T#Z#[Cz#[#]%T#]#^Cz#^#a%T#a#bCz#b#g%T#g#hCz#h#i%T#i#jCz#j#m%T#m#nCz#n#o%T#p~%TPEVVyPOYEQZ!PEQ!P!QEl!Q!}EQ!}#OFT#O#PFp#P~EQPEqUyP#Z#[El#]#^El#a#bEl#g#hEl#i#jEl#m#nElPFWTOYFTZ#OFT#O#PFg#P#QEQ#Q~FTPFjQOYFTZ~FTPFsQOYEQZ~EQXGOY#|WOYFyYZ%TZ!^Fy!^!_FT!_#OFy#O#PGn#P#QB}#Q#oFy#o#pFT#p~FyXGsV#|WOYFyYZ%TZ!^Fy!^!_FT!_#oFy#o#pFT#p~FyXH_V#|WOYB}YZ%TZ!^B}!^!_EQ!_#oB}#o#pEQ#p~B},TH{^#|WyPOYHtYZIwZzHtz{LY{!PHt!P!Q!*Z!Q!^Ht!^!_Ne!_!}Ht!}#O!&U#O#P!)i#P#oHt#o#pNe#p~Ht,TI|V#|WOzIwz{Jc{!^Iw!^!_Ke!_#oIw#o#pKe#p~Iw,TJhX#|WOzIwz{Jc{!PIw!P!QKT!Q!^Iw!^!_Ke!_#oIw#o#pKe#p~Iw,TK[R#|WT+{O!^%T!_#o%T#p~%T+{KhROzKez{Kq{~Ke+{KtTOzKez{Kq{!PKe!P!QLT!Q~Ke+{LYOT+{,TLa^#|WyPOYHtYZIwZzHtz{LY{!PHt!P!QM]!Q!^Ht!^!_Ne!_!}Ht!}#O!&U#O#P!)i#P#oHt#o#pNe#p~Ht,TMf_#|WT+{yPO!^%T!_#Z%T#Z#[Cz#[#]%T#]#^Cz#^#a%T#a#bCz#b#g%T#g#hCz#h#i%T#i#jCz#j#m%T#m#nCz#n#o%T#p~%T+{NjYyPOYNeYZKeZzNez{! Y{!PNe!P!Q!%Q!Q!}Ne!}#O!!h#O#P!$n#P~Ne+{! _YyPOYNeYZKeZzNez{! Y{!PNe!P!Q! }!Q!}Ne!}#O!!h#O#P!$n#P~Ne+{!!UUT+{yP#Z#[El#]#^El#a#bEl#g#hEl#i#jEl#m#nEl+{!!kWOY!!hYZKeZz!!hz{!#T{#O!!h#O#P!$[#P#QNe#Q~!!h+{!#WYOY!!hYZKeZz!!hz{!#T{!P!!h!P!Q!#v!Q#O!!h#O#P!$[#P#QNe#Q~!!h+{!#{TT+{OYFTZ#OFT#O#PFg#P#QEQ#Q~FT+{!$_TOY!!hYZKeZz!!hz{!#T{~!!h+{!$qTOYNeYZKeZzNez{! Y{~Ne+{!%V_yPOzKez{Kq{#ZKe#Z#[!%Q#[#]Ke#]#^!%Q#^#aKe#a#b!%Q#b#gKe#g#h!%Q#h#iKe#i#j!%Q#j#mKe#m#n!%Q#n~Ke,T!&Z[#|WOY!&UYZIwZz!&Uz{!'P{!^!&U!^!_!!h!_#O!&U#O#P!(w#P#QHt#Q#o!&U#o#p!!h#p~!&U,T!'U^#|WOY!&UYZIwZz!&Uz{!'P{!P!&U!P!Q!(Q!Q!^!&U!^!_!!h!_#O!&U#O#P!(w#P#QHt#Q#o!&U#o#p!!h#p~!&U,T!(XY#|WT+{OYFyYZ%TZ!^Fy!^!_FT!_#OFy#O#PGn#P#QB}#Q#oFy#o#pFT#p~Fy,T!(|X#|WOY!&UYZIwZz!&Uz{!'P{!^!&U!^!_!!h!_#o!&U#o#p!!h#p~!&U,T!)nX#|WOYHtYZIwZzHtz{LY{!^Ht!^!_Ne!_#oHt#o#pNe#p~Ht,T!*bc#|WyPOzIwz{Jc{!^Iw!^!_Ke!_#ZIw#Z#[!*Z#[#]Iw#]#^!*Z#^#aIw#a#b!*Z#b#gIw#g#h!*Z#h#iIw#i#j!*Z#j#mIw#m#n!*Z#n#oIw#o#pKe#p~Iw,T!+tV#|WS+{OY!+mYZ%TZ!^!+m!^!_!,Z!_#o!+m#o#p!,Z#p~!+m+{!,`QS+{OY!,ZZ~!,Z$P!,o[#|W#g#vyPOYB}YZ%TZ!PB}!P!QCz!Q!^B}!^!_EQ!_!}B}!}#OFy#O#PHY#P#oB}#o#pEQ#p~B}]!-n[#oS#|WyPOYB}YZ%TZ!PB}!P!QCz!Q!^B}!^!_EQ!_!}B}!}#OFy#O#PHY#P#oB}#o#pEQ#p~B}y!.kd#|WjqO!O%T!O!P>z!P!Q%T!Q![!/y![!^%T!_!g%T!g!h?t!h#R%T#R#S!/y#S#U%T#U#V!1a#V#X%T#X#Y?t#Y#b%T#b#c!1P#c#d!2o#d#l%T#l#m!3w#m#o%T#p~%Ty!0Q_#|WjqO!O%T!O!P>z!P!Q%T!Q![!/y![!^%T!_!g%T!g!h?t!h#R%T#R#S!/y#S#X%T#X#Y?t#Y#b%T#b#c!1P#c#o%T#p~%Ty!1WR#|WjqO!^%T!_#o%T#p~%Ty!1fW#|WO!Q%T!Q!R!2O!R!S!2O!S!^%T!_#R%T#R#S!2O#S#o%T#p~%Ty!2VW#|WjqO!Q%T!Q!R!2O!R!S!2O!S!^%T!_#R%T#R#S!2O#S#o%T#p~%Ty!2tV#|WO!Q%T!Q!Y!3Z!Y!^%T!_#R%T#R#S!3Z#S#o%T#p~%Ty!3bV#|WjqO!Q%T!Q!Y!3Z!Y!^%T!_#R%T#R#S!3Z#S#o%T#p~%Ty!3|Z#|WO!Q%T!Q![!4o![!^%T!_!c%T!c!i!4o!i#R%T#R#S!4o#S#T%T#T#Z!4o#Z#o%T#p~%Ty!4vZ#|WjqO!Q%T!Q![!4o![!^%T!_!c%T!c!i!4o!i#R%T#R#S!4o#S#T%T#T#Z!4o#Z#o%T#p~%T%w!5rR!XV#|W#e%hO!^%T!_#o%T#p~%T!P!6SR^w#|WO!^%T!_#o%T#p~%T+c!6hR'Xd!]%Y#p&s'uP!P!Q!6q!^!_!6v!_!`!7TW!6vO$OW#v!6{P#W#v!_!`!7O#v!7TO#g#v#v!7YO#X#v%w!7aT!u%o#|WO!^%T!_!`'v!`!a!7p!a#o%T#p~%T$P!7wR#P#w#|WO!^%T!_#o%T#p~%T%w!8]T'W!s#X#v#yS#|WO!^%T!_!`!8l!`!a!8|!a#o%T#p~%T$O!8sR#X#v#|WO!^%T!_#o%T#p~%T$O!9TT#W#v#|WO!^%T!_!`3]!`!a!9d!a#o%T#p~%T$O!9kS#W#v#|WO!^%T!_!`3]!`#o%T#p~%T%w!:OV'i%o#|WO!O%T!O!P!:e!P!^%T!_!a%T!a!b!:u!b#o%T#p~%T$`!:lRs$W#|WO!^%T!_#o%T#p~%T$O!:|S#|W#b#vO!^%T!_!`3]!`#o%T#p~%T&e!;aRu&]#|WO!^%T!_#o%T#p~%TZ!;qRzR#|WO!^%T!_#o%T#p~%T$O!<RS#_#v#|WO!^%T!_!`3]!`#o%T#p~%T$P!<fR#|W']#wO!^%T!_#o%T#p~%T~!<tO!P~%r!<{T'p%j#|WO!^%T!_!`3]!`#o%T#p#q!:u#q~%T$u!=eR!O$k#|W'_QO!^%T!_#o%T#p~%TX!=uR!gP#|WO!^%T!_#o%T#p~%T,T!>]r#|W'P+{#rS'S%k'`pOX%TXY%cYZ%TZ[%c[p%Tpq%cqt%Ttu0hu}%T}!O1r!O!Q%T!Q![0h![!^%T!_!c%T!c!}0h!}#R%T#R#S0h#S#T%T#T#o0h#p$f%T$f$g%c$g#BY0h#BY#BZ!>O#BZ$IS0h$IS$I_!>O$I_$JT0h$JT$JU!>O$JU$KV0h$KV$KW!>O$KW&FU0h&FU&FV!>O&FV?HT0h?HT?HU!>O?HU~0h,T!@t_#|W'Q+{#rS'S%k'`pOt%Ttu0hu}%T}!O1r!O!Q%T!Q![0h![!^%T!_!c%T!c!}0h!}#R%T#R#S0h#S#T%T#T#o0h#p$g%T$g~0h",
+  tokenData: "!Ck~R!`OX%TXY%cYZ'RZ[%c[]%T]^'R^p%Tpq%cqr'crs(kst0htu2`uv4pvw5ewx6cxy<yyz=Zz{=k{|>k|}?O}!O>k!O!P?`!P!QCl!Q!R!0[!R![!1q![!]!7a!]!^!7s!^!_!8T!_!`!9Q!`!a!9x!a!b!;o!b!c%T!c!}2`!}#O!=Q#O#P%T#P#Q!=b#Q#R!=r#R#S2`#S#T!>V#T#o2`#o#p!>g#p#q!>l#q#r!?S#r#s!?f#s$f%T$f$g%c$g#BY2`#BY#BZ!?v#BZ$IS2`$IS$I_!?v$I_$I|2`$I|$I}!B_$I}$JO!B_$JO$JT2`$JT$JU!?v$JU$KV2`$KV$KW!?v$KW&FU2`&FU&FV!?v&FV?HT2`?HT?HU!?v?HU~2`W%YR$PWO!^%T!_#o%T#p~%T,T%jg$PW'S+{OX%TXY%cYZ%TZ[%c[p%Tpq%cq!^%T!_#o%T#p$f%T$f$g%c$g#BY%T#BY#BZ%c#BZ$IS%T$IS$I_%c$I_$JT%T$JT$JU%c$JU$KV%T$KV$KW%c$KW&FU%T&FU&FV%c&FV?HT%T?HT?HU%c?HU~%T,T'YR$PW'T+{O!^%T!_#o%T#p~%T$T'jS$PW!f#{O!^%T!_!`'v!`#o%T#p~%T$O'}S#`#v$PWO!^%T!_!`(Z!`#o%T#p~%T$O(bR#`#v$PWO!^%T!_#o%T#p~%T'u(rZ$PW]!ROY(kYZ)eZr(krs*rs!^(k!^!_+U!_#O(k#O#P-b#P#o(k#o#p+U#p~(k&r)jV$PWOr)ers*Ps!^)e!^!_*a!_#o)e#o#p*a#p~)e&r*WR#z&j$PWO!^%T!_#o%T#p~%T&j*dROr*ars*ms~*a&j*rO#z&j'u*{R#z&j$PW]!RO!^%T!_#o%T#p~%T'm+ZV]!ROY+UYZ*aZr+Urs+ps#O+U#O#P+w#P~+U'm+wO#z&j]!R'm+zROr+Urs,Ts~+U'm,[U#z&j]!ROY,nZr,nrs-Vs#O,n#O#P-[#P~,n!R,sU]!ROY,nZr,nrs-Vs#O,n#O#P-[#P~,n!R-[O]!R!R-_PO~,n'u-gV$PWOr(krs-|s!^(k!^!_+U!_#o(k#o#p+U#p~(k'u.VZ#z&j$PW]!ROY.xYZ%TZr.xrs/rs!^.x!^!_,n!_#O.x#O#P0S#P#o.x#o#p,n#p~.x!Z/PZ$PW]!ROY.xYZ%TZr.xrs/rs!^.x!^!_,n!_#O.x#O#P0S#P#o.x#o#p,n#p~.x!Z/yR$PW]!RO!^%T!_#o%T#p~%T!Z0XT$PWO!^.x!^!_,n!_#o.x#o#p,n#p~.xx0mZ$PWOt%Ttu1`u!^%T!_!c%T!c!}1`!}#R%T#R#S1`#S#T%T#T#o1`#p$g%T$g~1`x1g]$PW'lpOt%Ttu1`u!Q%T!Q![1`![!^%T!_!c%T!c!}1`!}#R%T#R#S1`#S#T%T#T#o1`#p$g%T$g~1`&i2k_$PW#uS'V%k'cpOt%Ttu2`u}%T}!O3j!O!Q%T!Q![2`![!^%T!_!c%T!c!}2`!}#R%T#R#S2`#S#T%T#T#o2`#p$g%T$g~2`[3q_$PW#uSOt%Ttu3ju}%T}!O3j!O!Q%T!Q![3j![!^%T!_!c%T!c!}3j!}#R%T#R#S3j#S#T%T#T#o3j#p$g%T$g~3j$O4wS#X#v$PWO!^%T!_!`5T!`#o%T#p~%T$O5[R$PW#j#vO!^%T!_#o%T#p~%T%r5lU'u%j$PWOv%Tvw6Ow!^%T!_!`5T!`#o%T#p~%T$O6VS$PW#d#vO!^%T!_!`5T!`#o%T#p~%T'u6jZ$PW]!ROY6cYZ7]Zw6cwx*rx!^6c!^!_8T!_#O6c#O#P:T#P#o6c#o#p8T#p~6c&r7bV$PWOw7]wx*Px!^7]!^!_7w!_#o7]#o#p7w#p~7]&j7zROw7wwx*mx~7w'm8YV]!ROY8TYZ7wZw8Twx+px#O8T#O#P8o#P~8T'm8rROw8Twx8{x~8T'm9SU#z&j]!ROY9fZw9fwx-Vx#O9f#O#P9}#P~9f!R9kU]!ROY9fZw9fwx-Vx#O9f#O#P9}#P~9f!R:QPO~9f'u:YV$PWOw6cwx:ox!^6c!^!_8T!_#o6c#o#p8T#p~6c'u:xZ#z&j$PW]!ROY;kYZ%TZw;kwx/rx!^;k!^!_9f!_#O;k#O#P<e#P#o;k#o#p9f#p~;k!Z;rZ$PW]!ROY;kYZ%TZw;kwx/rx!^;k!^!_9f!_#O;k#O#P<e#P#o;k#o#p9f#p~;k!Z<jT$PWO!^;k!^!_9f!_#o;k#o#p9f#p~;k%V=QR!`$}$PWO!^%T!_#o%T#p~%TZ=bR!_R$PWO!^%T!_#o%T#p~%T%R=tU'W!R#Y#v$PWOz%Tz{>W{!^%T!_!`5T!`#o%T#p~%T$O>_S#V#v$PWO!^%T!_!`5T!`#o%T#p~%T$u>rSi$m$PWO!^%T!_!`5T!`#o%T#p~%T&i?VR}&a$PWO!^%T!_#o%T#p~%T&i?gVr%n$PWO!O%T!O!P?|!P!Q%T!Q![@r![!^%T!_#o%T#p~%Ty@RT$PWO!O%T!O!P@b!P!^%T!_#o%T#p~%Ty@iR|q$PWO!^%T!_#o%T#p~%Ty@yZ$PWjqO!Q%T!Q![@r![!^%T!_!g%T!g!hAl!h#R%T#R#S@r#S#X%T#X#YAl#Y#o%T#p~%TyAqZ$PWO{%T{|Bd|}%T}!OBd!O!Q%T!Q![CO![!^%T!_#R%T#R#SCO#S#o%T#p~%TyBiV$PWO!Q%T!Q![CO![!^%T!_#R%T#R#SCO#S#o%T#p~%TyCVV$PWjqO!Q%T!Q![CO![!^%T!_#R%T#R#SCO#S#o%T#p~%T,TCs`$PW#W#vOYDuYZ%TZzDuz{Jl{!PDu!P!Q!-e!Q!^Du!^!_Fx!_!`!.^!`!a!/]!a!}Du!}#OHq#O#PJQ#P#oDu#o#pFx#p~DuXD|[$PWyPOYDuYZ%TZ!PDu!P!QEr!Q!^Du!^!_Fx!_!}Du!}#OHq#O#PJQ#P#oDu#o#pFx#p~DuXEy_$PWyPO!^%T!_#Z%T#Z#[Er#[#]%T#]#^Er#^#a%T#a#bEr#b#g%T#g#hEr#h#i%T#i#jEr#j#m%T#m#nEr#n#o%T#p~%TPF}VyPOYFxZ!PFx!P!QGd!Q!}Fx!}#OG{#O#PHh#P~FxPGiUyP#Z#[Gd#]#^Gd#a#bGd#g#hGd#i#jGd#m#nGdPHOTOYG{Z#OG{#O#PH_#P#QFx#Q~G{PHbQOYG{Z~G{PHkQOYFxZ~FxXHvY$PWOYHqYZ%TZ!^Hq!^!_G{!_#OHq#O#PIf#P#QDu#Q#oHq#o#pG{#p~HqXIkV$PWOYHqYZ%TZ!^Hq!^!_G{!_#oHq#o#pG{#p~HqXJVV$PWOYDuYZ%TZ!^Du!^!_Fx!_#oDu#o#pFx#p~Du,TJs^$PWyPOYJlYZKoZzJlz{NQ{!PJl!P!Q!,R!Q!^Jl!^!_!!]!_!}Jl!}#O!'|#O#P!+a#P#oJl#o#p!!]#p~Jl,TKtV$PWOzKoz{LZ{!^Ko!^!_M]!_#oKo#o#pM]#p~Ko,TL`X$PWOzKoz{LZ{!PKo!P!QL{!Q!^Ko!^!_M]!_#oKo#o#pM]#p~Ko,TMSR$PWT+{O!^%T!_#o%T#p~%T+{M`ROzM]z{Mi{~M]+{MlTOzM]z{Mi{!PM]!P!QM{!Q~M]+{NQOT+{,TNX^$PWyPOYJlYZKoZzJlz{NQ{!PJl!P!Q! T!Q!^Jl!^!_!!]!_!}Jl!}#O!'|#O#P!+a#P#oJl#o#p!!]#p~Jl,T! ^_$PWT+{yPO!^%T!_#Z%T#Z#[Er#[#]%T#]#^Er#^#a%T#a#bEr#b#g%T#g#hEr#h#i%T#i#jEr#j#m%T#m#nEr#n#o%T#p~%T+{!!bYyPOY!!]YZM]Zz!!]z{!#Q{!P!!]!P!Q!&x!Q!}!!]!}#O!$`#O#P!&f#P~!!]+{!#VYyPOY!!]YZM]Zz!!]z{!#Q{!P!!]!P!Q!#u!Q!}!!]!}#O!$`#O#P!&f#P~!!]+{!#|UT+{yP#Z#[Gd#]#^Gd#a#bGd#g#hGd#i#jGd#m#nGd+{!$cWOY!$`YZM]Zz!$`z{!${{#O!$`#O#P!&S#P#Q!!]#Q~!$`+{!%OYOY!$`YZM]Zz!$`z{!${{!P!$`!P!Q!%n!Q#O!$`#O#P!&S#P#Q!!]#Q~!$`+{!%sTT+{OYG{Z#OG{#O#PH_#P#QFx#Q~G{+{!&VTOY!$`YZM]Zz!$`z{!${{~!$`+{!&iTOY!!]YZM]Zz!!]z{!#Q{~!!]+{!&}_yPOzM]z{Mi{#ZM]#Z#[!&x#[#]M]#]#^!&x#^#aM]#a#b!&x#b#gM]#g#h!&x#h#iM]#i#j!&x#j#mM]#m#n!&x#n~M],T!(R[$PWOY!'|YZKoZz!'|z{!(w{!^!'|!^!_!$`!_#O!'|#O#P!*o#P#QJl#Q#o!'|#o#p!$`#p~!'|,T!(|^$PWOY!'|YZKoZz!'|z{!(w{!P!'|!P!Q!)x!Q!^!'|!^!_!$`!_#O!'|#O#P!*o#P#QJl#Q#o!'|#o#p!$`#p~!'|,T!*PY$PWT+{OYHqYZ%TZ!^Hq!^!_G{!_#OHq#O#PIf#P#QDu#Q#oHq#o#pG{#p~Hq,T!*tX$PWOY!'|YZKoZz!'|z{!(w{!^!'|!^!_!$`!_#o!'|#o#p!$`#p~!'|,T!+fX$PWOYJlYZKoZzJlz{NQ{!^Jl!^!_!!]!_#oJl#o#p!!]#p~Jl,T!,Yc$PWyPOzKoz{LZ{!^Ko!^!_M]!_#ZKo#Z#[!,R#[#]Ko#]#^!,R#^#aKo#a#b!,R#b#gKo#g#h!,R#h#iKo#i#j!,R#j#mKo#m#n!,R#n#oKo#o#pM]#p~Ko,T!-lV$PWS+{OY!-eYZ%TZ!^!-e!^!_!.R!_#o!-e#o#p!.R#p~!-e+{!.WQS+{OY!.RZ~!.R$P!.g[$PW#j#vyPOYDuYZ%TZ!PDu!P!QEr!Q!^Du!^!_Fx!_!}Du!}#OHq#O#PJQ#P#oDu#o#pFx#p~Du]!/f[#rS$PWyPOYDuYZ%TZ!PDu!P!QEr!Q!^Du!^!_Fx!_!}Du!}#OHq#O#PJQ#P#oDu#o#pFx#p~Duy!0cd$PWjqO!O%T!O!P@r!P!Q%T!Q![!1q![!^%T!_!g%T!g!hAl!h#R%T#R#S!1q#S#U%T#U#V!3X#V#X%T#X#YAl#Y#b%T#b#c!2w#c#d!4g#d#l%T#l#m!5o#m#o%T#p~%Ty!1x_$PWjqO!O%T!O!P@r!P!Q%T!Q![!1q![!^%T!_!g%T!g!hAl!h#R%T#R#S!1q#S#X%T#X#YAl#Y#b%T#b#c!2w#c#o%T#p~%Ty!3OR$PWjqO!^%T!_#o%T#p~%Ty!3^W$PWO!Q%T!Q!R!3v!R!S!3v!S!^%T!_#R%T#R#S!3v#S#o%T#p~%Ty!3}W$PWjqO!Q%T!Q!R!3v!R!S!3v!S!^%T!_#R%T#R#S!3v#S#o%T#p~%Ty!4lV$PWO!Q%T!Q!Y!5R!Y!^%T!_#R%T#R#S!5R#S#o%T#p~%Ty!5YV$PWjqO!Q%T!Q!Y!5R!Y!^%T!_#R%T#R#S!5R#S#o%T#p~%Ty!5tZ$PWO!Q%T!Q![!6g![!^%T!_!c%T!c!i!6g!i#R%T#R#S!6g#S#T%T#T#Z!6g#Z#o%T#p~%Ty!6nZ$PWjqO!Q%T!Q![!6g![!^%T!_!c%T!c!i!6g!i#R%T#R#S!6g#S#T%T#T#Z!6g#Z#o%T#p~%T%w!7jR!XV$PW#h%hO!^%T!_#o%T#p~%T!P!7zR^w$PWO!^%T!_#o%T#p~%T+c!8`R'[d!]%Y#s&s'yP!P!Q!8i!^!_!8n!_!`!8{W!8nO$RW#v!8sP#Z#v!_!`!8v#v!8{O#j#v#v!9QO#[#v%w!9XT!w%o$PWO!^%T!_!`'v!`!a!9h!a#o%T#p~%T$P!9oR#R#w$PWO!^%T!_#o%T#p~%T%w!:TT'Z!s#[#v#|S$PWO!^%T!_!`!:d!`!a!:t!a#o%T#p~%T$O!:kR#[#v$PWO!^%T!_#o%T#p~%T$O!:{T#Z#v$PWO!^%T!_!`5T!`!a!;[!a#o%T#p~%T$O!;cS#Z#v$PWO!^%T!_!`5T!`#o%T#p~%T%w!;vV'm%o$PWO!O%T!O!P!<]!P!^%T!_!a%T!a!b!<m!b#o%T#p~%T$`!<dRs$W$PWO!^%T!_#o%T#p~%T$O!<tS$PW#e#vO!^%T!_!`5T!`#o%T#p~%T&e!=XRu&]$PWO!^%T!_#o%T#p~%TZ!=iRzR$PWO!^%T!_#o%T#p~%T$O!=yS#b#v$PWO!^%T!_!`5T!`#o%T#p~%T$P!>^R$PW'`#wO!^%T!_#o%T#p~%T~!>lO!P~%r!>sT't%j$PWO!^%T!_!`5T!`#o%T#p#q!<m#q~%T$u!?]R!O$k$PW'bQO!^%T!_#o%T#p~%TX!?mR!gP$PWO!^%T!_#o%T#p~%T,T!@Tr$PW'S+{#uS'V%k'cpOX%TXY%cYZ%TZ[%c[p%Tpq%cqt%Ttu2`u}%T}!O3j!O!Q%T!Q![2`![!^%T!_!c%T!c!}2`!}#R%T#R#S2`#S#T%T#T#o2`#p$f%T$f$g%c$g#BY2`#BY#BZ!?v#BZ$IS2`$IS$I_!?v$I_$JT2`$JT$JU!?v$JU$KV2`$KV$KW!?v$KW&FU2`&FU&FV!?v&FV?HT2`?HT?HU!?v?HU~2`,T!Bl_$PW'T+{#uS'V%k'cpOt%Ttu2`u}%T}!O3j!O!Q%T!Q![2`![!^%T!_!c%T!c!}2`!}#R%T#R#S2`#S#T%T#T#o2`#p$g%T$g~2`",
   tokenizers: [noSemicolon, incdecToken, index_es_template, 0, 1, 2, 3, 4, 5, 6, 7, 8, insertSemicolon],
   topRules: {"Script":[0,6]},
-  dialects: {jsx: 11129, ts: 11131},
-  dynamicPrecedences: {"141":1,"168":1},
-  specialized: [{term: 280, get: (value, stack) => (tsExtends(value, stack) << 1) | 1},{term: 280, get: value => index_es_spec_identifier[value] || -1},{term: 292, get: value => spec_word[value] || -1},{term: 59, get: value => spec_LessThan[value] || -1}],
-  tokenPrec: 11151
+  dialects: {jsx: 11230, ts: 11232},
+  dynamicPrecedences: {"144":1,"171":1},
+  specialized: [{term: 283, get: (value, stack) => (tsExtends(value, stack) << 1)},{term: 283, get: value => index_es_spec_identifier[value] || -1},{term: 295, get: value => spec_word[value] || -1},{term: 59, get: value => spec_LessThan[value] || -1}],
+  tokenPrec: 11253
 });
 
 
@@ -31069,7 +31975,7 @@ const javascriptLanguage = /*@__PURE__*/LRLanguage.define({
         props: [
             /*@__PURE__*/indentNodeProp.add({
                 IfStatement: /*@__PURE__*/continuedIndent({ except: /^\s*({|else\b)/ }),
-                TryStatement: /*@__PURE__*/continuedIndent({ except: /^\s*({|catch|finally)\b/ }),
+                TryStatement: /*@__PURE__*/continuedIndent({ except: /^\s*({|catch\b|finally\b)/ }),
                 LabeledStatement: flatIndent,
                 SwitchBody: context => {
                     let after = context.textAfter, closed = /^\s*\}/.test(after), isCase = /^\s*(case|default)\b/.test(after);
@@ -31112,10 +32018,12 @@ const javascriptLanguage = /*@__PURE__*/LRLanguage.define({
                 VariableDefinition: /*@__PURE__*/dist_tags.definition(dist_tags.variableName),
                 Label: dist_tags.labelName,
                 PropertyName: dist_tags.propertyName,
+                PrivatePropertyName: /*@__PURE__*/dist_tags.special(dist_tags.propertyName),
                 "CallExpression/MemberExpression/PropertyName": /*@__PURE__*/dist_tags.function(dist_tags.propertyName),
                 "FunctionDeclaration/VariableDefinition": /*@__PURE__*/dist_tags.function(/*@__PURE__*/dist_tags.definition(dist_tags.variableName)),
                 "ClassDeclaration/VariableDefinition": /*@__PURE__*/dist_tags.definition(dist_tags.className),
-                PropertyNameDefinition: /*@__PURE__*/dist_tags.definition(dist_tags.propertyName),
+                PropertyDefinition: /*@__PURE__*/dist_tags.definition(dist_tags.propertyName),
+                PrivatePropertyDefinition: /*@__PURE__*/dist_tags.definition(/*@__PURE__*/dist_tags.special(dist_tags.propertyName)),
                 UpdateOp: dist_tags.updateOperator,
                 LineComment: dist_tags.lineComment,
                 BlockComment: dist_tags.blockComment,
@@ -31136,13 +32044,13 @@ const javascriptLanguage = /*@__PURE__*/LRLanguage.define({
                 TypeName: dist_tags.typeName,
                 TypeDefinition: /*@__PURE__*/dist_tags.definition(dist_tags.typeName),
                 "type enum interface implements namespace module declare": dist_tags.definitionKeyword,
-                "abstract global privacy readonly": dist_tags.modifier,
+                "abstract global privacy readonly override": dist_tags.modifier,
                 "is keyof unique infer": dist_tags.operatorKeyword,
-                JSXAttributeValue: dist_tags.string,
+                JSXAttributeValue: dist_tags.attributeValue,
                 JSXText: dist_tags.content,
                 "JSXStartTag JSXStartCloseTag JSXSelfCloseEndTag JSXEndTag": dist_tags.angleBracket,
                 "JSXIdentifier JSXNameSpacedName": dist_tags.tagName,
-                "JSXAttribute/JSXIdentifier JSXAttribute/JSXNameSpacedName": dist_tags.propertyName
+                "JSXAttribute/JSXIdentifier JSXAttribute/JSXNameSpacedName": dist_tags.attributeName
             })
         ]
     }),
@@ -31240,6 +32148,8 @@ function translateDiagnostic(input, doc, offset) {
 
 
 // CONCATENATED MODULE: ./node_modules/@codemirror/lang-html/dist/index.js
+
+
 
 
 
@@ -31360,8 +32270,7 @@ const Tags = {
     hgroup: S,
     hr: S,
     html: {
-        attrs: { manifest: null },
-        children: ["head", "body"]
+        attrs: { manifest: null }
     },
     i: S,
     iframe: {
@@ -31599,6 +32508,8 @@ const GlobalAttrs = {
 const AllTags = /*@__PURE__*/Object.keys(Tags);
 const GlobalAttrNames = /*@__PURE__*/Object.keys(GlobalAttrs);
 function elementName(doc, tree) {
+    if (!tree)
+        return "";
     let tag = tree.firstChild;
     let name = tag && tag.getChild("TagName");
     return name ? doc.sliceString(name.from, name.to) : "";
@@ -31614,8 +32525,7 @@ function findParentElement(tree, skip = false) {
     return null;
 }
 function allowedChildren(doc, tree) {
-    let parent = findParentElement(tree, true);
-    let parentInfo = parent ? Tags[elementName(doc, parent)] : null;
+    let parentInfo = Tags[elementName(doc, findParentElement(tree, true))];
     return (parentInfo === null || parentInfo === void 0 ? void 0 : parentInfo.children) || AllTags;
 }
 function openTags(doc, tree) {
@@ -31686,7 +32596,11 @@ function completeAttrValue(state, tree, from, to) {
     }
     return { from, to, options, span };
 }
-function completeHTML(context) {
+/**
+HTML tag completion. Opens and closes tags and attributes in a
+context-aware way.
+*/
+function htmlCompletionSource(context) {
     let { state, pos } = context, around = syntaxTree(state).resolveInner(pos), tree = around.resolve(pos, -1);
     for (let scan = pos, before; around == tree && (before = tree.childBefore(scan));) {
         let last = before.lastChild;
@@ -31762,13 +32676,12 @@ const htmlLanguage = /*@__PURE__*/LRLanguage.define({
                 }
             }),
             /*@__PURE__*/styleTags({
-                AttributeValue: dist_tags.string,
                 "Text RawText": dist_tags.content,
                 "StartTag StartCloseTag SelfCloserEndTag EndTag SelfCloseEndTag": dist_tags.angleBracket,
                 TagName: dist_tags.tagName,
                 "MismatchedCloseTag/TagName": [dist_tags.tagName, dist_tags.invalid],
-                AttributeName: dist_tags.propertyName,
-                UnquotedAttributeValue: dist_tags.string,
+                AttributeName: dist_tags.attributeName,
+                "AttributeValue UnquotedAttributeValue": dist_tags.attributeValue,
                 Is: dist_tags.definitionOperator,
                 "EntityReference CharacterReference": dist_tags.character,
                 Comment: dist_tags.blockComment,
@@ -31791,14 +32704,12 @@ const htmlLanguage = /*@__PURE__*/LRLanguage.define({
     }),
     languageData: {
         commentTokens: { block: { open: "<!--", close: "-->" } },
-        indentOnInput: /^\s*<\/\w+\W$/
+        indentOnInput: /^\s*<\/\w+\W$/,
+        wordChars: "-._"
     }
 });
-/**
-HTML tag completion. Opens and closes tags and attributes in a
-context-aware way.
-*/
-const htmlCompletion = /*@__PURE__*/htmlLanguage.data.of({ autocomplete: completeHTML });
+// FIXME remove on next major version
+const htmlCompletion = /*@__PURE__*/htmlLanguage.data.of({ autocomplete: htmlCompletionSource });
 /**
 Language support for HTML, including
 [`htmlCompletion`](https://codemirror.net/6/docs/ref/#lang-html.htmlCompletion) and JavaScript and
@@ -31808,8 +32719,45 @@ function dist_html(config = {}) {
     let lang = htmlLanguage;
     if (config.matchClosingTags === false)
         lang = lang.configure({ dialect: "noMatch" });
-    return new LanguageSupport(lang, [htmlCompletion, javascript().support, dist_css().support]);
+    return new LanguageSupport(lang, [
+        htmlCompletion,
+        config.autoCloseTags !== false ? autoCloseTags : [],
+        javascript().support,
+        dist_css().support
+    ]);
 }
+/**
+Extension that will automatically insert close tags when a `>` or
+`/` is typed.
+*/
+const autoCloseTags = /*@__PURE__*/dist_EditorView.inputHandler.of((view, from, to, text) => {
+    if (view.composing || view.state.readOnly || from != to || (text != ">" && text != "/") ||
+        !htmlLanguage.isActiveAt(view.state, from, -1))
+        return false;
+    let { state } = view;
+    let changes = state.changeByRange(range => {
+        var _a, _b, _c;
+        let around = syntaxTree(state).resolveInner(range.head, -1), name;
+        if (around.name == "TagName" || around.name == "StartTag")
+            around = around.parent;
+        if (text == ">" && around.name == "OpenTag") {
+            if (((_b = (_a = around.parent) === null || _a === void 0 ? void 0 : _a.lastChild) === null || _b === void 0 ? void 0 : _b.name) != "CloseTag" && (name = elementName(state.doc, around.parent)))
+                return { range: EditorSelection.cursor(range.head + 1), changes: { from: range.head, insert: `></${name}>` } };
+        }
+        else if (text == "/" && around.name == "OpenTag") {
+            let empty = around.parent, base = empty === null || empty === void 0 ? void 0 : empty.parent;
+            if (empty.from == range.head - 1 && ((_c = base.lastChild) === null || _c === void 0 ? void 0 : _c.name) != "CloseTag" && (name = elementName(state.doc, base))) {
+                let insert = `/${name}>`;
+                return { range: EditorSelection.cursor(range.head + insert.length), changes: { from: range.head, insert } };
+            }
+        }
+        return { range };
+    });
+    if (changes.changes.empty)
+        return false;
+    view.dispatch(changes, { userEvent: "input.type", scrollIntoView: true });
+    return true;
+});
 
 
 
@@ -31819,7 +32767,7 @@ function dist_html(config = {}) {
 
 // Using https://github.com/one-dark/vscode-one-dark-theme/ as reference for the colors
 const chalky = "#e5c07b", coral = "#e06c75", cyan = "#56b6c2", invalid = "#ffffff", ivory = "#abb2bf", stone = "#7d8799", // Brightened compared to original to increase contrast
-malibu = "#61afef", sage = "#98c379", whiskey = "#d19a66", violet = "#c678dd", darkBackground = "#21252b", highlightBackground = "#2c313a", background = "#282c34", dist_selection = "#3E4451", dist_cursor = "#528bff";
+malibu = "#61afef", sage = "#98c379", whiskey = "#d19a66", violet = "#c678dd", darkBackground = "#21252b", highlightBackground = "#2c313a", background = "#282c34", tooltipBackground = "#353a42", dist_selection = "#3E4451", dist_cursor = "#528bff";
 /**
 The editor theme styles for One Dark.
 */
@@ -31832,7 +32780,7 @@ const oneDarkTheme = /*@__PURE__*/dist_EditorView.theme({
         caretColor: dist_cursor
     },
     "&.cm-focused .cm-cursor": { borderLeftColor: dist_cursor },
-    "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection": { backgroundColor: dist_selection },
+    "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection": { backgroundColor: dist_selection },
     ".cm-panels": { backgroundColor: darkBackground, color: ivory },
     ".cm-panels.cm-panels-top": { borderBottom: "2px solid black" },
     ".cm-panels.cm-panels-bottom": { borderTop: "2px solid black" },
@@ -31845,7 +32793,7 @@ const oneDarkTheme = /*@__PURE__*/dist_EditorView.theme({
     },
     ".cm-activeLine": { backgroundColor: highlightBackground },
     ".cm-selectionMatch": { backgroundColor: "#aafe661a" },
-    ".cm-matchingBracket, .cm-nonmatchingBracket": {
+    "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
         backgroundColor: "#bad0f847",
         outline: "1px solid #515a6b"
     },
@@ -31863,8 +32811,16 @@ const oneDarkTheme = /*@__PURE__*/dist_EditorView.theme({
         color: "#ddd"
     },
     ".cm-tooltip": {
-        border: "1px solid #181a1f",
-        backgroundColor: darkBackground
+        border: "none",
+        backgroundColor: tooltipBackground
+    },
+    ".cm-tooltip .cm-tooltip-arrow:before": {
+        borderTopColor: "transparent",
+        borderBottomColor: "transparent"
+    },
+    ".cm-tooltip .cm-tooltip-arrow:after": {
+        borderTopColor: tooltipBackground,
+        borderBottomColor: tooltipBackground
     },
     ".cm-tooltip-autocomplete": {
         "& > ul > li[aria-selected]": {
@@ -31920,8 +32876,8 @@ const oneDark = [oneDarkTheme, oneDarkHighlightStyle];
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorDemoModal.vue?vue&type=template&id=45233b92&
-var EditorDemoModalvue_type_template_id_45233b92_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('editor-modal',{staticClass:"capsule-editor-demo-modal",class:("step-" + _vm.active)},[_c('slide-deck',{ref:"slides",attrs:{"active":_vm.active,"controls":_vm.active !== 'welcome'},on:{"enter":_vm.onEnter},scopedSlots:_vm._u([(_vm.active > 0 && _vm.active < 3)?{key:"bottom",fn:function(){return [_c('div',{staticClass:"capsule-editor-modal-footer"},[_c('small',[_c('a',{attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.clear($event)}}},[_vm._v("Skip Tutorial")])])])]},proxy:true}:null],null,true)},_vm._l((_vm.steps),function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorDemoModal.vue?vue&type=template&id=45233b92&
+var EditorDemoModalvue_type_template_id_45233b92_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('editor-modal',{staticClass:"capsule-editor-demo-modal",class:("step-" + _vm.active)},[_c('slide-deck',{ref:"slides",attrs:{"active":_vm.active,"controls":_vm.active !== 'welcome'},on:{"enter":_vm.onEnter},scopedSlots:_vm._u([(_vm.active > 0 && _vm.active < 3)?{key:"bottom",fn:function(){return [_c('div',{staticClass:"capsule-editor-modal-footer"},[_c('small',[_c('a',{attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.clear.apply(null, arguments)}}},[_vm._v("Skip Tutorial")])])])]},proxy:true}:null],null,true)},_vm._l((_vm.steps),function(ref){
 var key = ref[0];
 var component = ref[1];
 return _c('div',{key:key},[_c(component,{tag:"component",attrs:{"clear":_vm.clear,"next":_vm.next,"prev":_vm.prev}})],1)}),0)],1)}
@@ -31930,21 +32886,21 @@ var EditorDemoModalvue_type_template_id_45233b92_staticRenderFns = []
 
 // CONCATENATED MODULE: ./src/EditorDemoModal.vue?vue&type=template&id=45233b92&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeck.vue?vue&type=template&id=29e0fd3a&
-var SlideDeckvue_type_template_id_29e0fd3a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-deck",class:{'slide-deck-flex': _vm.center, 'is-sliding': _vm.isSliding}},[_vm._t("top"),_c('div',{ref:"content",staticClass:"slide-deck-content",style:(_vm.styles())},[_c('transition',{attrs:{"name":("slide-" + _vm.direction)},on:{"after-enter":_vm.onSlideAfterEnter,"before-enter":_vm.onSlideBeforeEnter,"enter":_vm.onSlideEnter,"after-leave":_vm.onSlideAfterLeave,"before-leave":_vm.onSlideBeforeLeave,"leave":_vm.onSlideLeave}},[_c('slides',{ref:"slides",attrs:{"active":_vm.currentSlide,"nodes":_vm.$slots.default}})],1)],1),_vm._t("middle"),_vm._t("controls",[(_vm.controls && _vm.mounted)?_c('slide-deck-controls',{ref:"controls",attrs:{"slides":_vm.slides(),"active":_vm.currentSlide},on:{"click":_vm.onClickControl}}):_vm._e()],{"slides":_vm.slides(),"active":_vm.currentSlide}),_vm._t("bottom")],2)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeck.vue?vue&type=template&id=29e0fd3a&
+var SlideDeckvue_type_template_id_29e0fd3a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-deck",class:{'slide-deck-flex': _vm.center, 'is-sliding': _vm.isSliding}},[_vm._t("top"),_c('div',{ref:"content",staticClass:"slide-deck-content",style:(_vm.styles())},[_c('transition',{attrs:{"name":("slide-" + _vm.direction)},on:{"after-enter":_vm.onSlideAfterEnter,"before-enter":_vm.onSlideBeforeEnter,"enter":_vm.onSlideEnter,"after-leave":_vm.onSlideAfterLeave,"before-leave":_vm.onSlideBeforeLeave,"leave":_vm.onSlideLeave}},[_c('slides',{ref:"slides",attrs:{"active":_vm.currentSlide,"nodes":_vm.$slots.default}})],1)],1),_vm._t("middle"),_vm._t("controls",function(){return [(_vm.controls && _vm.mounted)?_c('slide-deck-controls',{ref:"controls",attrs:{"slides":_vm.slides(),"active":_vm.currentSlide},on:{"click":_vm.onClickControl}}):_vm._e()]},{"slides":_vm.slides(),"active":_vm.currentSlide}),_vm._t("bottom")],2)}
 var SlideDeckvue_type_template_id_29e0fd3a_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/slide-deck/src/SlideDeck.vue?vue&type=template&id=29e0fd3a&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slides.vue?vue&type=template&id=8c2f408c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slides.vue?vue&type=template&id=8c2f408c&
 var Slidesvue_type_template_id_8c2f408c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('keep-alive',[_c('slide',{key:_vm.currentSlide,attrs:{"node":_vm.slide(_vm.currentSlide)}})],1)}
 var Slidesvue_type_template_id_8c2f408c_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/slide-deck/src/Slides.vue?vue&type=template&id=8c2f408c&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slide.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slide.vue?vue&type=script&lang=js&
 //
 
 /* harmony default export */ var Slidevue_type_script_lang_js_ = ({
@@ -31992,7 +32948,7 @@ var Slide_component = normalizeComponent(
 )
 
 /* harmony default export */ var Slide = (Slide_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slides.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/Slides.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -32215,14 +33171,14 @@ var Slides_component = normalizeComponent(
 )
 
 /* harmony default export */ var Slides = (Slides_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeckControls.vue?vue&type=template&id=7c421c74&
-var SlideDeckControlsvue_type_template_id_7c421c74_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-deck-controls"},_vm._l((_vm.slides),function(slide,i){return _c('a',{key:i,staticClass:"slide-deck-control-icon",class:{'is-active': (slide.data ? slide.data.key : slide.key) === _vm.active},attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.onClick($event, slide)}}},[_vm._t("default",[_vm._v("•")])],2)}),0)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeckControls.vue?vue&type=template&id=7c421c74&
+var SlideDeckControlsvue_type_template_id_7c421c74_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-deck-controls"},_vm._l((_vm.slides),function(slide,i){return _c('a',{key:i,staticClass:"slide-deck-control-icon",class:{'is-active': (slide.data ? slide.data.key : slide.key) === _vm.active},attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.onClick($event, slide)}}},[_vm._t("default",function(){return [_vm._v("•")]})],2)}),0)}
 var SlideDeckControlsvue_type_template_id_7c421c74_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/slide-deck/src/SlideDeckControls.vue?vue&type=template&id=7c421c74&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeckControls.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeckControls.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -32311,7 +33267,7 @@ var SlideDeckControls_component = normalizeComponent(
 )
 
 /* harmony default export */ var SlideDeckControls = (SlideDeckControls_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeck.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/slide-deck/src/SlideDeck.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -32636,14 +33592,14 @@ var SlideDeck_component = normalizeComponent(
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorModal.vue?vue&type=template&id=bbeea23c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorModal.vue?vue&type=template&id=bbeea23c&
 var EditorModalvue_type_template_id_bbeea23c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('animate-css',_vm._b({on:{"after-enter":function($event){_vm.showContent = true}}},'animate-css',_vm.bgAnimation,false),[(_vm.mounted)?_c('div',{staticClass:"capsule-editor-modal"},[_c('animate-css',_vm._b({},'animate-css',_vm.contentAnimation,false),[(_vm.showContent)?_c('div',{staticClass:"capsule-editor-modal-content"},[_vm._t("default",null,{"isShowing":_vm.isContentShowing})],2):_vm._e()])],1):_vm._e()])}
 var EditorModalvue_type_template_id_bbeea23c_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/EditorModal.vue?vue&type=template&id=bbeea23c&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorModal.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorModal.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -32724,7 +33680,7 @@ var EditorModal_component = normalizeComponent(
 )
 
 /* harmony default export */ var EditorModal = (EditorModal_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/ErrorDetection.vue?vue&type=template&id=73e4bd9b&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/ErrorDetection.vue?vue&type=template&id=73e4bd9b&
 var ErrorDetectionvue_type_template_id_73e4bd9b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Error Detection ")]),_c('p',[_vm._v(" Capsule Editor will automatically check for errors as you type. When an error is found, it will be underlined in red and be displayed in the panel at the bottom of the editor. ")]),_c('img',{staticClass:"screenshot img-fluid mb-3",attrs:{"src":__webpack_require__("d985")}}),_c('div',{staticClass:"text-center"},[_c('div',{staticClass:"mb-3"},[_c('btn',{attrs:{"type":"button"},on:{"click":_vm.next}},[_vm._v(" Next "),_c('font-awesome-icon',{attrs:{"icon":"long-arrow-alt-right"}})],1)],1)])])}
 var ErrorDetectionvue_type_template_id_73e4bd9b_staticRenderFns = []
 
@@ -32739,7 +33695,7 @@ var vue_fontawesome_index_es = __webpack_require__("ad3d");
 
 // CONCATENATED MODULE: ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js
 /*!
- * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 var index_es_prefix = "fas";
@@ -32766,7 +33722,7 @@ var faAdjust = {
 var faAirFreshener = {
   prefix: 'fas',
   iconName: 'air-freshener',
-  icon: [384, 512, [], "f5d0", "M378.94 321.41L284.7 224h49.22c15.3 0 23.66-16.6 13.86-27.53L234.45 69.96c3.43-6.61 5.55-14 5.55-21.96 0-26.51-21.49-48-48-48s-48 21.49-48 48c0 7.96 2.12 15.35 5.55 21.96L36.22 196.47C26.42 207.4 34.78 224 50.08 224H99.3L5.06 321.41C-6.69 333.56 3.34 352 21.7 352H160v32H48c-8.84 0-16 7.16-16 16v96c0 8.84 7.16 16 16 16h288c8.84 0 16-7.16 16-16v-96c0-8.84-7.16-16-16-16H224v-32h138.3c18.36 0 28.39-18.44 16.64-30.59zM192 31.98c8.85 0 16.02 7.17 16.02 16.02 0 8.84-7.17 16.02-16.02 16.02S175.98 56.84 175.98 48c0-8.85 7.17-16.02 16.02-16.02zM304 432v32H80v-32h224z"]
+  icon: [512, 512, [], "f5d0", "M224 160H96C43 160 0 203 0 256V480C0 497.625 14.375 512 32 512H288C305.625 512 320 497.625 320 480V256C320 203 277 160 224 160ZM160 416C115.875 416 80 380.125 80 336S115.875 256 160 256S240 291.875 240 336S204.125 416 160 416ZM224 32C224 14.375 209.625 0 192 0H128C110.375 0 96 14.375 96 32V128H224V32ZM381.781 51.578C383 50.969 384 49.359 384 48C384 46.625 383 45.031 381.781 44.422L352 32L339.562 2.219C338.969 1 337.375 0 336 0S333.031 1 332.406 2.219L320 32L290.219 44.422C289 45.031 288 46.625 288 48C288 49.359 289 50.969 290.219 51.578L320 64L332.406 93.781C333.031 95 334.625 96 336 96S338.969 95 339.562 93.781L352 64L381.781 51.578ZM448 64L460.406 93.781C461.031 95 462.625 96 464 96S466.969 95 467.562 93.781L480 64L509.781 51.578C511 50.969 512 49.359 512 48C512 46.625 511 45.031 509.781 44.422L480 32L467.562 2.219C466.969 1 465.375 0 464 0S461.031 1 460.406 2.219L448 32L418.219 44.422C417 45.031 416 46.625 416 48C416 49.359 417 50.969 418.219 51.578L448 64ZM480 224L467.562 194.219C466.969 193 465.375 192 464 192S461.031 193 460.406 194.219L448 224L418.219 236.422C417 237.031 416 238.625 416 240C416 241.359 417 242.969 418.219 243.578L448 256L460.406 285.781C461.031 287 462.625 288 464 288S466.969 287 467.562 285.781L480 256L509.781 243.578C511 242.969 512 241.359 512 240C512 238.625 511 237.031 509.781 236.422L480 224ZM445.781 147.578C447 146.969 448 145.359 448 144C448 142.625 447 141.031 445.781 140.422L416 128L403.562 98.219C402.969 97 401.375 96 400 96S397.031 97 396.406 98.219L384 128L354.219 140.422C353 141.031 352 142.625 352 144C352 145.359 353 146.969 354.219 147.578L384 160L396.406 189.781C397.031 191 398.625 192 400 192S402.969 191 403.562 189.781L416 160L445.781 147.578Z"]
 };
 var faAlignCenter = {
   prefix: 'fas',
@@ -38760,7 +39716,7 @@ var _iconsCache = {
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/DemoComponent.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/DemoComponent.vue?vue&type=script&lang=js&
 
 
 
@@ -38819,7 +39775,7 @@ var DemoComponent_component = normalizeComponent(
 )
 
 /* harmony default export */ var DemoComponent = (DemoComponent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/ErrorDetection.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/ErrorDetection.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -38870,14 +39826,14 @@ var ErrorDetection_component = normalizeComponent(
 )
 
 /* harmony default export */ var ErrorDetection = (ErrorDetection_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Finished.vue?vue&type=template&id=1c010784&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Finished.vue?vue&type=template&id=1c010784&
 var Finishedvue_type_template_id_1c010784_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Almost Ready! ")]),_c('p',[_vm._v(" If you ever need to return to this tutorial, just click the question mark in the top right corner. ")]),_c('img',{staticClass:"screenshot img-fluid mb-3",attrs:{"src":__webpack_require__("ced0")}}),_c('div',{staticClass:"text-center"},[_c('btn',{attrs:{"variant":"success","type":"button"},on:{"click":_vm.clear}},[_vm._v(" Get Started! ")])],1)])}
 var Finishedvue_type_template_id_1c010784_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/Demo/Finished.vue?vue&type=template&id=1c010784&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Finished.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Finished.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -38921,14 +39877,14 @@ var Finished_component = normalizeComponent(
 )
 
 /* harmony default export */ var Finished = (Finished_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/FixingErrors.vue?vue&type=template&id=99987e02&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/FixingErrors.vue?vue&type=template&id=99987e02&
 var FixingErrorsvue_type_template_id_99987e02_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Fixing Errors ")]),_c('p',[_vm._v(" Some errors can be automatically fixed. If there are multiple ways to fix an error, select the best option for that particular instance. ")]),_c('img',{staticClass:"screenshot img-fluid mb-3",attrs:{"src":__webpack_require__("b98e")}}),_c('div',{staticClass:"text-center"},[_c('div',{staticClass:"mb-3"},[_c('btn',{attrs:{"type":"button"},on:{"click":_vm.next}},[_vm._v(" Next "),_c('font-awesome-icon',{attrs:{"icon":"long-arrow-alt-right"}})],1)],1)])])}
 var FixingErrorsvue_type_template_id_99987e02_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/Demo/FixingErrors.vue?vue&type=template&id=99987e02&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/FixingErrors.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/FixingErrors.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -38978,14 +39934,14 @@ var FixingErrors_component = normalizeComponent(
 )
 
 /* harmony default export */ var FixingErrors = (FixingErrors_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Paginating.vue?vue&type=template&id=5b557237&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Paginating.vue?vue&type=template&id=5b557237&
 var Paginatingvue_type_template_id_5b557237_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Navigation ")]),_c('p',[_vm._v(" Navigating through the errors is a breeze. Your cursor will automatically highlight the error, or click the next/prev buttons to cycle through the errors. ")]),_c('img',{staticClass:"screenshot img-fluid mb-3",attrs:{"src":__webpack_require__("583c")}}),_c('div',{staticClass:"text-center"},[_c('div',{staticClass:"mb-3"},[_c('btn',{attrs:{"type":"button"},on:{"click":_vm.next}},[_vm._v(" Next "),_c('font-awesome-icon',{attrs:{"icon":"long-arrow-alt-right"}})],1)],1)])])}
 var Paginatingvue_type_template_id_5b557237_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/Demo/Paginating.vue?vue&type=template&id=5b557237&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Paginating.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Paginating.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -39035,14 +39991,14 @@ var Paginating_component = normalizeComponent(
 )
 
 /* harmony default export */ var Paginating = (Paginating_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Welcome.vue?vue&type=template&id=64b0bbe6&
-var Welcomevue_type_template_id_64b0bbe6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('animate-css',{attrs:{"name":"zoom","in":"","left":""}},[(_vm.loaded)?_c('img',{staticClass:"capsule-editor-modal-logo",attrs:{"src":__webpack_require__("ffdb")}}):_vm._e()]),_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Capsule Editor ")]),_c('p',{staticClass:"mx-5 px-3 py-2"},[_vm._v(" Capsule Editor will step you through each error to help you quickly find the correct solution. Would like to learn more about Capsule Editor? ")]),_c('div',{staticClass:"text-center"},[_c('div',{staticClass:"mb-3"},[_c('btn',{attrs:{"type":"button"},on:{"click":_vm.next}},[_c('font-awesome-icon',{attrs:{"icon":"info-circle"}}),_vm._v(" Learn More ")],1)],1),_c('small',[_c('a',{attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.clear($event)}}},[_vm._v("No, I just want to fix the errors.")])])])],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Welcome.vue?vue&type=template&id=64b0bbe6&
+var Welcomevue_type_template_id_64b0bbe6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('animate-css',{attrs:{"name":"zoom","in":"","left":""}},[(_vm.loaded)?_c('img',{staticClass:"capsule-editor-modal-logo",attrs:{"src":__webpack_require__("ffdb")}}):_vm._e()]),_c('h1',{staticClass:"text-center font-weight-light"},[_vm._v(" Capsule Editor ")]),_c('p',{staticClass:"mx-5 px-3 py-2"},[_vm._v(" Capsule Editor will step you through each error to help you quickly find the correct solution. Would like to learn more about Capsule Editor? ")]),_c('div',{staticClass:"text-center"},[_c('div',{staticClass:"mb-3"},[_c('btn',{attrs:{"type":"button"},on:{"click":_vm.next}},[_c('font-awesome-icon',{attrs:{"icon":"info-circle"}}),_vm._v(" Learn More ")],1)],1),_c('small',[_c('a',{attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.clear.apply(null, arguments)}}},[_vm._v("No, I just want to fix the errors.")])])])],1)}
 var Welcomevue_type_template_id_64b0bbe6_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/Demo/Welcome.vue?vue&type=template&id=64b0bbe6&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Welcome.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Demo/Welcome.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -39105,7 +40061,7 @@ const steps = {
   'fixing-errors': FixingErrors,
   'finished': Finished
 };
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorDemoModal.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorDemoModal.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -39203,8 +40159,8 @@ var EditorDemoModal_component = normalizeComponent(
 )
 
 /* harmony default export */ var EditorDemoModal = (EditorDemoModal_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorFooter.vue?vue&type=template&id=8afa4436&
-var EditorFootervue_type_template_id_8afa4436_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('footer',{staticClass:"editor-footer d-flex align-items-center",style:({minHeight: !_vm.showFooter ? 0 : undefined})},[_c('animate-css',{attrs:{"name":"fade","duration":"200ms"}},[(_vm.showFooterContent)?_c('div',{staticClass:"d-flex justify-content-between align-items-center w-100"},[_c('div',{staticClass:"d-flex align-items-center w-100 overflow-hidden position-relative"},[_c('div',{staticClass:"d-flex align-items-center"},[_c('div',{staticClass:"editor-footer-pager flex-shrink-0"},[(_vm.totalDiagnostics)?_c('div',{staticClass:"py-2 mx-2"},[_c('btn',{attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index - 1)}}},[_c('font-awesome-icon',{attrs:{"icon":"caret-left"}})],1),_c('span',[_vm._v(_vm._s(_vm.index + 1)+" of "+_vm._s(_vm.diagnostics.length)+" ")]),_c('btn',{attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index + 1)}}},[_c('font-awesome-icon',{attrs:{"icon":"caret-right"}})],1)],1):_vm._e()]),_c('div',{staticClass:"mr-3"},[(_vm.currentDiagnostic)?_c('btn',{staticClass:"text-white",attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index)}}},[(_vm.currentDiagnostic.severity === 'error')?_c('font-awesome-icon',{attrs:{"icon":"bug","size":"lg"}}):_vm._e(),(_vm.currentDiagnostic.severity === 'warning')?_c('font-awesome-icon',{attrs:{"icon":"exclamation-triangle","size":"lg"}}):_vm._e()],1):_vm._e()],1)]),_c('div',{staticClass:"editor-footer-diagnostic"},[_c('animate-css',{attrs:{"name":"fade","duration":"200ms","direction":_vm.direction,"leave-active-class":"position-absolute"}},[(_vm.currentDiagnostic)?_c('editor-error',{key:_vm.index,staticClass:"py-2 pr-3",attrs:{"error":_vm.currentDiagnostic}}):_vm._e()],1)],1)]),_c('div',{staticClass:"flex-shrink-0 pr-2"},[_vm._t("before-save-button"),_vm._t("action-button",[(_vm.actions.length)?[(_vm.actions.length === 1)?[_c('btn',{attrs:{"type":"button","variant":"light"},on:{"click":function () { return _vm.onClickAction(_vm.currentDiagnostic, _vm.action); }}},[_c('font-awesome-icon',{staticClass:"mr-1",attrs:{"icon":"hammer"}}),_vm._v(" "+_vm._s(_vm.actions[0].name)+" ")],1)]:[_c('btn-dropdown',{attrs:{"label":"Fix Errors","type":"button","variant":"light","dropup":""},scopedSlots:_vm._u([{key:"icon",fn:function(){return [_c('font-awesome-icon',{staticClass:"mr-2",attrs:{"icon":"hammer"}})]},proxy:true}],null,false,832869925)},_vm._l((_vm.actions),function(action,i){return _c('button',{key:((_vm.currentDiagnostic.rule.id) + "-" + i),attrs:{"type":"button","variant":"light"},on:{"click":function () { return _vm.onClickAction(_vm.currentDiagnostic, action); }}},[_vm._v(" "+_vm._s(action.name)+" ")])}),0)]]:_vm._e()]),_vm._t("save-button",[(!_vm.diagnostics.length)?_c('btn',{attrs:{"type":"button","variant":"light"},on:{"click":function($event){return _vm.$emit('save')}}},[_c('font-awesome-icon',{staticClass:"mr-1",attrs:{"icon":"save"}}),_vm._v(" "+_vm._s(_vm.saveButtonLabel)+" ")],1):_vm._e()]),_vm._t("after-save-button")],2)]):_vm._e()])],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorFooter.vue?vue&type=template&id=8afa4436&
+var EditorFootervue_type_template_id_8afa4436_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('footer',{staticClass:"editor-footer d-flex align-items-center",style:({minHeight: !_vm.showFooter ? 0 : undefined})},[_c('animate-css',{attrs:{"name":"fade","duration":"200ms"}},[(_vm.showFooterContent)?_c('div',{staticClass:"d-flex justify-content-between align-items-center w-100"},[_c('div',{staticClass:"d-flex align-items-center w-100 overflow-hidden position-relative"},[_c('div',{staticClass:"d-flex align-items-center"},[_c('div',{staticClass:"editor-footer-pager flex-shrink-0"},[(_vm.totalDiagnostics)?_c('div',{staticClass:"py-2 mx-2"},[_c('btn',{attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index - 1)}}},[_c('font-awesome-icon',{attrs:{"icon":"caret-left"}})],1),_c('span',[_vm._v(_vm._s(_vm.index + 1)+" of "+_vm._s(_vm.diagnostics.length)+" ")]),_c('btn',{attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index + 1)}}},[_c('font-awesome-icon',{attrs:{"icon":"caret-right"}})],1)],1):_vm._e()]),_c('div',{staticClass:"mr-3"},[(_vm.currentDiagnostic)?_c('btn',{staticClass:"text-white",attrs:{"type":"button","variant":"link"},on:{"click":function($event){return _vm.goto(_vm.index)}}},[(_vm.currentDiagnostic.severity === 'error')?_c('font-awesome-icon',{attrs:{"icon":"bug","size":"lg"}}):_vm._e(),(_vm.currentDiagnostic.severity === 'warning')?_c('font-awesome-icon',{attrs:{"icon":"exclamation-triangle","size":"lg"}}):_vm._e()],1):_vm._e()],1)]),_c('div',{staticClass:"editor-footer-diagnostic"},[_c('animate-css',{attrs:{"name":"fade","duration":"200ms","direction":_vm.direction,"leave-active-class":"position-absolute"}},[(_vm.currentDiagnostic)?_c('editor-error',{key:_vm.index,staticClass:"py-2 pr-3",attrs:{"error":_vm.currentDiagnostic}}):_vm._e()],1)],1)]),_c('div',{staticClass:"flex-shrink-0 pr-2"},[_vm._t("before-save-button"),_vm._t("action-button",function(){return [(_vm.actions.length)?[(_vm.actions.length === 1)?[_c('btn',{attrs:{"type":"button","variant":"light"},on:{"click":function () { return _vm.onClickAction(_vm.currentDiagnostic, _vm.action); }}},[_c('font-awesome-icon',{staticClass:"mr-1",attrs:{"icon":"hammer"}}),_vm._v(" "+_vm._s(_vm.actions[0].name)+" ")],1)]:[_c('btn-dropdown',{attrs:{"label":"Fix Errors","type":"button","variant":"light","dropup":""},scopedSlots:_vm._u([{key:"icon",fn:function(){return [_c('font-awesome-icon',{staticClass:"mr-2",attrs:{"icon":"hammer"}})]},proxy:true}],null,false,832869925)},_vm._l((_vm.actions),function(action,i){return _c('button',{key:((_vm.currentDiagnostic.rule.id) + "-" + i),attrs:{"type":"button","variant":"light"},on:{"click":function () { return _vm.onClickAction(_vm.currentDiagnostic, action); }}},[_vm._v(" "+_vm._s(action.name)+" ")])}),0)]]:_vm._e()]}),_vm._t("save-button",function(){return [(!_vm.diagnostics.length)?_c('btn',{attrs:{"type":"button","variant":"light"},on:{"click":function($event){return _vm.$emit('save')}}},[_c('font-awesome-icon',{staticClass:"mr-1",attrs:{"icon":"save"}}),_vm._v(" "+_vm._s(_vm.saveButtonLabel)+" ")],1):_vm._e()]}),_vm._t("after-save-button")],2)]):_vm._e()])],1)}
 var EditorFootervue_type_template_id_8afa4436_staticRenderFns = []
 
 
@@ -39213,7 +40169,7 @@ var EditorFootervue_type_template_id_8afa4436_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/@vue-interface/btn-dropdown/src/css/BtnDropdown.css
 var BtnDropdown = __webpack_require__("ea01");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdown.vue?vue&type=template&id=0a072a98&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdown.vue?vue&type=template&id=0a072a98&
 var BtnDropdownvue_type_template_id_0a072a98_render = function () {
 var this$1 = this;
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.$attrs.split === undefined || !!_vm.$attrs.nav ? 'btn-dropdown-single' : 'btn-dropdown-split',_vm._b({tag:"component",staticClass:"btn-dropdown",on:{"click":function () {
@@ -39252,27 +40208,27 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.$at
 	var args = [], len = arguments.length;
 	while ( len-- ) args[ len ] = arguments[ len ];
 	return (ref = this$1).$emit.apply(ref, [ 'toggle' ].concat( args ));
-}},scopedSlots:_vm._u([{key:"icon",fn:function(){return [_vm._t("icon")]},proxy:true},(_vm.$attrs.label || this.$slots.label)?{key:"label",fn:function(){return [_vm._t("label",[_vm._v(" "+_vm._s(_vm.$attrs.label)+" ")])]},proxy:true}:null],null,true)},'component',_vm.$attrs,false),[_vm._t("default")],2)}
+}},scopedSlots:_vm._u([{key:"icon",fn:function(){return [_vm._t("icon")]},proxy:true},(_vm.$attrs.label || this.$slots.label)?{key:"label",fn:function(){return [_vm._t("label",function(){return [_vm._v(" "+_vm._s(_vm.$attrs.label)+" ")]})]},proxy:true}:null],null,true)},'component',_vm.$attrs,false),[_vm._t("default")],2)}
 var BtnDropdownvue_type_template_id_0a072a98_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-dropdown/src/BtnDropdown.vue?vue&type=template&id=0a072a98&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSplit.vue?vue&type=template&id=1bcf77bc&
-var BtnDropdownSplitvue_type_template_id_1bcf77bc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('btn-group',{staticClass:"btn-dropdown-split",class:_vm.classes,on:{"click":_vm.onClick}},[(!_vm.dropleft)?_c('btn-dropdown-action',{ref:"button",class:_vm.actionClasses,attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return (function (e) { return _vm.$emit('click', e); })($event)}}},[_vm._t("icon"),_vm._t("label",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2):_vm._e(),_c('btn-group',[(_vm.split)?_c('button',{ref:"split",class:_vm.toggleClasses,attrs:{"id":_vm.$attrs.id,"type":"button","aria-haspopup":"true","aria-expanded":_vm.isDropdownShowing},on:{"click":_vm.onClickToggle}}):_vm._e(),_c('dropdown-menu',{ref:"menu",class:{animated: _vm.triggerAnimation},attrs:{"id":_vm.$attrs.id,"align":_vm.align,"show":_vm.isDropdownShowing},on:{"click-item":_vm.onClickItem,"blur-item":_vm.onBlurItem}},[_vm._t("default")],2)],1),(_vm.dropleft)?_c('btn-dropdown-action',{ref:"button",class:_vm.actionClasses,attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return (function (e) { return _vm.$emit('click', e); })($event)}}},[_vm._t("icon"),_vm._t("label",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSplit.vue?vue&type=template&id=1bcf77bc&
+var BtnDropdownSplitvue_type_template_id_1bcf77bc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('btn-group',{staticClass:"btn-dropdown-split",class:_vm.classes,on:{"click":_vm.onClick}},[(!_vm.dropleft)?_c('btn-dropdown-action',{ref:"button",class:_vm.actionClasses,attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return (function (e) { return _vm.$emit('click', e); }).apply(null, arguments)}}},[_vm._t("icon"),_vm._t("label",function(){return [_vm._v(" "+_vm._s(_vm.label)+" ")]})],2):_vm._e(),_c('btn-group',[(_vm.split)?_c('button',{ref:"split",class:_vm.toggleClasses,attrs:{"id":_vm.$attrs.id,"type":"button","aria-haspopup":"true","aria-expanded":_vm.isDropdownShowing},on:{"click":_vm.onClickToggle}}):_vm._e(),_c('dropdown-menu',{ref:"menu",class:{animated: _vm.triggerAnimation},attrs:{"id":_vm.$attrs.id,"align":_vm.align,"show":_vm.isDropdownShowing},on:{"click-item":_vm.onClickItem,"blur-item":_vm.onBlurItem}},[_vm._t("default")],2)],1),(_vm.dropleft)?_c('btn-dropdown-action',{ref:"button",class:_vm.actionClasses,attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return (function (e) { return _vm.$emit('click', e); }).apply(null, arguments)}}},[_vm._t("icon"),_vm._t("label",function(){return [_vm._v(" "+_vm._s(_vm.label)+" ")]})],2):_vm._e()],1)}
 var BtnDropdownSplitvue_type_template_id_1bcf77bc_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSplit.vue?vue&type=template&id=1bcf77bc&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownAction.vue?vue&type=template&id=5a7b0daa&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownAction.vue?vue&type=template&id=5a7b0daa&
 var BtnDropdownActionvue_type_template_id_5a7b0daa_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.is,_vm._b({tag:"component",attrs:{"id":_vm.id,"aria-haspopup":"true","aria-expanded":_vm.expanded,"type":_vm.is === 'button' ? 'button': undefined}},'component',_vm.to ? { to: _vm.to } : { href: _vm.href },false),[_vm._t("default")],2)}
 var BtnDropdownActionvue_type_template_id_5a7b0daa_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownAction.vue?vue&type=template&id=5a7b0daa&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownAction.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownAction.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -39334,24 +40290,50 @@ var BtnDropdownAction_component = normalizeComponent(
 
 /* harmony default export */ var BtnDropdownAction = (BtnDropdownAction_component.exports);
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
-function getBoundingClientRect(element) {
+// import { isHTMLElement } from './instanceOf';
+function getBoundingClientRect(element, // eslint-disable-next-line unused-imports/no-unused-vars
+includeScale) {
+  if (includeScale === void 0) {
+    includeScale = false;
+  }
+
   var rect = element.getBoundingClientRect();
+  var scaleX = 1;
+  var scaleY = 1; // FIXME:
+  // `offsetWidth` returns an integer while `getBoundingClientRect`
+  // returns a float. This results in `scaleX` or `scaleY` being
+  // non-1 when it should be for elements that aren't a full pixel in
+  // width or height.
+  // if (isHTMLElement(element) && includeScale) {
+  //   const offsetHeight = element.offsetHeight;
+  //   const offsetWidth = element.offsetWidth;
+  //   // Do not attempt to divide by 0, otherwise we get `Infinity` as scale
+  //   // Fallback to 1 in case both values are `0`
+  //   if (offsetWidth > 0) {
+  //     scaleX = rect.width / offsetWidth || 1;
+  //   }
+  //   if (offsetHeight > 0) {
+  //     scaleY = rect.height / offsetHeight || 1;
+  //   }
+  // }
+
   return {
-    width: rect.width,
-    height: rect.height,
-    top: rect.top,
-    right: rect.right,
-    bottom: rect.bottom,
-    left: rect.left,
-    x: rect.left,
-    y: rect.top
+    width: rect.width / scaleX,
+    height: rect.height / scaleY,
+    top: rect.top / scaleY,
+    right: rect.right / scaleX,
+    bottom: rect.bottom / scaleY,
+    left: rect.left / scaleX,
+    x: rect.left / scaleX,
+    y: rect.top / scaleY
   };
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindow.js
-/*:: import type { Window } from '../types'; */
-
-/*:: declare function getWindow(node: Node | Window): Window; */
 function getWindow(node) {
+  if (node == null) {
+    return window;
+  }
+
   if (node.toString() !== '[object Window]') {
     var ownerDocument = node.ownerDocument;
     return ownerDocument ? ownerDocument.defaultView || window : window;
@@ -39372,26 +40354,23 @@ function getWindowScroll(node) {
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
 
-/*:: declare function isElement(node: mixed): boolean %checks(node instanceof
-  Element); */
 
 function isElement(node) {
   var OwnElement = getWindow(node).Element;
   return node instanceof OwnElement || node instanceof Element;
 }
-/*:: declare function isHTMLElement(node: mixed): boolean %checks(node instanceof
-  HTMLElement); */
-
 
 function isHTMLElement(node) {
   var OwnElement = getWindow(node).HTMLElement;
   return node instanceof OwnElement || node instanceof HTMLElement;
 }
-/*:: declare function isShadowRoot(node: mixed): boolean %checks(node instanceof
-  ShadowRoot); */
-
 
 function isShadowRoot(node) {
+  // IE 11 has no ShadowRoot
+  if (typeof ShadowRoot === 'undefined') {
+    return false;
+  }
+
   var OwnElement = getWindow(node).ShadowRoot;
   return node instanceof OwnElement || node instanceof ShadowRoot;
 }
@@ -39464,17 +40443,26 @@ function isScrollParent(element) {
 
 
 
- // Returns the composite rect of an element relative to its offsetParent.
+
+
+function isElementScaled(element) {
+  var rect = element.getBoundingClientRect();
+  var scaleX = rect.width / element.offsetWidth || 1;
+  var scaleY = rect.height / element.offsetHeight || 1;
+  return scaleX !== 1 || scaleY !== 1;
+} // Returns the composite rect of an element relative to its offsetParent.
 // Composite means it takes into account transforms as well as layout.
+
 
 function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   if (isFixed === void 0) {
     isFixed = false;
   }
 
-  var documentElement = getDocumentElement(offsetParent);
-  var rect = getBoundingClientRect(elementOrVirtualElement);
   var isOffsetParentAnElement = isHTMLElement(offsetParent);
+  var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
+  var documentElement = getDocumentElement(offsetParent);
+  var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled);
   var scroll = {
     scrollLeft: 0,
     scrollTop: 0
@@ -39491,7 +40479,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     }
 
     if (isHTMLElement(offsetParent)) {
-      offsets = getBoundingClientRect(offsetParent);
+      offsets = getBoundingClientRect(offsetParent, true);
       offsets.x += offsetParent.clientLeft;
       offsets.y += offsetParent.clientTop;
     } else if (documentElement) {
@@ -39507,17 +40495,33 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   };
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
-// Returns the layout rect of an element relative to its offsetParent. Layout
+ // Returns the layout rect of an element relative to its offsetParent. Layout
 // means it doesn't take into account transforms.
+
 function getLayoutRect(element) {
+  var clientRect = getBoundingClientRect(element); // Use the clientRect sizes if it's not been transformed.
+  // Fixes https://github.com/popperjs/popper-core/issues/1223
+
+  var width = element.offsetWidth;
+  var height = element.offsetHeight;
+
+  if (Math.abs(clientRect.width - width) <= 1) {
+    width = clientRect.width;
+  }
+
+  if (Math.abs(clientRect.height - height) <= 1) {
+    height = clientRect.height;
+  }
+
   return {
     x: element.offsetLeft,
     y: element.offsetTop,
-    width: element.offsetWidth,
-    height: element.offsetHeight
+    width: width,
+    height: height
   };
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
+
 
 
 function getParentNode(element) {
@@ -39529,9 +40533,8 @@ function getParentNode(element) {
     // $FlowFixMe[incompatible-return]
     // $FlowFixMe[prop-missing]
     element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-    element.parentNode || // DOM Element detected
-    // $FlowFixMe[incompatible-return]: need a better way to handle this...
-    element.host || // ShadowRoot detected
+    element.parentNode || ( // DOM Element detected
+    isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
     // $FlowFixMe[incompatible-call]: HTMLElement is a Node
     getDocumentElement(element) // fallback
 
@@ -39559,7 +40562,6 @@ function getScrollParent(node) {
 
 
 
-
 /*
 given a DOM element, return the list of all scroll parents, up the list of ancesors
 until we get to the top window object. This list is what we attach scroll listeners
@@ -39568,12 +40570,14 @@ reference element's position.
 */
 
 function listScrollParents(element, list) {
+  var _element$ownerDocumen;
+
   if (list === void 0) {
     list = [];
   }
 
   var scrollParent = getScrollParent(element);
-  var isBody = getNodeName(scrollParent) === 'body';
+  var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
   var win = getWindow(scrollParent);
   var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
   var updatedList = list.concat(target);
@@ -39593,36 +40597,38 @@ function isTableElement(element) {
 
 
 
-
 function getTrueOffsetParent(element) {
   if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
   getComputedStyle_getComputedStyle(element).position === 'fixed') {
     return null;
   }
 
-  var offsetParent = element.offsetParent;
-
-  if (offsetParent) {
-    var html = getDocumentElement(offsetParent);
-
-    if (getNodeName(offsetParent) === 'body' && getComputedStyle_getComputedStyle(offsetParent).position === 'static' && getComputedStyle_getComputedStyle(html).position !== 'static') {
-      return html;
-    }
-  }
-
-  return offsetParent;
+  return element.offsetParent;
 } // `.offsetParent` reports `null` for fixed elements, while absolute elements
 // return the containing block
 
 
 function getContainingBlock(element) {
+  var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') !== -1;
+  var isIE = navigator.userAgent.indexOf('Trident') !== -1;
+
+  if (isIE && isHTMLElement(element)) {
+    // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
+    var elementCss = getComputedStyle_getComputedStyle(element);
+
+    if (elementCss.position === 'fixed') {
+      return null;
+    }
+  }
+
   var currentNode = getParentNode(element);
 
   while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
     var css = getComputedStyle_getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
     // create a containing block.
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
 
-    if (css.transform !== 'none' || css.perspective !== 'none' || css.willChange && css.willChange !== 'auto') {
+    if (css.transform !== 'none' || css.perspective !== 'none' || css.contain === 'paint' || ['transform', 'perspective'].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === 'filter' || isFirefox && css.filter && css.filter !== 'none') {
       return currentNode;
     } else {
       currentNode = currentNode.parentNode;
@@ -39642,7 +40648,7 @@ function getOffsetParent(element) {
     offsetParent = getTrueOffsetParent(offsetParent);
   }
 
-  if (offsetParent && getNodeName(offsetParent) === 'body' && getComputedStyle_getComputedStyle(offsetParent).position === 'static') {
+  if (offsetParent && (getNodeName(offsetParent) === 'html' || getNodeName(offsetParent) === 'body' && getComputedStyle_getComputedStyle(offsetParent).position === 'static')) {
     return window;
   }
 
@@ -39745,9 +40751,9 @@ function debounce_debounce(fn) {
 function mergeByName(modifiers) {
   var merged = modifiers.reduce(function (merged, current) {
     var existing = merged[current.name];
-    merged[current.name] = existing ? Object.assign(Object.assign(Object.assign({}, existing), current), {}, {
-      options: Object.assign(Object.assign({}, existing.options), current.options),
-      data: Object.assign(Object.assign({}, existing.data), current.data)
+    merged[current.name] = existing ? Object.assign({}, existing, current, {
+      options: Object.assign({}, existing.options, current.options),
+      data: Object.assign({}, existing.data, current.data)
     }) : current;
     return merged;
   }, {}); // IE11 does not support Object.values
@@ -39807,7 +40813,7 @@ function popperGenerator(generatorOptions) {
     var state = {
       placement: 'bottom',
       orderedModifiers: [],
-      options: Object.assign(Object.assign({}, DEFAULT_OPTIONS), defaultOptions),
+      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
       modifiersData: {},
       elements: {
         reference: reference,
@@ -39820,9 +40826,10 @@ function popperGenerator(generatorOptions) {
     var isDestroyed = false;
     var instance = {
       state: state,
-      setOptions: function setOptions(options) {
+      setOptions: function setOptions(setOptionsAction) {
+        var options = typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
         cleanupModifierEffects();
-        state.options = Object.assign(Object.assign(Object.assign({}, defaultOptions), state.options), options);
+        state.options = Object.assign({}, defaultOptions, state.options, options);
         state.scrollParents = {
           reference: isElement(reference) ? listScrollParents(reference) : reference.contextElement ? listScrollParents(reference.contextElement) : [],
           popper: listScrollParents(popper)
@@ -40133,7 +41140,13 @@ function popperOffsets_popperOffsets(_ref) {
   fn: popperOffsets_popperOffsets,
   data: {}
 });
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/math.js
+var math_max = Math.max;
+var math_min = Math.min;
+var round = Math.round;
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/computeStyles.js
+
+
 
 
 
@@ -40156,8 +41169,8 @@ function roundOffsetsByDPR(_ref) {
   var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
-    x: Math.round(x * dpr) / dpr || 0,
-    y: Math.round(y * dpr) / dpr || 0
+    x: round(round(x * dpr) / dpr) || 0,
+    y: round(round(y * dpr) / dpr) || 0
   };
 }
 
@@ -40167,13 +41180,14 @@ function mapToStyles(_ref2) {
   var popper = _ref2.popper,
       popperRect = _ref2.popperRect,
       placement = _ref2.placement,
+      variation = _ref2.variation,
       offsets = _ref2.offsets,
       position = _ref2.position,
       gpuAcceleration = _ref2.gpuAcceleration,
       adaptive = _ref2.adaptive,
       roundOffsets = _ref2.roundOffsets;
 
-  var _ref3 = roundOffsets ? roundOffsetsByDPR(offsets) : offsets,
+  var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
       _ref3$x = _ref3.x,
       x = _ref3$x === void 0 ? 0 : _ref3$x,
       _ref3$y = _ref3.y,
@@ -40187,23 +41201,32 @@ function mapToStyles(_ref2) {
 
   if (adaptive) {
     var offsetParent = getOffsetParent(popper);
+    var heightProp = 'clientHeight';
+    var widthProp = 'clientWidth';
 
     if (offsetParent === getWindow(popper)) {
       offsetParent = getDocumentElement(popper);
+
+      if (getComputedStyle_getComputedStyle(offsetParent).position !== 'static' && position === 'absolute') {
+        heightProp = 'scrollHeight';
+        widthProp = 'scrollWidth';
+      }
     } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
 
-    /*:: offsetParent = (offsetParent: Element); */
 
+    offsetParent = offsetParent;
 
-    if (placement === enums_top) {
-      sideY = bottom;
-      y -= offsetParent.clientHeight - popperRect.height;
+    if (placement === enums_top || (placement === enums_left || placement === enums_right) && variation === enums_end) {
+      sideY = bottom; // $FlowFixMe[prop-missing]
+
+      y -= offsetParent[heightProp] - popperRect.height;
       y *= gpuAcceleration ? 1 : -1;
     }
 
-    if (placement === enums_left) {
-      sideX = enums_right;
-      x -= offsetParent.clientWidth - popperRect.width;
+    if (placement === enums_left || (placement === enums_top || placement === bottom) && variation === enums_end) {
+      sideX = enums_right; // $FlowFixMe[prop-missing]
+
+      x -= offsetParent[widthProp] - popperRect.width;
       x *= gpuAcceleration ? 1 : -1;
     }
   }
@@ -40215,10 +41238,10 @@ function mapToStyles(_ref2) {
   if (gpuAcceleration) {
     var _Object$assign;
 
-    return Object.assign(Object.assign({}, commonStyles), {}, (_Object$assign = {}, _Object$assign[sideY] = hasY ? '0' : '', _Object$assign[sideX] = hasX ? '0' : '', _Object$assign.transform = (win.devicePixelRatio || 1) < 2 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
+    return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? '0' : '', _Object$assign[sideX] = hasX ? '0' : '', _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
   }
 
-  return Object.assign(Object.assign({}, commonStyles), {}, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
+  return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
 }
 
 function computeStyles(_ref4) {
@@ -40235,13 +41258,14 @@ function computeStyles(_ref4) {
 
   var commonStyles = {
     placement: getBasePlacement(state.placement),
+    variation: getVariation(state.placement),
     popper: state.elements.popper,
     popperRect: state.rects.popper,
     gpuAcceleration: gpuAcceleration
   };
 
   if (state.modifiersData.popperOffsets != null) {
-    state.styles.popper = Object.assign(Object.assign({}, state.styles.popper), mapToStyles(Object.assign(Object.assign({}, commonStyles), {}, {
+    state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
       offsets: state.modifiersData.popperOffsets,
       position: state.options.strategy,
       adaptive: adaptive,
@@ -40250,7 +41274,7 @@ function computeStyles(_ref4) {
   }
 
   if (state.modifiersData.arrow != null) {
-    state.styles.arrow = Object.assign(Object.assign({}, state.styles.arrow), mapToStyles(Object.assign(Object.assign({}, commonStyles), {}, {
+    state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
       offsets: state.modifiersData.arrow,
       position: 'absolute',
       adaptive: false,
@@ -40258,7 +41282,7 @@ function computeStyles(_ref4) {
     })));
   }
 
-  state.attributes.popper = Object.assign(Object.assign({}, state.attributes.popper), {}, {
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
     'data-popper-placement': state.placement
   });
 } // eslint-disable-next-line import/no-unused-modules
@@ -40318,6 +41342,7 @@ function applyStyles_effect(_ref2) {
     reference: {}
   };
   Object.assign(state.elements.popper.style, initialStyles.popper);
+  state.styles = initialStyles;
 
   if (state.elements.arrow) {
     Object.assign(state.elements.arrow.style, initialStyles.arrow);
@@ -40362,7 +41387,7 @@ function distanceAndSkiddingToXY(placement, rects, offset) {
   var basePlacement = getBasePlacement(placement);
   var invertDistance = [enums_left, enums_top].indexOf(basePlacement) >= 0 ? -1 : 1;
 
-  var _ref = typeof offset === 'function' ? offset(Object.assign(Object.assign({}, rects), {}, {
+  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
     placement: placement
   })) : offset,
       skidding = _ref[0],
@@ -40476,20 +41501,23 @@ function getViewportRect(element) {
 
 
 
+
  // Gets the entire size of the scrollable document area, even extending outside
 // of the `<html>` and `<body>` rect bounds if horizontally scrollable
 
 function getDocumentRect(element) {
+  var _element$ownerDocumen;
+
   var html = getDocumentElement(element);
   var winScroll = getWindowScroll(element);
-  var body = element.ownerDocument.body;
-  var width = Math.max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-  var height = Math.max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+  var width = math_max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+  var height = math_max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
   var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
   var y = -winScroll.scrollTop;
 
   if (getComputedStyle_getComputedStyle(body || html).direction === 'rtl') {
-    x += Math.max(html.clientWidth, body ? body.clientWidth : 0) - width;
+    x += math_max(html.clientWidth, body ? body.clientWidth : 0) - width;
   }
 
   return {
@@ -40525,7 +41553,7 @@ function contains_contains(parent, child) {
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/rectToClientRect.js
 function rectToClientRect(rect) {
-  return Object.assign(Object.assign({}, rect), {}, {
+  return Object.assign({}, rect, {
     left: rect.x,
     top: rect.y,
     right: rect.x + rect.width,
@@ -40533,6 +41561,7 @@ function rectToClientRect(rect) {
   });
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
+
 
 
 
@@ -40590,10 +41619,10 @@ function getClippingRect(element, boundary, rootBoundary) {
   var firstClippingParent = clippingParents[0];
   var clippingRect = clippingParents.reduce(function (accRect, clippingParent) {
     var rect = getClientRectFromMixedType(element, clippingParent);
-    accRect.top = Math.max(rect.top, accRect.top);
-    accRect.right = Math.min(rect.right, accRect.right);
-    accRect.bottom = Math.min(rect.bottom, accRect.bottom);
-    accRect.left = Math.max(rect.left, accRect.left);
+    accRect.top = math_max(rect.top, accRect.top);
+    accRect.right = math_min(rect.right, accRect.right);
+    accRect.bottom = math_min(rect.bottom, accRect.bottom);
+    accRect.left = math_max(rect.left, accRect.left);
     return accRect;
   }, getClientRectFromMixedType(element, firstClippingParent));
   clippingRect.width = clippingRect.right - clippingRect.left;
@@ -40614,7 +41643,7 @@ function getFreshSideObject() {
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
 
 function mergePaddingObject(paddingObject) {
-  return Object.assign(Object.assign({}, getFreshSideObject()), paddingObject);
+  return Object.assign({}, getFreshSideObject(), paddingObject);
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/expandToHashMap.js
 function expandToHashMap(value, keys) {
@@ -40654,18 +41683,17 @@ function detectOverflow(state, options) {
       padding = _options$padding === void 0 ? 0 : _options$padding;
   var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
   var altContext = elementContext === enums_popper ? enums_reference : enums_popper;
-  var referenceElement = state.elements.reference;
   var popperRect = state.rects.popper;
   var element = state.elements[altBoundary ? altContext : elementContext];
   var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary);
-  var referenceClientRect = getBoundingClientRect(referenceElement);
+  var referenceClientRect = getBoundingClientRect(state.elements.reference);
   var popperOffsets = computeOffsets({
     reference: referenceClientRect,
     element: popperRect,
     strategy: 'absolute',
     placement: placement
   });
-  var popperClientRect = rectToClientRect(Object.assign(Object.assign({}, popperRect), popperOffsets));
+  var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets));
   var elementClientRect = elementContext === enums_popper ? popperClientRect : referenceClientRect; // positive = overflowing the clipping rect
   // 0 or negative = within the clipping rect
 
@@ -40693,10 +41721,6 @@ function detectOverflow(state, options) {
 
 
 
-
-/*:: type OverflowsMap = { [ComputedPlacement]: number }; */
-
-/*;; type OverflowsMap = { [key in ComputedPlacement]: number }; */
 function computeAutoPlacement(state, options) {
   if (options === void 0) {
     options = {};
@@ -40891,10 +41915,12 @@ function getAltAxis(axis) {
   return axis === 'x' ? 'y' : 'x';
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/within.js
+
 function within(min, value, max) {
-  return Math.max(min, Math.min(value, max));
+  return math_max(min, math_min(value, max));
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
+
 
 
 
@@ -40936,7 +41962,7 @@ function preventOverflow(_ref) {
   var popperOffsets = state.modifiersData.popperOffsets;
   var referenceRect = state.rects.reference;
   var popperRect = state.rects.popper;
-  var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign(Object.assign({}, state.rects), {}, {
+  var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign({}, state.rects, {
     placement: state.placement
   })) : tetherOffset;
   var data = {
@@ -40948,7 +41974,7 @@ function preventOverflow(_ref) {
     return;
   }
 
-  if (checkMainAxis) {
+  if (checkMainAxis || checkAltAxis) {
     var mainSide = mainAxis === 'y' ? enums_top : enums_left;
     var altSide = mainAxis === 'y' ? bottom : enums_right;
     var len = mainAxis === 'y' ? 'height' : 'width';
@@ -40981,26 +42007,29 @@ function preventOverflow(_ref) {
     var offsetModifierValue = state.modifiersData.offset ? state.modifiersData.offset[state.placement][mainAxis] : 0;
     var tetherMin = popperOffsets[mainAxis] + minOffset - offsetModifierValue - clientOffset;
     var tetherMax = popperOffsets[mainAxis] + maxOffset - offsetModifierValue;
-    var preventedOffset = within(tether ? Math.min(min, tetherMin) : min, offset, tether ? Math.max(max, tetherMax) : max);
-    popperOffsets[mainAxis] = preventedOffset;
-    data[mainAxis] = preventedOffset - offset;
-  }
 
-  if (checkAltAxis) {
-    var _mainSide = mainAxis === 'x' ? enums_top : enums_left;
+    if (checkMainAxis) {
+      var preventedOffset = within(tether ? math_min(min, tetherMin) : min, offset, tether ? math_max(max, tetherMax) : max);
+      popperOffsets[mainAxis] = preventedOffset;
+      data[mainAxis] = preventedOffset - offset;
+    }
 
-    var _altSide = mainAxis === 'x' ? bottom : enums_right;
+    if (checkAltAxis) {
+      var _mainSide = mainAxis === 'x' ? enums_top : enums_left;
 
-    var _offset = popperOffsets[altAxis];
+      var _altSide = mainAxis === 'x' ? bottom : enums_right;
 
-    var _min = _offset + overflow[_mainSide];
+      var _offset = popperOffsets[altAxis];
 
-    var _max = _offset - overflow[_altSide];
+      var _min = _offset + overflow[_mainSide];
 
-    var _preventedOffset = within(_min, _offset, _max);
+      var _max = _offset - overflow[_altSide];
 
-    popperOffsets[altAxis] = _preventedOffset;
-    data[altAxis] = _preventedOffset - _offset;
+      var _preventedOffset = within(tether ? math_min(_min, tetherMin) : _min, _offset, tether ? math_max(_max, tetherMax) : _max);
+
+      popperOffsets[altAxis] = _preventedOffset;
+      data[altAxis] = _preventedOffset - _offset;
+    }
   }
 
   state.modifiersData[name] = data;
@@ -41026,11 +42055,19 @@ function preventOverflow(_ref) {
 
  // eslint-disable-next-line import/no-unused-modules
 
-function arrow(_ref) {
+var arrow_toPaddingObject = function toPaddingObject(padding, state) {
+  padding = typeof padding === 'function' ? padding(Object.assign({}, state.rects, {
+    placement: state.placement
+  })) : padding;
+  return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
+};
+
+function arrow_arrow(_ref) {
   var _state$modifiersData$;
 
   var state = _ref.state,
-      name = _ref.name;
+      name = _ref.name,
+      options = _ref.options;
   var arrowElement = state.elements.arrow;
   var popperOffsets = state.modifiersData.popperOffsets;
   var basePlacement = getBasePlacement(state.placement);
@@ -41042,7 +42079,7 @@ function arrow(_ref) {
     return;
   }
 
-  var paddingObject = state.modifiersData[name + "#persistent"].padding;
+  var paddingObject = arrow_toPaddingObject(options.padding, state);
   var arrowRect = getLayoutRect(arrowElement);
   var minProp = axis === 'y' ? enums_top : enums_left;
   var maxProp = axis === 'y' ? bottom : enums_right;
@@ -41064,12 +42101,9 @@ function arrow(_ref) {
 
 function arrow_effect(_ref2) {
   var state = _ref2.state,
-      options = _ref2.options,
-      name = _ref2.name;
+      options = _ref2.options;
   var _options$element = options.element,
-      arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element,
-      _options$padding = options.padding,
-      padding = _options$padding === void 0 ? 0 : _options$padding;
+      arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element;
 
   if (arrowElement == null) {
     return;
@@ -41093,9 +42127,6 @@ function arrow_effect(_ref2) {
   }
 
   state.elements.arrow = arrowElement;
-  state.modifiersData[name + "#persistent"] = {
-    padding: mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements))
-  };
 } // eslint-disable-next-line import/no-unused-modules
 
 
@@ -41103,7 +42134,7 @@ function arrow_effect(_ref2) {
   name: 'arrow',
   enabled: true,
   phase: 'main',
-  fn: arrow,
+  fn: arrow_arrow,
   effect: arrow_effect,
   requires: ['popperOffsets'],
   requiresIfExists: ['preventOverflow']
@@ -41156,7 +42187,7 @@ function hide(_ref) {
     isReferenceHidden: isReferenceHidden,
     hasPopperEscaped: hasPopperEscaped
   };
-  state.attributes.popper = Object.assign(Object.assign({}, state.attributes.popper), {}, {
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
     'data-popper-reference-hidden': isReferenceHidden,
     'data-popper-escaped': hasPopperEscaped
   });
@@ -41194,14 +42225,14 @@ var popper_createPopper = /*#__PURE__*/popperGenerator({
 // EXTERNAL MODULE: ./node_modules/@vue-interface/btn-group/src/css/ButtonGroup.css
 var ButtonGroup = __webpack_require__("a671");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroup.vue?vue&type=template&id=2b9066b6&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroup.vue?vue&type=template&id=2b9066b6&
 var BtnGroupvue_type_template_id_2b9066b6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.classes,attrs:{"data-toggle":_vm.toggle ? 'buttons' : false,"role":"group"}},[(_vm.buttons)?_vm._l((_vm.buttons),function(button,i){return _c('btn',_vm._b({key:i},'btn',button,false))}):_vm._e(),_vm._t("default")],2)}
 var BtnGroupvue_type_template_id_2b9066b6_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-group/src/BtnGroup.vue?vue&type=template&id=2b9066b6&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroup.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroup.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -41288,14 +42319,14 @@ var BtnGroup_component = normalizeComponent(
 )
 
 /* harmony default export */ var BtnGroup = (BtnGroup_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroupToggle.vue?vue&type=template&id=6e01a010&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroupToggle.vue?vue&type=template&id=6e01a010&
 var BtnGroupTogglevue_type_template_id_6e01a010_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group-toggle",attrs:{"data-toggle":"buttons"}},[_vm._t("default")],2)}
 var BtnGroupTogglevue_type_template_id_6e01a010_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-group/src/BtnGroupToggle.vue?vue&type=template&id=6e01a010&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroupToggle.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnGroupToggle.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -41331,14 +42362,14 @@ var BtnGroupToggle_component = normalizeComponent(
 )
 
 /* harmony default export */ var BtnGroupToggle = (BtnGroupToggle_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnToolbar.vue?vue&type=template&id=2411d13c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnToolbar.vue?vue&type=template&id=2411d13c&
 var BtnToolbarvue_type_template_id_2411d13c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-toolbar",attrs:{"role":"toolbar"}},[_vm._t("default")],2)}
 var BtnToolbarvue_type_template_id_2411d13c_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-group/src/BtnToolbar.vue?vue&type=template&id=2411d13c&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnToolbar.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-group/src/BtnToolbar.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -41382,14 +42413,14 @@ var BtnToolbar_component = normalizeComponent(
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenu.vue?vue&type=template&id=b6106506&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenu.vue?vue&type=template&id=b6106506&
 var DropdownMenuvue_type_template_id_b6106506_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"dropdown-menu",class:{'dropdown-menu-left': _vm.align === 'left', 'dropdown-menu-right': _vm.align === 'right', 'show': _vm.show},attrs:{"aria-labelledby":_vm.$attrs.id}},[_c('dropdown-menu-items',[_vm._t("default")],2)],1)}
 var DropdownMenuvue_type_template_id_b6106506_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/dropdown-menu/src/DropdownMenu.vue?vue&type=template&id=b6106506&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenuItems.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenuItems.vue?vue&type=script&lang=js&
 
 
 
@@ -41480,7 +42511,7 @@ var DropdownMenuItems_component = normalizeComponent(
 )
 
 /* harmony default export */ var DropdownMenuItems = (DropdownMenuItems_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenu.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/dropdown-menu/src/DropdownMenu.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -41978,7 +43009,7 @@ const TAB_KEYCODE = 9;
     }
 
 });
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSplit.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSplit.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -42067,14 +43098,14 @@ var BtnDropdownSplit_component = normalizeComponent(
 )
 
 /* harmony default export */ var BtnDropdownSplit = (BtnDropdownSplit_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSingle.vue?vue&type=template&id=bbafb680&
-var BtnDropdownSinglevue_type_template_id_bbafb680_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('btn-group',{class:_vm.classes},[_c('btn-dropdown-action',{ref:"button",class:_vm.toggleClasses,style:(_vm.toggleStyle),attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return _vm.onClickToggle($event)}}},[_vm._t("icon"),_vm._t("label",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2),_c('dropdown-menu',{ref:"menu",class:{animated: _vm.triggerAnimation},attrs:{"id":_vm.$attrs.id,"align":_vm.align,"show":_vm.isDropdownShowing},on:{"click-item":_vm.onClickItem,"blur-item":_vm.onBlurItem}},[_vm._t("default")],2)],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSingle.vue?vue&type=template&id=bbafb680&
+var BtnDropdownSinglevue_type_template_id_bbafb680_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('btn-group',{class:_vm.classes},[_c('btn-dropdown-action',{ref:"button",class:_vm.toggleClasses,style:(_vm.toggleStyle),attrs:{"id":_vm.$attrs.id,"expanded":_vm.isDropdownShowing,"href":_vm.href,"to":_vm.to},nativeOn:{"click":function($event){return _vm.onClickToggle.apply(null, arguments)}}},[_vm._t("icon"),_vm._t("label",function(){return [_vm._v(" "+_vm._s(_vm.label)+" ")]})],2),_c('dropdown-menu',{ref:"menu",class:{animated: _vm.triggerAnimation},attrs:{"id":_vm.$attrs.id,"align":_vm.align,"show":_vm.isDropdownShowing},on:{"click-item":_vm.onClickItem,"blur-item":_vm.onBlurItem}},[_vm._t("default")],2)],1)}
 var BtnDropdownSinglevue_type_template_id_bbafb680_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSingle.vue?vue&type=template&id=bbafb680&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSingle.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdownSingle.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -42137,7 +43168,7 @@ var BtnDropdownSingle_component = normalizeComponent(
 )
 
 /* harmony default export */ var BtnDropdownSingle = (BtnDropdownSingle_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdown.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/btn-dropdown/src/BtnDropdown.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -42208,7 +43239,7 @@ var BtnDropdown_component = normalizeComponent(
 
 
 /* harmony default export */ var btn_dropdown = (src_BtnDropdown);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorError.vue?vue&type=template&id=471ed5b4&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorError.vue?vue&type=template&id=471ed5b4&
 var EditorErrorvue_type_template_id_471ed5b4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"d-flex align-items-center capsule-editor-error"},[_c('code',[_vm._v(" "+_vm._s(_vm.error.line)+","+_vm._s(_vm.error.col)+" :: ("+_vm._s(_vm.error.rule.id)+") "+_vm._s(_vm.error.message)+" "),_c('a',{staticClass:"small",attrs:{"href":_vm.url,"variant":"link","text-light":"","target":"_blank"}},[_vm._v(" Reference "),_c('font-awesome-icon',{attrs:{"icon":"external-link-alt"}})],1)])])}
 var EditorErrorvue_type_template_id_471ed5b4_staticRenderFns = []
 
@@ -44022,7 +45053,7 @@ var index_es_config = api$1.config;
 
 /* harmony default export */ var fontawesome_index_es = (api$1);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorError.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorError.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -44083,7 +45114,7 @@ var EditorError_component = normalizeComponent(
 )
 
 /* harmony default export */ var EditorError = (EditorError_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorFooter.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorFooter.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -44334,21 +45365,21 @@ var EditorFooter_component = normalizeComponent(
 )
 
 /* harmony default export */ var EditorFooter = (EditorFooter_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorToolbar.vue?vue&type=template&id=87c64c52&
-var EditorToolbarvue_type_template_id_87c64c52_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor-toolbar d-flex justify-content-between pt-2 px-2 pb-1"},[_c('div',{staticClass:"editor-toolbar-left"},[_vm._t("left")],2),_c('div',{staticClass:"editor-toolbar-title"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.currentValue),expression:"currentValue"}],attrs:{"type":"text","placeholder":"Untitled Document","disabled":_vm.disableFilename},domProps:{"value":(_vm.currentValue)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.currentValue=$event.target.value},function (event) { return _vm.$emit('input', event.target.value); }]}})]),_c('div',{staticClass:"editor-toolbar-right"},[_vm._t("right",[(_vm.demoMode)?_c('btn',{staticClass:"editor-help",attrs:{"size":"sm","variant":"link"},on:{"click":function($event){return _vm.$emit('demo-modal')}}},[_c('font-awesome-icon',{attrs:{"icon":['far', 'question-circle']}})],1):_vm._e()])],2)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorToolbar.vue?vue&type=template&id=87c64c52&
+var EditorToolbarvue_type_template_id_87c64c52_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor-toolbar d-flex justify-content-between pt-2 px-2 pb-1"},[_c('div',{staticClass:"editor-toolbar-left"},[_vm._t("left")],2),_c('div',{staticClass:"editor-toolbar-title"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.currentValue),expression:"currentValue"}],attrs:{"type":"text","placeholder":"Untitled Document","disabled":_vm.disableFilename},domProps:{"value":(_vm.currentValue)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.currentValue=$event.target.value},function (event) { return _vm.$emit('input', event.target.value); }]}})]),_c('div',{staticClass:"editor-toolbar-right"},[_vm._t("right",function(){return [(_vm.demoMode)?_c('btn',{staticClass:"editor-help",attrs:{"size":"sm","variant":"link"},on:{"click":function($event){return _vm.$emit('demo-modal')}}},[_c('font-awesome-icon',{attrs:{"icon":['far', 'question-circle']}})],1):_vm._e()]})],2)])}
 var EditorToolbarvue_type_template_id_87c64c52_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/EditorToolbar.vue?vue&type=template&id=87c64c52&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"685340f2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/badge/src/Badge.vue?vue&type=template&id=4eef410c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"275463e4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/badge/src/Badge.vue?vue&type=template&id=4eef410c&
 var Badgevue_type_template_id_4eef410c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.component || _vm.type,{tag:"component",staticClass:"badge",class:_vm.classes,attrs:{"href":_vm.href,"to":_vm.to}},[_vm._t("default")],2)}
 var Badgevue_type_template_id_4eef410c_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./node_modules/@vue-interface/badge/src/Badge.vue?vue&type=template&id=4eef410c&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/badge/src/Badge.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@vue-interface/badge/src/Badge.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -44468,7 +45499,7 @@ var Badge_component = normalizeComponent(
 /* harmony default export */ var badge = (Badge);
 // CONCATENATED MODULE: ./node_modules/@fortawesome/free-regular-svg-icons/index.es.js
 /*!
- * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 var free_regular_svg_icons_index_es_prefix = "far";
@@ -45389,7 +46420,7 @@ var index_es_iconsCache = {
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorToolbar.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/EditorToolbar.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -45692,7 +46723,7 @@ const Lint_lintState = StateField.define({
     dom: parent.$refs.toolbar.$el
   }))];
 });
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Editor.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Editor.vue?vue&type=script&lang=js&
 //
 //
 //
