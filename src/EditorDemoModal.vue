@@ -1,6 +1,6 @@
 <template>
     <editor-modal class="capsule-editor-demo-modal" :class="`step-${active}`">
-        <slide-deck ref="slides" :active="active" :controls="active !== 'welcome'" @enter="onEnter">
+        <slide-deck ref="slides" :controls="active !== 'welcome'" @enter="onEnter">
             <div v-for="[key, component] in steps" :key="key">
                 <component :is="component" :clear="clear" :next="next" :prev="prev" />
             </div>
@@ -15,7 +15,7 @@
 
 <script>
 import { SlideDeck } from '@vue-interface/slide-deck';
-import EditorModal from './EditorModal';
+import EditorModal from './EditorModal.vue';
 import { steps } from './Demo';
 
 export default {
@@ -62,11 +62,11 @@ export default {
         },
 
         next() {
-            this.goto(Math.max(0, this.indexOf(this.active)) + 1);
+            this.$refs.slides.next();
         },
 
         prev() {
-            this.goto(Math.max(0, this.indexOf(this.active)) - 1);
+            this.$refs.slides.prev();
         },
 
         onEnter(current) {
@@ -80,8 +80,8 @@ export default {
 <style lang="scss">
 .capsule-editor-demo-modal {
     &:not(.step-welcome):not(.step-finished) .slide-deck-content {
-        min-height: 28rem;
-        margin-bottom: 3rem;
+        // min-height: 28rem;
+        margin-bottom: 1rem;
     }
 
     &.step-finished {        
@@ -94,13 +94,11 @@ export default {
         }
     }
 
-    .slide-deck-content {
-        min-height: 25rem;
+    .screenshot {
+        width: 100%;
+        max-width: 100%;
+        min-height: 260px;
         margin-bottom: 1rem;
-
-        .screenshot {
-            min-height: 260.5px;
-        }
     }
 }
 </style>

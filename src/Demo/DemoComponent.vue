@@ -1,6 +1,6 @@
 <script>
-import AnimateCss from '@vue-interface/animate-css';
-import Btn from '@vue-interface/btn';
+import { AnimateCss } from '@vue-interface/animate-css';
+import { Btn } from '@vue-interface/btn';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

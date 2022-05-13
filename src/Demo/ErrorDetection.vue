@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center font-weight-light">
+        <h1 class="text-center font-light">
             Error Detection
         </h1>
     
@@ -10,7 +10,7 @@
             the panel at the bottom of the editor.
         </p>
         
-        <img src="../assets/error-detection.gif" class="screenshot img-fluid mb-3">
+        <img src="../assets/error-detection.gif" class="screenshot">
 
         <div class="text-center">
             <div class="mb-3">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import DemoComponent from './DemoComponent';
+import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent

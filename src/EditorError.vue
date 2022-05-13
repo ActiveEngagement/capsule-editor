@@ -2,17 +2,17 @@
     <div class="d-flex align-items-center capsule-editor-error">
         <code>
             {{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }} 
-            <a :href="url" variant="link" text-light class="small" target="_blank">
+            <btn :href="url" variant="link" class="small text-light" target="_blank">
                 Reference <font-awesome-icon icon="external-link-alt" />
-            </a>
+            </btn>
         </code>
     </div>
 </template>
 
 <script>
-import Btn from '@vue-interface/btn';
+import { Btn } from '@vue-interface/btn';
 
-import { library } from '@fortawesome/fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExclamationTriangle, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 

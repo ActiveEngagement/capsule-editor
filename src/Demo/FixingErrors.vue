@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center font-weight-light">
+        <h1 class="text-center font-light">
             Fixing Errors
         </h1>
 
@@ -9,7 +9,7 @@
             to fix an error, select the best option for that particular instance.
         </p>
 
-        <img src="../assets/fixing-errors.gif" class="screenshot img-fluid mb-3">
+        <img src="../assets/fixing-errors.gif" class="screenshot">
 
         <div class="text-center">
             <div class="mb-3">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import DemoComponent from './DemoComponent';
+import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent

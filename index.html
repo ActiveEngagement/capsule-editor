@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Capsule Editor</title>
+        <style>
+            html, body, #app {
+                width: 100%;
+                height: 100%
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <editor ref="editor" demo-mode :content="content" />
+        </div>
+        
+        <script type="module">
+            import './index.css';
+            import Vue from 'vue/dist/vue';
+            import Editor from './index.js';
+            
+            Vue.config.devtools = false;
+            Vue.config.productionTip = false;
+                        
+            const content = `<div>
+                <p>test
+            </div>`;
+  
+            const vue = new Vue({
+                el: '#app',
+                components: {
+                    Editor
+                },
+                computed: {
+                    content: () => content
+                }
+            });
+        </script>
+    </body>
+</html>

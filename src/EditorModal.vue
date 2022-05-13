@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AnimateCss from "@vue-interface/animate-css";
+import { AnimateCss } from "@vue-interface/animate-css";
 
 export default {
     props: {
@@ -54,9 +54,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './node_modules/bootstrap/scss/_functions.scss';
-@import './node_modules/bootstrap/scss/_variables.scss';
-
 .capsule-editor-modal {
     position: fixed;
     top: 0;
@@ -109,7 +106,7 @@ export default {
                 font-size: .75rem;
 
                 &:not(.is-active) {
-                    color: $gray-400;
+                    // color: $gray-400;
                 }
             }        
         }

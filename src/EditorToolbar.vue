@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import Badge from '@vue-interface/badge';
-import Btn from '@vue-interface/btn';
+import { Btn } from '@vue-interface/btn';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
@@ -36,7 +35,6 @@ export default {
 
     components: {
         Btn,
-        Badge,
         FontAwesomeIcon
     },
 
@@ -64,9 +62,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './node_modules/bootstrap/scss/_functions.scss';
-@import './node_modules/bootstrap/scss/_variables.scss';
-
 .editor-toolbar {
     color: white;
     background-color: #292C33 !important;
@@ -90,7 +85,7 @@ export default {
         }
 
         &.has-error > svg {
-            color: $danger;
+            color: #9f1239;
         }
     }
 

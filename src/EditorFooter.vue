@@ -71,10 +71,10 @@
 
 <script>
 import { forceLinting } from "@codemirror/lint";
-import AnimateCss from '@vue-interface/animate-css';
-import Btn from '@vue-interface/btn';
-import BtnDropdown from '@vue-interface/btn-dropdown';
-import EditorError from './EditorError';
+import { AnimateCss } from '@vue-interface/animate-css';
+import { Btn } from '@vue-interface/btn';
+import { BtnDropdown } from '@vue-interface/btn-dropdown';
+import EditorError from './EditorError.vue';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -266,7 +266,6 @@ export default {
         font-size: 1.2em;
         overflow: hidden;
     }
-
     .editor-footer-pager {
         min-width: 10.5rem;
 

@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h1 class="text-center font-weight-light">
+        <h1 class="text-center font-light">
             Almost Ready!
         </h1>
         <p>
             If you ever need to return to this tutorial, just click the question mark in the top right corner.
         </p>
-        <img src="../assets/show-help-modal.gif" class="screenshot img-fluid mb-3">
+        <img src="../assets/show-help-modal.gif" class="screenshot">
         <div class="text-center">
             <btn variant="success" type="button" @click="clear">
                 Get Started!
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import DemoComponent from './DemoComponent';
+import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center font-weight-light">
+        <h1 class="text-center font-light">
             Navigation
         </h1>
         <p>
@@ -9,7 +9,7 @@
             to cycle through the errors.
         </p>
 
-        <img src="../assets/navigation.gif" class="screenshot img-fluid mb-3">
+        <img src="../assets/navigation.gif" class="screenshot">
 
         <div class="text-center">
             <div class="mb-3">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import DemoComponent from './DemoComponent';
+import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent
