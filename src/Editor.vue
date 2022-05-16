@@ -265,7 +265,7 @@ export default {
         text-decoration: underline;
     }
 
-    .small {
+    small, .small {
         font-size: .75rem;
     }
     
