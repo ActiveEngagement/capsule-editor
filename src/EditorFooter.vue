@@ -113,17 +113,6 @@ export default {
         };
     },
 
-    updated() {
-        if(!this.isEmpty() && this.hasLinted) {
-            this.showFooter = true;
-            setTimeout(() => this.showFooterContent = true, 200);
-        }
-        else {
-            this.showFooterContent = false;
-            setTimeout(() => this.showFooter = false, 200);
-        }
-    },
-
     computed: {
 
         actions() {
@@ -165,6 +154,17 @@ export default {
                 this.fixedAllDiagnostics = true;
             }
 
+        }
+    },
+
+    updated() {
+        if(!this.isEmpty() && this.hasLinted) {
+            this.showFooter = true;
+            setTimeout(() => this.showFooterContent = true, 200);
+        }
+        else {
+            this.showFooterContent = false;
+            setTimeout(() => this.showFooter = false, 200);
         }
     },
 
@@ -263,9 +263,11 @@ export default {
 
     .editor-footer-diagnostic {
         font-weight: 300;
-        font-size: 1.2em;
+        font-size: 1em;
         overflow: hidden;
+        padding: 1rem 0;
     }
+    
     .editor-footer-pager {
         min-width: 10.5rem;
 

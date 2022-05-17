@@ -4,8 +4,7 @@
   "files": [
     "index.js",
     "dist",
-    "src",
-    "tailwindcss"
+    "src"
   ],
   "main": "./dist/capsule-editor.umd.js",
   "module": "./index.js",

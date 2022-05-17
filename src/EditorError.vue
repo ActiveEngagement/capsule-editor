@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center capsule-editor-error">
         <code>
             {{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }} 
-            <btn :href="url" variant="link" class="small text-light" target="_blank">
+            <btn :href="url" variant="link" class="text-sm text-light hover:text-light" target="_blank">
                 Reference <font-awesome-icon icon="external-link-alt" />
             </btn>
         </code>
