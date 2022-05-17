@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import { Btn } from '@vue-interface/btn';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faExclamationTriangle, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +19,6 @@ library.add(faExclamationTriangle, faExternalLinkAlt);
 export default {
 
     components: {
-        Btn,
         FontAwesomeIcon
     },
 
