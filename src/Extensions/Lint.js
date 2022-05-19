@@ -33,7 +33,9 @@ class DiagnosticWidget extends WidgetType {
     toDOM() {
         return document.createElement('span');
     }
-    ignoreEvent() { return false }
+    ignoreEvent() {
+        return false; 
+    }
 }
 
 class LintState {
@@ -161,7 +163,7 @@ const lintState = StateField.define({
                         message: error.message,
                         severity: error.type,
                         source: error.rule.id,
-                    }
+                    };
                 });
             
                 view.dispatch({
@@ -176,7 +178,7 @@ const lintState = StateField.define({
                     event.state.field(lintState).sync(event.view.state);
                 }
             })
-        ]
+        ];
     }
 });
 
@@ -189,7 +191,11 @@ export default function(parent) {
                 dom: parent.$refs.footer.$el
             };
         }),
-        EditorView.updateListener.of(view => {           
+        EditorView.updateListener.of(view => {   
+            if(!parent.$refs.footer) {
+                return;
+            }
+                 
             if(view.docChanged) {
                 parent.$refs.footer.update(
                     view.state.field(lintState).diagnostics
