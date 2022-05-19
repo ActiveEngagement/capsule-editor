@@ -41,7 +41,8 @@
     "@vue-interface/form-control": "^0.12.4",
     "@vue-interface/navbar": "^0.9.6",
     "@vue-interface/slide-deck": "^1.0.4",
-    "capsule-lint": "^0.2.1"
+    "capsule-lint": "^0.2.1",
+    "process": "^0.11.10"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^5.3.0",

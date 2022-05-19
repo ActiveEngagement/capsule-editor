@@ -32,6 +32,7 @@
         </editor-modal>
 
         <editor-toolbar
+            v-if="toolbar"
             ref="toolbar"
             v-model="currentFilename"
             :demo-mode="demoMode"
@@ -59,6 +60,7 @@
         <editor-footer
             ref="footer"
             v-model="errors"
+            :save-button="saveButton"
             :view="view"
             @goto="onGoto"
             @save="onSave">
@@ -115,20 +117,30 @@ export default {
         prop: 'currentContent'
     },
     props: {
-        disableFilename: Boolean,
+        content: String,
         
         demoMode: {
             type: Boolean,
             default: false
         },
 
-        filename: String,
+        disableFilename: Boolean,
+
+        filename: {
+            type: String,
+            default: null
+        },
 
         save: {
             type: Function,
             default() {
                 return this.showFinishModal = true;
             }
+        },
+
+        saveButton: {
+            type: Boolean,
+            default: true
         },
 
         skipIntro: {
@@ -138,12 +150,15 @@ export default {
 
         title: String,
 
-        content: String,
+        toolbar: {
+            type: Boolean,
+            default: true
+        },
     },
     data() {
         return {
             currentContent: this.content,
-            currentFilename: this.filename || this.title,
+            currentFilename: this.filename,
             demoModalCleared: this.skipIntro,
             errors: [],
             hasDismissedFinishPopup: false,
@@ -152,11 +167,11 @@ export default {
         };
     },
     watch: {
-        currentContent(content) {
-            this.$emit('input', {
-                content,
-                filename: this.currentFilename,
-            });
+        currentContent() {
+            this.input();
+        },
+        currentFilename() {
+            this.input();
         },
         errors(value, oldErrors) {
             if(!value.length && oldErrors.length) {
@@ -177,6 +192,7 @@ export default {
         });
     },
     mounted() {
+        
         this.view = new EditorView({
             state: EditorState.create({
                 doc: this.currentContent ||this.getSlotContents(),
@@ -185,10 +201,15 @@ export default {
                     ...basicSetup,
                     keymap.of([ indentWithTab ]),
                     html(),
-                    toolbar(this),
+                    this.toolbar && toolbar(this),
                     lint(this),
                     EditorView.lineWrapping,
-                ]
+                    EditorView.updateListener.of(view => {
+                        if(view.docChanged) {
+                            this.currentContent = view.state.doc.toString();
+                        }
+                    })
+                ].filter(value => !!value)
             }),
             parent: this.$refs.wrapper
         });
@@ -209,6 +230,13 @@ export default {
                     }).join('')
                 );
             }, '').trim() : null;
+        },
+
+        input() {
+            this.$emit('input', {
+                content: this.currentContent,
+                filename: this.currentFilename,
+            });
         },
 
         onModalClear() {
@@ -251,7 +279,6 @@ export default {
 .cm-editor,
 .cm-wrapper { height: 100%; }
 .cm-scroller { overflow: auto }
-
 .cm-editor.cm-focused { outline: none }
 .cm-panels.cm-panels-top { border: none !important; }
 .cm-panels.cm-panels-bottom { border: 1px solid #101114 !important; }

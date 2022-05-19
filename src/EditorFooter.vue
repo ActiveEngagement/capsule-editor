@@ -54,13 +54,13 @@
                         </template>
                     </slot>
 
-                    <slot name="save-button">
-                        <btn v-if="!diagnostics.length" type="button" variant="light" @click="$emit('save')">
+                    <slot name="save-button" :diagnostics="diagnostics" :save-button-label="diagnostics">
+                        <btn v-if="saveButton && !diagnostics.length" type="button" variant="light" @click="$emit('save')">
                             <font-awesome-icon icon="save" class="editor-footer-action-icon" /> {{ saveButtonLabel }}
                         </btn>
                     </slot>
 
-                    <slot name="after-save-button" />
+                    <slot name="after-save-button" :diagnostics="diagnostics" />
                 </div>
             </div>
         </animate-css>
@@ -76,7 +76,7 @@ import EditorError from './EditorError.vue';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faHammer, faSave, faScrewdriver } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faHammer, faSave } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faSave, faHammer);
 
@@ -91,6 +91,11 @@ export default {
     },
 
     props: {
+        saveButton: {
+            type: Boolean,
+            default: true
+        },
+
         saveButtonLabel: {
             type: String,
             default: 'Save File'
@@ -156,7 +161,7 @@ export default {
     },
 
     updated() {
-        if(!this.isEmpty() && this.hasLinted) {
+        if(!this.isEmpty() && this.hasLinted && (this.saveButton || !this.saveButton && this.diagnostics.length)) {
             this.showFooter = true;
             setTimeout(() => this.showFooterContent = true, 200);
         }
