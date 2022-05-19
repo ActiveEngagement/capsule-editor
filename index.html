@@ -13,7 +13,7 @@
     </head>
     <body>
         <div id="app">
-            <editor ref="editor" demo-mode :content="content" />
+            <editor ref="editor" :content="content" />
         </div>
         
         <script type="module">
@@ -24,9 +24,7 @@
             Vue.config.devtools = false;
             Vue.config.productionTip = false;
                         
-            const content = `<div>
-                <p>test
-            </div>`;
+            const content = `<`;
   
             const vue = new Vue({
                 el: '#app',

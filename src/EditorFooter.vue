@@ -32,7 +32,7 @@
                     <slot name="action-button">
                         <template v-if="actions.length">
                             <template v-if="actions.length === 1">
-                                <btn type="button" variant="light" @click="() => onClickAction(currentDiagnostic, action)">
+                                <btn type="button" variant="light" @click="() => onClickAction(currentDiagnostic, actions[0])">
                                     <font-awesome-icon icon="hammer" class="editor-footer-action-icon" /> {{ actions[0].name }}
                                 </btn>
                             </template>
