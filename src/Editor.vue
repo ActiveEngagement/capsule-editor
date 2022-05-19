@@ -16,10 +16,10 @@
                         :filename="currentFilename"
                         :view="view">
                         <div class="text-center">
-                            <h1 class="font-light">
+                            <h1>
                                 Success!
                             </h1>
-                            <h5 class="font-light mb-5">
+                            <h5>
                                 Your document has been fixed.
                             </h5>
                             <btn type="button" variant="primary" size="lg" block @click="closeFinishPopup">
@@ -34,7 +34,7 @@
         <editor-toolbar
             ref="toolbar"
             v-model="currentFilename"
-            :demoMode="demoMode"
+            :demo-mode="demoMode"
             :disable-filename="disableFilename"
             :filename="currentFilename"
             @demo-modal="() => demoModalCleared = false">
@@ -43,16 +43,14 @@
                     name="toolbar-left"
                     :errors="errors"
                     :filename="currentFilename"
-                    :content="currentContent"
-                />
+                    :content="currentContent" />
             </template>
             <template #right>
                 <slot
                     name="toolbar-right"
                     :errors="errors"
                     :filename="currentFilename"
-                    :content="currentContent"
-                />
+                    :content="currentContent" />
             </template>
         </editor-toolbar>
 
@@ -60,8 +58,8 @@
 
         <editor-footer
             ref="footer"
-            :view="view"
             v-model="errors"
+            :view="view"
             @goto="onGoto"
             @save="onSave">
             <template #before-save-button>
@@ -93,7 +91,7 @@
 import { AnimateCss } from '@vue-interface/animate-css';
 import { Btn } from '@vue-interface/btn';
 import { EditorState, basicSetup } from "@codemirror/basic-setup";
-import { indentWithTab } from "@codemirror/commands"
+import { indentWithTab } from "@codemirror/commands";
 import { html } from '@codemirror/lang-html';
 import { EditorView, keymap } from '@codemirror/view';
 import { oneDark } from "@codemirror/theme-one-dark";
@@ -112,6 +110,9 @@ export default {
         EditorFooter,
         EditorModal,
         EditorToolbar,
+    },
+    model: {
+        prop: 'currentContent'
     },
     props: {
         disableFilename: Boolean,
@@ -139,9 +140,6 @@ export default {
 
         content: String,
     },
-    model: {
-        prop: 'currentContent'
-    },
     data() {
         return {
             currentContent: this.content,
@@ -151,7 +149,7 @@ export default {
             hasDismissedFinishPopup: false,
             showFinishModal: false,
             view: null,
-        }
+        };
     },
     watch: {
         currentContent(content) {
@@ -236,155 +234,16 @@ export default {
             this.save(this);
         }
     }
-}
+};
 </script>
 
-<style lang="scss">
-/* html, body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-} */
-
+<style>
 .capsule-editor {
     font-size: 1rem;
+}
 
-    h1 {
-        font-size: 2rem;
-    }
-
-    p {
-        margin-bottom: 1rem;
-    }
-
-    a {
-        color: #0284c7;
-    }
-
-    a:not(.btn):not(.slide-deck-control-icon):hover {
-        text-decoration: underline;
-    }
-
-    small, .small {
-        font-size: .75rem;
-    }
-    
-    .font-light {
-        font-weight: 300;
-    }
-
-    .text-white {
-        color: white;
-    }
-
-    .text-light {
-        color: #e0e0e0;
-    }
-    
-    .text-center { 
-        text-align: center;
-    }
-    
-    .h-100 {
-        height: 100%;
-    }
-    
-    .w-100 {
-        width: 100%;
-    }
-
-    .mx-2 {
-        margin-left: .5rem;
-        margin-right: .5rem;
-    }
-
-    .mr-1 {
-        margin-right: .25rem;
-    }
-
-    .mr-2 {
-        margin-right: .5rem;
-    }
-
-    .mr-3 {
-        margin-right: .75rem;
-    }
-
-    .mb-3 {
-        margin-bottom: .75rem;
-    }
-
-    .mb-5 {
-        margin-bottom: 1.25rem;
-    }
-
-    .mx-5 {
-        margin-left: 1.25rem;
-        margin-right: 1.25rem;
-    }
-    
-    .pt-2 {
-        padding-top: .5rem;
-    }
-
-    .pb-1 {
-        padding-bottom: .25rem;
-    }
-    
-    .py-2 {
-        padding-left: .5rem;
-        padding-right: .5rem;
-    }
-
-    .px-2 {
-        padding-left: .5rem;
-        padding-right: .5rem;
-    }
-
-    .px-3 {
-        padding-left: .75rem;
-        padding-right: .75rem;
-    }
-
-    .pr-2 {
-        padding-right: .5rem;
-    }
-
-    .pr-3 {
-        padding-right: .75rem;
-    }
-
-    .d-flex {
-        display: flex;
-    }
-
-    .align-items-center {
-        align-items: center;
-    }
-
-    .justify-content-center {
-        justify-content: center;
-    }
-
-    .justify-content-between {
-        justify-content: space-between;
-    }
-
-    .flex-shrink-0 {
-        flex-shrink: 0;
-    }
-
-    .overflow-hidden {
-        overflow: hidden;
-    }
-
-    .position-absolute {
-        position: absolute;
-    }
-
-    .position-relative {
-        position: relative;
-    }
+.capsule-editor .position-absolute {
+    position: absolute;
 }
 
 .capsule-editor,

@@ -20,5 +20,5 @@ import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent
-}
+};
 </script>

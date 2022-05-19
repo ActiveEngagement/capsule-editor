@@ -77,28 +77,23 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.capsule-editor-demo-modal {
-    &:not(.step-welcome):not(.step-finished) .slide-deck-content {
-        // min-height: 28rem;
-        margin-bottom: 1rem;
-    }
+<style>
+.capsule-editor-demo-modal:not(.step-welcome):not(.step-finished) .slide-deck-content {
+    margin-bottom: 1rem;
+}
 
-    &.step-finished {        
-        .slide-deck-controls {
-            bottom: 0;
-        }
+.capsule-editor-demo-modal.step-finished .slide-deck-controls {
+    bottom: 0;
+}
 
-        .slide-deck-content {
-            margin-bottom: 2rem;
-        }
-    }
+.capsule-editor-demo-modal.step-finished .slide-deck-content {
+    margin-bottom: 2rem;
+}
 
-    .screenshot {
-        width: 100%;
-        max-width: 100%;
-        min-height: 260px;
-        margin-bottom: 1rem;
-    }
+.capsule-editor-demo-modal .screenshot {
+    width: 100%;
+    max-width: 100%;
+    min-height: 260px;
+    margin-bottom: 1rem;
 }
 </style>

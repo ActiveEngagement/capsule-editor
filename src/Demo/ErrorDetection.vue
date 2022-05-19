@@ -12,12 +12,10 @@
         
         <img src="../assets/error-detection.gif" class="screenshot">
 
-        <div class="text-center">
-            <div class="mb-3">
-                <btn type="button" @click="next">
-                    Next <font-awesome-icon icon="long-arrow-alt-right" />
-                </btn>
-            </div>
+        <div class="capsule-editor-modal-action">
+            <btn type="button" @click="next">
+                Next <font-awesome-icon icon="long-arrow-alt-right" />
+            </btn>
         </div>
     </div>
 </template>
@@ -27,5 +25,5 @@ import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent
-}
+};
 </script>

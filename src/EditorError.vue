@@ -1,8 +1,8 @@
 <template>
-    <div class="d-flex align-items-center capsule-editor-error">
+    <div class="capsule-editor-error">
         <code>
             {{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }} 
-            <a :href="url" class="text-sm text-light hover:text-light" target="_blank">
+            <a :href="url" target="_blank">
                 Reference <font-awesome-icon icon="external-link-alt" />
             </a>
         </code>
@@ -40,8 +40,17 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .capsule-editor-error {
+    display: flex;
+    align-items: center;
     animation-duration: .5s;
+    padding: .5rem .75rem;
+}
+
+.capsule-editor-error code a {
+    font-size: .85rem;
+    color: #e0e0e0;
+    padding-left: .5rem;
 }
 </style>

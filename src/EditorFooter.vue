@@ -1,47 +1,45 @@
 <template>
-    <footer class="editor-footer d-flex align-items-center" :style="{minHeight: !showFooter ? 0 : undefined}">
+    <footer class="editor-footer" :style="{minHeight: !showFooter ? 0 : undefined}">
         <animate-css name="fade" duration="200ms">
-            <div v-if="showFooterContent" class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center w-100 overflow-hidden position-relative">
-                    <div class="d-flex align-items-center">
-                        <div class="editor-footer-pager flex-shrink-0">
-                            <div v-if="totalDiagnostics" class="py-2 mx-2">
-                                <btn type="button" variant="link" @click="goto(index - 1)">
-                                    <font-awesome-icon icon="caret-left" />
-                                </btn> 
-                                <span>{{ index + 1 }} of {{ diagnostics.length }} </span>
-                                <btn type="button" variant="link" @click="goto(index + 1)">
-                                    <font-awesome-icon icon="caret-right" />
-                                </btn>
-                            </div>
-                        </div>
-                        <div class="mr-3">
-                            <btn v-if="currentDiagnostic" type="button" variant="link" class="text-white" @click="goto(index)">
-                                <font-awesome-icon v-if="currentDiagnostic.severity === 'error'" icon="bug" size="lg" />
-                                <font-awesome-icon v-if="currentDiagnostic.severity === 'warning'" icon="exclamation-triangle" size="lg" />
+            <div v-if="showFooterContent" class="editor-footer-content">
+                <div class="editor-footer-error">
+                    <div class="editor-footer-pager">
+                        <div v-if="totalDiagnostics">
+                            <btn type="button" variant="link" @click="goto(index - 1)">
+                                <font-awesome-icon icon="caret-left" />
+                            </btn> 
+                            <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
+                            <btn type="button" variant="link" @click="goto(index + 1)">
+                                <font-awesome-icon icon="caret-right" />
                             </btn>
                         </div>
                     </div>
+                    <div class="editor-footer-icon">
+                        <button v-if="currentDiagnostic" type="button" @click="goto(index)">
+                            <font-awesome-icon v-if="currentDiagnostic.severity === 'error'" icon="bug" size="lg" />
+                            <font-awesome-icon v-if="currentDiagnostic.severity === 'warning'" icon="exclamation-triangle" size="lg" />
+                        </button>
+                    </div>
                     <div class="editor-footer-diagnostic">
                         <animate-css name="fade" duration="200ms" :direction="direction" leave-active-class="position-absolute">
-                            <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" class="py-2 pr-3" />
+                            <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" />
                         </animate-css>
                     </div>
                 </div>
-                <div class="flex-shrink-0 pr-2">
+                <div class="editor-footer-action">
                     <slot name="before-save-button" />
 
                     <slot name="action-button">
                         <template v-if="actions.length">
                             <template v-if="actions.length === 1">
                                 <btn type="button" variant="light" @click="() => onClickAction(currentDiagnostic, action)">
-                                    <font-awesome-icon icon="hammer" class="mr-1" /> {{ actions[0].name }}
+                                    <font-awesome-icon icon="hammer" class="editor-footer-action-icon" /> {{ actions[0].name }}
                                 </btn>
                             </template>
                             <template v-else>
                                 <btn-dropdown label="Fix Errors" type="button" variant="light" dropup>
                                     <template #icon>
-                                        <font-awesome-icon icon="hammer" class="mr-2" /> 
+                                        <font-awesome-icon icon="hammer" class="editor-footer-action-icon" /> 
                                     </template>
                                     <button
                                         v-for="(action, i) in actions"
@@ -58,7 +56,7 @@
 
                     <slot name="save-button">
                         <btn v-if="!diagnostics.length" type="button" variant="light" @click="$emit('save')">
-                            <font-awesome-icon icon="save" class="mr-1" /> {{ saveButtonLabel }}
+                            <font-awesome-icon icon="save" class="editor-footer-action-icon" /> {{ saveButtonLabel }}
                         </btn>
                     </slot>
 
@@ -249,55 +247,87 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .editor-footer {
+    display: flex;
+    align-items: center;
     color: white;
     position: relative;
-    align-items: end;
     transition: .2s all ease-in;
     min-height: 3.5rem;
+}
 
-    .footer & {
-        height: 4.75rem;
-    }
+.editor-footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+}
 
-    .editor-footer-diagnostic {
-        font-weight: 300;
-        font-size: 1em;
-        overflow: hidden;
-        padding: 1rem 0;
-    }
+.editor-footer-error {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.editor-footer-icon {
+    margin-right: .5rem;
+}
+
+.editor-footer-icon button {
+    color: white;
+    padding: 0 1rem;
+}
+
+.editor-footer-icon button:active {
+    color: #e0e0e0;
+}
+
+.editor-footer-action {
+    flex-shrink: 0;
+    padding-right: 1rem;
+}
+
+.editor-footer-action-icon {
+    margin-right: .25rem;
+}
+
+.editor-footer-diagnostic {
+    font-weight: 300;
+    font-size: .9em;
+    overflow: hidden;
+}
     
-    .editor-footer-pager {
-        min-width: 10.5rem;
+.editor-footer-pager {
+    flex-shrink: 0;
+    min-width: 10.5rem;
+}
 
-        & > div {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.editor-footer-pager  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .5rem;
+}
 
-        .btn {
-            padding: 0;
-            color: white;
-            width: 2.5rem;
-            height: 2.5rem;
-            font-size: 2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: .6666rem;
-            background: transparent;
-            border: 0;
-        }
+.editor-footer-pager .btn {
+    padding: 0;
+    color: white;
+    width: 2rem;
+    height: 1.75rem;
+    font-size: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .6666rem;
+    background: transparent;
+    border: 0;
+}
 
-        .btn:active {
-            background: rgba(0, 0, 0, .3);
-        }
-
-        span {
-            padding: 0 .5rem;
-        }
-    }
+.editor-footer-pager .btn:active {
+    background: rgba(0, 0, 0, .3);
 }
 </style>

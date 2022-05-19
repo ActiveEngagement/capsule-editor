@@ -6,15 +6,14 @@
         <h1 class="text-center font-light">
             Capsule Editor
         </h1>
-        <p class="mx-5 px-3 py-2">
+        <div class="capsule-editor-modal-text">
             Capsule Editor will step you through each error to help you quickly find the correct solution.
             Would like to learn more about Capsule Editor?
-        </p>
-        <div class="text-center">            <div class="mb-3">
-                <btn type="button" @click="next">
-                    <font-awesome-icon icon="info-circle" /> Learn More
-                </btn>
-            </div>
+        </div>
+        <div class="capsule-editor-modal-action">
+            <btn type="button" @click="next">
+                <font-awesome-icon icon="info-circle" /> Learn More
+            </btn>
             <small><a href="#" @click.prevent="clear">No, I just want to fix the errors.</a></small>
         </div>
     </div>
@@ -25,5 +24,5 @@ import DemoComponent from './DemoComponent.vue';
 
 export default {
     extends: DemoComponent
-}
+};
 </script>
