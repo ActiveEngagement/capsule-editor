@@ -241,8 +241,8 @@ export default {
             }
         },
 
-        onClickAction(diagnostic, { apply }) {
-            apply(this.view, diagnostic.from, diagnostic.to);
+        onClickAction(diagnostic, action) {
+            action.apply(this.view, diagnostic.from, diagnostic.to);
 
             forceLinting(this.view);
         }
