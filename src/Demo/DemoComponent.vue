@@ -1,19 +1,13 @@
-<script>
+<script lang="ts">
 import { AnimateCss } from '@vue-interface/animate-css';
 import { Btn } from '@vue-interface/btn';
+import { defineComponent } from 'vue';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faLongArrowAltRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faInfoCircle);
-library.add(faLongArrowAltRight);
-
-export default {
+export default defineComponent({
     components: {
         AnimateCss,
         Btn,
-        FontAwesomeIcon
+        // FontAwesomeIcon
     },
     props: {
         clear: {
@@ -37,5 +31,5 @@ export default {
     mounted() {
         this.loaded = true;
     },
-}
+});
 </script>

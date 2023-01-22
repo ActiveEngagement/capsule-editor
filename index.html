@@ -18,16 +18,13 @@
         
         <script type="module">
             import './index.css';
-            import Vue from 'vue/dist/vue';
-            import Editor from './index.js';
-            
-            Vue.config.devtools = false;
-            Vue.config.productionTip = false;
-                        
-            const content = `We'll even cover all the shipping & handling charges.`;
+            import { createApp } from 'vue/dist/vue.esm-bundler.js';
+            import { Editor } from './index.ts';
+            import 'animate.css';
+             
+            const content = `<div>We'll even cover all the shipping & test.`;
   
-            const vue = new Vue({
-                el: '#app',
+            const vue = createApp({
                 components: {
                     Editor
                 },
@@ -35,6 +32,8 @@
                     content: () => content
                 }
             });
+
+            vue.mount('#app')
         </script>
     </body>
 </html>

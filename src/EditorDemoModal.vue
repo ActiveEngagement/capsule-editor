@@ -1,33 +1,23 @@
-<template>
-    <editor-modal class="capsule-editor-demo-modal" :class="`step-${active}`">
-        <slide-deck ref="slides" :controls="active !== 'welcome'" @enter="onEnter">
-            <div v-for="[key, component] in steps" :key="key">
-                <component :is="component" :clear="clear" :next="next" :prev="prev" />
-            </div>
-            <template v-if="active > 0 && active < 3" #bottom>
-                <div class="capsule-editor-modal-footer">
-                    <small><a href="#" @click.prevent="clear">Skip Tutorial</a></small>
-                </div>
-            </template>
-        </slide-deck>
-    </editor-modal>
-</template>
-
-<script>
+<script lang="ts">
 import { SlideDeck } from '@vue-interface/slide-deck';
-import EditorModal from './EditorModal.vue';
+import { defineComponent } from 'vue';
 import { steps } from './Demo';
+import EditorModal from './EditorModal.vue';
 
-export default {
+export default defineComponent({
 
     components: Object.assign({
         EditorModal,
         SlideDeck,
     }, steps),
 
+    emits: [
+        'clear'
+    ],
+
     data() {
         return {
-            active: 'welcome'
+            active: 0
         };
     },
 
@@ -39,8 +29,8 @@ export default {
 
     methods: {
 
-        indexOf(name) {
-            const match = this.steps.find(([key, component], i) => {
+        indexOf(name: any) {
+            const match = this.steps.find(([key]: [any]) => {
                 if(name === key) {
                     return true;
                 }
@@ -53,7 +43,7 @@ export default {
             this.$emit('clear');
         },
 
-        goto(index) {
+        goto(index: number) {
             if(this.steps[index]) {
                 const [ key ] = this.steps[index];
 
@@ -69,13 +59,43 @@ export default {
             this.$refs.slides.prev();
         },
 
-        onEnter(current) {
+        onEnter(current: any) {
             this.active = current.key;
         }  
 
     }
-};
+});
 </script>
+
+<template>
+    <editor-modal
+        class="capsule-editor-demo-modal"
+        :class="`step-${active}`">
+        <slide-deck
+            ref="slides"
+            :controls="active !== 0"
+            @enter="onEnter">
+            <div
+                v-for="[key, component] in steps"
+                :key="key">
+                <component
+                    :is="component"
+                    :clear="clear"
+                    :next="next"
+                    :prev="prev" />
+            </div>
+            <template
+                v-if="active > 0 && active < 3"
+                #bottom>
+                <div class="capsule-editor-modal-footer">
+                    <small><a
+                        href="#"
+                        @click.prevent="clear">Skip Tutorial</a></small>
+                </div>
+            </template>
+        </slide-deck>
+    </editor-modal>
+</template>
 
 <style>
 .capsule-editor-demo-modal:not(.step-welcome):not(.step-finished) .slide-deck-content {

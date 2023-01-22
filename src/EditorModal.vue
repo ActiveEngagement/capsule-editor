@@ -1,19 +1,8 @@
-<template>
-    <animate-css v-bind="bgAnimation" @after-enter="showContent = true">
-        <div v-if="mounted" class="capsule-editor-modal">
-            <animate-css v-bind="contentAnimation">
-                <div v-if="showContent" class="capsule-editor-modal-content">
-                    <slot :is-showing="isContentShowing" />
-                </div>
-            </animate-css>
-        </div>
-    </animate-css>
-</template>
+<script lang="ts">
+import { AnimateCss } from '@vue-interface/animate-css';
+import { defineComponent } from 'vue';
 
-<script>
-import { AnimateCss } from "@vue-interface/animate-css";
-
-export default {
+export default defineComponent({
     components: {
         AnimateCss
     },
@@ -50,8 +39,26 @@ export default {
     mounted() {
         this.mounted = true;
     },
-};
+});
 </script>
+
+<template>
+    <animate-css
+        v-bind="bgAnimation"
+        @after-enter="showContent = true">
+        <div
+            v-if="mounted"
+            class="capsule-editor-modal">
+            <animate-css v-bind="contentAnimation">
+                <div
+                    v-if="showContent"
+                    class="capsule-editor-modal-content">
+                    <slot :is-showing="isContentShowing" />
+                </div>
+            </animate-css>
+        </div>
+    </animate-css>
+</template>
 
 <style>
 .capsule-editor-modal {

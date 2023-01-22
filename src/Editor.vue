@@ -1,12 +1,216 @@
+<script lang="ts">
+import { basicSetup, EditorState } from '@codemirror/basic-setup';
+import { indentWithTab } from '@codemirror/commands';
+import { html } from '@codemirror/lang-html';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { EditorView, keymap } from '@codemirror/view';
+import { AnimateCss } from '@vue-interface/animate-css';
+import { Btn } from '@vue-interface/btn';
+import { defineComponent } from 'vue';
+// import EditorDemoModal from './EditorDemoModal.vue';
+import EditorFooter from './EditorFooter.vue';
+import EditorModal from './EditorModal.vue';
+import EditorToolbar from './EditorToolbar.vue';
+import lint from './Extensions/Lint.js';
+import toolbar from './Extensions/Toolbar.js';
+
+// import { defineComponent } from 'vue';
+
+export default defineComponent({
+    components: {
+        AnimateCss,
+        Btn,
+        // EditorDemoModal,
+        EditorFooter,
+        EditorModal,
+        EditorToolbar,
+    },
+    model: {
+        prop: 'currentContent'
+    },
+    props: {
+        content: {
+            type: String,
+            default: undefined
+        },
+        
+        demoMode: {
+            type: Boolean,
+            default: false
+        },
+
+        disableFilename: Boolean,
+
+        filename: {
+            type: String,
+            default: null
+        },
+
+        save: {
+            type: Function,
+            default() {
+                return this.showFinishModal = true;
+            }
+        },
+
+        saveButton: {
+            type: Boolean,
+            default: true
+        },
+
+        skipIntro: {
+            type: Boolean,
+            default: false
+        },
+
+        title: {
+            type: String,
+            default: undefined
+        },
+
+        toolbar: {
+            type: Boolean,
+            default: true
+        },
+    },
+    emits: [
+        'demo-complete',
+        'fixed-errors',
+        'update:modelValue'
+    ],
+    data() {
+        return {
+            currentContent: this.content,
+            currentFilename: this.filename,
+            demoModalCleared: this.skipIntro,
+            errors: [],
+            hasDismissedFinishPopup: false,
+            showFinishModal: false,
+            view: null,
+        };
+    },
+    watch: {
+        currentContent() {
+            this.input();
+        },
+        currentFilename() {
+            this.input();
+        },
+        errors(value, oldErrors) {
+            if(!value.length && oldErrors.length) {
+                this.$emit('fixed-errors');
+            }
+        },
+        showFinishModal(value) {
+            if(value) {
+                // setTimeout(() => this.isSuccessModalShowing = true, 1000)
+            }
+        }
+    },
+    created() {
+        // this.$on('finish', value => {
+        //     if(this.demoMode) {
+        //         this.showFinishModal = value;
+        //     }
+        // });
+    },
+    mounted() {
+        
+        this.view = new EditorView({
+            state: EditorState.create({
+                doc: this.currentContent,// || this.getSlotContents(),
+                extensions: [
+                    oneDark,
+                    ...basicSetup,
+                    keymap.of([ indentWithTab ]),
+                    html(),
+                    this.toolbar && toolbar(this),
+                    lint(this),
+                    EditorView.lineWrapping,
+                    EditorView.updateListener.of(view => {
+                        if(view.docChanged) {
+                            this.currentContent = view.state.doc.toString();
+                        }
+                    })
+                ].filter(value => !!value)
+            }),
+            parent: this.$refs.wrapper
+        });
+    },
+    methods: {
+        closeFinishPopup() {
+            this.showFinishModal = false;
+            this.hasDismissedFinishPopup = true;
+        },
+
+        // getSlotContents() {
+        //     return this.$slots.default ? this.$slots.default().filter((vnode: any) => {
+        //         return vnode.tag && vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
+        //     }).reduce((carry: any, vnode: any) => {
+        //         return (
+        //             carry + vnode.children.map((child: any) => {
+        //                 return child.text;
+        //             }).join('')
+        //         );
+        //     }, '').trim() : null;
+        // },
+
+        input() {
+            this.$emit('update:modelValue', {
+                content: this.currentContent,
+                filename: this.currentFilename,
+            });
+        },
+
+        onModalClear() {
+            this.demoModalCleared = true;
+            this.$emit('demo-complete');
+            this.view.focus();
+        },
+        
+        // onGoto({ from, to }) {
+        //     const tr = this.view.state.update({
+        //         selection: {
+        //             anchor: from,
+        //             head: to
+        //         },
+        //         scrollIntoView: true
+        //     });
+
+        //     this.view.dispatch(tr);
+        //     this.view.focus();
+        // },
+
+        onSave() {
+            this.save(this);
+        }
+    }
+});
+</script>
+
 <template>
     <div class="capsule-editor">
-        <editor-demo-modal v-if="demoMode && !demoModalCleared" @clear="onModalClear" />
+        <!-- <editor-demo-modal
+            v-if="demoMode && !demoModalCleared"
+            @clear="onModalClear" /> -->
 
-        <editor-modal v-if="showFinishModal" :content-animation="{name: 'tada'}">
+        <editor-modal
+            v-if="showFinishModal"
+            :content-animation="{name: 'tada'}">
             <template #default="{ isShowing }">
-                <slot name="success" :close="closeFinishPopup" :filename="currentFilename" :view="view" :is-showing="isShowing">
-                    <animate-css name="zoom" left>
-                        <img v-if="isShowing" src="./assets/logo-no-text-1028x1028.png" class="capsule-editor-modal-logo">
+                <slot
+                    name="success"
+                    :close="closeFinishPopup"
+                    :filename="currentFilename"
+                    :view="view"
+                    :is-showing="isShowing">
+                    <animate-css
+                        name="zoom"
+                        left>
+                        <img
+                            v-if="isShowing"
+                            src="./assets/logo-no-text-1028x1028.png"
+                            class="capsule-editor-modal-logo">
                     </animate-css>
                     
                     <slot
@@ -22,7 +226,12 @@
                             <h5>
                                 Your document has been fixed.
                             </h5>
-                            <btn type="button" variant="primary" size="lg" block @click="closeFinishPopup">
+                            <btn
+                                type="button"
+                                variant="primary"
+                                size="lg"
+                                block
+                                @click="closeFinishPopup">
                                 Dismiss
                             </btn>
                         </div>
@@ -55,14 +264,15 @@
             </template>
         </editor-toolbar>
 
-        <div ref="wrapper" class="cm-wrapper" />
+        <div
+            ref="wrapper"
+            class="cm-wrapper" />
 
         <editor-footer
             ref="footer"
             v-model="errors"
             :save-button="saveButton"
             :view="view"
-            @goto="onGoto"
             @save="onSave">
             <template #before-save-button>
                 <slot
@@ -88,182 +298,6 @@
         </editor-footer>
     </div>
 </template>
-
-<script>
-import { AnimateCss } from '@vue-interface/animate-css';
-import { Btn } from '@vue-interface/btn';
-import { EditorState, basicSetup } from "@codemirror/basic-setup";
-import { indentWithTab } from "@codemirror/commands";
-import { html } from '@codemirror/lang-html';
-import { EditorView, keymap } from '@codemirror/view';
-import { oneDark } from "@codemirror/theme-one-dark";
-import EditorDemoModal from './EditorDemoModal.vue';
-import EditorFooter from './EditorFooter.vue';
-import EditorModal from './EditorModal.vue';
-import EditorToolbar from './EditorToolbar.vue';
-import lint from './Extensions/Lint.js';
-import toolbar from './Extensions/Toolbar.js';
-
-export default {
-    components: {
-        AnimateCss,
-        Btn,
-        EditorDemoModal,
-        EditorFooter,
-        EditorModal,
-        EditorToolbar,
-    },
-    model: {
-        prop: 'currentContent'
-    },
-    props: {
-        content: String,
-        
-        demoMode: {
-            type: Boolean,
-            default: false
-        },
-
-        disableFilename: Boolean,
-
-        filename: {
-            type: String,
-            default: null
-        },
-
-        save: {
-            type: Function,
-            default() {
-                return this.showFinishModal = true;
-            }
-        },
-
-        saveButton: {
-            type: Boolean,
-            default: true
-        },
-
-        skipIntro: {
-            type: Boolean,
-            default: false
-        },
-
-        title: String,
-
-        toolbar: {
-            type: Boolean,
-            default: true
-        },
-    },
-    data() {
-        return {
-            currentContent: this.content,
-            currentFilename: this.filename,
-            demoModalCleared: this.skipIntro,
-            errors: [],
-            hasDismissedFinishPopup: false,
-            showFinishModal: false,
-            view: null,
-        };
-    },
-    watch: {
-        currentContent() {
-            this.input();
-        },
-        currentFilename() {
-            this.input();
-        },
-        errors(value, oldErrors) {
-            if(!value.length && oldErrors.length) {
-                this.$emit('fixed-errors');
-            }
-        },
-        showFinishModal(value) {
-            if(value) {
-                // setTimeout(() => this.isSuccessModalShowing = true, 1000)
-            }
-        }
-    },
-    created() {
-        this.$on('finish', value => {
-            if(this.demoMode) {
-                this.showFinishModal = value;
-            }
-        });
-    },
-    mounted() {
-        
-        this.view = new EditorView({
-            state: EditorState.create({
-                doc: this.currentContent ||this.getSlotContents(),
-                extensions: [
-                    oneDark,
-                    ...basicSetup,
-                    keymap.of([ indentWithTab ]),
-                    html(),
-                    this.toolbar && toolbar(this),
-                    lint(this),
-                    EditorView.lineWrapping,
-                    EditorView.updateListener.of(view => {
-                        if(view.docChanged) {
-                            this.currentContent = view.state.doc.toString();
-                        }
-                    })
-                ].filter(value => !!value)
-            }),
-            parent: this.$refs.wrapper
-        });
-    },
-    methods: {
-        closeFinishPopup() {
-            this.showFinishModal = false;
-            this.hasDismissedFinishPopup = true;
-        },
-
-        getSlotContents() {
-            return this.$slots.default ? this.$slots.default.filter(vnode => {
-                return vnode.tag && vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
-            }).reduce((carry, vnode) => {
-                return (
-                    carry + vnode.children.map(child => {
-                        return child.text;
-                    }).join('')
-                );
-            }, '').trim() : null;
-        },
-
-        input() {
-            this.$emit('input', {
-                content: this.currentContent,
-                filename: this.currentFilename,
-            });
-        },
-
-        onModalClear() {
-            this.demoModalCleared = true;
-            this.$emit('demo-complete');
-            this.view.focus();
-        },
-        
-        onGoto({ from, to }) {
-            const tr = this.view.state.update({
-                selection: {
-                    anchor: from,
-                    head: to
-                },
-                scrollIntoView: true
-            });
-
-            this.view.dispatch(tr);
-            this.view.focus();
-        },
-
-        onSave() {
-            this.save(this);
-        }
-    }
-};
-</script>
 
 <style>
 .capsule-editor {

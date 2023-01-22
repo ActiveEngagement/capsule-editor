@@ -10,4 +10,4 @@ export const steps = {
     'paginating': Paginating,
     'fixing-errors': FixingErrors,
     'finished': Finished,
-}
+};

@@ -1,93 +1,24 @@
-<template>
-    <footer class="editor-footer" :style="{minHeight: !showFooter ? 0 : undefined}">
-        <animate-css name="fade" duration="200ms">
-            <div v-if="showFooterContent" class="editor-footer-content">
-                <div class="editor-footer-error">
-                    <div class="editor-footer-pager">
-                        <div v-if="totalDiagnostics">
-                            <btn type="button" variant="link" @click="goto(index - 1)">
-                                <font-awesome-icon icon="caret-left" />
-                            </btn> 
-                            <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
-                            <btn type="button" variant="link" @click="goto(index + 1)">
-                                <font-awesome-icon icon="caret-right" />
-                            </btn>
-                        </div>
-                    </div>
-                    <div class="editor-footer-icon">
-                        <button v-if="currentDiagnostic" type="button" @click="goto(index)">
-                            <font-awesome-icon v-if="currentDiagnostic.severity === 'error'" icon="bug" size="lg" />
-                            <font-awesome-icon v-if="currentDiagnostic.severity === 'warning'" icon="exclamation-triangle" size="lg" />
-                        </button>
-                    </div>
-                    <div class="editor-footer-diagnostic">
-                        <animate-css name="fade" duration="200ms" :direction="direction" leave-active-class="position-absolute">
-                            <editor-error v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" />
-                        </animate-css>
-                    </div>
-                </div>
-                <div class="editor-footer-action">
-                    <slot name="before-save-button" />
-
-                    <slot name="action-button">
-                        <template v-if="actions.length">
-                            <template v-if="actions.length === 1">
-                                <btn type="button" variant="light" @click="() => onClickAction(currentDiagnostic, actions[0])">
-                                    <font-awesome-icon icon="hammer" class="editor-footer-action-icon" /> {{ actions[0].name }}
-                                </btn>
-                            </template>
-                            <template v-else>
-                                <btn-dropdown label="Fix Errors" type="button" variant="light" dropup>
-                                    <template #icon>
-                                        <font-awesome-icon icon="hammer" class="editor-footer-action-icon" /> 
-                                    </template>
-                                    <button
-                                        v-for="(action, i) in actions"
-                                        :key="`${currentDiagnostic.rule.id}-${i}`"
-                                        type="button"
-                                        variant="light"
-                                        @click="() => onClickAction(currentDiagnostic, action)">
-                                        {{ action.name }}
-                                    </button>
-                                </btn-dropdown>
-                            </template>
-                        </template>
-                    </slot>
-
-                    <slot name="save-button" :diagnostics="diagnostics" :save-button-label="diagnostics">
-                        <btn v-if="saveButton && !diagnostics.length" type="button" variant="light" @click="$emit('save')">
-                            <font-awesome-icon icon="save" class="editor-footer-action-icon" /> {{ saveButtonLabel }}
-                        </btn>
-                    </slot>
-
-                    <slot name="after-save-button" :diagnostics="diagnostics" />
-                </div>
-            </div>
-        </animate-css>
-    </footer>
-</template>
-
-<script>
-import { forceLinting } from "@codemirror/lint";
+<script lang="ts">
+import { forceLinting } from '@codemirror/lint';
+import { BugAntIcon, ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon, WrenchScrewdriverIcon } from '@heroicons/vue/24/outline';
 import { AnimateCss } from '@vue-interface/animate-css';
 import { Btn } from '@vue-interface/btn';
 import { BtnDropdown } from '@vue-interface/btn-dropdown';
+import { defineComponent } from 'vue';
 import EditorError from './EditorError.vue';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faHammer, faSave } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faBug, faCaretLeft, faCaretRight, faExclamationTriangle, faSave, faHammer);
-
-export default {
-
+export default defineComponent({
+    
     components: {
         AnimateCss,
         Btn,
         BtnDropdown,
+        ChevronLeftIcon,
+        ChevronRightIcon,
         EditorError,
-        FontAwesomeIcon,
+        BugAntIcon,
+        ExclamationTriangleIcon,
+        WrenchScrewdriverIcon
     },
 
     props: {
@@ -101,8 +32,17 @@ export default {
             default: 'Save File'
         },
         
-        view: Object
+        view: {
+            type: Object,
+            default: undefined
+        }
     },
+
+    emits: [
+        'goto',
+        'update:modelValue',
+        'save'
+    ],
 
     data() {
         return {
@@ -122,7 +62,7 @@ export default {
             return this.currentDiagnostic ? []
                 .concat(this.currentDiagnostic.rule.actions)
                 .reverse()
-                .filter(({ validate }) => {
+                .filter(({ validate }: { validate: Function }) => {
                     return !validate || validate(this.view, this.currentDiagnostic);
                 }) : [];
         },
@@ -175,11 +115,11 @@ export default {
 
         findActiveDiagnostic() {
             return this.diagnostics
-                .filter(diagnostic => diagnostic.isActive)
+                .filter((diagnostic: any) => diagnostic.isActive)
                 .pop();
         },
 
-        goto(index) {
+        goto(index: number) {
             if(index < 0) {
                 index = this.diagnostics.length - 1;
             }
@@ -198,14 +138,14 @@ export default {
             return this.view ? this.view.state.doc.toString() === '' : false;
         },
 
-        compare(a, b) {
+        compare(a: any, b: any) {
             return (!!a && !!b)
                 && a.from === b.from
                 && a.to === b.to
                 && a.rule.id === b.rule.id;
         },
 
-        update(diagnostics) {
+        update(diagnostics: any) {
             this.diagnostics = diagnostics || [];
             this.hasLinted = true;
 
@@ -213,13 +153,13 @@ export default {
                 this.currentDiagnostic = this.diagnostics[this.index];
             }
             
-            this.$emit('input', this.diagnostics);
+            this.$emit('update:modelValue', this.diagnostics);
         },
         
-        activate(view) {
+        activate(view: any) {
             const { from, to } = view.state.selection.main;
 
-            const active = this.diagnostics.filter(diagnostic => {
+            const active = this.diagnostics.filter((diagnostic: any) => {
                 if(from === to) {
                     return diagnostic.from <= from && diagnostic.to >= to;
                 }
@@ -227,7 +167,7 @@ export default {
                 return diagnostic.from >= from && diagnostic.to <= to;
             });
 
-            const match = this.diagnostics.find(diagnostic => {
+            const match = this.diagnostics.find((diagnostic: any) => {
                 return this.compare(diagnostic, this.currentDiagnostic);
             });
 
@@ -241,7 +181,7 @@ export default {
             }
         },
 
-        onClickAction(diagnostic, action) {
+        onClickAction(diagnostic: any, action: any) {
             action.apply(this.view, diagnostic.from, diagnostic.to);
 
             forceLinting(this.view);
@@ -249,8 +189,116 @@ export default {
 
     }
 
-};
+});
 </script>
+
+<template>
+    <footer
+        class="editor-footer"
+        :style="{minHeight: !showFooter ? 0 : undefined}">
+        <animate-css
+            name="fade"
+            :duration="200">
+            <div
+                v-if="showFooterContent"
+                class="flex justify-between items-center w-full py-4">
+                <div class="flex items-center w-full overflow-hidden relative gap-2">
+                    <div class="editor-footer-pager">
+                        <div v-if="totalDiagnostics">
+                            <btn
+                                type="button"
+                                variant="link"
+                                @click="goto(index - 1)">
+                                <ChevronLeftIcon class="w-4 h-4" />
+                            </btn> 
+                            <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
+                            <btn
+                                type="button"
+                                variant="link"
+                                @click="goto(index + 1)">
+                                <ChevronRightIcon class="w-4 h-4" />
+                            </btn>
+                        </div>
+                    </div>
+                    <button
+                        v-if="currentDiagnostic"
+                        type="button"
+                        @click="goto(index)">
+                        <BugAntIcon
+                            v-if="currentDiagnostic.severity === 'error'"
+                            class="w-6 h-6" />
+                                
+                        <ExclamationTriangleIcon
+                            v-if="currentDiagnostic.severity === 'warning'"
+                            class="w-6 h-6" />
+                    </button>
+                    <div class="editor-footer-diagnostic">
+                        <animate-css
+                            name="fade"
+                            :duration="200"
+                            :direction="direction"
+                            leave-active-class="position-absolute">
+                            <editor-error
+                                v-if="currentDiagnostic"
+                                :key="index"
+                                :error="currentDiagnostic" />
+                        </animate-css>
+                    </div>
+                </div>
+                <div class="editor-footer-action">
+                    <slot name="before-save-button" />
+
+                    <slot name="action-button">
+                        <template v-if="actions.length">
+                            <template v-if="actions.length === 1">
+                                <btn
+                                    type="button"
+                                    variant="light"
+                                    class="flex items-center gap-2"
+                                    @click="() => onClickAction(currentDiagnostic, actions[0])">
+                                    <WrenchScrewdriverIcon class="w-6 h-6" /> {{ actions[0].name }}
+                                </btn>
+                            </template>
+                            <template v-else>
+                                <btn-dropdown
+                                    label="Fix Errors"
+                                    type="button"
+                                    variant="light"
+                                    dropup>
+                                    <button
+                                        v-for="(action, i) in actions"
+                                        :key="`${currentDiagnostic.rule.id}-${i}`"
+                                        type="button"
+                                        variant="light"
+                                        @click="() => onClickAction(currentDiagnostic, action)">
+                                        {{ action.name }}
+                                    </button>
+                                </btn-dropdown>
+                            </template>
+                        </template>
+                    </slot>
+
+                    <slot
+                        name="save-button"
+                        :diagnostics="diagnostics"
+                        :save-button-label="diagnostics">
+                        <btn
+                            v-if="saveButton && !diagnostics.length"
+                            type="button"
+                            variant="light"
+                            @click="$emit('save')">
+                            {{ saveButtonLabel }}
+                        </btn>
+                    </slot>
+
+                    <slot
+                        name="after-save-button"
+                        :diagnostics="diagnostics" />
+                </div>
+            </div>
+        </animate-css>
+    </footer>
+</template>
 
 <style>
 .editor-footer {

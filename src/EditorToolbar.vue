@@ -1,41 +1,13 @@
-<template>
-    <div class="editor-toolbar">
-        <div class="editor-toolbar-left">
-            <slot name="left" />
-        </div>
-        <div class="editor-toolbar-title">
-            <input
-                v-model="currentValue"
-                type="text"
-                placeholder="Untitled Document"
-                :disabled="disableFilename"
-                @input="event => $emit('input', event.target.value)">
-        </div>
-        <div class="editor-toolbar-right">
-            <slot name="right">
-                <btn v-if="demoMode" size="sm" variant="link" class="editor-help" @click="$emit('demo-modal')">
-                    <font-awesome-icon :icon="['far', 'question-circle']" />
-                </btn>
-            </slot>
-        </div>
-    </div>
-</template>
-
-<script>
+<script lang="ts">
+import { QuestionMarkCircleIcon } from '@heroicons/vue/24/outline';
 import { Btn } from '@vue-interface/btn';
+import { defineComponent } from 'vue';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBug, faCog } from '@fortawesome/free-solid-svg-icons';
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-library.add(faBug, faCog, faQuestionCircle);
-
-export default {
+export default defineComponent({
 
     components: {
         Btn,
-        FontAwesomeIcon
+        QuestionMarkCircleIcon
     },
 
     model: {
@@ -48,9 +20,17 @@ export default {
 
         disableFilename: Boolean,
         
-        filename: String
+        filename: {
+            type: String,
+            default: undefined
+        }
 
     },
+
+    emits: [
+        'demo-modal',
+        'update:modelValue',
+    ],
 
     data() {
         return {
@@ -58,8 +38,36 @@ export default {
         };
     }
 
-};
+});
 </script>
+
+<template>
+    <div class="editor-toolbar">
+        <div class="editor-toolbar-left">
+            <slot name="left" />
+        </div>
+        <div class="editor-toolbar-title">
+            <input
+                v-model="currentValue"
+                type="text"
+                placeholder="Untitled Document"
+                :disabled="disableFilename"
+                @input="(event: any) => $emit('update:modelValue', event.target.value)">
+        </div>
+        <div class="editor-toolbar-right">
+            <slot name="right">
+                <btn
+                    v-if="demoMode"
+                    size="sm"
+                    variant="link"
+                    class="editor-help"
+                    @click="$emit('demo-modal')">
+                    <QuestionMarkCircleIcon class="w-4 h-4" />
+                </btn>
+            </slot>
+        </div>
+    </div>
+</template>
 
 <style>
 .editor-toolbar {

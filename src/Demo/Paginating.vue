@@ -1,3 +1,14 @@
+<script lang="ts">
+import { ArrowLongRightIcon } from '@heroicons/vue/24/outline';
+import { defineComponent } from 'vue';
+import DemoComponent from './DemoComponent.vue';
+
+export default defineComponent({
+    components: { ArrowLongRightIcon },
+    extends: DemoComponent
+});
+</script>
+
 <template>
     <div>
         <h1 class="text-center font-light">
@@ -9,20 +20,16 @@
             to cycle through the errors.
         </p>
 
-        <img src="../assets/navigation.gif" class="screenshot">
+        <img
+            src="../assets/navigation.gif"
+            class="screenshot">
 
         <div class="capsule-editor-modal-action">
-            <btn type="button" @click="next">
-                Next <font-awesome-icon icon="long-arrow-alt-right" />
+            <btn
+                type="button"
+                @click="next">
+                Next <ArrowLongRightIcon class="w-4 h-4" />
             </btn>
         </div>
     </div>
 </template>
-
-<script>
-import DemoComponent from './DemoComponent.vue';
-
-export default {
-    extends: DemoComponent
-};
-</script>

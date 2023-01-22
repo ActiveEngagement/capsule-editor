@@ -2,12 +2,20 @@
   "name": "capsule-editor",
   "version": "1.0.0",
   "files": [
-    "index.js",
-    "dist",
-    "src"
+    "dist"
   ],
-  "main": "./dist/capsule-editor.umd.js",
-  "module": "./index.js",
+  "type": "module",
+  "main": "./dist/capsule-editor.umd.cjs",
+  "module": "./dist/capsule-editor.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/capsule-editor.js",
+      "require": "./dist/capsule-editor.umd.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "browserslist": "last 2 versions, > 0.5%, ie >= 11",
   "scripts": {
     "dev": "vite",
@@ -23,6 +31,9 @@
     "release-major-beta": "npm run pre-release && npm version major -m \"%s\" --preid beta && npm run release;",
     "release": "git add . -A; git commit; git push --tags origin; npm publish;"
   },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.0",
     "@codemirror/lang-html": "^0.19.1",
@@ -30,35 +41,31 @@
     "@codemirror/state": "^0.19.1",
     "@codemirror/theme-one-dark": "^0.19.0",
     "@codemirror/view": "^0.19.4",
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-regular-svg-icons": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@fortawesome/vue-fontawesome": "^2.0.6",
-    "@vue-interface/animate-css": "^1.0.0",
-    "@vue-interface/btn": "^2.1.1",
-    "@vue-interface/btn-activity": "^1.1.0",
-    "@vue-interface/btn-dropdown": "^1.0.4",
-    "@vue-interface/form-control": "^0.12.4",
-    "@vue-interface/navbar": "^0.9.6",
-    "@vue-interface/slide-deck": "^1.0.4",
-    "capsule-lint": "^0.2.1",
-    "process": "^0.11.10"
+    "@heroicons/vue": "^2.0.13",
+    "@vue-interface/animate-css": "^2.0.0-beta.0",
+    "@vue-interface/btn": "^3.0.0-beta.0",
+    "@vue-interface/btn-activity": "^2.0.0-beta.0",
+    "@vue-interface/btn-dropdown": "^2.0.0-beta.0",
+    "@vue-interface/form-control": "^1.0.0-beta.0",
+    "@vue-interface/slide-deck": "^2.0.0-beta.0",
+    "capsule-lint": "^0.2.1"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "^5.3.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.2.45",
+    "@vue/eslint-config-typescript": "^11.0.2",
     "autoprefixer": "^10.4.2",
-    "babel-eslint": "^10.1.0",
-    "babel-preset-vue": "^2.0.2",
     "change-case": "^4.1.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^8.27.0",
+    "eslint-plugin-vue": "^9.7.0",
     "pascalcase": "^2.0.0",
     "postcss": "^8.4.6",
-    "postcss-functions": "^4.0.2",
-    "postcss-hexrgba": "^2.0.1",
-    "sass": "^1.51.0",
     "tailwindcss": "^3.0.18",
-    "vite": "^2.7.2",
-    "vite-plugin-vue2": "^1.9.3"
+    "ts-vue": "^0.1.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.0",
+    "vite-bundle-visualizer": "^0.4.2",
+    "vite-plugin-dts": "^1.7.1",
+    "vue": "^3.2.37"
   }
 }

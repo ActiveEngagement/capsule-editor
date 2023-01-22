@@ -1,7 +1,7 @@
-import { linter, lintKeymap } from "@codemirror/lint";
-import { showPanel } from "@codemirror/panel";
-import { StateEffect, StateField } from "@codemirror/state";
-import { Decoration, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
+import { linter, lintKeymap } from '@codemirror/lint';
+import { showPanel } from '@codemirror/panel';
+import { StateEffect, StateField } from '@codemirror/state';
+import { Decoration, EditorView, WidgetType } from '@codemirror/view';
 import { lint } from 'capsule-lint';
 
 // Override the default keymaps
