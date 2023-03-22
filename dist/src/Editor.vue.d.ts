@@ -39,7 +39,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     errors: never[];
     hasDismissedFinishPopup: boolean;
     showFinishModal: boolean;
-    view: null;
+    view: undefined;
 }, {}, {
     closeFinishPopup(): void;
     input(): void;

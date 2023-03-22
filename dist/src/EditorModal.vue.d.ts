@@ -3,14 +3,14 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: ObjectConstructor;
         default: () => {
             name: string;
-            duration: string;
+            duration: number;
         };
     };
     contentAnimation: {
         type: ObjectConstructor;
         default: () => {
             name: string;
-            duration: string;
+            duration: number;
         };
     };
 }, unknown, {
@@ -22,14 +22,14 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: ObjectConstructor;
         default: () => {
             name: string;
-            duration: string;
+            duration: number;
         };
     };
     contentAnimation: {
         type: ObjectConstructor;
         default: () => {
             name: string;
-            duration: string;
+            duration: number;
         };
     };
 }>>, {

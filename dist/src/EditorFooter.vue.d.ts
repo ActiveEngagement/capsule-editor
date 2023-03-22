@@ -12,7 +12,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         default: undefined;
     };
 }, unknown, {
-    currentDiagnostic: null;
+    currentDiagnostic: undefined;
     direction: string;
     diagnostics: never[];
     fixedAllDiagnostics: boolean;
