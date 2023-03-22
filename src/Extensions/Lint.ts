@@ -5,29 +5,32 @@ import { Decoration, EditorView, WidgetType } from '@codemirror/view';
 import { lint } from 'capsule-lint';
 
 // Override the default keymaps
+// @ts-ignore
 lintKeymap[0].run = () => {
     // Ignore the command
 };
 
 class DiagnosticWidget extends WidgetType {
-    constructor(diagnostic) {
+    constructor(
+        public diagnostic: any
+    ) {
         super();
 
         this.diagnostic = diagnostic;
     }
-    line(number) {
+    line(number: number) {
         this.diagnostic.line = number;
     }
-    col(number) {
+    col(number: number) {
         this.diagnostic.col = number;
     }
-    from(number) {
+    from(number: number) {
         this.diagnostic.from = number;
     }
-    to(number) {
+    to(number: number) {
         this.diagnostic.to = number;
     }
-    eq(other) {
+    eq(other: any) {
         return other.diagnostic == this.diagnostic;
     }
     toDOM() {
@@ -39,16 +42,18 @@ class DiagnosticWidget extends WidgetType {
 }
 
 class LintState {
-    constructor(decorations) {
+    constructor(
+        public decorations: any
+    ) {
         this.decorations = decorations;
     }
     get length() {
         return this.decorations.length;
     }
     get diagnostics() {
-        const items = [];
+        const items: any[] = [];
         
-        this.iter(iter => {
+        this.iter((iter: any) => {
             items.push(iter.value);
         });
 
@@ -60,10 +65,10 @@ class LintState {
             return carry;
         }, []);
     }
-    map(changes) {
-        return this.decorations.map(changes);
+    map(fn: Function) {
+        return this.decorations.map(fn);
     }
-    iter(fn) {
+    iter(fn: Function) {
         const iter = this.decorations.iter();
         
         while(iter.value) {
@@ -72,10 +77,10 @@ class LintState {
             iter.next();
         }
     }
-    sync(state) {
-        const items = [];
+    sync(state: any) {
+        const items: any[] = [];
 
-        this.iter(iter => {
+        this.iter((iter: any) => {
             if(!iter.value.spec.side) {
                 const line = state.doc.lineAt(iter.from);
                 
@@ -98,7 +103,7 @@ class LintState {
             return carry;
         }, []);
     }
-    static init(diagnostics, state) {
+    static init(diagnostics: any[]) {
         const mapped = diagnostics.map(diagnostic => {
             const from = Decoration.widget({
                 widget: new DiagnosticWidget(diagnostic),
@@ -131,12 +136,12 @@ const lintState = StateField.define({
     create() {
         return new LintState(Decoration.none);
     },
-    update(value, tr) {
+    update(value, tr: any) {
         if(tr.docChanged && value.length) {
             return new LintState(value.map(tr.changes));
         }
 
-        for(let effect of tr.effects) {
+        for(const effect of tr.effects) {
             if(effect.is(setDiagnosticsEffect)) {
                 return LintState.init(effect.value);
             }
@@ -149,7 +154,7 @@ const lintState = StateField.define({
             linter(view => {
                 const { doc } = view.state.toJSON();
             
-                const diagnostics = lint(doc).map(error => {
+                const diagnostics = lint(doc).map((error: any) => {
                     const pos = view.state.doc.line(error.line);
                     const from  = Math.min(doc.length, pos.from - 1 + error.col);
                     const to = Math.min(doc.length, from + error.raw.length);
@@ -182,10 +187,10 @@ const lintState = StateField.define({
     }
 });
 
-export default function(parent) {
+export default function(parent: any) {
     return [
         lintState,
-        showPanel.of(view => {
+        showPanel.of(() => {
             return {
                 bottom: true,
                 dom: parent.$refs.footer.$el
@@ -202,8 +207,8 @@ export default function(parent) {
                 );
             }
 
-            for(let tr of view.transactions) {
-                for(let effect of tr.effects) {
+            for(const tr of view.transactions) {
+                for(const effect of tr.effects) {
                     if(effect.is(setDiagnosticsEffect)) {
                         parent.$refs.footer.update(
                             view.state.field(lintState).diagnostics

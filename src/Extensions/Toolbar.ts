@@ -1,10 +1,10 @@
-import { showPanel } from "@codemirror/panel";
-import { EditorView, ViewPlugin } from "@codemirror/view";
+import { showPanel } from '@codemirror/panel';
+import { EditorView, ViewPlugin } from '@codemirror/view';
 
-export default function(parent, left, right) {
+export default function(parent: any) {
     return [
         ViewPlugin.fromClass(class {
-            constructor(view) {
+            constructor(view: any) {
                 parent.currentContent = view.state.doc.toString();
             }
         }),
@@ -13,7 +13,7 @@ export default function(parent, left, right) {
                 parent.currentContent = view.state.doc.toString();
             }
         }),
-        showPanel.of(view => ({
+        showPanel.of(() => ({
             top: true,
             dom: parent.$refs.toolbar.$el
         }))

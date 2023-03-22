@@ -3,22 +3,34 @@ import { pascalCase } from 'change-case';
 import path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { name } from './package.json';
+import pkg from './package.json';
 
-export default defineConfig({
+const fileName = pkg.name;
+
+const external = [
+    '@heroicons/vue/24/outline',
+    '@heroicons/vue/24/solid',
+    'eslint/lib/cli-engine/formatters',
+    ...(pkg.dependencies ? Object.keys(pkg.dependencies) : []),
+    ...(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [])
+];
+
+export default ({ command }) => defineConfig({
     build: {
-        sourcemap: true,
+        sourcemap: command === 'build',
         lib: {
-            entry: path.resolve('index.ts'),
-            name: pascalCase(name),
-            fileName: name,
+            entry: path.resolve(__dirname, 'index.ts'),
+            name: pascalCase(fileName),
+            fileName,
         },
         rollupOptions: {
-            external: ['vue'],
+            external,
             output: {
-                globals: {
-                    vue: 'Vue'
-                },
+                globals: external.reduce((carry, dep) => {
+                    return Object.assign(carry, {
+                        [dep]: pascalCase(dep)
+                    });
+                }, {}),
             }
         },
         watch: !process.env.NODE_ENV && {

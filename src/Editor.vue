@@ -1,26 +1,19 @@
 <script lang="ts">
 import { basicSetup, EditorState } from '@codemirror/basic-setup';
-import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { EditorView, keymap } from '@codemirror/view';
-import { AnimateCss } from '@vue-interface/animate-css';
+import { EditorView } from '@codemirror/view';
 import { Btn } from '@vue-interface/btn';
 import { defineComponent } from 'vue';
-// import EditorDemoModal from './EditorDemoModal.vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorModal from './EditorModal.vue';
 import EditorToolbar from './EditorToolbar.vue';
 import lint from './Extensions/Lint.js';
 import toolbar from './Extensions/Toolbar.js';
 
-// import { defineComponent } from 'vue';
-
 export default defineComponent({
     components: {
-        AnimateCss,
         Btn,
-        // EditorDemoModal,
         EditorFooter,
         EditorModal,
         EditorToolbar,
@@ -122,7 +115,7 @@ export default defineComponent({
                 extensions: [
                     oneDark,
                     ...basicSetup,
-                    keymap.of([ indentWithTab ]),
+                    // keymap.of([ indentWithTab ]),
                     html(),
                     this.toolbar && toolbar(this),
                     lint(this),
@@ -206,15 +199,6 @@ export default defineComponent({
                     :filename="currentFilename"
                     :view="view"
                     :is-showing="isShowing">
-                    <animate-css
-                        name="zoom"
-                        left>
-                        <img
-                            v-if="isShowing"
-                            src="./assets/logo-no-text-1028x1028.png"
-                            class="capsule-editor-modal-logo">
-                    </animate-css>
-                    
                     <slot
                         name="success-content"
                         :content="currentContent"
