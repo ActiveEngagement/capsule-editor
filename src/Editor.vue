@@ -129,7 +129,7 @@ export default defineComponent({
             this.view.dispatch({ 
                 selection: EditorSelection.create([
                     EditorSelection.range(from, to),
-                    EditorSelection.cursor(to)
+                    EditorSelection.cursor(from)
                 ]),
                 scrollIntoView: true
             });
