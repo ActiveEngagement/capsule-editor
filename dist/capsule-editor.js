@@ -660,7 +660,7 @@ const Qe = k({
       this.view.dispatch({
         selection: B.create([
           B.range(e, t),
-          B.cursor(t)
+          B.cursor(e)
         ]),
         scrollIntoView: !0
       }), this.view.focus();
