@@ -86,7 +86,7 @@ export default defineComponent({
             errors: [],
             hasDismissedFinishPopup: false,
             showFinishModal: false,
-            view: null,
+            view: undefined,
         };
     },
     watch: {
@@ -101,11 +101,11 @@ export default defineComponent({
                 this.$emit('fixed-errors');
             }
         },
-        showFinishModal(value) {
-            if(value) {
-                // setTimeout(() => this.isSuccessModalShowing = true, 1000)
-            }
-        }
+        // showFinishModal(value) {
+        //     if(value) {
+        //         setTimeout(() => this.isSuccessModalShowing = true, 1000)
+        //     }
+        // }
     },
     created() {
         // this.$on('finish', value => {
@@ -169,16 +169,18 @@ export default defineComponent({
         },
         
         // onGoto({ from, to }) {
-        //     const tr = this.view.state.update({
-        //         selection: {
-        //             anchor: from,
-        //             head: to
-        //         },
-        //         scrollIntoView: true
-        //     });
 
-        //     this.view.dispatch(tr);
-        //     this.view.focus();
+        //     console.log(from, to);
+        //     // const tr = this.view.state.update({
+        //     //     selection: {
+        //     //         anchor: from,
+        //     //         head: to
+        //     //     },
+        //     //     scrollIntoView: true
+        //     // });
+
+        //     // this.view.dispatch(tr);
+        //     // this.view.focus();
         // },
 
         onSave() {

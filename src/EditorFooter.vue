@@ -46,7 +46,7 @@ export default defineComponent({
 
     data() {
         return {
-            currentDiagnostic: null,
+            currentDiagnostic: undefined,
             direction: 'up',
             diagnostics: [],
             fixedAllDiagnostics: false,
@@ -201,7 +201,7 @@ export default defineComponent({
             :duration="200">
             <div
                 v-if="showFooterContent"
-                class="flex justify-between items-center w-full py-4">
+                class="flex justify-between items-center w-full py-2">
                 <div class="flex items-center w-full overflow-hidden relative gap-2">
                     <div class="editor-footer-pager">
                         <div v-if="totalDiagnostics">
@@ -254,6 +254,7 @@ export default defineComponent({
                                 <btn
                                     type="button"
                                     variant="light"
+                                    size="sm"
                                     class="flex items-center gap-2"
                                     @click="() => onClickAction(currentDiagnostic, actions[0])">
                                     <WrenchScrewdriverIcon class="w-6 h-6" /> {{ actions[0].name }}
@@ -263,6 +264,7 @@ export default defineComponent({
                                 <btn-dropdown
                                     label="Fix Errors"
                                     type="button"
+                                    size="sm"
                                     variant="light"
                                     dropup>
                                     <button
@@ -286,6 +288,7 @@ export default defineComponent({
                             v-if="saveButton && !diagnostics.length"
                             type="button"
                             variant="light"
+                            size="sm"
                             @click="$emit('save')">
                             {{ saveButtonLabel }}
                         </btn>
@@ -307,7 +310,6 @@ export default defineComponent({
     color: white;
     position: relative;
     transition: .2s all ease-in;
-    min-height: 3.5rem;
 }
 
 .editor-footer-content {
@@ -341,7 +343,7 @@ export default defineComponent({
 
 .editor-footer-action {
     flex-shrink: 0;
-    padding-right: 1rem;
+    padding-right: .5rem;
 }
 
 .editor-footer-action-icon {
@@ -350,7 +352,7 @@ export default defineComponent({
 
 .editor-footer-diagnostic {
     font-weight: 300;
-    font-size: .9em;
+    font-size: .85em;
     overflow: hidden;
 }
     

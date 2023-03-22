@@ -49,7 +49,7 @@ export default defineComponent({
 }
 
 .capsule-editor-error code {
-    padding: 0 1rem;
+    padding: 0 .25rem;
 }
 
 .capsule-editor-error a {

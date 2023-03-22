@@ -11,14 +11,14 @@ export default defineComponent({
             type: Object,
             default: () => ({
                 name: 'fade',
-                duration: '500ms'
+                duration: 500
             })
         },
         contentAnimation: {
             type: Object,
             default: () => ({
                 name: 'fade',
-                duration: '500ms'
+                duration: 500
             })
         }
     },
