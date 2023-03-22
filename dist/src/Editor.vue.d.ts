@@ -33,8 +33,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
         default: boolean;
     };
 }, unknown, {
-    currentContent: string | undefined;
-    currentFilename: string;
     demoModalCleared: boolean;
     errors: never[];
     hasDismissedFinishPopup: boolean;
@@ -42,10 +40,13 @@ declare const _sfc_main: import("vue").DefineComponent<{
     view: undefined;
 }, {}, {
     closeFinishPopup(): void;
-    input(): void;
     onModalClear(): void;
+    onGoto({ from, to }: {
+        from: number;
+        to: number;
+    }): void;
     onSave(): void;
-}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "demo-complete" | "fixed-errors")[], "update:modelValue" | "demo-complete" | "fixed-errors", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:filename" | "demo-complete" | "fixed-errors" | "update:content")[], "update:filename" | "demo-complete" | "fixed-errors" | "update:content", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     content: {
         type: StringConstructor;
         default: undefined;
@@ -80,9 +81,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         default: boolean;
     };
 }>> & {
-    "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:filename"?: ((...args: any[]) => any) | undefined;
     "onDemo-complete"?: ((...args: any[]) => any) | undefined;
     "onFixed-errors"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:content"?: ((...args: any[]) => any) | undefined;
 }, {
     title: string;
     save: Function;

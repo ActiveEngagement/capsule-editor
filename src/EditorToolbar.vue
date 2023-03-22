@@ -29,7 +29,7 @@ export default defineComponent({
 
     emits: [
         'demo-modal',
-        'update:modelValue',
+        'update:filename',
     ],
 
     data() {
@@ -52,7 +52,7 @@ export default defineComponent({
                 type="text"
                 placeholder="Untitled Document"
                 :disabled="disableFilename"
-                @input="(event: any) => $emit('update:modelValue', event.target.value)">
+                @input="(event: any) => $emit('update:filename', event.target.value)">
         </div>
         <div class="editor-toolbar-right">
             <slot name="right">

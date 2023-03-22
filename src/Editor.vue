@@ -1,8 +1,10 @@
 <script lang="ts">
 import { basicSetup, EditorState } from '@codemirror/basic-setup';
+import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
+import { EditorSelection } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { EditorView } from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
 import { Btn } from '@vue-interface/btn';
 import { defineComponent } from 'vue';
 import EditorFooter from './EditorFooter.vue';
@@ -18,10 +20,11 @@ export default defineComponent({
         EditorModal,
         EditorToolbar,
     },
-    model: {
-        prop: 'currentContent'
-    },
+    // model: {
+    //     prop: 'content'
+    // },
     props: {
+
         content: {
             type: String,
             default: undefined
@@ -69,12 +72,11 @@ export default defineComponent({
     emits: [
         'demo-complete',
         'fixed-errors',
-        'update:modelValue'
+        'update:content',
+        'update:filename'
     ],
     data() {
         return {
-            currentContent: this.content,
-            currentFilename: this.filename,
             demoModalCleared: this.skipIntro,
             errors: [],
             hasDismissedFinishPopup: false,
@@ -83,46 +85,27 @@ export default defineComponent({
         };
     },
     watch: {
-        currentContent() {
-            this.input();
-        },
-        currentFilename() {
-            this.input();
-        },
         errors(value, oldErrors) {
             if(!value.length && oldErrors.length) {
                 this.$emit('fixed-errors');
             }
         },
-        // showFinishModal(value) {
-        //     if(value) {
-        //         setTimeout(() => this.isSuccessModalShowing = true, 1000)
-        //     }
-        // }
-    },
-    created() {
-        // this.$on('finish', value => {
-        //     if(this.demoMode) {
-        //         this.showFinishModal = value;
-        //     }
-        // });
     },
     mounted() {
-        
         this.view = new EditorView({
             state: EditorState.create({
-                doc: this.currentContent,// || this.getSlotContents(),
+                doc: this.content,// || this.getSlotContents(),
                 extensions: [
                     oneDark,
                     ...basicSetup,
-                    // keymap.of([ indentWithTab ]),
+                    keymap.of([ indentWithTab ]),
                     html(),
                     this.toolbar && toolbar(this),
                     lint(this),
                     EditorView.lineWrapping,
                     EditorView.updateListener.of(view => {
                         if(view.docChanged) {
-                            this.currentContent = view.state.doc.toString();
+                            this.$emit('update:content', view.state.doc.toString());
                         }
                     })
                 ].filter(value => !!value)
@@ -136,46 +119,24 @@ export default defineComponent({
             this.hasDismissedFinishPopup = true;
         },
 
-        // getSlotContents() {
-        //     return this.$slots.default ? this.$slots.default().filter((vnode: any) => {
-        //         return vnode.tag && vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
-        //     }).reduce((carry: any, vnode: any) => {
-        //         return (
-        //             carry + vnode.children.map((child: any) => {
-        //                 return child.text;
-        //             }).join('')
-        //         );
-        //     }, '').trim() : null;
-        // },
-
-        input() {
-            this.$emit('update:modelValue', {
-                content: this.currentContent,
-                filename: this.currentFilename,
-            });
-        },
-
         onModalClear() {
             this.demoModalCleared = true;
             this.$emit('demo-complete');
             this.view.focus();
         },
         
-        // onGoto({ from, to }) {
-
-        //     console.log(from, to);
-        //     // const tr = this.view.state.update({
-        //     //     selection: {
-        //     //         anchor: from,
-        //     //         head: to
-        //     //     },
-        //     //     scrollIntoView: true
-        //     // });
-
-        //     // this.view.dispatch(tr);
-        //     // this.view.focus();
-        // },
-
+        onGoto({ from, to }: { from: number, to:number }) {
+            this.view.dispatch({ 
+                selection: EditorSelection.create([
+                    EditorSelection.range(from, to),
+                    EditorSelection.cursor(to)
+                ]),
+                scrollIntoView: true
+            });
+            
+            this.view.focus();
+        },
+    
         onSave() {
             this.save(this);
         }
@@ -196,14 +157,14 @@ export default defineComponent({
                 <slot
                     name="success"
                     :close="closeFinishPopup"
-                    :filename="currentFilename"
+                    :filename="filename"
                     :view="view"
                     :is-showing="isShowing">
                     <slot
                         name="success-content"
-                        :content="currentContent"
+                        :content="content"
                         :close="closeFinishPopup"
-                        :filename="currentFilename"
+                        :filename="filename"
                         :view="view">
                         <div class="text-center">
                             <h1>
@@ -229,24 +190,24 @@ export default defineComponent({
         <editor-toolbar
             v-if="toolbar"
             ref="toolbar"
-            v-model="currentFilename"
             :demo-mode="demoMode"
             :disable-filename="disableFilename"
-            :filename="currentFilename"
-            @demo-modal="() => demoModalCleared = false">
+            :filename="filename"
+            @demo-modal="() => demoModalCleared = false"
+            @update:filename="value => $emit('update:filename', value)">
             <template #left>
                 <slot
                     name="toolbar-left"
                     :errors="errors"
-                    :filename="currentFilename"
-                    :content="currentContent" />
+                    :filename="filename"
+                    :content="content" />
             </template>
             <template #right>
                 <slot
                     name="toolbar-right"
                     :errors="errors"
-                    :filename="currentFilename"
-                    :content="currentContent" />
+                    :filename="filename"
+                    :content="content" />
             </template>
         </editor-toolbar>
 
@@ -259,27 +220,28 @@ export default defineComponent({
             v-model="errors"
             :save-button="saveButton"
             :view="view"
-            @save="onSave">
+            @save="onSave"
+            @goto="onGoto">
             <template #before-save-button>
                 <slot
                     name="before-save-button"
                     :errors="errors"
-                    :filename="currentFilename"
-                    :content="currentContent" />
+                    :filename="filename"
+                    :content="content" />
             </template>
             <template #save-button>
                 <slot
                     name="save-button"
                     :errors="errors"
-                    :filename="currentFilename"
-                    :content="currentContent" />
+                    :filename="filename"
+                    :content="content" />
             </template>
             <template #after-save-button>
                 <slot
                     name="after-save-button"
                     :errors="errors"
-                    :filename="currentFilename"
-                    :content="currentContent" />
+                    :filename="filename"
+                    :content="content" />
             </template>
         </editor-footer>
     </div>

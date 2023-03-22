@@ -1,19 +1,20 @@
-import { EditorState as W, basicSetup as j } from "@codemirror/basic-setup";
-import { html as q } from "@codemirror/lang-html";
-import { oneDark as N } from "@codemirror/theme-one-dark";
-import { Decoration as F, EditorView as b, WidgetType as U, ViewPlugin as Q } from "@codemirror/view";
-import { Btn as I } from "@vue-interface/btn";
-import { defineComponent as k, resolveComponent as a, openBlock as s, createElementBlock as f, createElementVNode as d, toDisplayString as v, createTextVNode as S, createVNode as m, normalizeStyle as H, withCtx as l, createCommentVNode as c, createBlock as g, renderSlot as u, Fragment as V, renderList as J, mergeProps as K, normalizeProps as Y, guardReactiveProps as G, withDirectives as X, vModelText as Z } from "vue";
-import { forceLinting as x, lintKeymap as ee, linter as te } from "@codemirror/lint";
-import { ArrowTopRightOnSquareIcon as oe, ChevronLeftIcon as ne, ChevronRightIcon as ie, BugAntIcon as se, ExclamationTriangleIcon as re, WrenchScrewdriverIcon as ae, QuestionMarkCircleIcon as le } from "@heroicons/vue/24/outline";
-import { AnimateCss as L } from "@vue-interface/animate-css";
-import { BtnDropdown as de } from "@vue-interface/btn-dropdown";
-import { showPanel as O } from "@codemirror/panel";
-import { StateEffect as ue, StateField as ce } from "@codemirror/state";
-import { lint as fe } from "capsule-lint";
-const me = k({
+import { EditorState as j, basicSetup as q } from "@codemirror/basic-setup";
+import { indentWithTab as N } from "@codemirror/commands";
+import { html as G } from "@codemirror/lang-html";
+import { StateEffect as U, StateField as Q, EditorSelection as B } from "@codemirror/state";
+import { oneDark as H } from "@codemirror/theme-one-dark";
+import { Decoration as _, EditorView as b, WidgetType as J, ViewPlugin as K, keymap as Y } from "@codemirror/view";
+import { Btn as M } from "@vue-interface/btn";
+import { defineComponent as k, resolveComponent as a, openBlock as s, createElementBlock as f, createElementVNode as d, toDisplayString as v, createTextVNode as F, createVNode as m, normalizeStyle as X, withCtx as l, createCommentVNode as u, createBlock as g, renderSlot as c, Fragment as L, renderList as Z, mergeProps as x, normalizeProps as ee, guardReactiveProps as te, withDirectives as oe, vModelText as ne } from "vue";
+import { forceLinting as ie, lintKeymap as se, linter as re } from "@codemirror/lint";
+import { ArrowTopRightOnSquareIcon as ae, ChevronLeftIcon as le, ChevronRightIcon as de, BugAntIcon as ce, ExclamationTriangleIcon as ue, WrenchScrewdriverIcon as fe, QuestionMarkCircleIcon as me } from "@heroicons/vue/24/outline";
+import { AnimateCss as O } from "@vue-interface/animate-css";
+import { BtnDropdown as he } from "@vue-interface/btn-dropdown";
+import { showPanel as T } from "@codemirror/panel";
+import { lint as pe } from "capsule-lint";
+const ge = k({
   components: {
-    ArrowTopRightOnSquareIcon: oe
+    ArrowTopRightOnSquareIcon: ae
   },
   props: {
     error: {
@@ -32,33 +33,33 @@ const D = (e, t) => {
   for (const [o, i] of t)
     n[o] = i;
   return n;
-}, he = { class: "capsule-editor-error" }, pe = ["href"];
-function ge(e, t, n, o, i, p) {
+}, ve = { class: "capsule-editor-error" }, $e = ["href"];
+function we(e, t, n, o, i, p) {
   const r = a("ArrowTopRightOnSquareIcon");
-  return s(), f("div", he, [
+  return s(), f("div", ve, [
     d("code", null, [
       d("span", null, v(e.error.line) + "," + v(e.error.col) + " :: (" + v(e.error.rule.id) + ") " + v(e.error.message), 1),
       d("a", {
         href: e.url,
         target: "_blank"
       }, [
-        S(" Reference "),
+        F(" Reference "),
         m(r)
-      ], 8, pe)
+      ], 8, $e)
     ])
   ]);
 }
-const ve = /* @__PURE__ */ D(me, [["render", ge]]), $e = k({
+const be = /* @__PURE__ */ D(ge, [["render", we]]), ye = k({
   components: {
-    AnimateCss: L,
-    Btn: I,
-    BtnDropdown: de,
-    ChevronLeftIcon: ne,
-    ChevronRightIcon: ie,
-    EditorError: ve,
-    BugAntIcon: se,
-    ExclamationTriangleIcon: re,
-    WrenchScrewdriverIcon: ae
+    AnimateCss: O,
+    Btn: M,
+    BtnDropdown: he,
+    ChevronLeftIcon: le,
+    ChevronRightIcon: de,
+    EditorError: be,
+    BugAntIcon: ce,
+    ExclamationTriangleIcon: ue,
+    WrenchScrewdriverIcon: fe
   },
   props: {
     saveButton: {
@@ -135,29 +136,29 @@ const ve = /* @__PURE__ */ D(me, [["render", ge]]), $e = k({
       o.length ? this.currentDiagnostic = o[p] : this.currentDiagnostic = i || this.diagnostics[this.index];
     },
     onClickAction(e, t) {
-      t.apply(this.view, e.from, e.to), x(this.view);
+      t.apply(this.view, e.from, e.to), ie(this.view);
     }
   }
 });
-const we = {
+const Ce = {
   key: 0,
   class: "flex justify-between items-center w-full py-2"
-}, be = { class: "flex items-center w-full overflow-hidden relative gap-2" }, ye = { class: "editor-footer-pager" }, Ce = { key: 0 }, ke = { class: "editor-footer-diagnostic" }, De = { class: "editor-footer-action" }, Fe = ["onClick"];
-function _e(e, t, n, o, i, p) {
-  const r = a("ChevronLeftIcon"), h = a("btn"), $ = a("ChevronRightIcon"), E = a("BugAntIcon"), w = a("ExclamationTriangleIcon"), T = a("editor-error"), M = a("animate-css"), P = a("WrenchScrewdriverIcon"), R = a("btn-dropdown");
+}, ke = { class: "flex items-center w-full overflow-hidden relative gap-2" }, De = { class: "editor-footer-pager" }, _e = { key: 0 }, Se = { class: "editor-footer-diagnostic" }, Fe = { class: "editor-footer-action" }, Ee = ["onClick"];
+function Be(e, t, n, o, i, p) {
+  const r = a("ChevronLeftIcon"), h = a("btn"), $ = a("ChevronRightIcon"), E = a("BugAntIcon"), w = a("ExclamationTriangleIcon"), P = a("editor-error"), A = a("animate-css"), R = a("WrenchScrewdriverIcon"), z = a("btn-dropdown");
   return s(), f("footer", {
     class: "editor-footer",
-    style: H({ minHeight: e.showFooter ? void 0 : 0 })
+    style: X({ minHeight: e.showFooter ? void 0 : 0 })
   }, [
-    m(M, {
+    m(A, {
       name: "fade",
       duration: 200
     }, {
       default: l(() => [
-        e.showFooterContent ? (s(), f("div", we, [
-          d("div", be, [
-            d("div", ye, [
-              e.totalDiagnostics ? (s(), f("div", Ce, [
+        e.showFooterContent ? (s(), f("div", Ce, [
+          d("div", ke, [
+            d("div", De, [
+              e.totalDiagnostics ? (s(), f("div", _e, [
                 m(h, {
                   type: "button",
                   variant: "link",
@@ -179,7 +180,7 @@ function _e(e, t, n, o, i, p) {
                   ]),
                   _: 1
                 })
-              ])) : c("", !0)
+              ])) : u("", !0)
             ]),
             e.currentDiagnostic ? (s(), f("button", {
               key: 0,
@@ -189,33 +190,33 @@ function _e(e, t, n, o, i, p) {
               e.currentDiagnostic.severity === "error" ? (s(), g(E, {
                 key: 0,
                 class: "w-6 h-6"
-              })) : c("", !0),
+              })) : u("", !0),
               e.currentDiagnostic.severity === "warning" ? (s(), g(w, {
                 key: 1,
                 class: "w-6 h-6"
-              })) : c("", !0)
-            ])) : c("", !0),
-            d("div", ke, [
-              m(M, {
+              })) : u("", !0)
+            ])) : u("", !0),
+            d("div", Se, [
+              m(A, {
                 name: "fade",
                 duration: 200,
                 direction: e.direction,
                 "leave-active-class": "position-absolute"
               }, {
                 default: l(() => [
-                  e.currentDiagnostic ? (s(), g(T, {
+                  e.currentDiagnostic ? (s(), g(P, {
                     key: e.index,
                     error: e.currentDiagnostic
-                  }, null, 8, ["error"])) : c("", !0)
+                  }, null, 8, ["error"])) : u("", !0)
                 ]),
                 _: 1
               }, 8, ["direction"])
             ])
           ]),
-          d("div", De, [
-            u(e.$slots, "before-save-button"),
-            u(e.$slots, "action-button", {}, () => [
-              e.actions.length ? (s(), f(V, { key: 0 }, [
+          d("div", Fe, [
+            c(e.$slots, "before-save-button"),
+            c(e.$slots, "action-button", {}, () => [
+              e.actions.length ? (s(), f(L, { key: 0 }, [
                 e.actions.length === 1 ? (s(), g(h, {
                   key: 0,
                   type: "button",
@@ -225,11 +226,11 @@ function _e(e, t, n, o, i, p) {
                   onClick: t[3] || (t[3] = () => e.onClickAction(e.currentDiagnostic, e.actions[0]))
                 }, {
                   default: l(() => [
-                    m(P, { class: "w-6 h-6" }),
-                    S(" " + v(e.actions[0].name), 1)
+                    m(R, { class: "w-6 h-6" }),
+                    F(" " + v(e.actions[0].name), 1)
                   ]),
                   _: 1
-                })) : (s(), g(R, {
+                })) : (s(), g(z, {
                   key: 1,
                   label: "Fix Errors",
                   type: "button",
@@ -238,18 +239,18 @@ function _e(e, t, n, o, i, p) {
                   dropup: ""
                 }, {
                   default: l(() => [
-                    (s(!0), f(V, null, J(e.actions, (y, z) => (s(), f("button", {
-                      key: `${e.currentDiagnostic.rule.id}-${z}`,
+                    (s(!0), f(L, null, Z(e.actions, (y, W) => (s(), f("button", {
+                      key: `${e.currentDiagnostic.rule.id}-${W}`,
                       type: "button",
                       variant: "light",
                       onClick: () => e.onClickAction(e.currentDiagnostic, y)
-                    }, v(y.name), 9, Fe))), 128))
+                    }, v(y.name), 9, Ee))), 128))
                   ]),
                   _: 1
                 }))
-              ], 64)) : c("", !0)
+              ], 64)) : u("", !0)
             ]),
-            u(e.$slots, "save-button", {
+            c(e.$slots, "save-button", {
               diagnostics: e.diagnostics,
               saveButtonLabel: e.diagnostics
             }, () => [
@@ -261,22 +262,22 @@ function _e(e, t, n, o, i, p) {
                 onClick: t[4] || (t[4] = (y) => e.$emit("save"))
               }, {
                 default: l(() => [
-                  S(v(e.saveButtonLabel), 1)
+                  F(v(e.saveButtonLabel), 1)
                 ]),
                 _: 1
-              })) : c("", !0)
+              })) : u("", !0)
             ]),
-            u(e.$slots, "after-save-button", { diagnostics: e.diagnostics })
+            c(e.$slots, "after-save-button", { diagnostics: e.diagnostics })
           ])
-        ])) : c("", !0)
+        ])) : u("", !0)
       ]),
       _: 3
     })
   ], 4);
 }
-const Se = /* @__PURE__ */ D($e, [["render", _e]]), Ee = k({
+const Ie = /* @__PURE__ */ D(ye, [["render", Be]]), Me = k({
   components: {
-    AnimateCss: L
+    AnimateCss: O
   },
   props: {
     bgAnimation: {
@@ -310,37 +311,37 @@ const Se = /* @__PURE__ */ D($e, [["render", _e]]), Ee = k({
     this.mounted = !0;
   }
 });
-const Be = {
+const Ae = {
   key: 0,
   class: "capsule-editor-modal"
-}, Ie = {
+}, Le = {
   key: 0,
   class: "capsule-editor-modal-content"
 };
-function Me(e, t, n, o, i, p) {
+function Ve(e, t, n, o, i, p) {
   const r = a("animate-css");
-  return s(), g(r, K(e.bgAnimation, {
+  return s(), g(r, x(e.bgAnimation, {
     onAfterEnter: t[0] || (t[0] = (h) => e.showContent = !0)
   }), {
     default: l(() => [
-      e.mounted ? (s(), f("div", Be, [
-        m(r, Y(G(e.contentAnimation)), {
+      e.mounted ? (s(), f("div", Ae, [
+        m(r, ee(te(e.contentAnimation)), {
           default: l(() => [
-            e.showContent ? (s(), f("div", Ie, [
-              u(e.$slots, "default", { isShowing: e.isContentShowing })
-            ])) : c("", !0)
+            e.showContent ? (s(), f("div", Le, [
+              c(e.$slots, "default", { isShowing: e.isContentShowing })
+            ])) : u("", !0)
           ]),
           _: 3
         }, 16)
-      ])) : c("", !0)
+      ])) : u("", !0)
     ]),
     _: 3
   }, 16);
 }
-const Ve = /* @__PURE__ */ D(Ee, [["render", Me]]), Ae = k({
+const Oe = /* @__PURE__ */ D(Me, [["render", Ve]]), Te = k({
   components: {
-    Btn: I,
-    QuestionMarkCircleIcon: le
+    Btn: M,
+    QuestionMarkCircleIcon: me
   },
   model: {
     prop: "currentValue"
@@ -355,7 +356,7 @@ const Ve = /* @__PURE__ */ D(Ee, [["render", Me]]), Ae = k({
   },
   emits: [
     "demo-modal",
-    "update:modelValue"
+    "update:filename"
   ],
   data() {
     return {
@@ -363,26 +364,26 @@ const Ve = /* @__PURE__ */ D(Ee, [["render", Me]]), Ae = k({
     };
   }
 });
-const Le = { class: "editor-toolbar" }, Oe = { class: "editor-toolbar-left" }, Te = { class: "editor-toolbar-title" }, Pe = ["disabled"], Re = { class: "editor-toolbar-right" };
-function ze(e, t, n, o, i, p) {
+const Pe = { class: "editor-toolbar" }, Re = { class: "editor-toolbar-left" }, ze = { class: "editor-toolbar-title" }, We = ["disabled"], je = { class: "editor-toolbar-right" };
+function qe(e, t, n, o, i, p) {
   const r = a("QuestionMarkCircleIcon"), h = a("btn");
-  return s(), f("div", Le, [
-    d("div", Oe, [
-      u(e.$slots, "left")
+  return s(), f("div", Pe, [
+    d("div", Re, [
+      c(e.$slots, "left")
     ]),
-    d("div", Te, [
-      X(d("input", {
+    d("div", ze, [
+      oe(d("input", {
         "onUpdate:modelValue": t[0] || (t[0] = ($) => e.currentValue = $),
         type: "text",
         placeholder: "Untitled Document",
         disabled: e.disableFilename,
-        onInput: t[1] || (t[1] = ($) => e.$emit("update:modelValue", $.target.value))
-      }, null, 40, Pe), [
-        [Z, e.currentValue]
+        onInput: t[1] || (t[1] = ($) => e.$emit("update:filename", $.target.value))
+      }, null, 40, We), [
+        [ne, e.currentValue]
       ])
     ]),
-    d("div", Re, [
-      u(e.$slots, "right", {}, () => [
+    d("div", je, [
+      c(e.$slots, "right", {}, () => [
         e.demoMode ? (s(), g(h, {
           key: 0,
           size: "sm",
@@ -394,15 +395,15 @@ function ze(e, t, n, o, i, p) {
             m(r, { class: "w-4 h-4" })
           ]),
           _: 1
-        })) : c("", !0)
+        })) : u("", !0)
       ])
     ])
   ]);
 }
-const We = /* @__PURE__ */ D(Ae, [["render", ze]]);
-ee[0].run = () => {
+const Ne = /* @__PURE__ */ D(Te, [["render", qe]]);
+se[0].run = () => {
 };
-class A extends U {
+class V extends J {
   constructor(t) {
     super(), this.diagnostic = t, this.diagnostic = t;
   }
@@ -463,12 +464,12 @@ class C {
   }
   static init(t) {
     const n = t.map((o) => {
-      const i = F.widget({
-        widget: new A(o),
+      const i = _.widget({
+        widget: new V(o),
         diagnostic: o,
         side: 0
-      }).range(o.from), p = F.widget({
-        widget: new A(o),
+      }).range(o.from), p = _.widget({
+        widget: new V(o),
         diagnostic: o,
         side: 1,
         from: i
@@ -479,26 +480,26 @@ class C {
       ];
     });
     return new C(
-      F.set(n.flat(), !0)
+      _.set(n.flat(), !0)
     );
   }
 }
-const B = ue.define(), _ = ce.define({
+const I = U.define(), S = Q.define({
   create() {
-    return new C(F.none);
+    return new C(_.none);
   },
   update(e, t) {
     if (t.docChanged && e.length)
       return new C(e.map(t.changes));
     for (const n of t.effects)
-      if (n.is(B))
+      if (n.is(I))
         return C.init(n.value);
     return e;
   },
   provide(e) {
     return [
-      te((t) => {
-        const { doc: n } = t.state.toJSON(), o = fe(n).map((i) => {
+      re((t) => {
+        const { doc: n } = t.state.toJSON(), o = pe(n).map((i) => {
           const p = t.state.doc.line(i.line), r = Math.min(n.length, p.from - 1 + i.col), h = Math.min(n.length, r + i.raw.length);
           return {
             from: r,
@@ -512,41 +513,41 @@ const B = ue.define(), _ = ce.define({
           };
         });
         return t.dispatch({
-          effects: B.of(o)
+          effects: I.of(o)
         }), o;
       }),
       b.decorations.from(e, (t) => t.decorations),
       b.updateListener.of((t) => {
-        t.docChanged && t.state.field(_).sync(t.view.state);
+        t.docChanged && t.state.field(S).sync(t.view.state);
       })
     ];
   }
 });
-function je(e) {
+function Ge(e) {
   return [
-    _,
-    O.of(() => ({
+    S,
+    T.of(() => ({
       bottom: !0,
       dom: e.$refs.footer.$el
     })),
     b.updateListener.of((t) => {
       if (e.$refs.footer) {
         t.docChanged && e.$refs.footer.update(
-          t.state.field(_).diagnostics
+          t.state.field(S).diagnostics
         );
         for (const n of t.transactions)
           for (const o of n.effects)
-            o.is(B) && e.$refs.footer.update(
-              t.state.field(_).diagnostics
+            o.is(I) && e.$refs.footer.update(
+              t.state.field(S).diagnostics
             );
         e.$refs.footer.activate(t);
       }
     })
   ];
 }
-function qe(e) {
+function Ue(e) {
   return [
-    Q.fromClass(class {
+    K.fromClass(class {
       constructor(t) {
         e.currentContent = t.state.doc.toString();
       }
@@ -554,22 +555,22 @@ function qe(e) {
     b.updateListener.of((t) => {
       t.docChanged && (e.currentContent = t.state.doc.toString());
     }),
-    O.of(() => ({
+    T.of(() => ({
       top: !0,
       dom: e.$refs.toolbar.$el
     }))
   ];
 }
-const Ne = k({
+const Qe = k({
   components: {
-    Btn: I,
-    EditorFooter: Se,
-    EditorModal: Ve,
-    EditorToolbar: We
+    Btn: M,
+    EditorFooter: Ie,
+    EditorModal: Oe,
+    EditorToolbar: Ne
   },
-  model: {
-    prop: "currentContent"
-  },
+  // model: {
+  //     prop: 'content'
+  // },
   props: {
     content: {
       type: String,
@@ -610,12 +611,11 @@ const Ne = k({
   emits: [
     "demo-complete",
     "fixed-errors",
-    "update:modelValue"
+    "update:content",
+    "update:filename"
   ],
   data() {
     return {
-      currentContent: this.content,
-      currentFilename: this.filename,
       demoModalCleared: this.skipIntro,
       errors: [],
       hasDismissedFinishPopup: !1,
@@ -624,38 +624,25 @@ const Ne = k({
     };
   },
   watch: {
-    currentContent() {
-      this.input();
-    },
-    currentFilename() {
-      this.input();
-    },
     errors(e, t) {
       !e.length && t.length && this.$emit("fixed-errors");
     }
-    // showFinishModal(value) {
-    //     if(value) {
-    //         setTimeout(() => this.isSuccessModalShowing = true, 1000)
-    //     }
-    // }
-  },
-  created() {
   },
   mounted() {
     this.view = new b({
-      state: W.create({
-        doc: this.currentContent,
+      state: j.create({
+        doc: this.content,
         // || this.getSlotContents(),
         extensions: [
-          N,
-          ...j,
-          // keymap.of([ indentWithTab ]),
-          q(),
-          this.toolbar && qe(this),
-          je(this),
+          H,
+          ...q,
+          Y.of([N]),
+          G(),
+          this.toolbar && Ue(this),
+          Ge(this),
           b.lineWrapping,
           b.updateListener.of((e) => {
-            e.docChanged && (this.currentContent = e.state.doc.toString());
+            e.docChanged && this.$emit("update:content", e.state.doc.toString());
           })
         ].filter((e) => !!e)
       }),
@@ -666,70 +653,50 @@ const Ne = k({
     closeFinishPopup() {
       this.showFinishModal = !1, this.hasDismissedFinishPopup = !0;
     },
-    // getSlotContents() {
-    //     return this.$slots.default ? this.$slots.default().filter((vnode: any) => {
-    //         return vnode.tag && vnode.tag.toLowerCase() === 'textarea' && !!vnode.children;
-    //     }).reduce((carry: any, vnode: any) => {
-    //         return (
-    //             carry + vnode.children.map((child: any) => {
-    //                 return child.text;
-    //             }).join('')
-    //         );
-    //     }, '').trim() : null;
-    // },
-    input() {
-      this.$emit("update:modelValue", {
-        content: this.currentContent,
-        filename: this.currentFilename
-      });
-    },
     onModalClear() {
       this.demoModalCleared = !0, this.$emit("demo-complete"), this.view.focus();
     },
-    // onGoto({ from, to }) {
-    //     console.log(from, to);
-    //     // const tr = this.view.state.update({
-    //     //     selection: {
-    //     //         anchor: from,
-    //     //         head: to
-    //     //     },
-    //     //     scrollIntoView: true
-    //     // });
-    //     // this.view.dispatch(tr);
-    //     // this.view.focus();
-    // },
+    onGoto({ from: e, to: t }) {
+      this.view.dispatch({
+        selection: B.create([
+          B.range(e, t),
+          B.cursor(t)
+        ]),
+        scrollIntoView: !0
+      }), this.view.focus();
+    },
     onSave() {
       this.save(this);
     }
   }
 });
-const Ue = { class: "capsule-editor" }, Qe = { class: "text-center" }, He = /* @__PURE__ */ d("h1", null, " Success! ", -1), Je = /* @__PURE__ */ d("h5", null, " Your document has been fixed. ", -1), Ke = {
+const He = { class: "capsule-editor" }, Je = { class: "text-center" }, Ke = /* @__PURE__ */ d("h1", null, " Success! ", -1), Ye = /* @__PURE__ */ d("h5", null, " Your document has been fixed. ", -1), Xe = {
   ref: "wrapper",
   class: "cm-wrapper"
 };
-function Ye(e, t, n, o, i, p) {
+function Ze(e, t, n, o, i, p) {
   const r = a("btn"), h = a("editor-modal"), $ = a("editor-toolbar"), E = a("editor-footer");
-  return s(), f("div", Ue, [
+  return s(), f("div", He, [
     e.showFinishModal ? (s(), g(h, {
       key: 0,
       "content-animation": { name: "tada" }
     }, {
       default: l(({ isShowing: w }) => [
-        u(e.$slots, "success", {
+        c(e.$slots, "success", {
           close: e.closeFinishPopup,
-          filename: e.currentFilename,
+          filename: e.filename,
           view: e.view,
           isShowing: w
         }, () => [
-          u(e.$slots, "success-content", {
-            content: e.currentContent,
+          c(e.$slots, "success-content", {
+            content: e.content,
             close: e.closeFinishPopup,
-            filename: e.currentFilename,
+            filename: e.filename,
             view: e.view
           }, () => [
-            d("div", Qe, [
-              He,
-              Je,
+            d("div", Je, [
+              Ke,
+              Ye,
               m(r, {
                 type: "button",
                 variant: "primary",
@@ -738,7 +705,7 @@ function Ye(e, t, n, o, i, p) {
                 onClick: e.closeFinishPopup
               }, {
                 default: l(() => [
-                  S(" Dismiss ")
+                  F(" Dismiss ")
                 ]),
                 _: 1
               }, 8, ["onClick"])
@@ -747,69 +714,69 @@ function Ye(e, t, n, o, i, p) {
         ])
       ]),
       _: 3
-    })) : c("", !0),
+    })) : u("", !0),
     e.toolbar ? (s(), g($, {
       key: 1,
       ref: "toolbar",
-      modelValue: e.currentFilename,
-      "onUpdate:modelValue": t[0] || (t[0] = (w) => e.currentFilename = w),
       "demo-mode": e.demoMode,
       "disable-filename": e.disableFilename,
-      filename: e.currentFilename,
-      onDemoModal: t[1] || (t[1] = () => e.demoModalCleared = !1)
+      filename: e.filename,
+      onDemoModal: t[0] || (t[0] = () => e.demoModalCleared = !1),
+      "onUpdate:filename": t[1] || (t[1] = (w) => e.$emit("update:filename", w))
     }, {
       left: l(() => [
-        u(e.$slots, "toolbar-left", {
+        c(e.$slots, "toolbar-left", {
           errors: e.errors,
-          filename: e.currentFilename,
-          content: e.currentContent
+          filename: e.filename,
+          content: e.content
         })
       ]),
       right: l(() => [
-        u(e.$slots, "toolbar-right", {
+        c(e.$slots, "toolbar-right", {
           errors: e.errors,
-          filename: e.currentFilename,
-          content: e.currentContent
+          filename: e.filename,
+          content: e.content
         })
       ]),
       _: 3
-    }, 8, ["modelValue", "demo-mode", "disable-filename", "filename"])) : c("", !0),
-    d("div", Ke, null, 512),
+    }, 8, ["demo-mode", "disable-filename", "filename"])) : u("", !0),
+    d("div", Xe, null, 512),
     m(E, {
       ref: "footer",
       modelValue: e.errors,
       "onUpdate:modelValue": t[2] || (t[2] = (w) => e.errors = w),
       "save-button": e.saveButton,
       view: e.view,
-      onSave: e.onSave
+      onSave: e.onSave,
+      onGoto: e.onGoto
     }, {
       "before-save-button": l(() => [
-        u(e.$slots, "before-save-button", {
+        c(e.$slots, "before-save-button", {
           errors: e.errors,
-          filename: e.currentFilename,
-          content: e.currentContent
+          filename: e.filename,
+          content: e.content
         })
       ]),
       "save-button": l(() => [
-        u(e.$slots, "save-button", {
+        c(e.$slots, "save-button", {
           errors: e.errors,
-          filename: e.currentFilename,
-          content: e.currentContent
+          filename: e.filename,
+          content: e.content
         })
       ]),
       "after-save-button": l(() => [
-        u(e.$slots, "after-save-button", {
+        c(e.$slots, "after-save-button", {
           errors: e.errors,
-          filename: e.currentFilename,
-          content: e.currentContent
+          filename: e.filename,
+          content: e.content
         })
       ]),
       _: 3
-    }, 8, ["modelValue", "save-button", "view", "onSave"])
+    }, 8, ["modelValue", "save-button", "view", "onSave", "onGoto"])
   ]);
 }
-const dt = /* @__PURE__ */ D(Ne, [["render", Ye]]);
+const mt = /* @__PURE__ */ D(Qe, [["render", Ze]]);
 export {
-  dt as Editor
+  mt as Editor
 };
 //# sourceMappingURL=capsule-editor.js.map

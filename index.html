@@ -13,12 +13,12 @@
     </head>
     <body>
         <div id="app">
-            <editor v-model="editor" ref="editor" :toolbar="false" :content="content" />
+            <editor v-model:filename="filename" v-model:content="content" />
         </div>
         
         <script type="module">
             import './index.css';
-            import { createApp } from 'vue/dist/vue.esm-bundler.js';
+            import { createApp, ref } from 'vue/dist/vue.esm-bundler.js';
             import { Editor } from './index.ts';
             import 'animate.css';
              
@@ -31,12 +31,12 @@
                 computed: {
                     content: () => content
                 },
-                data: () => ({
-                    editor: {
-                        filename: null,
-                        content: null
+                setup() {
+                    return {
+                        filename: ref('test.html'),
+                        content: ref(content),
                     }
-                })
+                }
             });
 
             vue.mount('#app')
