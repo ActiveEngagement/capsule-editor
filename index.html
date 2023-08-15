@@ -13,16 +13,16 @@
     </head>
     <body>
         <div id="app">
-            <editor v-model:filename="filename" v-model:content="content" />
+            <editor v-model:filename="filename" v-model:content="content" :toolbar="true" />
         </div>
         
         <script type="module">
             import './index.css';
             import { createApp, ref } from 'vue/dist/vue.esm-bundler.js';
             import { Editor } from './index.ts';
-            import 'animate.css';
+            // import 'animate.css';
              
-            const content = `<div>We'll even cover all the shipping & test.`;
+            const content = `<div>We'll even cover all the shipping.`;
   
             const vue = createApp({
                 components: {

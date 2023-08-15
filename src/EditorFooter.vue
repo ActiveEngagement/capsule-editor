@@ -1,210 +1,122 @@
-<script lang="ts">
-import { forceLinting } from '@codemirror/lint';
-import { BugAntIcon, ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon, WrenchScrewdriverIcon } from '@heroicons/vue/24/outline';
+<script lang="ts" setup>
+import { Action, Diagnostic, forceLinting } from '@codemirror/lint';
+import { EditorView } from '@codemirror/view';
+import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
 import { AnimateCss } from '@vue-interface/animate-css';
 import { Btn } from '@vue-interface/btn';
 import { BtnDropdown } from '@vue-interface/btn-dropdown';
-import { defineComponent } from 'vue';
+import { Rule } from 'capsule-lint';
+import { Ref, computed, ref } from 'vue';
 import EditorError from './EditorError.vue';
 
-export default defineComponent({
-    
-    components: {
-        AnimateCss,
-        Btn,
-        BtnDropdown,
-        ChevronLeftIcon,
-        ChevronRightIcon,
-        EditorError,
-        BugAntIcon,
-        ExclamationTriangleIcon,
-        WrenchScrewdriverIcon
-    },
+const props = withDefaults(defineProps<{
+    saveButton?: boolean,
+    saveButtonLabel?: string,
+    view?: EditorView
+}>(), {
+    saveButton: true,
+    saveButtonLabel: 'Save Changes',
+    view: undefined
+});
 
-    props: {
-        saveButton: {
-            type: Boolean,
-            default: true
-        },
+const emit = defineEmits<{
+    'goto': [Diagnostic, Diagnostic|undefined]
+    'update:modelValue': [Ref<Diagnostic[]>]
+    'save': []
+}>();
 
-        saveButtonLabel: {
-            type: String,
-            default: 'Save File'
-        },
-        
-        view: {
-            type: Object,
-            default: undefined
-        }
-    },
+const currentDiagnostic = ref<Diagnostic & { rule: Rule }>();
+const diagnostics = ref<Diagnostic[]>([]);
+const hasLinted = ref(false);
 
-    emits: [
-        'goto',
-        'update:modelValue',
-        'save'
-    ],
+const index = computed(() => Math.max(0, currentDiagnostic.value ? diagnostics.value.indexOf(currentDiagnostic.value) : 0));
 
-    data() {
-        return {
-            currentDiagnostic: undefined,
-            direction: 'up',
-            diagnostics: [],
-            fixedAllDiagnostics: false,
-            hasLinted: false,
-            showFooter: false,
-            showFooterContent: false,
-        };
-    },
+function goto(index: number) {
+    if(index < 0) {
+        index = diagnostics.value.length - 1;
+    }
+    else if(index > diagnostics.value.length - 1) {
+        index = 0;
+    }
 
-    computed: {
-
-        actions() {
-            return this.currentDiagnostic ? []
-                .concat(this.currentDiagnostic.rule.actions)
-                .reverse()
-                .filter(({ validate }: { validate: Function }) => {
-                    return !validate || validate(this.view, this.currentDiagnostic);
-                }) : [];
-        },
-
-        index() {
-            return Math.max(0, this.diagnostics.indexOf(this.currentDiagnostic));
-        },
-
-        totalDiagnostics() {
-            return this.diagnostics.length;
-        }
-
-    },
-
-    watch: {
-
-        currentDiagnostic(value, oldValue) {
-            this.direction = this.index > this.diagnostics.indexOf(oldValue) ? 'down': 'up';
-        },
-
-        diagnostics(value, oldValue) {
-            if(value.length) {
-                this.hasLinted = true;
-                this.fixedAllDiagnostics = false;
-            }
-            else if(!value.length && !!oldValue.length) {
-                this.hasLinted = true;
-                this.currentDiagnostic = null;
-                this.fixedAllDiagnostics = true;
-            }
-            else if(!value.length) {
-                this.fixedAllDiagnostics = true;
-            }
-
-        }
-    },
-
-    updated() {
-        if(!this.isEmpty() && this.hasLinted && (this.saveButton || !this.saveButton && this.diagnostics.length)) {
-            this.showFooter = true;
-            setTimeout(() => this.showFooterContent = true, 200);
-        }
-        else {
-            this.showFooterContent = false;
-            setTimeout(() => this.showFooter = false, 200);
-        }
-    },
-
-    methods: {
-
-        findActiveDiagnostic() {
-            return this.diagnostics
-                .filter((diagnostic: any) => diagnostic.isActive)
-                .pop();
-        },
-
-        goto(index: number) {
-            if(index < 0) {
-                index = this.diagnostics.length - 1;
-            }
-            else if(index > this.diagnostics.length - 1) {
-                index = 0;
-            }
-
-            const lastDiagnostic = this.currentDiagnostic;
+    const lastDiagnostic = currentDiagnostic.value;
             
-            this.currentDiagnostic = this.diagnostics[index];   
+    currentDiagnostic.value = diagnostics.value[index] as Diagnostic & { rule: any };   
 
-            this.$emit('goto', this.currentDiagnostic, lastDiagnostic);
-        },
+    emit('goto', currentDiagnostic.value, lastDiagnostic);
+}
 
-        isEmpty() {
-            return this.view ? this.view.state.doc.toString() === '' : false;
-        },
-
-        compare(a: any, b: any) {
-            return (!!a && !!b)
+function compare(a: any, b: any) {
+    return (!!a && !!b)
                 && a.from === b.from
                 && a.to === b.to
                 && a.rule.id === b.rule.id;
-        },
+}
 
-        update(diagnostics: any) {
-            this.diagnostics = diagnostics || [];
-            this.hasLinted = true;
+function update(values: Diagnostic[]) {
+    diagnostics.value = values;
+    hasLinted.value = true;
 
-            if(!this.currentDiagnostic) {
-                this.currentDiagnostic = this.diagnostics[this.index];
-            }
-            
-            this.$emit('update:modelValue', this.diagnostics);
-        },
-        
-        activate(view: any) {
-            const { from, to } = view.state.selection.main;
-
-            const active = this.diagnostics.filter((diagnostic: any) => {
-                if(from === to) {
-                    return diagnostic.from <= from && diagnostic.to >= to;
-                }
-
-                return diagnostic.from >= from && diagnostic.to <= to;
-            });
-
-            const match = this.diagnostics.find((diagnostic: any) => {
-                return this.compare(diagnostic, this.currentDiagnostic);
-            });
-
-            const index = Math.max(0, active.indexOf(this.currentDiagnostic));
-            
-            if(active.length) {
-                this.currentDiagnostic = active[index];
-            }
-            else {
-                this.currentDiagnostic = match || this.diagnostics[this.index];
-            }
-        },
-
-        onClickAction(diagnostic: any, action: any) {
-            action.apply(this.view, diagnostic.from, diagnostic.to);
-
-            forceLinting(this.view);
-        }
-
+    if(!currentDiagnostic.value) {
+        currentDiagnostic.value = diagnostics.value[index.value] as Diagnostic & { rule: any };
     }
 
+    emit('update:modelValue', diagnostics);
+}
+        
+function activate(view: EditorView) {
+    const { from, to } = view.state.selection.main;
+
+    const active = diagnostics.value.filter((diagnostic: Diagnostic) => {
+        if(from === to) {
+            return diagnostic.from <= from && diagnostic.to >= to;
+        }
+
+        return diagnostic.from >= from && diagnostic.to <= to;
+    });
+
+    const match = diagnostics.value.find((diagnostic: Diagnostic) => {
+        return compare(diagnostic, currentDiagnostic.value);
+    });
+
+    if(active.length) {
+        const max = Math.max(0, currentDiagnostic.value ? active.indexOf(currentDiagnostic.value) : 0);
+            
+        currentDiagnostic.value = active[max] as Diagnostic & { rule: any };
+    }
+    else {
+        currentDiagnostic.value = (match || diagnostics.value[index.value]) as Diagnostic & { rule: any };
+    }
+}
+
+function onClickAction(diagnostic: Diagnostic, action: Action) {
+    if(!props.view) {
+        return;
+    }
+    
+    action.apply(props.view, diagnostic.from, diagnostic.to);
+
+    forceLinting(props.view);
+}
+
+defineExpose({
+    activate,
+    update
 });
 </script>
 
 <template>
     <footer
-        class="editor-footer"
-        :style="{minHeight: !showFooter ? 0 : undefined}">
+        class="editor-footer">
         <animate-css
             name="fade"
             :duration="200">
             <div
-                v-if="showFooterContent"
+                v-if="hasLinted"
                 class="flex justify-between items-center w-full py-2">
                 <div class="flex items-center w-full overflow-hidden relative gap-2">
                     <div class="editor-footer-pager">
-                        <div v-if="totalDiagnostics">
+                        <div v-if="diagnostics?.length">
                             <btn
                                 type="button"
                                 variant="link"
@@ -224,21 +136,15 @@ export default defineComponent({
                         v-if="currentDiagnostic"
                         type="button"
                         @click="goto(index)">
-                        <BugAntIcon
-                            v-if="currentDiagnostic.severity === 'error'"
-                            class="w-6 h-6" />
-                                
                         <ExclamationTriangleIcon
-                            v-if="currentDiagnostic.severity === 'warning'"
                             class="w-6 h-6" />
                     </button>
                     <div class="editor-footer-diagnostic">
                         <animate-css
                             name="fade"
                             :duration="200"
-                            :direction="direction"
                             leave-active-class="position-absolute">
-                            <editor-error
+                            <EditorError
                                 v-if="currentDiagnostic"
                                 :key="index"
                                 :error="currentDiagnostic" />
@@ -249,15 +155,15 @@ export default defineComponent({
                     <slot name="before-save-button" />
 
                     <slot name="action-button">
-                        <template v-if="actions.length">
-                            <template v-if="actions.length === 1">
+                        <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
+                            <template v-if="currentDiagnostic.actions.length === 1">
                                 <btn
                                     type="button"
                                     variant="light"
                                     size="sm"
                                     class="flex items-center gap-2"
-                                    @click="() => onClickAction(currentDiagnostic, actions[0])">
-                                    <WrenchScrewdriverIcon class="w-6 h-6" /> {{ actions[0].name }}
+                                    @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
+                                    {{ currentDiagnostic.actions[0].name }}
                                 </btn>
                             </template>
                             <template v-else>
@@ -268,11 +174,11 @@ export default defineComponent({
                                     variant="light"
                                     dropup>
                                     <button
-                                        v-for="(action, i) in actions"
+                                        v-for="(action, i) in currentDiagnostic.actions"
                                         :key="`${currentDiagnostic.rule.id}-${i}`"
                                         type="button"
                                         variant="light"
-                                        @click="() => onClickAction(currentDiagnostic, action)">
+                                        @click="onClickAction(currentDiagnostic, action)">
                                         {{ action.name }}
                                     </button>
                                 </btn-dropdown>
@@ -289,7 +195,7 @@ export default defineComponent({
                             type="button"
                             variant="light"
                             size="sm"
-                            @click="$emit('save')">
+                            @click="emit('save')">
                             {{ saveButtonLabel }}
                         </btn>
                     </slot>
@@ -309,7 +215,7 @@ export default defineComponent({
     align-items: center;
     color: white;
     position: relative;
-    transition: .2s all ease-in;
+    transition: .1s all ease-in;
 }
 
 .editor-footer-content {

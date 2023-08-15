@@ -1,22 +1,13 @@
 <script lang="ts">
-import { QuestionMarkCircleIcon } from '@heroicons/vue/24/outline';
-import { Btn } from '@vue-interface/btn';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-
-    components: {
-        Btn,
-        QuestionMarkCircleIcon
-    },
 
     model: {
         prop: 'currentValue'
     },
 
     props: {
-
-        demoMode: Boolean,
 
         disableFilename: Boolean,
         
@@ -28,7 +19,6 @@ export default defineComponent({
     },
 
     emits: [
-        'demo-modal',
         'update:filename',
     ],
 
@@ -52,19 +42,10 @@ export default defineComponent({
                 type="text"
                 placeholder="Untitled Document"
                 :disabled="disableFilename"
-                @input="(event: any) => $emit('update:filename', event.target.value)">
+                @input="$emit('update:filename', currentValue)">
         </div>
         <div class="editor-toolbar-right">
-            <slot name="right">
-                <btn
-                    v-if="demoMode"
-                    size="sm"
-                    variant="link"
-                    class="editor-help"
-                    @click="$emit('demo-modal')">
-                    <QuestionMarkCircleIcon class="w-4 h-4" />
-                </btn>
-            </slot>
+            <slot name="right" />
         </div>
     </div>
 </template>

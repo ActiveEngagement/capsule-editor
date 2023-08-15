@@ -9,5 +9,5 @@ declare class LintState {
     sync(state: any): any;
     static init(diagnostics: any[]): LintState;
 }
-export default function (parent: any): (import("@codemirror/state").Extension | StateField<LintState>)[];
+export default function (parent: any): (StateField<LintState> | import("@codemirror/state").Extension)[];
 export {};

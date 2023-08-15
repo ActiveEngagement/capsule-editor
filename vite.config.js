@@ -10,8 +10,7 @@ const fileName = pkg.name;
 const external = [
     '@heroicons/vue/24/outline',
     '@heroicons/vue/24/solid',
-    'eslint/lib/cli-engine/formatters',
-    ...(pkg.dependencies ? Object.keys(pkg.dependencies) : []),
+    // ...(pkg.dependencies ? Object.keys(pkg.dependencies) : []),
     ...(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [])
 ];
 

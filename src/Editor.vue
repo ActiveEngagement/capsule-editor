@@ -1,28 +1,20 @@
 <script lang="ts">
-import { basicSetup, EditorState } from '@codemirror/basic-setup';
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { EditorSelection } from '@codemirror/state';
-import { oneDark } from '@codemirror/theme-one-dark';
-import { EditorView, keymap } from '@codemirror/view';
-import { Btn } from '@vue-interface/btn';
+import { EditorSelection, EditorState } from '@codemirror/state';
+import { keymap } from '@codemirror/view';
+import { materialDark } from 'cm6-theme-material-dark';
+import { EditorView, basicSetup } from 'codemirror';
 import { defineComponent } from 'vue';
 import EditorFooter from './EditorFooter.vue';
-import EditorModal from './EditorModal.vue';
 import EditorToolbar from './EditorToolbar.vue';
-import lint from './Extensions/Lint.js';
-import toolbar from './Extensions/Toolbar.js';
+import lint from './extensions/Lint';
 
 export default defineComponent({
     components: {
-        Btn,
         EditorFooter,
-        EditorModal,
         EditorToolbar,
     },
-    // model: {
-    //     prop: 'content'
-    // },
     props: {
 
         content: {
@@ -30,11 +22,6 @@ export default defineComponent({
             default: undefined
         },
         
-        demoMode: {
-            type: Boolean,
-            default: false
-        },
-
         disableFilename: Boolean,
 
         filename: {
@@ -54,11 +41,6 @@ export default defineComponent({
             default: true
         },
 
-        skipIntro: {
-            type: Boolean,
-            default: false
-        },
-
         title: {
             type: String,
             default: undefined
@@ -70,14 +52,13 @@ export default defineComponent({
         },
     },
     emits: [
-        'demo-complete',
         'fixed-errors',
         'update:content',
-        'update:filename'
+        'update:filename',
+        'save'
     ],
     data() {
         return {
-            demoModalCleared: this.skipIntro,
             errors: [],
             hasDismissedFinishPopup: false,
             showFinishModal: false,
@@ -93,14 +74,15 @@ export default defineComponent({
     },
     mounted() {
         this.view = new EditorView({
+            extensions: [
+                basicSetup
+            ],
             state: EditorState.create({
-                doc: this.content,// || this.getSlotContents(),
+                doc: this.content,
                 extensions: [
-                    oneDark,
-                    ...basicSetup,
+                    materialDark,
                     keymap.of([ indentWithTab ]),
                     html(),
-                    this.toolbar && toolbar(this),
                     lint(this),
                     EditorView.lineWrapping,
                     EditorView.updateListener.of(view => {
@@ -114,17 +96,7 @@ export default defineComponent({
         });
     },
     methods: {
-        closeFinishPopup() {
-            this.showFinishModal = false;
-            this.hasDismissedFinishPopup = true;
-        },
-
-        onModalClear() {
-            this.demoModalCleared = true;
-            this.$emit('demo-complete');
-            this.view.focus();
-        },
-        
+       
         onGoto({ from, to }: { from: number, to:number }) {
             this.view.dispatch({ 
                 selection: EditorSelection.create([
@@ -138,7 +110,7 @@ export default defineComponent({
         },
     
         onSave() {
-            this.save(this);
+            this.$emit('save');
         }
     }
 });
@@ -146,54 +118,11 @@ export default defineComponent({
 
 <template>
     <div class="capsule-editor">
-        <!-- <editor-demo-modal
-            v-if="demoMode && !demoModalCleared"
-            @clear="onModalClear" /> -->
-
-        <editor-modal
-            v-if="showFinishModal"
-            :content-animation="{name: 'tada'}">
-            <template #default="{ isShowing }">
-                <slot
-                    name="success"
-                    :close="closeFinishPopup"
-                    :filename="filename"
-                    :view="view"
-                    :is-showing="isShowing">
-                    <slot
-                        name="success-content"
-                        :content="content"
-                        :close="closeFinishPopup"
-                        :filename="filename"
-                        :view="view">
-                        <div class="text-center">
-                            <h1>
-                                Success!
-                            </h1>
-                            <h5>
-                                Your document has been fixed.
-                            </h5>
-                            <btn
-                                type="button"
-                                variant="primary"
-                                size="lg"
-                                block
-                                @click="closeFinishPopup">
-                                Dismiss
-                            </btn>
-                        </div>
-                    </slot>
-                </slot>
-            </template>
-        </editor-modal>
-
         <editor-toolbar
             v-if="toolbar"
             ref="toolbar"
-            :demo-mode="demoMode"
             :disable-filename="disableFilename"
             :filename="filename"
-            @demo-modal="() => demoModalCleared = false"
             @update:filename="value => $emit('update:filename', value)">
             <template #left>
                 <slot

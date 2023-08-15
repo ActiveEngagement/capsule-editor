@@ -1,14 +1,8 @@
-import { linter, lintKeymap } from '@codemirror/lint';
-import { showPanel } from '@codemirror/panel';
+import { Diagnostic, linter } from '@codemirror/lint';
 import { StateEffect, StateField } from '@codemirror/state';
-import { Decoration, EditorView, WidgetType } from '@codemirror/view';
+import { Decoration, EditorView, WidgetType, showPanel } from '@codemirror/view';
 import { lint } from 'capsule-lint';
-
-// Override the default keymaps
-// @ts-ignore
-lintKeymap[0].run = () => {
-    // Ignore the command
-};
+import actions from '../actions';
 
 class DiagnosticWidget extends WidgetType {
     constructor(
@@ -130,7 +124,7 @@ class LintState {
     }
 }
 
-const setDiagnosticsEffect = StateEffect.define();
+const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
 const lintState = StateField.define({
     create() {
@@ -153,7 +147,7 @@ const lintState = StateField.define({
         return [
             linter(view => {
                 const { doc } = view.state.toJSON();
-            
+                    
                 const diagnostics = lint(doc).map((error: any) => {
                     const pos = view.state.doc.line(error.line);
                     const from  = Math.min(doc.length, pos.from - 1 + error.col);
@@ -168,7 +162,10 @@ const lintState = StateField.define({
                         message: error.message,
                         severity: error.type,
                         source: error.rule.id,
-                    };
+                        actions: error.rule.id in actions && actions[
+                            error.rule.id as keyof typeof actions
+                        ]
+                    } as Diagnostic;
                 });
             
                 view.dispatch({
