@@ -9,3 +9,4 @@
 ### Features
 
 * added beta release ([531339f](https://github.com/ActiveEngagement/capsule-editor/commit/531339f68da6b3bd6c48fa63cbf654d1a4d8f368))
+
