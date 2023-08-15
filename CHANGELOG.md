@@ -1,3 +1,10 @@
+# [2.0.0-beta.6](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-08-15)
+
+
+### Bug Fixes
+
+* issue with tag-pair not working ([83db6fb](https://github.com/ActiveEngagement/capsule-editor/commit/83db6fb9c9d54c5a2fa80238f51546e474c4f855))
+
 # [2.0.0-beta.5](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2023-08-15)
 
 
