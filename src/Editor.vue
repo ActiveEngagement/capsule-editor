@@ -8,7 +8,7 @@ import { EditorView, basicSetup } from 'codemirror';
 import { defineComponent } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
-import lint from './extensions/Lint';
+import lint from './plugins/Lint';
 
 export default defineComponent({
     components: {
