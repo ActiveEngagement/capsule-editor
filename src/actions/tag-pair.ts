@@ -37,6 +37,8 @@ function changes(view: EditorView, from?: number, to?: number) {
     const tree = syntaxTree(view.state);
 
     tree.iterate({
+        from,
+        to,
         enter(node) {
             if(node.type.name === 'Element') {
                 stack.push(lastElement = new Element(view, node.from, node.to));
@@ -48,12 +50,17 @@ function changes(view: EditorView, from?: number, to?: number) {
         leave(node) {
             if(node.type.name === 'CloseTag') {
                 for(pos = stack.length - 1; pos >= 0; pos--) {
-                    const tag = tagName(view, from, to);
+                    const tag = tagName(view, node.from, node.to);
+
+                    console.log(stack[pos], pos, tag);
+                    
                     if(!tag) {
                         continue;
                     }
 
                     if(!stack[pos].closed && stack[pos].is(tag)) {
+                        console.log('closed', tag);
+                        
                         stack[pos].closed = true;
     
                         break;
@@ -62,6 +69,8 @@ function changes(view: EditorView, from?: number, to?: number) {
             }
         }
     });
+
+    console.log(stack);
     
     return stack.filter(element => !element.closed)
         .reverse()

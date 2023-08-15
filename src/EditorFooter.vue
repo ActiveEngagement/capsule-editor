@@ -113,7 +113,7 @@ defineExpose({
             :duration="200">
             <div
                 v-if="hasLinted"
-                class="flex justify-between items-center w-full py-2">
+                class="flex justify-between items-center w-full p-[.33rem]">
                 <div class="flex items-center w-full overflow-hidden relative gap-2">
                     <div class="editor-footer-pager">
                         <div v-if="diagnostics?.length">
@@ -151,7 +151,7 @@ defineExpose({
                         </animate-css>
                     </div>
                 </div>
-                <div class="editor-footer-action">
+                <div class="editor-footer-action flex-shrink-0">
                     <slot name="before-save-button" />
 
                     <slot name="action-button">
@@ -245,11 +245,6 @@ defineExpose({
 
 .editor-footer-icon button:active {
     color: #e0e0e0;
-}
-
-.editor-footer-action {
-    flex-shrink: 0;
-    padding-right: .5rem;
 }
 
 .editor-footer-action-icon {
