@@ -1,3 +1,10 @@
+# [2.0.0-beta.7](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2023-09-10)
+
+
+### Bug Fixes
+
+* remove css, must use Tailwind to compile css ([6ad407e](https://github.com/ActiveEngagement/capsule-editor/commit/6ad407e2dd212c2b36fdf064045fdf9b747b1d0d))
+
 # [2.0.0-beta.6](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-08-15)
 
 
