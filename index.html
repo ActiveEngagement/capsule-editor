@@ -13,13 +13,13 @@
     </head>
     <body>
         <div id="app">
-            <capsule-editor v-model:filename="filename" v-model:content="content" :toolbar="true" />
+            <editor v-model:filename="filename" v-model:content="content" :toolbar="true" :footer="false" />
         </div>
         
         <script type="module">
             import './index.css';
             import { createApp, ref } from 'vue/dist/vue.esm-bundler.js';
-            import { CapsuleEditor } from './index.ts';
+            import { Editor } from './index.ts';
 
             // import 'animate.css';
              
@@ -44,7 +44,7 @@ const content = `<!DOCTYPE html>
   
             const vue = createApp({
                 components: {
-                    CapsuleEditor
+                    Editor
                 },
                 computed: {
                     content: () => content

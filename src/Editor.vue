@@ -93,7 +93,7 @@ export default defineComponent({
                     this.theme,
                     keymap.of([ indentWithTab ]),
                     html(),
-                    lint(this),
+                    this.footer && lint(this),
                     EditorView.lineWrapping,
                     EditorView.updateListener.of(view => {
                         if(view.docChanged) {
