@@ -107,26 +107,24 @@ defineExpose({
 
 <template>
     <footer
-        class="editor-footer">
+        class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
         <animate-css
             name="fade"
             :duration="200">
             <div
                 v-if="hasLinted"
                 class="flex justify-between items-center w-full p-[.33rem]">
-                <div class="flex items-center w-full overflow-hidden relative gap-2">
-                    <div class="editor-footer-pager">
-                        <div v-if="diagnostics?.length">
+                <div class="flex items-center w-full overflow-hidden relative gap-4">
+                    <div class="flex-shrink-0">
+                        <div v-if="diagnostics?.length" class="flex items-center justify-center gap-2">
                             <btn
-                                type="button"
-                                variant="link"
+                                class="btn btn-secondary"
                                 @click="goto(index - 1)">
                                 <ChevronLeftIcon class="w-4 h-4" />
                             </btn> 
                             <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
                             <btn
-                                type="button"
-                                variant="link"
+                                class="btn btn-secondary"
                                 @click="goto(index + 1)">
                                 <ChevronRightIcon class="w-4 h-4" />
                             </btn>
@@ -139,17 +137,15 @@ defineExpose({
                         <ExclamationTriangleIcon
                             class="w-6 h-6" />
                     </button>
-                    <div class="editor-footer-diagnostic">
                         <animate-css
                             name="fade"
                             :duration="200"
-                            leave-active-class="position-absolute">
+                            leave-active-class="absolute">
                             <EditorError
                                 v-if="currentDiagnostic"
                                 :key="index"
                                 :error="currentDiagnostic" />
                         </animate-css>
-                    </div>
                 </div>
                 <div class="editor-footer-action flex-shrink-0">
                     <slot name="before-save-button" />
@@ -158,30 +154,28 @@ defineExpose({
                         <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
                             <template v-if="currentDiagnostic.actions.length === 1">
                                 <btn
-                                    type="button"
-                                    variant="light"
-                                    size="sm"
-                                    class="flex items-center gap-2"
+                                    class="btn-secondary btn-sm flex items-center gap-2"
                                     @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
                                     {{ currentDiagnostic.actions[0].name }}
                                 </btn>
                             </template>
                             <template v-else>
-                                <btn-dropdown
-                                    label="Fix Errors"
-                                    type="button"
-                                    size="sm"
-                                    variant="light"
-                                    dropup>
-                                    <button
-                                        v-for="(action, i) in currentDiagnostic.actions"
-                                        :key="`${currentDiagnostic.rule.id}-${i}`"
-                                        type="button"
-                                        variant="light"
-                                        @click="onClickAction(currentDiagnostic, action)">
-                                        {{ action.name }}
-                                    </button>
-                                </btn-dropdown>
+                                <div>
+                                    <BtnDropdown
+                                        label="Fix Errors"
+                                        size="sm"
+                                        button-class="btn-primary"
+                                        dropup>
+                                        <button
+                                            v-for="(action, i) in currentDiagnostic.actions"
+                                            :key="`${currentDiagnostic.rule.id}-${i}`"
+                                            type="button"
+                                            variant="light"
+                                            @click="onClickAction(currentDiagnostic, action)">
+                                            {{ action.name }}
+                                        </button>
+                                    </BtnDropdown>
+                                </div>
                             </template>
                         </template>
                     </slot>
@@ -192,9 +186,7 @@ defineExpose({
                         :save-button-label="diagnostics">
                         <btn
                             v-if="saveButton && !diagnostics.length"
-                            type="button"
-                            variant="light"
-                            size="sm"
+                            class="btn-primary"
                             @click="emit('save')">
                             {{ saveButtonLabel }}
                         </btn>
@@ -208,82 +200,3 @@ defineExpose({
         </animate-css>
     </footer>
 </template>
-
-<style>
-.editor-footer {
-    display: flex;
-    align-items: center;
-    color: white;
-    position: relative;
-    transition: .1s all ease-in;
-}
-
-.editor-footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 0;
-}
-
-.editor-footer-error {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.editor-footer-icon {
-    margin-right: .5rem;
-}
-
-.editor-footer-icon button {
-    color: white;
-    padding: 0 1rem;
-}
-
-.editor-footer-icon button:active {
-    color: #e0e0e0;
-}
-
-.editor-footer-action-icon {
-    margin-right: .25rem;
-}
-
-.editor-footer-diagnostic {
-    font-weight: 300;
-    font-size: .85em;
-    overflow: hidden;
-}
-    
-.editor-footer-pager {
-    flex-shrink: 0;
-    min-width: 10.5rem;
-}
-
-.editor-footer-pager  > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 .5rem;
-}
-
-.editor-footer-pager .btn {
-    padding: 0;
-    color: white;
-    width: 2rem;
-    height: 1.75rem;
-    font-size: 1.75rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: .6666rem;
-    background: transparent;
-    border: 0;
-}
-
-.editor-footer-pager .btn:active {
-    background: rgba(0, 0, 0, .3);
-}
-</style>

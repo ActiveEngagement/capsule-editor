@@ -1,3 +1,3 @@
-import Editor from './src/Editor.vue';
+import CapsuleEditor from './src/Editor.vue';
 
-export { Editor };
+export { CapsuleEditor };

@@ -1,11 +1,11 @@
 <script lang="ts">
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { EditorSelection, EditorState } from '@codemirror/state';
+import { EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup } from 'codemirror';
-import { defineComponent } from 'vue';
+import { PropType, defineComponent } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
 import lint from './plugins/Lint';
@@ -24,6 +24,11 @@ export default defineComponent({
         
         disableFilename: Boolean,
 
+        footer: {
+            type: Boolean,
+            default: true
+        },
+
         filename: {
             type: String,
             default: null
@@ -39,6 +44,11 @@ export default defineComponent({
         saveButton: {
             type: Boolean,
             default: true
+        },
+
+        theme: {
+            type: Object as PropType<Extension>,
+            default: () => materialDark
         },
 
         title: {
@@ -80,7 +90,7 @@ export default defineComponent({
             state: EditorState.create({
                 doc: this.content,
                 extensions: [
-                    materialDark,
+                    this.theme,
                     keymap.of([ indentWithTab ]),
                     html(),
                     lint(this),
@@ -145,6 +155,7 @@ export default defineComponent({
             class="cm-wrapper" />
 
         <editor-footer
+            v-if="footer"
             ref="footer"
             v-model="errors"
             :save-button="saveButton"
@@ -175,22 +186,3 @@ export default defineComponent({
         </editor-footer>
     </div>
 </template>
-
-<style>
-.capsule-editor {
-    font-size: 1rem;
-}
-
-.capsule-editor .position-absolute {
-    position: absolute;
-}
-
-.capsule-editor,
-.cm-container,
-.cm-editor,
-.cm-wrapper { height: 100%; }
-.cm-scroller { overflow: auto }
-.cm-editor.cm-focused { outline: none }
-.cm-panels.cm-panels-top { border: none !important; }
-.cm-panels.cm-panels-bottom { border: 1px solid #101114 !important; }
-</style>
