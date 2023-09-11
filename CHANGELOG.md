@@ -1,3 +1,10 @@
+# [2.0.0-beta.15](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2023-09-11)
+
+
+### Bug Fixes
+
+* more template changes ([557b4d4](https://github.com/ActiveEngagement/capsule-editor/commit/557b4d45db2bffa18c4c0a874020363c9e065144))
+
 # [2.0.0-beta.14](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2023-09-11)
 
 
