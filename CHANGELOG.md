@@ -1,3 +1,10 @@
+# [2.0.0-beta.10](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2023-09-11)
+
+
+### Bug Fixes
+
+* removed outline from focus ([bfcfed7](https://github.com/ActiveEngagement/capsule-editor/commit/bfcfed77795786a466690e1273e6d5351e0345ee))
+
 # [2.0.0-beta.9](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2023-09-11)
 
 
