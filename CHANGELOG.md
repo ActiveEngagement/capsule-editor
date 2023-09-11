@@ -1,3 +1,10 @@
+# [2.0.0-beta.12](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2023-09-11)
+
+
+### Bug Fixes
+
+* attempting to use peer deps instead for [@codemirror](https://github.com/codemirror) ([9f354b5](https://github.com/ActiveEngagement/capsule-editor/commit/9f354b5e189ede7dad8e00e9de59936bfd88a81d))
+
 # [2.0.0-beta.11](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2023-09-11)
 
 
