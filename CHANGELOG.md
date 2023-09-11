@@ -1,3 +1,10 @@
+# [2.0.0-beta.11](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2023-09-11)
+
+
+### Bug Fixes
+
+* updated capsule lint ([c743c45](https://github.com/ActiveEngagement/capsule-editor/commit/c743c453bc5812e199fae539fef59a043fe8c4b7))
+
 # [2.0.0-beta.10](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2023-09-11)
 
 
