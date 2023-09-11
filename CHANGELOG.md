@@ -1,3 +1,15 @@
+# [2.0.0-beta.8](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2023-09-11)
+
+
+### Bug Fixes
+
+* export name and js issues ([3267940](https://github.com/ActiveEngagement/capsule-editor/commit/3267940e0ea3cb8d4e8ec102360010b522d0a47b))
+
+
+### Features
+
+* added ability to change theme and watch for theme prop changes ([84d3fab](https://github.com/ActiveEngagement/capsule-editor/commit/84d3fabab4ec026f68140c789b8b9d979cd3578c))
+
 # [2.0.0-beta.7](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2023-09-10)
 
 
