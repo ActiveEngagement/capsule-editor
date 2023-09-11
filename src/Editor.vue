@@ -119,6 +119,9 @@ export default defineComponent({
                 EditorView.theme({
                     '&': {
                         height: '100%'
+                    },
+                    '&.cm-focused': {
+                        outline: 'none'
                     }
                 }),
             ].filter(value => !!value);
