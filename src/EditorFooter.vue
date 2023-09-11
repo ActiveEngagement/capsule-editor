@@ -163,8 +163,7 @@ defineExpose({
                                 <div>
                                     <BtnDropdown
                                         label="Fix Errors"
-                                        size="sm"
-                                        button-class="btn-primary"
+                                        button-class="btn-sm btn-primary"
                                         dropup>
                                         <button
                                             v-for="(action, i) in currentDiagnostic.actions"
