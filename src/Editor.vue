@@ -1,7 +1,7 @@
 <script lang="ts">
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { EditorSelection, EditorState, Extension, StateEffect } from '@codemirror/state';
+import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup } from 'codemirror';
@@ -68,7 +68,10 @@ export default defineComponent({
         'save'
     ],
     data() {
+        const themeConfig = new Compartment();
+        
         return {
+            themeConfig,
             errors: [],
             hasDismissedFinishPopup: false,
             showFinishModal: false,
@@ -78,7 +81,7 @@ export default defineComponent({
     watch: {
         theme() {
             this.view.dispatch({
-                effects: StateEffect.reconfigure.of(this.extensions())
+                effects: this.themeConfig.reconfigure([this.theme])
             });
         },
         errors(value, oldErrors) {
@@ -102,7 +105,8 @@ export default defineComponent({
     methods: {
         extensions() {
             return [
-                this.theme,
+                this.themeConfig.of([ this.theme ]),
+                // this.theme,
                 keymap.of([ indentWithTab ]),
                 html(),
                 this.footer && lint(this),
