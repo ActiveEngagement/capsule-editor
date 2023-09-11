@@ -48,8 +48,8 @@ dependencies:
     specifier: ^2.0.0-beta.0
     version: 2.0.0-beta.5(vue@3.3.4)
   capsule-lint:
-    specifier: ^0.3.0
-    version: 0.3.0(@lezer/common@1.0.4)
+    specifier: ^0.3.1
+    version: 0.3.1
   cm6-theme-material-dark:
     specifier: ^0.2.0
     version: 0.2.0(@codemirror/language@6.9.0)(@codemirror/state@6.2.1)(@codemirror/view@6.18.0)(@lezer/highlight@1.1.6)
@@ -1832,18 +1832,12 @@ packages:
       upper-case-first: 2.0.2
     dev: true
 
-  /capsule-lint@0.3.0(@lezer/common@1.0.4):
-    resolution: {integrity: sha512-PSRms9gv3YCVOzxhBnfW8nvoI2AwOkegcBzarROtdiPRULi6D8nhMGeDCTtLsUN/um7ecBkF/LcdJhgqVxDkMQ==}
+  /capsule-lint@0.3.1:
+    resolution: {integrity: sha512-H/bUX6lHcSsg4/ojefk+piTYExsCmDvI5GTwSrDH2apFgV0nHUTkmkiEZr2XZeTmEeb96njFA8ey4heLPlTVcA==}
     hasBin: true
     dependencies:
-      '@codemirror/language': 6.9.0
-      '@codemirror/lint': 6.4.1
-      '@codemirror/state': 6.2.1
-      '@codemirror/view': 6.18.0
-      codemirror: 6.0.1(@lezer/common@1.0.4)
       htmlhint: 1.1.4
     transitivePeerDependencies:
-      - '@lezer/common'
       - encoding
     dev: false
 
