@@ -1,3 +1,10 @@
+# [2.0.0-beta.14](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2023-09-11)
+
+
+### Bug Fixes
+
+* more editor css issues ([3ba3e49](https://github.com/ActiveEngagement/capsule-editor/commit/3ba3e49265fca375885270965bb00084f829409f))
+
 # [2.0.0-beta.13](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2023-09-11)
 
 
