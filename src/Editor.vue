@@ -123,6 +123,9 @@ export default defineComponent({
                     },
                     '&.cm-focused': {
                         outline: 'none'
+                    },
+                    '.cm-panels.cm-panels-bottom': {
+                        border: 'none !important'
                     }
                 }),
             ].filter(value => !!value);

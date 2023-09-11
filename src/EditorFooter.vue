@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
     view?: EditorView
 }>(), {
     saveButton: true,
-    saveButtonLabel: 'Save Changes',
+    saveButtonLabel: 'Save',
     view: undefined
 });
 
