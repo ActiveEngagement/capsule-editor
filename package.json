@@ -55,6 +55,8 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "autoprefixer": "^10.4.15",
     "change-case": "^4.1.2",
+    "cm6-theme-basic-dark": "^0.2.0",
+    "cm6-theme-basic-light": "^0.2.0",
     "commitlint": "^17.7.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.48.0",

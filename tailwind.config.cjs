@@ -7,9 +7,6 @@ module.exports = {
     theme: {
         extend: {},
     },
-    presets: [
-        require('./tailwindcss')
-    ],
     plugins: [
         require('@vue-interface/btn/tailwindcss')(),
         require('@vue-interface/dropdown-menu/tailwindcss')

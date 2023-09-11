@@ -1,7 +1,7 @@
 <script lang="ts">
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { EditorSelection, EditorState, Extension } from '@codemirror/state';
+import { EditorSelection, EditorState, Extension, StateEffect } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup } from 'codemirror';
@@ -76,6 +76,11 @@ export default defineComponent({
         };
     },
     watch: {
+        theme() {
+            this.view.dispatch({
+                effects: StateEffect.reconfigure.of(this.extensions())
+            });
+        },
         errors(value, oldErrors) {
             if(!value.length && oldErrors.length) {
                 this.$emit('fixed-errors');
@@ -89,24 +94,31 @@ export default defineComponent({
             ],
             state: EditorState.create({
                 doc: this.content,
-                extensions: [
-                    this.theme,
-                    keymap.of([ indentWithTab ]),
-                    html(),
-                    this.footer && lint(this),
-                    EditorView.lineWrapping,
-                    EditorView.updateListener.of(view => {
-                        if(view.docChanged) {
-                            this.$emit('update:content', view.state.doc.toString());
-                        }
-                    })
-                ].filter(value => !!value)
+                extensions: this.extensions()
             }),
             parent: this.$refs.wrapper
         });
     },
     methods: {
-       
+        extensions() {
+            return [
+                this.theme,
+                keymap.of([ indentWithTab ]),
+                html(),
+                this.footer && lint(this),
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(view => {
+                    if(view.docChanged) {
+                        this.$emit('update:content', view.state.doc.toString());
+                    }
+                }),
+                EditorView.theme({
+                    '&': {
+                        height: '100%'
+                    }
+                }),
+            ].filter(value => !!value);
+        },  
         onGoto({ from, to }: { from: number, to:number }) {
             this.view.dispatch({ 
                 selection: EditorSelection.create([
@@ -117,8 +129,7 @@ export default defineComponent({
             });
             
             this.view.focus();
-        },
-    
+        },    
         onSave() {
             this.$emit('save');
         }
@@ -152,7 +163,7 @@ export default defineComponent({
 
         <div
             ref="wrapper"
-            class="cm-wrapper" />
+            class="cm-wrapper h-full w-full" />
 
         <editor-footer
             v-if="footer"

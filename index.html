@@ -13,11 +13,23 @@
     </head>
     <body>
         <div id="app">
-            <editor v-model:filename="filename" v-model:content="content" :toolbar="true" :footer="false" />
+            <select v-model="theme">
+                <option>basic-light</option>
+                <option>basic-dark</option>
+            </select>
+            <editor
+                v-model:filename="filename"
+                v-model:content="content"
+                :toolbar="false"
+                :footer="false"
+                :theme="currentTheme"
+                class="h-full" />
         </div>
         
         <script type="module">
             import './index.css';
+            import { basicLight } from 'cm6-theme-basic-light';
+            import { basicDark } from 'cm6-theme-basic-dark';
             import { createApp, ref } from 'vue/dist/vue.esm-bundler.js';
             import { Editor } from './index.ts';
 
@@ -41,16 +53,26 @@ const content = `<!DOCTYPE html>
 
 </html>
 `;
-  
+            const themes = {
+                'basic-light': basicLight,
+                'basic-dark': basicDark
+            }
+
+            const theme = ref('basic-light');
+
             const vue = createApp({
                 components: {
                     Editor
                 },
                 computed: {
-                    content: () => content
+                    content: () => content,
+                    currentTheme: () => {
+                        return themes[theme.value];
+                    }
                 },
                 setup() {
                     return {
+                        theme,
                         filename: ref('test.html'),
                         content: ref(content),
                     }
