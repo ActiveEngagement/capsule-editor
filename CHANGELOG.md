@@ -1,3 +1,10 @@
+# [2.0.0-beta.9](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2023-09-11)
+
+
+### Bug Fixes
+
+* optimized last release ([e83cea9](https://github.com/ActiveEngagement/capsule-editor/commit/e83cea91654017e37a2a8bb618bb6c98670bd6ab))
+
 # [2.0.0-beta.8](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2023-09-11)
 
 
