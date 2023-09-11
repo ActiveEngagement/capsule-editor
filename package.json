@@ -24,15 +24,6 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@heroicons/vue": "^2.0.13",
-    "@vue-interface/animate-css": "^2.0.0-beta.0",
-    "@vue-interface/btn": "^3.0.0-beta.19",
-    "@vue-interface/btn-dropdown": "^2.0.0-beta.0",
-    "@vue-interface/slide-deck": "^2.0.0-beta.0",
-    "capsule-lint": "^0.3.1",
-    "vue": "^3.0.0"
-  },
-  "dependencies": {
     "@codemirror/autocomplete": "^6.9.0",
     "@codemirror/commands": "^6.2.5",
     "@codemirror/lang-css": "^6.2.1",
@@ -42,7 +33,16 @@
     "@codemirror/lint": "^6.4.1",
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.18.0",
+    "@heroicons/vue": "^2.0.13",
+    "@vue-interface/animate-css": "^2.0.0-beta.0",
+    "@vue-interface/btn": "^3.0.0-beta.19",
+    "@vue-interface/btn-dropdown": "^2.0.0-beta.0",
+    "@vue-interface/slide-deck": "^2.0.0-beta.0",
+    "capsule-lint": "^0.3.1",
     "cm6-theme-material-dark": "^0.2.0",
+    "vue": "^3.0.0"
+  },
+  "dependencies": {
     "codemirror": "^6.0.1"
   },
   "devDependencies": {
@@ -59,7 +59,7 @@
     "cm6-theme-basic-light": "^0.2.0",
     "commitlint": "^17.7.1",
     "dotenv": "^16.3.1",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "husky": "^8.0.3",
     "pascalcase": "^2.0.0",
