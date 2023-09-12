@@ -119,10 +119,13 @@ export default defineComponent({
                 EditorView.theme({
                     '&': {
                         width: '100%',
-                        height: '100%'
+                        height: '100%',
                     },
                     '&.cm-focused': {
                         outline: 'none'
+                    },
+                    '.cm-editor': {
+                        'padding-bottom': '4em'
                     },
                     '.cm-panels.cm-panels-bottom': {
                         border: 'none !important'
