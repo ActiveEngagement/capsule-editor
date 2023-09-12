@@ -1,3 +1,10 @@
+# [2.0.0-beta.16](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2023-09-12)
+
+
+### Bug Fixes
+
+* added padding bottom to editor ([d317fe5](https://github.com/ActiveEngagement/capsule-editor/commit/d317fe54ac8f31a4b643adc26ec8908d61c9d0eb))
+
 # [2.0.0-beta.15](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2023-09-11)
 
 
