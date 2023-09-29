@@ -113,7 +113,7 @@ defineExpose({
             :duration="200">
             <div
                 v-if="hasLinted"
-                class="flex justify-between items-center w-full p-[.33rem]">
+                class="flex justify-between items-center w-full px-2 py-[.33rem]">
                 <div class="flex items-center w-full overflow-hidden relative gap-4">
                     <div class="flex-shrink-0">
                         <div
