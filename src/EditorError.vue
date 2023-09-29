@@ -27,13 +27,13 @@ export default defineComponent({
 </script>
 
 <template>
-    <code class="flex items-center">
+    <code class="flex items-center text-sm">
         <span class="mr-3">{{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }}</span>
         <a
             :href="url"
             target="_blank"
             class="btn btn-sm btn-link">
-            Reference <ArrowTopRightOnSquareIcon class="w-6 h-6 mb-1" />
+            <ArrowTopRightOnSquareIcon class="w-6 h-6 mb-1" />
         </a>
     </code>    
 </template>

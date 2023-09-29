@@ -116,15 +116,17 @@ defineExpose({
                 class="flex justify-between items-center w-full p-[.33rem]">
                 <div class="flex items-center w-full overflow-hidden relative gap-4">
                     <div class="flex-shrink-0">
-                        <div v-if="diagnostics?.length" class="flex items-center justify-center gap-2">
+                        <div
+                            v-if="diagnostics?.length"
+                            class="flex items-center justify-center gap-2">
                             <btn
-                                class="btn btn-secondary"
+                                class="btn-sm btn-secondary"
                                 @click="goto(index - 1)">
                                 <ChevronLeftIcon class="w-4 h-4" />
                             </btn> 
                             <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
                             <btn
-                                class="btn btn-secondary"
+                                class="btn-sm btn-secondary"
                                 @click="goto(index + 1)">
                                 <ChevronRightIcon class="w-4 h-4" />
                             </btn>
@@ -137,15 +139,15 @@ defineExpose({
                         <ExclamationTriangleIcon
                             class="w-6 h-6" />
                     </button>
-                        <animate-css
-                            name="fade"
-                            :duration="200"
-                            leave-active-class="absolute">
-                            <EditorError
-                                v-if="currentDiagnostic"
-                                :key="index"
-                                :error="currentDiagnostic" />
-                        </animate-css>
+                    <animate-css
+                        name="fade"
+                        :duration="200"
+                        leave-active-class="absolute">
+                        <EditorError
+                            v-if="currentDiagnostic"
+                            :key="index"
+                            :error="currentDiagnostic" />
+                    </animate-css>
                 </div>
                 <div class="editor-footer-action flex-shrink-0">
                     <slot name="before-save-button" />
