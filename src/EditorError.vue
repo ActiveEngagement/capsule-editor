@@ -32,8 +32,8 @@ export default defineComponent({
         <a
             :href="url"
             target="_blank"
-            class="btn btn-sm btn-link ml-2 mr-2">
-            <ArrowTopRightOnSquareIcon class="w-6 h-6 mb-1" />
+            class="btn btn-sm btn-link ml-1 mr-3">
+            <ArrowTopRightOnSquareIcon class="w-4 h-4" />
         </a>
     </code>    
 </template>
