@@ -28,11 +28,11 @@ export default defineComponent({
 
 <template>
     <code class="flex items-center text-sm">
-        <span class="mr-3">{{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }}</span>
+        <span>{{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }}</span>
         <a
             :href="url"
             target="_blank"
-            class="btn btn-sm btn-link">
+            class="btn btn-sm btn-link ml-2 mr-2">
             <ArrowTopRightOnSquareIcon class="w-6 h-6 mb-1" />
         </a>
     </code>    
