@@ -1,3 +1,10 @@
+# [2.0.0-beta.20](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.19...v2.0.0-beta.20) (2023-09-29)
+
+
+### Bug Fixes
+
+* css updates ([a09ec37](https://github.com/ActiveEngagement/capsule-editor/commit/a09ec3763866893e65b1d0c068e574a4713717f5))
+
 # [2.0.0-beta.19](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.18...v2.0.0-beta.19) (2023-09-29)
 
 
