@@ -1,3 +1,10 @@
+# [2.0.0-beta.23](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2023-10-03)
+
+
+### Features
+
+* added scroll past end so footer never will hide content ([b535aac](https://github.com/ActiveEngagement/capsule-editor/commit/b535aac98e54f5795beb91b548b83a5851bcc87c))
+
 # [2.0.0-beta.22](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2023-10-03)
 
 
