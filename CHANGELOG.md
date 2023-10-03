@@ -1,3 +1,10 @@
+# [2.0.0-beta.22](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2023-10-03)
+
+
+### Features
+
+* added line numbers and errors to gutters ([13fa69b](https://github.com/ActiveEngagement/capsule-editor/commit/13fa69b058e9343cdf27ece2a4b25fc719850f1f))
+
 # [2.0.0-beta.21](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.20...v2.0.0-beta.21) (2023-09-29)
 
 
