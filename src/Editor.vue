@@ -2,9 +2,9 @@
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
-import { keymap } from '@codemirror/view';
+import { keymap, lineNumbers } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
-import { EditorView, basicSetup } from 'codemirror';
+import { EditorView, basicSetup, } from 'codemirror';
 import { PropType, defineComponent } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
@@ -107,6 +107,7 @@ export default defineComponent({
             return [
                 this.themeConfig.of([ this.theme ]),
                 // this.theme,
+                lineNumbers(),
                 keymap.of([ indentWithTab ]),
                 html(),
                 this.footer && lint(this),
@@ -129,6 +130,17 @@ export default defineComponent({
                     },
                     '.cm-panels.cm-panels-bottom': {
                         border: 'none !important'
+                    },
+                    '.cm-gutter-error': {
+                        display: 'flex',
+                        height: '100%',
+                        alignItems: 'center',
+                    },
+                    '.cm-gutter-error > div': {
+                        width: '8px',
+                        height: '8px',
+                        background: 'red',
+                        borderRadius: '100%',
                     }
                 }),
             ].filter(value => !!value);

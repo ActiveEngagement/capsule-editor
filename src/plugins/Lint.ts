@@ -1,6 +1,6 @@
 import { Diagnostic, linter } from '@codemirror/lint';
-import { StateEffect, StateField } from '@codemirror/state';
-import { Decoration, EditorView, WidgetType, showPanel } from '@codemirror/view';
+import { RangeSet, StateEffect, StateField } from '@codemirror/state';
+import { Decoration, EditorView, GutterMarker, WidgetType, gutter, showPanel } from '@codemirror/view';
 import { lint } from 'capsule-lint';
 import actions from '../actions';
 
@@ -126,6 +126,31 @@ class LintState {
 
 const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
+
+const emptyMarker = new class extends GutterMarker {
+    toDOM() { 
+        const el = document.createElement('div');
+
+        el.append(document.createElement('div'));
+        
+        el.classList.add('cm-gutter-error');
+
+        return el;
+    }
+};
+  
+const emptyLineGutter = gutter({
+    markers(view) {
+        const diagnostics: Diagnostic[] = view.state.field(lintState).diagnostics;
+
+        return RangeSet.of(diagnostics.map(({ from }) => {
+            const line = view.state.doc.lineAt(from);
+
+            return ({ from: line.from, to: line.to, value: emptyMarker });
+        }));
+    }
+});
+
 const lintState = StateField.define({
     create() {
         return new LintState(Decoration.none);
@@ -170,8 +195,8 @@ const lintState = StateField.define({
             
                 view.dispatch({
                     effects: setDiagnosticsEffect.of(diagnostics)
-                });
-            
+                });  
+                
                 return diagnostics;
             }),
             EditorView.decorations.from(field, state => state.decorations),
@@ -179,7 +204,7 @@ const lintState = StateField.define({
                 if(event.docChanged) {
                     event.state.field(lintState).sync(event.view.state);
                 }
-            })
+            }),
         ];
     }
 });
@@ -187,6 +212,7 @@ const lintState = StateField.define({
 export default function(parent: any) {
     return [
         lintState,
+        emptyLineGutter,
         showPanel.of(() => {
             return {
                 bottom: true,
