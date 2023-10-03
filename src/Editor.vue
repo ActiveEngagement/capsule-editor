@@ -2,7 +2,7 @@
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
-import { keymap, lineNumbers } from '@codemirror/view';
+import { keymap, lineNumbers, scrollPastEnd } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
 import { PropType, defineComponent } from 'vue';
@@ -107,6 +107,7 @@ export default defineComponent({
             return [
                 this.themeConfig.of([ this.theme ]),
                 // this.theme,
+                scrollPastEnd(),
                 lineNumbers(),
                 keymap.of([ indentWithTab ]),
                 html(),
