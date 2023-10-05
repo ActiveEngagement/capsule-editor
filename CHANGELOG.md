@@ -1,3 +1,10 @@
+# [2.0.0-beta.24](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.23...v2.0.0-beta.24) (2023-10-05)
+
+
+### Bug Fixes
+
+* editor scroll issue ([d1d60f3](https://github.com/ActiveEngagement/capsule-editor/commit/d1d60f3d3f699f374de1e3086f7d7ccc3d61b143))
+
 # [2.0.0-beta.23](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2023-10-03)
 
 
