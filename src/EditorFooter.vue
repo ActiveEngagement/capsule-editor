@@ -114,7 +114,7 @@ defineExpose({
             <div
                 v-if="hasLinted"
                 class="flex justify-between items-center w-full px-2 py-[.33rem]">
-                <div class="flex items-center w-full overflow-hidden relative gap-4">
+                <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
                     <div class="flex-shrink-0">
                         <div
                             v-if="diagnostics?.length"

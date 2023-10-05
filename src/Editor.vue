@@ -2,7 +2,7 @@
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
-import { keymap, lineNumbers, scrollPastEnd } from '@codemirror/view';
+import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
 import { PropType, defineComponent } from 'vue';
@@ -103,11 +103,29 @@ export default defineComponent({
         });
     },
     methods: {
+
         extensions() {
+            const t = this;
+
+            const plugin = ViewPlugin.fromClass(class {
+                height = '0px';
+                attrs = { style: 'padding-bottom: 0' };
+
+                update() {
+                    const height = getComputedStyle(t.$el.querySelector('footer')).height;
+
+                    this.height = height;
+                    
+                    this.attrs = {
+                        style: `padding-bottom: ${height}`
+                    };
+                }
+            });
+
             return [
                 this.themeConfig.of([ this.theme ]),
-                // this.theme,
-                scrollPastEnd(),
+                plugin,
+                EditorView.contentAttributes.of(view => view.plugin(plugin)?.attrs || null),
                 lineNumbers(),
                 keymap.of([ indentWithTab ]),
                 html(),
