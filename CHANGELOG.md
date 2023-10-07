@@ -1,3 +1,10 @@
+# [2.0.0-beta.25](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.24...v2.0.0-beta.25) (2023-10-07)
+
+
+### Features
+
+* added search/replace keybindings ([5198acd](https://github.com/ActiveEngagement/capsule-editor/commit/5198acd0d9851caece25ef69d0076438e2cf6ca9))
+
 # [2.0.0-beta.24](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.23...v2.0.0-beta.24) (2023-10-05)
 
 
