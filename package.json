@@ -43,6 +43,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
+    "@codemirror/search": "^6.5.4",
     "codemirror": "^6.0.1"
   },
   "devDependencies": {

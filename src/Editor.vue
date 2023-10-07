@@ -1,6 +1,7 @@
 <script lang="ts">
 import { indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
+import { search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
@@ -127,7 +128,10 @@ export default defineComponent({
                 plugin,
                 EditorView.contentAttributes.of(view => view.plugin(plugin)?.attrs || null),
                 lineNumbers(),
-                keymap.of([ indentWithTab ]),
+                search(),
+                // highlightSelectionMatches(),
+                keymap.of(searchKeymap),
+                keymap.of([ indentWithTab  ]),
                 html(),
                 this.footer && lint(this),
                 EditorView.lineWrapping,
