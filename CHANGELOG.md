@@ -1,3 +1,10 @@
+# [2.0.0-beta.26](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.25...v2.0.0-beta.26) (2023-10-09)
+
+
+### Bug Fixes
+
+* updated package.json ([c25cac1](https://github.com/ActiveEngagement/capsule-editor/commit/c25cac175a49dad3d6ab43d02916a1a0d41c6340))
+
 # [2.0.0-beta.25](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.24...v2.0.0-beta.25) (2023-10-07)
 
 
