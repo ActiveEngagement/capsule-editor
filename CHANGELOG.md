@@ -1,3 +1,10 @@
+# [2.0.0-beta.27](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2023-10-30)
+
+
+### Bug Fixes
+
+* issue with closing tag pairs ([33c7bcb](https://github.com/ActiveEngagement/capsule-editor/commit/33c7bcb8a77bab505237d05073864ea34d454313))
+
 # [2.0.0-beta.26](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.25...v2.0.0-beta.26) (2023-10-09)
 
 
