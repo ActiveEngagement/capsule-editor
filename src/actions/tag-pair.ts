@@ -1,24 +1,41 @@
 import { syntaxTree } from '@codemirror/language';
-import { Action } from '@codemirror/lint';
+import { Action, } from '@codemirror/lint';
 import { EditorView } from '@codemirror/view';
+import { SyntaxNodeRef } from '@lezer/common';
 
 class Element {
+    public node: SyntaxNodeRef;
+    public parent?: Element;
+    // public closed: boolean;
     public tagName?: string;
-    public closed: boolean;
+    public name: string;
+    public from: number;
+    public to: number;
+    public isError: boolean;
+    public children: Element[];
 
-    constructor(
-        public readonly view: EditorView,        
-        public readonly from: number,
-        public readonly to: number,
-    ) {
-        this.from = from;
-        this.to = to;
-        this.tagName = tagName(view, from, to);
-        this.closed = false;
+    constructor(view: EditorView, node: SyntaxNodeRef, parent?: Element, children: Element[] = []) {
+        this.node = node;
+        this.name = node.type.name;
+        this.parent = parent;
+        this.isError = node.type.name === '⚠';
+        this.children = children;
+        this.from = node.from;
+        this.to = node.to;
+        this.tagName = tagName(view, this.from, this.to);
+        // this.closed = node.type.name === 'Element' ? false : true;
     }
 
-    is(tagName: string) {
-        return this.tagName?.toLowerCase() === tagName.toLowerCase();
+    fix(view: EditorView, at: Element) {
+        view.dispatch({
+            changes: {
+                from: at.from,
+                to: at.from,
+                insert: `</${this.tagName}>`
+            }
+        });
+
+        // this.closed = true;
     }
 }
 
@@ -28,85 +45,102 @@ function tagName(view: EditorView, from?: number, to?: number) {
         .match(/^<\/?(?:\s+)?(\w+)/)?.[1];
 }
 
-function changes(view: EditorView, from?: number, to?: number) {
-    let lastElement: Element;
-    let pos: number;
+// function changes(view: EditorView, from?: number, to?: number) {
+//     const elements = stack(view, from, to);
 
-    const stack: Element[] = [];
+//     const element = elements.filter(element => !element.closed).pop();
 
-    const tree = syntaxTree(view.state);
+//     if(!element) {
+//         return;
+//     }
 
-    tree.iterate({
+//     return {
+//         from: element.from,
+//         to: element.to,
+//         insert: `</${element.tagName}>`
+//     };
+// }
+
+function stack(view: EditorView, from?: number, to?: number): [Element|undefined, Element|undefined] {
+    let root: Element|undefined = undefined;
+    let current: Element|undefined = undefined;
+    
+    syntaxTree(view.state).iterate({
         from,
         to,
         enter(node) {
-            if(node.type.name === 'Element') {
-                stack.push(lastElement = new Element(view, node.from, node.to));
+            const element = new Element(view, node, current);
+
+            if(!root) {
+                root = current;
             }
-            else if(node.type.name === 'SelfClosingTag') {
-                stack.splice(stack.indexOf(lastElement), 1);
+
+            if(current) {
+                current.children.push(element);
             }
+            
+            current = element;            
         },
-        leave(node) {
-            if(node.type.name === 'CloseTag') {
-                for(pos = stack.length - 1; pos >= 0; pos--) {
-                    const tag = tagName(view, node.from, node.to);
-
-                    console.log(stack[pos], pos, tag);
-                    
-                    if(!tag) {
-                        continue;
-                    }
-
-                    if(!stack[pos].closed && stack[pos].is(tag)) {
-                        console.log('closed', tag);
-                        
-                        stack[pos].closed = true;
-    
-                        break;
-                    }
-                }
-            }
+        leave() {
+            current = current?.parent;
         }
     });
 
-    console.log(stack);
+    return [root, root ? findFirstError(root) : undefined];
+}
+
+function findFirstError(el: Element): Element|undefined {
+    if(el.isError) {
+        return el;
+    }
     
-    return stack.filter(element => !element.closed)
-        .reverse()
-        .map(({ to, tagName }) => ({
-            from: to,
-            to: to,
-            insert: `</${tagName}>`
-        }));
+    for(const child of el.children) {
+        const error = findFirstError(child);
+
+        if(error) {
+            return error;
+        }
+    }
+
+    return;
+}
+
+function findFirstUnclosedAncestor(el?: Element): Element | undefined {
+    if(!el) {
+        return;
+    }
+
+    if(el.name === 'Element') {
+        return el;
+    }
+
+    return findFirstUnclosedAncestor(el.parent);
+}
+
+function fix(view: EditorView, from: number, to: number): [Element|undefined, Element|undefined]  {
+    const [ root, error ] = stack(view, from, to);
+
+    if(!root || !error) {
+        return [undefined, undefined];
+    }
+        
+    const element = findFirstUnclosedAncestor(error);
+
+    if(!element) {
+        return [undefined, undefined];
+    }
+        
+    element.fix(view, error);
+
+    return stack(view, from, to);
 }
 
 const actions: Action[] = [{
-    name: 'Close Only First Tag',
+    name: 'Close Tag',
     apply(view: EditorView, from: number, to: number) {
-        let data = [];
-
-        // The purpose of this loop is if the from/to doen't catch the error,
-        // then we should traverse backwards until we find a charge, or reach
-        // the beginning of the document.
-        do {      
-            data = changes(view, from, to);
-
-            from -= 10;
-        }
-        while(from >= 0 && !data.length);
-            
-        view.dispatch({
-            changes: data.slice(0, 1)
-        });
+        fix(view, from, to);
     }
-}, {
-    name: 'Close All Tags',
-    apply(view: EditorView) {
-        view.dispatch({
-            changes: changes(view)
-        });
-    }
-}];
+}
+];
 
 export default actions;
