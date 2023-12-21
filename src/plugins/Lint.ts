@@ -1,7 +1,7 @@
 import { Diagnostic, linter } from '@codemirror/lint';
 import { RangeSet, StateEffect, StateField } from '@codemirror/state';
 import { Decoration, EditorView, GutterMarker, WidgetType, gutter, showPanel } from '@codemirror/view';
-import { lint } from 'capsule-lint';
+import { Hint, lint } from 'capsule-lint';
 import actions from '../actions';
 
 class DiagnosticWidget extends WidgetType {
@@ -126,7 +126,6 @@ class LintState {
 
 const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
-
 const emptyMarker = new class extends GutterMarker {
     toDOM() { 
         const el = document.createElement('div');
@@ -141,12 +140,24 @@ const emptyMarker = new class extends GutterMarker {
   
 const emptyLineGutter = gutter({
     markers(view) {
-        const diagnostics: Diagnostic[] = view.state.field(lintState).diagnostics;
+        const diagnostics = (
+            view.state.field(lintState).diagnostics as (Hint & {from: number})[]
+        ).reduce((carry: (Hint & {from: number})[], diagnostic) => {
+            if(!carry.find(({ line }) => diagnostic.line === line)) {
+                carry.push(diagnostic);
+            }
+
+            return carry;
+        }, []);
 
         return RangeSet.of(diagnostics.map(({ from }) => {
-            const line = view.state.doc.lineAt(from);
+            const line = view.state.doc.lineAt(Math.min(view.state.doc.length, from));
 
-            return ({ from: line.from, to: line.to, value: emptyMarker });
+            return {
+                from: line.from,
+                to: line.to,
+                value: emptyMarker
+            };
         }));
     }
 });
@@ -198,6 +209,8 @@ const lintState = StateField.define({
                 });  
                 
                 return diagnostics;
+            }, {
+                delay: 75  
             }),
             EditorView.decorations.from(field, state => state.decorations),
             EditorView.updateListener.of(event => {
