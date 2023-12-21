@@ -1,3 +1,17 @@
+# [2.0.0-beta.28](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2023-12-21)
+
+
+### Bug Fixes
+
+* issues with tag-pair auto fix not working ([9abbd4d](https://github.com/ActiveEngagement/capsule-editor/commit/9abbd4d0f47130711b0e78b435464744006667c9))
+* lint improvements ([d8098d0](https://github.com/ActiveEngagement/capsule-editor/commit/d8098d0eb8427cd8c598b97e11a5209945816d14))
+
+
+### Features
+
+* added ability to automatically fix html entities inside of attributes ([d81d474](https://github.com/ActiveEngagement/capsule-editor/commit/d81d4740e713a497b93bff341a740cd031d302e9))
+* added ability to automatically remove invalid html children ([09e0505](https://github.com/ActiveEngagement/capsule-editor/commit/09e0505cb829fbc4430f2a5e504ed98955689add))
+
 # [2.0.0-beta.27](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2023-10-30)
 
 
