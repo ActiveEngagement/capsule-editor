@@ -40,7 +40,7 @@
     "@vue-interface/btn": "^3.0.0-beta.19",
     "@vue-interface/btn-dropdown": "^2.0.0-beta.0",
     "@vue-interface/slide-deck": "^2.0.0-beta.0",
-    "capsule-lint": "^0.4.0",
+    "capsule-lint": "^0.4.3",
     "cm6-theme-material-dark": "^0.2.0",
     "codemirror": "^6.0.1",
     "vue": "^3.0.0"
