@@ -28,7 +28,7 @@ export default defineComponent({
 
 <template>
     <code class="flex items-center text-sm">
-        <span>{{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }}</span>
+        <span class="leading-tight text-[.8rem]">{{ error.line }},{{ error.col }} :: ({{ error.rule.id }}) {{ error.message }}</span>
         <a
             :href="url"
             target="_blank"

@@ -2,7 +2,6 @@
 import { Action, Diagnostic, forceLinting } from '@codemirror/lint';
 import { EditorView } from '@codemirror/view';
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
-import { AnimateCss } from '@vue-interface/animate-css';
 import { Btn } from '@vue-interface/btn';
 import { BtnDropdown } from '@vue-interface/btn-dropdown';
 import { Rule } from 'capsule-lint';
@@ -108,9 +107,6 @@ defineExpose({
 <template>
     <footer
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
-        <animate-css
-            name="fade"
-            :duration="200">
             <div
                 v-if="hasLinted"
                 class="flex justify-between items-center w-full px-2 py-[.33rem]">
@@ -124,7 +120,7 @@ defineExpose({
                                 @click="goto(index - 1)">
                                 <ChevronLeftIcon class="w-4 h-4" />
                             </btn> 
-                            <span>{{ index + 1 }} of {{ diagnostics.length }}</span>
+                            <span class="font-mono text-center  min-w-[6rem]">{{ index + 1 }} of {{ diagnostics.length }}</span>
                             <btn
                                 class="btn-sm btn-secondary"
                                 @click="goto(index + 1)">
@@ -139,15 +135,10 @@ defineExpose({
                         <ExclamationTriangleIcon
                             class="w-6 h-6" />
                     </button>
-                    <animate-css
-                        name="fade"
-                        :duration="200"
-                        leave-active-class="absolute">
-                        <EditorError
-                            v-if="currentDiagnostic"
-                            :key="index"
-                            :error="currentDiagnostic" />
-                    </animate-css>
+                    <EditorError
+                        v-if="currentDiagnostic"
+                        :key="index"
+                        :error="currentDiagnostic" />
                 </div>
                 <div class="editor-footer-action flex-shrink-0">
                     <slot name="before-save-button" />
@@ -198,6 +189,5 @@ defineExpose({
                         :diagnostics="diagnostics" />
                 </div>
             </div>
-        </animate-css>
     </footer>
 </template>
