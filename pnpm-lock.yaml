@@ -41,9 +41,6 @@ dependencies:
   '@lezer/common':
     specifier: ^1.1.2
     version: 1.2.1
-  '@vue-interface/animate-css':
-    specifier: ^2.0.0-beta.0
-    version: 2.0.0-beta.0(vue@3.4.15)
   '@vue-interface/btn':
     specifier: ^3.0.0-beta.19
     version: 3.0.0-beta.26(vue@3.4.15)
@@ -1406,16 +1403,6 @@ packages:
       path-browserify: 1.0.1
     dev: true
 
-  /@vue-interface/animate-css@2.0.0-beta.0(vue@3.4.15):
-    resolution: {integrity: sha512-FuUVba36ycIi5WfScrzUUUdX9845avSbgStla5Tb9oT0L768QndhDhGAqMOmP5vVuvuqlK7YjtUhMG71tko/xw==}
-    peerDependencies:
-      vue: ^3.0.0
-    dependencies:
-      animate.css: 4.1.1
-      camel-case: 4.1.2
-      vue: 3.4.15(typescript@5.3.3)
-    dev: false
-
   /@vue-interface/btn-dropdown@2.0.0-beta.12(vue@3.4.15):
     resolution: {integrity: sha512-vZ57IECXSbT0+wQbE7xCv61KAp9uqBfQebYvw7JoYtIOQ6ymZ+ROSkBfbgjyAwhlWJlOoyeu7xS4SFM/Mapx1Q==}
     peerDependencies:
@@ -1659,10 +1646,6 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /animate.css@4.1.1:
-    resolution: {integrity: sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==}
-    dev: false
-
   /ansi-escapes@6.2.0:
     resolution: {integrity: sha512-kzRaCqXnpzWs+3z5ABPQiVke+iq0KXkHo8xiWV4RPTi5Yli0l97BEQuhXV1s7+aSU/fu1kUuxgS4MsQ0fRuygw==}
     engines: {node: '>=14.16'}
@@ -1828,6 +1811,7 @@ packages:
     dependencies:
       pascal-case: 3.1.2
       tslib: 2.6.2
+    dev: true
 
   /camelcase-css@2.0.1:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
@@ -3438,6 +3422,7 @@ packages:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
       tslib: 2.6.2
+    dev: true
 
   /lru-cache@10.2.0:
     resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
@@ -3640,6 +3625,7 @@ packages:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.6.2
+    dev: true
 
   /node-emoji@1.11.0:
     resolution: {integrity: sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==}
@@ -3991,6 +3977,7 @@ packages:
     dependencies:
       no-case: 3.0.4
       tslib: 2.6.2
+    dev: true
 
   /pascalcase@2.0.0:
     resolution: {integrity: sha512-DHpENy5Qm/FaX+x3iBLoMLG/XHNCTgL+yErm1TwuVaj6u4fiOSkYkf60vGtITk7hrKHOO4uCl9vRrD4hqjNKjg==}
@@ -4879,6 +4866,7 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: true
 
   /tsutils@3.21.0(typescript@5.3.3):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
