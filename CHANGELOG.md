@@ -1,3 +1,10 @@
+# [2.0.0-beta.31](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2024-04-15)
+
+
+### Bug Fixes
+
+* fix issue with select all in safari ([2734e25](https://github.com/ActiveEngagement/capsule-editor/commit/2734e255b098df55afbb04f43d6042bfce52f40d))
+
 # [2.0.0-beta.30](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2024-04-15)
 
 
