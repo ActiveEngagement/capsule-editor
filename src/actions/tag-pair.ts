@@ -27,10 +27,13 @@ const actions: Action[] = [{
             tagNode.from, Math.min(tagNode.to, view.state.doc.length)
         );
 
+
         view.dispatch({
             changes: {
-                from, to, insert: `</${tagName}>`
-            }
+                from: nearest.to,
+                to: nearest.to,
+                insert: `</${tagName}>`
+            },
         });
     }
 }

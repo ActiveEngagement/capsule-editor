@@ -1,7 +1,7 @@
 <script lang="ts">
-import { indentWithTab } from '@codemirror/commands';
+import { history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { search, searchKeymap } from '@codemirror/search';
+import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
@@ -129,7 +129,9 @@ export default defineComponent({
                 EditorView.contentAttributes.of(view => view.plugin(plugin)?.attrs || null),
                 lineNumbers(),
                 search(),
-                // highlightSelectionMatches(),
+                history(),
+                keymap.of(historyKeymap),
+                highlightSelectionMatches(),
                 keymap.of(searchKeymap),
                 keymap.of([ indentWithTab  ]),
                 html(),

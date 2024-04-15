@@ -107,87 +107,87 @@ defineExpose({
 <template>
     <footer
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
-            <div
-                v-if="hasLinted"
-                class="flex justify-between items-center w-full px-2 py-[.33rem]">
-                <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
-                    <div class="flex-shrink-0">
-                        <div
-                            v-if="diagnostics?.length"
-                            class="flex items-center justify-center gap-2">
-                            <btn
-                                class="btn-sm btn-secondary"
-                                @click="goto(index - 1)">
-                                <ChevronLeftIcon class="w-4 h-4" />
-                            </btn> 
-                            <span class="font-mono text-center  min-w-[6rem]">{{ index + 1 }} of {{ diagnostics.length }}</span>
-                            <btn
-                                class="btn-sm btn-secondary"
-                                @click="goto(index + 1)">
-                                <ChevronRightIcon class="w-4 h-4" />
-                            </btn>
-                        </div>
-                    </div>
-                    <button
-                        v-if="currentDiagnostic"
-                        type="button"
-                        @click="goto(index)">
-                        <ExclamationTriangleIcon
-                            class="w-6 h-6" />
-                    </button>
-                    <EditorError
-                        v-if="currentDiagnostic"
-                        :key="index"
-                        :error="currentDiagnostic" />
-                </div>
-                <div class="editor-footer-action flex-shrink-0">
-                    <slot name="before-save-button" />
-
-                    <slot name="action-button">
-                        <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
-                            <template v-if="currentDiagnostic.actions.length === 1">
-                                <btn
-                                    class="btn-secondary btn-sm flex items-center gap-2"
-                                    @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
-                                    {{ currentDiagnostic.actions[0].name }}
-                                </btn>
-                            </template>
-                            <template v-else>
-                                <div>
-                                    <BtnDropdown
-                                        label="Fix Errors"
-                                        button-class="btn-sm btn-primary"
-                                        dropup>
-                                        <button
-                                            v-for="(action, i) in currentDiagnostic.actions"
-                                            :key="`${currentDiagnostic.rule.id}-${i}`"
-                                            type="button"
-                                            variant="light"
-                                            @click="onClickAction(currentDiagnostic, action)">
-                                            {{ action.name }}
-                                        </button>
-                                    </BtnDropdown>
-                                </div>
-                            </template>
-                        </template>
-                    </slot>
-
-                    <slot
-                        name="save-button"
-                        :diagnostics="diagnostics"
-                        :save-button-label="diagnostics">
+        <div
+            v-if="hasLinted"
+            class="flex justify-between items-center w-full px-2 py-[.33rem]">
+            <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
+                <div class="flex-shrink-0">
+                    <div
+                        v-if="diagnostics?.length"
+                        class="flex items-center justify-center gap-2">
                         <btn
-                            v-if="saveButton && !diagnostics.length"
-                            class="btn-primary"
-                            @click="emit('save')">
-                            {{ saveButtonLabel }}
+                            class="btn-sm btn-secondary"
+                            @click="goto(index - 1)">
+                            <ChevronLeftIcon class="w-4 h-4" />
+                        </btn> 
+                        <span class="font-mono text-center  min-w-[6rem]">{{ index + 1 }} of {{ diagnostics.length }}</span>
+                        <btn
+                            class="btn-sm btn-secondary"
+                            @click="goto(index + 1)">
+                            <ChevronRightIcon class="w-4 h-4" />
                         </btn>
-                    </slot>
-
-                    <slot
-                        name="after-save-button"
-                        :diagnostics="diagnostics" />
+                    </div>
                 </div>
+                <button
+                    v-if="currentDiagnostic"
+                    type="button"
+                    @click="goto(index)">
+                    <ExclamationTriangleIcon
+                        class="w-6 h-6" />
+                </button>
+                <EditorError
+                    v-if="currentDiagnostic"
+                    :key="index"
+                    :error="currentDiagnostic" />
             </div>
+            <div class="editor-footer-action flex-shrink-0">
+                <slot name="before-save-button" />
+
+                <slot name="action-button">
+                    <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
+                        <template v-if="currentDiagnostic.actions.length === 1">
+                            <btn
+                                class="btn-secondary btn-sm flex items-center gap-2"
+                                @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
+                                {{ currentDiagnostic.actions[0].name }}
+                            </btn>
+                        </template>
+                        <template v-else>
+                            <div>
+                                <BtnDropdown
+                                    label="Fix Errors"
+                                    button-class="btn-sm btn-primary"
+                                    dropup>
+                                    <button
+                                        v-for="(action, i) in currentDiagnostic.actions"
+                                        :key="`${currentDiagnostic.rule.id}-${i}`"
+                                        type="button"
+                                        variant="light"
+                                        @click="onClickAction(currentDiagnostic, action)">
+                                        {{ action.name }}
+                                    </button>
+                                </BtnDropdown>
+                            </div>
+                        </template>
+                    </template>
+                </slot>
+
+                <slot
+                    name="save-button"
+                    :diagnostics="diagnostics"
+                    :save-button-label="diagnostics">
+                    <btn
+                        v-if="saveButton && !diagnostics.length"
+                        class="btn-primary"
+                        @click="emit('save')">
+                        {{ saveButtonLabel }}
+                    </btn>
+                </slot>
+
+                <slot
+                    name="after-save-button"
+                    :diagnostics="diagnostics" />
+            </div>
+        </div>
     </footer>
 </template>
