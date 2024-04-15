@@ -1,3 +1,10 @@
+# [2.0.0-beta.30](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2024-04-15)
+
+
+### Bug Fixes
+
+* issues with linting and fixing closing tags ([b36a54e](https://github.com/ActiveEngagement/capsule-editor/commit/b36a54ed72c09a51812b375f1b990b7c154bcf30))
+
 # [2.0.0-beta.29](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2024-01-30)
 
 
