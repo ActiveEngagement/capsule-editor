@@ -134,6 +134,21 @@ export default defineComponent({
                 highlightSelectionMatches(),
                 keymap.of(searchKeymap),
                 keymap.of([ indentWithTab  ]),
+                keymap.of([
+                    {
+                        key: 'Mod-a',
+                        run: (view) => {
+                            view.dispatch({
+                                selection: {
+                                    anchor: 0,
+                                    head: view.state.doc.length
+                                }
+                            });
+
+                            return true;
+                        },
+                    },
+                ]),
                 html(),
                 this.footer && lint(this),
                 EditorView.lineWrapping,
