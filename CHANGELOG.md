@@ -1,3 +1,11 @@
+# [2.0.0-beta.29](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2024-01-30)
+
+
+### Bug Fixes
+
+* removed footer animations ([64759de](https://github.com/ActiveEngagement/capsule-editor/commit/64759dea005e2ece89ec380934172b083040caeb))
+* updated lock file ([6dafe99](https://github.com/ActiveEngagement/capsule-editor/commit/6dafe994dba1736dd4e3e55b207860e40299ef2a))
+
 # [2.0.0-beta.28](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2023-12-21)
 
 
