@@ -1,3 +1,10 @@
+# [2.0.0-beta.32](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2024-05-01)
+
+
+### Bug Fixes
+
+* typescript definitions ([f1eadbd](https://github.com/ActiveEngagement/capsule-editor/commit/f1eadbd4846995a41c21349ce93d7c9b7fe06f28))
+
 # [2.0.0-beta.31](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2024-04-15)
 
 
