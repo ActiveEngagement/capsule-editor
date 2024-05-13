@@ -1,4 +1,4 @@
-import { Action } from '@codemirror/lint';
+import { Action } from '../plugins/Lint';
 
 const actions: Action[] = [{
     name: 'Remove Attribute',

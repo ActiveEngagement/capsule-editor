@@ -1,5 +1,5 @@
 import { syntaxTree } from '@codemirror/language';
-import { Action } from '@codemirror/lint';
+import type { Action } from '../plugins/Lint';
 
 const actions: Action[] = [{
     name: 'Remove Img',

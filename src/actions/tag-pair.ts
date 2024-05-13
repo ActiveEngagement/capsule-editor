@@ -1,9 +1,12 @@
 import { syntaxTree } from '@codemirror/language';
-import { Action } from '@codemirror/lint';
 import { SyntaxNode } from '@lezer/common';
+import type { Action } from '../plugins/Lint';
 
 const actions: Action[] = [{
     name: 'Close Tag',
+    validate(hint) {
+        return !hint.message.startsWith('Tag must be paired, no start tag');
+    },
     apply(view, from, to) {
         const around: SyntaxNode = syntaxTree(view.state).resolveInner(to, -1);
 
@@ -26,7 +29,6 @@ const actions: Action[] = [{
         const tagName = view.state.doc.sliceString(
             tagNode.from, Math.min(tagNode.to, view.state.doc.length)
         );
-
 
         view.dispatch({
             changes: {
