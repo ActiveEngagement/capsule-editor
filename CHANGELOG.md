@@ -1,3 +1,10 @@
+# [2.0.0-beta.33](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2024-05-13)
+
+
+### Bug Fixes
+
+* fix issue with missing open tags showing a close tag button ([c38bf21](https://github.com/ActiveEngagement/capsule-editor/commit/c38bf211af02f99360b35ef80cdec1aec1e4d227))
+
 # [2.0.0-beta.32](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2024-05-01)
 
 
