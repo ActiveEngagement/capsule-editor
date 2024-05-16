@@ -6,7 +6,7 @@ import { Compartment, EditorSelection, EditorState, Extension } from '@codemirro
 import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
-import { PropType, defineComponent } from 'vue';
+import { PropType, defineComponent, ref } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
 import lint from './plugins/Lint';
@@ -70,8 +70,10 @@ export default defineComponent({
     ],
     data() {
         const themeConfig = new Compartment();
+        const currentContent = ref(this.content);
         
         return {
+            currentContent,
             themeConfig,
             errors: [],
             hasDismissedFinishPopup: false,
@@ -80,6 +82,19 @@ export default defineComponent({
         };
     },
     watch: {
+        content(value, oldValue) {
+            if(value !== this.currentContent) {
+                this.currentContent = value;
+                
+                this.view.dispatch({
+                    changes: {
+                        from: 0, 
+                        to: this.view.state.doc.length, 
+                        insert: value 
+                    }
+                });
+            }
+        },
         theme() {
             this.view.dispatch({
                 effects: this.themeConfig.reconfigure([this.theme])
@@ -97,8 +112,8 @@ export default defineComponent({
                 basicSetup
             ],
             state: EditorState.create({
-                doc: this.content,
-                extensions: this.extensions()
+                doc: this.currentContent,
+                extensions: this.extensions(),
             }),
             parent: this.$refs.wrapper
         });
@@ -151,10 +166,14 @@ export default defineComponent({
                 ]),
                 html(),
                 this.footer && lint(this),
+                // EditorView.updateListener.of(() => {
+                //     console.log('update')
+                // }),
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(view => {
-                    if(view.docChanged) {
-                        this.$emit('update:content', view.state.doc.toString());
+                    if(view.docChanged && view.state.doc.toString() !== this.currentContent) {
+                        this.currentContent = view.state.doc.toString()
+                        this.$emit('update:content', this.currentContent);                        
                     }
                 }),
                 EditorView.theme({
@@ -216,14 +235,14 @@ export default defineComponent({
                     name="toolbar-left"
                     :errors="errors"
                     :filename="filename"
-                    :content="content" />
+                    :content="currentContent" />
             </template>
             <template #right>
                 <slot
                     name="toolbar-right"
                     :errors="errors"
                     :filename="filename"
-                    :content="content" />
+                    :content="currentContent" />
             </template>
         </editor-toolbar>
 
@@ -244,21 +263,21 @@ export default defineComponent({
                     name="before-save-button"
                     :errors="errors"
                     :filename="filename"
-                    :content="content" />
+                    :content="currentContent" />
             </template>
             <template #save-button>
                 <slot
                     name="save-button"
                     :errors="errors"
                     :filename="filename"
-                    :content="content" />
+                    :content="currentContent" />
             </template>
             <template #after-save-button>
                 <slot
                     name="after-save-button"
                     :errors="errors"
                     :filename="filename"
-                    :content="content" />
+                    :content="currentContent" />
             </template>
         </editor-footer>
     </div>

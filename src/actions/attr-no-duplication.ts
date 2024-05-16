@@ -1,4 +1,4 @@
-import { Action } from '../plugins/Lint';
+import type { Action } from '../plugins/Lint';
 
 const actions: Action[] = [{
     name: 'Remove Attribute',

@@ -17,11 +17,16 @@
 
 <body>
     <div id="app" class="h-full flex flex-col overflow-hidden">
+        <textarea v-model="content"></textarea>
         <select v-model="theme">
             <option>basic-light</option>
             <option>basic-dark</option>
         </select>
-        <editor v-model:filename="filename" v-model:content="content" :toolbar="false" :theme="currentTheme"
+        <editor
+            v-model:filename="filename"
+            v-model:content="content"
+            :toolbar="false"
+            :theme="currentTheme"
             class="h-full" />
     </div>
 
