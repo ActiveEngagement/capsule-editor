@@ -1,3 +1,10 @@
+# [2.0.0-beta.34](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2024-05-16)
+
+
+### Bug Fixes
+
+* improved change callback to only change when the editor is changed by the user ([6fff903](https://github.com/ActiveEngagement/capsule-editor/commit/6fff9034d80d6074d2dc095f0a29e7c2f4f8a6a3))
+
 # [2.0.0-beta.33](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2024-05-13)
 
 
