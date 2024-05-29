@@ -23,7 +23,7 @@
     "build": "vite build && vue-tsc",
     "preview": "vite preview"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@codemirror/autocomplete": "^6.9.0",
     "@codemirror/commands": "^6.2.5",
     "@codemirror/lang-css": "^6.2.1",
