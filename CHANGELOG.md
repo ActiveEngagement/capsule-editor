@@ -1,3 +1,10 @@
+# [2.0.0-beta.37](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2024-05-29)
+
+
+### Bug Fixes
+
+* more fixes to peer deps ([c7b7c22](https://github.com/ActiveEngagement/capsule-editor/commit/c7b7c22baad8e0e1e956107db83f10eaba97d7c8))
+
 # [2.0.0-beta.36](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.35...v2.0.0-beta.36) (2024-05-28)
 
 
