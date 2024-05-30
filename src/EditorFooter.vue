@@ -117,12 +117,14 @@ defineExpose({
                         class="flex items-center justify-center gap-2">
                         <btn
                             class="btn-sm btn-secondary"
+                            type="button"
                             @click="goto(index - 1)">
                             <ChevronLeftIcon class="w-4 h-4" />
                         </btn> 
                         <span class="font-mono text-center  min-w-[6rem]">{{ index + 1 }} of {{ diagnostics.length }}</span>
                         <btn
                             class="btn-sm btn-secondary"
+                            type="button"
                             @click="goto(index + 1)">
                             <ChevronRightIcon class="w-4 h-4" />
                         </btn>
@@ -147,6 +149,7 @@ defineExpose({
                     <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
                         <template v-if="currentDiagnostic.actions.length === 1">
                             <btn
+                                type="button"
                                 class="btn-secondary btn-sm flex items-center gap-2"
                                 @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
                                 {{ currentDiagnostic.actions[0].name }}
@@ -155,6 +158,7 @@ defineExpose({
                         <template v-else>
                             <div>
                                 <BtnDropdown
+                                    type="button"
                                     label="Fix Errors"
                                     button-class="btn-sm btn-primary"
                                     dropup>
@@ -178,6 +182,7 @@ defineExpose({
                     :save-button-label="diagnostics">
                     <btn
                         v-if="saveButton && !diagnostics.length"
+                        type="button"
                         class="btn-primary"
                         @click="emit('save')">
                         {{ saveButtonLabel }}
