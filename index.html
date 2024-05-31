@@ -39,7 +39,11 @@
         // import 'animate.css';
 
 const content = `
-</p>
+<#if (Recipient.ShowUnsub = 'true')>
+
+*[Unsubscribe](https://join.nysun.com/preferences?sid=\${Recipient.RecipientId}) from emails like this.*
+
+</#if>
 `;
 
         const themes = {
