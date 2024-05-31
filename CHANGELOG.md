@@ -1,3 +1,10 @@
+# [2.0.0-beta.41](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.40...v2.0.0-beta.41) (2024-05-30)
+
+
+### Bug Fixes
+
+* added type="button" to EditorFooter buttons ([e6b7d60](https://github.com/ActiveEngagement/capsule-editor/commit/e6b7d60914cd7f48b545d67e5b2169544bdda5ae))
+
 # [2.0.0-beta.40](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2024-05-29)
 
 
