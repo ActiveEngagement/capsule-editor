@@ -1,3 +1,10 @@
+# [2.0.0-beta.43](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.42...v2.0.0-beta.43) (2024-06-11)
+
+
+### Bug Fixes
+
+* pnpm update ([4d4a2ef](https://github.com/ActiveEngagement/capsule-editor/commit/4d4a2eff51628c74110c99195d656000fae2fb55))
+
 # [2.0.0-beta.42](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2024-05-31)
 
 
