@@ -172,7 +172,7 @@ export default defineComponent({
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(view => {
                     if(view.docChanged && view.state.doc.toString() !== this.currentContent) {
-                        this.currentContent = view.state.doc.toString()
+                        this.currentContent = view.state.doc.toString();
                         this.$emit('update:content', this.currentContent);                        
                     }
                 }),
