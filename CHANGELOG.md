@@ -1,3 +1,10 @@
+# [2.0.0-beta.47](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.46...v2.0.0-beta.47) (2024-06-13)
+
+
+### Bug Fixes
+
+* fixed typescript issue ([7deaa71](https://github.com/ActiveEngagement/capsule-editor/commit/7deaa71e0d6acf6bab16c05a17bf144456a7dbe0))
+
 # [2.0.0-beta.46](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.45...v2.0.0-beta.46) (2024-06-13)
 
 
