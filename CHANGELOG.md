@@ -1,3 +1,10 @@
+# [2.0.0-beta.46](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.45...v2.0.0-beta.46) (2024-06-13)
+
+
+### Bug Fixes
+
+* added ability to override default lint rules ([77b250d](https://github.com/ActiveEngagement/capsule-editor/commit/77b250d27415a1dfc1699c924709c4d2b6d0410d))
+
 # [2.0.0-beta.45](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.44...v2.0.0-beta.45) (2024-06-12)
 
 
