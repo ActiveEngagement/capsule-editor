@@ -1,3 +1,10 @@
+# [2.0.0-beta.45](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.44...v2.0.0-beta.45) (2024-06-12)
+
+
+### Bug Fixes
+
+* updated npm ([c8555d9](https://github.com/ActiveEngagement/capsule-editor/commit/c8555d963cb7d4c566d0a67618ba52e34d9a0f55))
+
 # [2.0.0-beta.44](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.43...v2.0.0-beta.44) (2024-06-12)
 
 
