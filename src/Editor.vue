@@ -135,12 +135,7 @@ export default defineComponent({
 
                 update() {
                     const footer = t.$el.querySelector('footer');
-
-                    if(!footer) {
-                        return;
-                    }
-
-                    const height = footer.getComputedStyle().height;
+                    const height = footer.getComputedStyle?.().height;
 
                     this.height = height;
                     
