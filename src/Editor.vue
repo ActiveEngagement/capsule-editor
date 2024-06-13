@@ -37,7 +37,7 @@ export default defineComponent({
         },
 
         ruleset: {
-            type: Object as CapsuleRuleset,
+            type: Object as PropType<CapsuleRuleset>,
             default: undefined
         },
 
@@ -134,7 +134,13 @@ export default defineComponent({
                 attrs = { style: 'padding-bottom: 0' };
 
                 update() {
-                    const height = getComputedStyle(t.$el.querySelector('footer')).height;
+                    const footer = t.$el.querySelector('footer');
+
+                    if(!footer) {
+                        return;
+                    }
+
+                    const height = footer.getComputedStyle().height;
 
                     this.height = height;
                     
