@@ -4,6 +4,7 @@ import { html } from '@codemirror/lang-html';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
+import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
 import { PropType, defineComponent, ref } from 'vue';
@@ -33,6 +34,11 @@ export default defineComponent({
         filename: {
             type: String,
             default: null
+        },
+
+        ruleset: {
+            type: Object as CapsuleRuleset,
+            default: undefined
         },
 
         save: {
@@ -165,7 +171,7 @@ export default defineComponent({
                     },
                 ]),
                 html(),
-                this.footer && lint(this),
+                this.footer && lint(this, Object.assign({}, defaultConfig, this.ruleset)),
                 // EditorView.updateListener.of(() => {
                 //     console.log('update')
                 // }),

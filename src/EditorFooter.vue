@@ -106,6 +106,7 @@ defineExpose({
 
 <template>
     <footer
+        v-if="saveButton || diagnostics.length"
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
         <div
             v-if="hasLinted"

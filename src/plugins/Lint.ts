@@ -2,7 +2,7 @@ import type { Action as LintAction } from '@codemirror/lint';
 import { Diagnostic, lintGutter, linter } from '@codemirror/lint';
 import { StateEffect } from '@codemirror/state';
 import { EditorView, showPanel } from '@codemirror/view';
-import { Hint, lint } from 'capsule-lint';
+import { lint, type CapsuleRuleset, type Hint } from 'capsule-lint';
 import actions from '../actions';
 
 export type Action = LintAction & {
@@ -11,12 +11,12 @@ export type Action = LintAction & {
 
 const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
-export default function(parent: any) {
+export default function(parent: any, ruleset?: CapsuleRuleset) {
     return [
         linter(view => {
             const { doc } = view.state.toJSON();
                 
-            const diagnostics = lint(doc).map((error: Hint) => {
+            const diagnostics = lint(doc, ruleset).map((error: Hint) => {
                 const pos = view.state.doc.line(error.line);
                 const from  = Math.min(doc.length, pos.from - 1 + error.col);
                 const to = Math.min(doc.length, from + error.raw.length);
