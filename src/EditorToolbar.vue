@@ -1,34 +1,16 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-export default defineComponent({
+const props = defineProps<{
+    disableFilename: boolean;
+    filename?: string;
+}>();
 
-    model: {
-        prop: 'currentValue'
-    },
+const emit = defineEmits<{
+    'update:filename': [filename: string]
+}>();
 
-    props: {
-
-        disableFilename: Boolean,
-        
-        filename: {
-            type: String,
-            default: undefined
-        }
-
-    },
-
-    emits: [
-        'update:filename',
-    ],
-
-    data() {
-        return {
-            currentValue: this.filename
-        };
-    }
-
-});
+const currentValue = ref<string>(props.filename);
 </script>
 
 <template>
@@ -43,7 +25,7 @@ export default defineComponent({
                 placeholder="Untitled Document"
                 :disabled="disableFilename"
                 class="text-center w-full outline-none bg-transparent text-stone-800 dark:text-stone-100"
-                @input="$emit('update:filename', currentValue)">
+                @input="emit('update:filename', currentValue)">
         </div>
         <div>
             <slot name="right" />

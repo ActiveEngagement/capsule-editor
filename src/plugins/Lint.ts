@@ -3,6 +3,7 @@ import { Diagnostic, lintGutter, linter } from '@codemirror/lint';
 import { StateEffect } from '@codemirror/state';
 import { EditorView, showPanel } from '@codemirror/view';
 import { lint, type CapsuleRuleset, type Hint } from 'capsule-lint';
+import EditorFooter from 'src/EditorFooter.vue';
 import actions from '../actions';
 
 export type Action = LintAction & {
@@ -11,7 +12,7 @@ export type Action = LintAction & {
 
 const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
-export default function(parent: any, ruleset?: CapsuleRuleset) {
+export default function(footer: typeof EditorFooter, ruleset?: CapsuleRuleset) {
     return [
         linter(view => {
             const { doc } = view.state.toJSON();
@@ -54,23 +55,23 @@ export default function(parent: any, ruleset?: CapsuleRuleset) {
         showPanel.of(() => {
             return {
                 bottom: true,
-                dom: parent.$refs.footer.$el
+                dom: footer.$el
             };
         }),
         EditorView.updateListener.of(view => {   
-            if(!parent.$refs.footer) {
+            if(!footer) {
                 return;
             }
 
             for(const tr of view.transactions) {
                 for(const effect of tr.effects) {
                     if(effect.is(setDiagnosticsEffect)) {
-                        parent.$refs.footer.update(effect.value);
+                        footer.update(effect.value);
                     }
                 }
             }
 
-            parent.$refs.footer.activate(view);
+            footer.activate(view);
         }),
     ];
 }

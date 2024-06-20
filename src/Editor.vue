@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
@@ -7,225 +7,199 @@ import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
-import { PropType, defineComponent, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
 import lint from './plugins/Lint';
 
-export default defineComponent({
-    components: {
-        EditorFooter,
-        EditorToolbar,
+const props = withDefaults(defineProps<{
+    content?: string;
+    disableFilename?: boolean;
+    filename?: string;
+    footer?: boolean;
+    ruleset?: CapsuleRuleset;
+    saveButton?: boolean; 
+    theme?: Extension;
+    title?: string;
+    toolbar?: boolean;
+}>(), {
+    content: undefined,
+    disableFilename: false,
+    filename: undefined,
+    footer: true,
+    ruleset: undefined,
+    saveButton: true,
+    theme: () => materialDark,
+    title: undefined,
+    toolbar: true
+});
+
+const emit = defineEmits<{
+    'fixed-errors': [],
+    'update:content': [content: string],
+    'update:filename': [content: string],
+    'save': [],
+    'focus': [],
+    'blur': []
+}>();
+
+const wrapperRef = ref<HTMLDivElement>();
+const toolbarRef = ref<HTMLDivElement>();
+const footerRef = ref<typeof EditorFooter>();
+const themeConfig = new Compartment();
+const currentContent = ref(props.content);
+const errors = ref<any[]>();
+const isFocused = ref(false);
+const defaultTheme = EditorView.theme({
+    '&': {
+        width: '100%',
+        height: '100%',
     },
-    props: {
-
-        content: {
-            type: String,
-            default: undefined
-        },
-        
-        disableFilename: Boolean,
-
-        footer: {
-            type: Boolean,
-            default: true
-        },
-
-        filename: {
-            type: String,
-            default: null
-        },
-
-        ruleset: {
-            type: Object as PropType<CapsuleRuleset>,
-            default: undefined
-        },
-
-        save: {
-            type: Function,
-            default() {
-                return this.showFinishModal = true;
-            }
-        },
-
-        saveButton: {
-            type: Boolean,
-            default: true
-        },
-
-        theme: {
-            type: Object as PropType<Extension>,
-            default: () => materialDark
-        },
-
-        title: {
-            type: String,
-            default: undefined
-        },
-
-        toolbar: {
-            type: Boolean,
-            default: true
-        },
+    '&.cm-focused': {
+        outline: 'none'
     },
-    emits: [
-        'fixed-errors',
-        'update:content',
-        'update:filename',
-        'save'
-    ],
-    data() {
-        const themeConfig = new Compartment();
-        const currentContent = ref(this.content);
-        
-        return {
-            currentContent,
-            themeConfig,
-            errors: [],
-            hasDismissedFinishPopup: false,
-            showFinishModal: false,
-            view: undefined,
-        };
+    '.cm-editor': {
+        'padding-bottom': '4em'
     },
-    watch: {
-        content(value, oldValue) {
-            if(value !== this.currentContent) {
-                this.currentContent = value;
-                
-                this.view.dispatch({
-                    changes: {
-                        from: 0, 
-                        to: this.view.state.doc.length, 
-                        insert: value 
-                    }
-                });
-            }
-        },
-        theme() {
-            this.view.dispatch({
-                effects: this.themeConfig.reconfigure([this.theme])
-            });
-        },
-        errors(value, oldErrors) {
-            if(!value.length && oldErrors.length) {
-                this.$emit('fixed-errors');
-            }
-        },
+    '.cm-panels.cm-panels-bottom': {
+        border: 'none !important'
     },
-    mounted() {
-        this.view = new EditorView({
-            extensions: [
-                basicSetup
-            ],
-            state: EditorState.create({
-                doc: this.currentContent,
-                extensions: this.extensions(),
-            }),
-            parent: this.$refs.wrapper
-        });
+    '.cm-gutter-error': {
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
     },
-    methods: {
-
-        extensions() {
-            const t = this;
-
-            const plugin = ViewPlugin.fromClass(class {
-                height = '0px';
-                attrs = { style: 'padding-bottom: 0' };
-
-                update() {
-                    const footer = t.$el.querySelector('footer');
-                    const height = footer.getComputedStyle?.().height;
-
-                    this.height = height;
-                    
-                    this.attrs = {
-                        style: `padding-bottom: ${height}`
-                    };
-                }
-            });
-
-            return [
-                this.themeConfig.of([ this.theme ]),
-                plugin,
-                EditorView.contentAttributes.of(view => view.plugin(plugin)?.attrs || null),
-                lineNumbers(),
-                search(),
-                history(),
-                keymap.of(historyKeymap),
-                highlightSelectionMatches(),
-                keymap.of(searchKeymap),
-                keymap.of([ indentWithTab  ]),
-                keymap.of([
-                    {
-                        key: 'Mod-a',
-                        run: (view) => {
-                            view.dispatch({
-                                selection: {
-                                    anchor: 0,
-                                    head: view.state.doc.length
-                                }
-                            });
-
-                            return true;
-                        },
-                    },
-                ]),
-                html(),
-                this.footer && lint(this, Object.assign({}, defaultConfig, this.ruleset)),
-                // EditorView.updateListener.of(() => {
-                //     console.log('update')
-                // }),
-                EditorView.lineWrapping,
-                EditorView.updateListener.of(view => {
-                    if(view.docChanged && view.state.doc.toString() !== this.currentContent) {
-                        this.currentContent = view.state.doc.toString();
-                        this.$emit('update:content', this.currentContent);                        
-                    }
-                }),
-                EditorView.theme({
-                    '&': {
-                        width: '100%',
-                        height: '100%',
-                    },
-                    '&.cm-focused': {
-                        outline: 'none'
-                    },
-                    '.cm-editor': {
-                        'padding-bottom': '4em'
-                    },
-                    '.cm-panels.cm-panels-bottom': {
-                        border: 'none !important'
-                    },
-                    '.cm-gutter-error': {
-                        display: 'flex',
-                        height: '100%',
-                        alignItems: 'center',
-                    },
-                    '.cm-gutter-error > div': {
-                        width: '8px',
-                        height: '8px',
-                        background: 'red',
-                        borderRadius: '100%',
-                    }
-                }),
-            ].filter(value => !!value);
-        },  
-        onGoto({ from, to }: { from: number, to:number }) {
-            this.view.dispatch({ 
-                selection: EditorSelection.create([
-                    EditorSelection.range(from, to),
-                    EditorSelection.cursor(from)
-                ]),
-                scrollIntoView: true
-            });
-            
-            this.view.focus();
-        },    
-        onSave() {
-            this.$emit('save');
-        }
+    '.cm-gutter-error > div': {
+        width: '8px',
+        height: '8px',
+        background: 'red',
+        borderRadius: '100%',
     }
+});
+
+let view: EditorView;
+
+const footerPlugin = ViewPlugin.fromClass(class {
+    height = '0px';
+    attrs = { style: 'padding-bottom: 0' };
+
+    update() {
+        const footer = wrapperRef.value.querySelector<HTMLDivElement>('footer');
+        const height = getComputedStyle(footer).height;
+
+        this.height = height;
+        
+        this.attrs = {
+            style: `padding-bottom: ${height}`
+        };
+    }
+});
+
+function extensions() {
+    return [
+        themeConfig.of([ props.theme ]),
+        footerPlugin,
+        EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
+        lineNumbers(),
+        search(),
+        history(),
+        keymap.of(historyKeymap),
+        highlightSelectionMatches(),
+        keymap.of(searchKeymap),
+        keymap.of([ indentWithTab  ]),
+        keymap.of([
+            {
+                key: 'Mod-a',
+                run: (view) => {
+                    view.dispatch({
+                        selection: {
+                            anchor: 0,
+                            head: view.state.doc.length
+                        }
+                    });
+
+                    return true;
+                },
+            },
+        ]),
+        html(),
+        props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset)),
+        EditorView.updateListener.of((update) => {
+            if(update.focusChanged) {
+                isFocused.value = !isFocused.value;
+            }
+        }),
+        EditorView.lineWrapping,
+        EditorView.updateListener.of(view => {
+            if(view.docChanged && view.state.doc.toString() !== currentContent.value) {
+                currentContent.value = view.state.doc.toString();
+                emit('update:content', currentContent.value);                        
+            }
+        }),
+        defaultTheme,
+    ].filter(value => !!value);
+}
+
+function onGoto({ from, to }: { from: number, to:number }) {
+    console.log(view);
+
+    view.dispatch({ 
+        selection: EditorSelection.create([
+            EditorSelection.range(from, to),
+            EditorSelection.cursor(from)
+        ]),
+        scrollIntoView: true
+    });
+    
+    view.focus();
+}
+
+watch(isFocused, value => {
+    if(value) {
+        emit('focus');
+    }
+    else {
+        emit('blur');
+    }
+});
+
+watch(() => props.content, value => {
+    if(value !== currentContent.value) {
+        currentContent.value = value;
+        
+        view.dispatch({
+            changes: {
+                from: 0, 
+                to: view.state.doc.length, 
+                insert: value 
+            }
+        });
+    }
+});
+
+watch(() => props.theme, value => {
+    view.dispatch({
+        effects: themeConfig.reconfigure([ value ])
+    });
+});
+
+watch(errors, (value, oldValue) => {
+    if(!value.length && oldValue.length) {
+        emit('fixed-errors');
+    }
+});
+
+onMounted(() => {
+    view = new EditorView({
+        extensions: [
+            basicSetup
+        ],
+        state: EditorState.create({
+            doc: currentContent.value,
+            extensions: extensions(),
+        }),
+        parent: wrapperRef.value
+    });
 });
 </script>
 
@@ -233,7 +207,7 @@ export default defineComponent({
     <div class="capsule-editor">
         <editor-toolbar
             v-if="toolbar"
-            ref="toolbar"
+            ref="toolbarRef"
             :disable-filename="disableFilename"
             :filename="filename"
             @update:filename="value => $emit('update:filename', value)">
@@ -254,16 +228,16 @@ export default defineComponent({
         </editor-toolbar>
 
         <div
-            ref="wrapper"
+            ref="wrapperRef"
             class="cm-wrapper h-full w-full" />
 
         <editor-footer
             v-if="footer"
-            ref="footer"
+            ref="footerRef"
             v-model="errors"
             :save-button="saveButton"
             :view="view"
-            @save="onSave"
+            @save="emit('save')"
             @goto="onGoto">
             <template #before-save-button>
                 <slot

@@ -1,28 +1,14 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline';
-import { defineComponent } from 'vue';
+import type { Hint } from 'capsule-lint';
+import { computed } from 'vue';
 
-export default defineComponent({
+const props = defineProps<{
+    error: Hint
+}>();
 
-    components: {
-        ArrowTopRightOnSquareIcon
-    },
-
-    props: {
-
-        error: {
-            type: Object,
-            required: true
-        }
-
-    },
-
-    computed: {
-        url() {
-            return this.error.rule.link;
-        }
-    }
-    
+const url = computed(() => {
+    return props.error.rule.link;
 });
 </script>
 

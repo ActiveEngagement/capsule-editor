@@ -30,7 +30,9 @@
             :ruleset="{
                 'spec-char-escape': false
             }"
-            class="h-full" />
+            class="h-full"
+            @focus="onFocus"
+            @blur="onBlur" />
     </div>
 
     <script type="module">
@@ -65,6 +67,14 @@ const content = `
                 content: () => content,
                 currentTheme: () => {
                     return themes[theme.value];
+                }
+            },
+            methods: {
+                onFocus() {
+                    console.log('focus')
+                },
+                onBlur() {
+                    console.log('blur')
                 }
             },
             setup() {
