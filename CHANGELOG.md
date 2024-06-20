@@ -1,3 +1,10 @@
+# [2.0.0-beta.50](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.49...v2.0.0-beta.50) (2024-06-20)
+
+
+### Bug Fixes
+
+* fix js error ([586e2a2](https://github.com/ActiveEngagement/capsule-editor/commit/586e2a21fc8bd9a9f73dd0991567ea25e7b4d887))
+
 # [2.0.0-beta.49](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.48...v2.0.0-beta.49) (2024-06-20)
 
 
