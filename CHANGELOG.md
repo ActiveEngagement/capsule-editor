@@ -1,3 +1,10 @@
+# [2.0.0-beta.48](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.47...v2.0.0-beta.48) (2024-06-13)
+
+
+### Bug Fixes
+
+* fixed issue with footer throwing JS errors ([f0d8737](https://github.com/ActiveEngagement/capsule-editor/commit/f0d87378a2a1a99587cf5ede71b2292310ab4f6a))
+
 # [2.0.0-beta.47](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.46...v2.0.0-beta.47) (2024-06-13)
 
 
