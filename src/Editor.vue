@@ -50,7 +50,6 @@ const footerRef = ref<typeof EditorFooter>();
 const themeConfig = new Compartment();
 const currentContent = ref(props.content);
 const errors = ref<Hint[]>();
-const isFocused = ref(false);
 const defaultTheme = EditorView.theme({
     '&': {
         width: '100%',
@@ -126,8 +125,15 @@ function extensions() {
         html(),
         props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset)),
         EditorView.updateListener.of((update) => {
-            if(update.focusChanged) {
-                isFocused.value = !isFocused.value;
+            if(!update.focusChanged) {
+                return;
+            }
+
+            if(view.hasFocus) {
+                emit('focus');
+            }
+            else {
+                emit('blur');
             }
         }),
         EditorView.lineWrapping,
@@ -154,15 +160,6 @@ function onGoto({ from, to }: { from: number, to:number }) {
     
     view.focus();
 }
-
-watch(isFocused, value => {
-    if(value) {
-        emit('focus');
-    }
-    else {
-        emit('blur');
-    }
-});
 
 watch(() => props.content, value => {
     if(value !== currentContent.value) {
