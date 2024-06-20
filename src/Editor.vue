@@ -49,7 +49,7 @@ const toolbarRef = ref<HTMLDivElement>();
 const footerRef = ref<typeof EditorFooter>();
 const themeConfig = new Compartment();
 const currentContent = ref(props.content);
-const errors = ref<Hint[]>([]);
+const errors = ref<Hint[]>();
 const isFocused = ref(false);
 const defaultTheme = EditorView.theme({
     '&': {
@@ -185,7 +185,7 @@ watch(() => props.theme, value => {
 });
 
 watch(errors, (value, oldValue) => {
-    if(!value.length && oldValue.length) {
+    if(!value?.length && oldValue?.length) {
         emit('fixed-errors');
     }
 });
