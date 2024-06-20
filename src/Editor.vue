@@ -4,6 +4,7 @@ import { html } from '@codemirror/lang-html';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
+import type { Hint } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { materialDark } from 'cm6-theme-material-dark';
 import { EditorView, basicSetup, } from 'codemirror';
@@ -48,7 +49,7 @@ const toolbarRef = ref<HTMLDivElement>();
 const footerRef = ref<typeof EditorFooter>();
 const themeConfig = new Compartment();
 const currentContent = ref(props.content);
-const errors = ref<any[]>();
+const errors = ref<Hint[]>([]);
 const isFocused = ref(false);
 const defaultTheme = EditorView.theme({
     '&': {
