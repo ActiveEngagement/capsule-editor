@@ -1,3 +1,10 @@
+# [2.0.0-beta.51](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.50...v2.0.0-beta.51) (2024-06-20)
+
+
+### Bug Fixes
+
+* improved fix in last commit ([fcd2270](https://github.com/ActiveEngagement/capsule-editor/commit/fcd2270d475652d64c9dc3a892f0a115d5f56fcf))
+
 # [2.0.0-beta.50](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.49...v2.0.0-beta.50) (2024-06-20)
 
 
