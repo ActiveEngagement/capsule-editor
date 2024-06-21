@@ -1,3 +1,10 @@
+# [2.0.0-beta.52](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.51...v2.0.0-beta.52) (2024-06-21)
+
+
+### Bug Fixes
+
+* optimized blur/focus ([412af1e](https://github.com/ActiveEngagement/capsule-editor/commit/412af1e02c4cddcaf919ec08ffb4efbb442ee252))
+
 # [2.0.0-beta.51](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.50...v2.0.0-beta.51) (2024-06-20)
 
 
