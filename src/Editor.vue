@@ -2,12 +2,12 @@
 import { history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
-import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
-import { ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
+import { Compartment, EditorSelection, Extension } from '@codemirror/state';
+import { EditorView, ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
 import type { Hint } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { materialDark } from 'cm6-theme-material-dark';
-import { EditorView, basicSetup, } from 'codemirror';
+import { basicSetup, } from 'codemirror';
 import { onMounted, ref, watch } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
@@ -189,13 +189,11 @@ watch(errors, (value, oldValue) => {
 
 onMounted(() => {
     view = new EditorView({
+        doc: currentContent.value,
         extensions: [
-            basicSetup
+            basicSetup,
+            ...extensions(),
         ],
-        state: EditorState.create({
-            doc: currentContent.value,
-            extensions: extensions(),
-        }),
         parent: wrapperRef.value
     });
 });
