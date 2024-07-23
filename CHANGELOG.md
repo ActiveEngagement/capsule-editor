@@ -1,3 +1,10 @@
+# [2.0.0-beta.53](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.52...v2.0.0-beta.53) (2024-07-23)
+
+
+### Bug Fixes
+
+* fixed issue with component not instantiating the editor correctly ([1fab8ef](https://github.com/ActiveEngagement/capsule-editor/commit/1fab8ef4522a0823b21a7eb9650d2ea1ea7ad469))
+
 # [2.0.0-beta.52](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.51...v2.0.0-beta.52) (2024-06-21)
 
 
