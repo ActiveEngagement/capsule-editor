@@ -215,11 +215,12 @@ onMounted(() => {
     });
 });
 
-// defineExpose({
-//     view,
-//     focus,
-//     setSelection
-// });
+defineExpose({
+    props,
+    view: () => view,
+    focus,
+    setSelection
+});
 </script>
 
 <template>
