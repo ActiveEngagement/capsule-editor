@@ -1,3 +1,15 @@
+# [2.0.0-beta.54](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.53...v2.0.0-beta.54) (2024-09-13)
+
+
+### Bug Fixes
+
+* pnpm integrity issues ([f93a87d](https://github.com/ActiveEngagement/capsule-editor/commit/f93a87d79600936f6ec2da9cb67f02d3c3f2ce6f))
+
+
+### Features
+
+* added ability event to get the selection, set the selection, and focus on the editor ([825150d](https://github.com/ActiveEngagement/capsule-editor/commit/825150dbbb4a68668041f9f0bdfa49a27a26fad2))
+
 # [2.0.0-beta.53](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.52...v2.0.0-beta.53) (2024-07-23)
 
 
