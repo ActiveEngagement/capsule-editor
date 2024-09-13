@@ -1,3 +1,10 @@
+# [2.0.0-beta.55](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.54...v2.0.0-beta.55) (2024-09-13)
+
+
+### Bug Fixes
+
+* testing removing defineExpose as it might have broke something ([5fcb906](https://github.com/ActiveEngagement/capsule-editor/commit/5fcb9063bbb4f22e113a155b91ec48c1e6818c59))
+
 # [2.0.0-beta.54](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.53...v2.0.0-beta.54) (2024-09-13)
 
 
