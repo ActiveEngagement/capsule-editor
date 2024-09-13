@@ -215,11 +215,11 @@ onMounted(() => {
     });
 });
 
-defineExpose({
-    view,
-    focus,
-    setSelection
-});
+// defineExpose({
+//     view,
+//     focus,
+//     setSelection
+// });
 </script>
 
 <template>
