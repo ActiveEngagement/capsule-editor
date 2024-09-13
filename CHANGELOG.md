@@ -1,3 +1,10 @@
+# [2.0.0-beta.56](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.55...v2.0.0-beta.56) (2024-09-13)
+
+
+### Bug Fixes
+
+* another attempt to fix exposing issue ([a8290c9](https://github.com/ActiveEngagement/capsule-editor/commit/a8290c983a12c3cfdeb709c7c045412dea332c32))
+
 # [2.0.0-beta.55](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.54...v2.0.0-beta.55) (2024-09-13)
 
 
