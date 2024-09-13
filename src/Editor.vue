@@ -37,11 +37,12 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
     'fixed-errors': [],
-    'update:content': [content: string],
-    'update:filename': [content: string],
     'save': [],
     'focus': [],
-    'blur': []
+    'blur': [],
+    'selection': [selection: EditorSelection],
+    'update:content': [content: string],
+    'update:filename': [content: string],
 }>();
 
 const wrapperRef = ref<HTMLDivElement>();
@@ -74,7 +75,10 @@ const defaultTheme = EditorView.theme({
         height: '8px',
         background: 'red',
         borderRadius: '100%',
-    }
+    },
+    // ':focus .cm-activeLine': {
+    //     backgroundColor: 'transparent'
+    // }
 });
 
 let view: EditorView;
@@ -95,8 +99,19 @@ const footerPlugin = ViewPlugin.fromClass(class {
     }
 });
 
+function focus() {
+    view.focus();
+}
+
+function setSelection(selection: EditorSelection) {
+    view.dispatch({
+        selection
+    });
+}
+
 function extensions() {
     return [
+        defaultTheme,
         themeConfig.of([ props.theme ]),
         footerPlugin,
         EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
@@ -138,18 +153,20 @@ function extensions() {
         }),
         EditorView.lineWrapping,
         EditorView.updateListener.of(view => {
+            if(view.selectionSet) {
+                emit('selection', view.state.selection);
+            }
+        }),
+        EditorView.updateListener.of(view => {
             if(view.docChanged && view.state.doc.toString() !== currentContent.value) {
                 currentContent.value = view.state.doc.toString();
                 emit('update:content', currentContent.value);                        
             }
         }),
-        defaultTheme,
     ].filter(value => !!value);
 }
 
 function onGoto({ from, to }: { from: number, to:number }) {
-    console.log(view);
-
     view.dispatch({ 
         selection: EditorSelection.create([
             EditorSelection.range(from, to),
@@ -196,6 +213,12 @@ onMounted(() => {
         ],
         parent: wrapperRef.value
     });
+});
+
+defineExpose({
+    view,
+    focus,
+    setSelection
 });
 </script>
 

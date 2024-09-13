@@ -21,7 +21,11 @@
             <option>basic-light</option>
             <option>basic-dark</option>
         </select>
+
+        <button v-if="selection" @click="$refs.editor.setSelection(selection), $refs.editor.focus()">Resume Selection</button>
+
         <editor
+            ref="editor"
             v-model:filename="filename"
             v-model:content="content"
             :toolbar="false"
@@ -31,6 +35,7 @@
                 'spec-char-escape': false
             }"
             class="h-full"
+            @selection="value => selection = value"
             @focus="onFocus"
             @blur="onBlur" />
     </div>
@@ -82,6 +87,7 @@ const content = `
                     theme,
                     filename: ref('test.html'),
                     content: ref(content),
+                    selection: ref(undefined)
                 }
             }
         });
