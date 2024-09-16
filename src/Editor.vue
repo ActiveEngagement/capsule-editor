@@ -166,6 +166,17 @@ function extensions() {
     ].filter(value => !!value);
 }
 
+function initialize() {
+    return new EditorView({
+        doc: currentContent.value,
+        extensions: [
+            basicSetup,
+            ...extensions(),
+        ],
+        parent: wrapperRef.value
+    });
+}
+
 function onGoto({ from, to }: { from: number, to:number }) {
     view.dispatch({ 
         selection: EditorSelection.create([
@@ -205,19 +216,13 @@ watch(errors, (value, oldValue) => {
 });
 
 onMounted(() => {
-    view = new EditorView({
-        doc: currentContent.value,
-        extensions: [
-            basicSetup,
-            ...extensions(),
-        ],
-        parent: wrapperRef.value
-    });
+    view = initialize();
 });
 
 defineExpose({
     props,
     view: () => view,
+    initialize,
     focus,
     setSelection
 });
