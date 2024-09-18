@@ -1,3 +1,10 @@
+# [2.0.0-beta.57](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.56...v2.0.0-beta.57) (2024-09-16)
+
+
+### Bug Fixes
+
+* add initialize method to defineExpose ([d76f4af](https://github.com/ActiveEngagement/capsule-editor/commit/d76f4afc58836b472e6db27e8975329e485a91f8))
+
 # [2.0.0-beta.56](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.55...v2.0.0-beta.56) (2024-09-13)
 
 
