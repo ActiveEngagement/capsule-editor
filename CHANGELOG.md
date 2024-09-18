@@ -1,3 +1,10 @@
+# [2.0.0-beta.58](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.57...v2.0.0-beta.58) (2024-09-18)
+
+
+### Bug Fixes
+
+* updated capsule-lint and fixed an issue with the lint plugin ([b8a61f3](https://github.com/ActiveEngagement/capsule-editor/commit/b8a61f3e5ed165f42b72c8d6d11dc708cfb26cdb))
+
 # [2.0.0-beta.57](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.56...v2.0.0-beta.57) (2024-09-16)
 
 
