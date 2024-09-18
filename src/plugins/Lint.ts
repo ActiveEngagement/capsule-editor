@@ -31,7 +31,7 @@ export default function(footer: typeof EditorFooter, ruleset?: CapsuleRuleset) {
                     message: error.message,
                     severity: error.type,
                     source: error.rule.id,
-                    actions: error.rule.id in actions && actions[
+                    actions: error.rule.id in actions ? actions[
                         error.rule.id as keyof typeof actions
                     ].filter(action => {
                         if(!action.validate) {
@@ -39,7 +39,7 @@ export default function(footer: typeof EditorFooter, ruleset?: CapsuleRuleset) {
                         }
                         
                         return action.validate(error);
-                    })
+                    }) : []
                 } as Diagnostic;
             });
 
