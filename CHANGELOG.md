@@ -1,3 +1,10 @@
+# [2.0.0-beta.60](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.59...v2.0.0-beta.60) (2024-10-09)
+
+
+### Bug Fixes
+
+* fixed styles for autocomplete tooltips ([ae10966](https://github.com/ActiveEngagement/capsule-editor/commit/ae109669cf5b50f191732c81954d5ef54295ad12))
+
 # [2.0.0-beta.59](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.58...v2.0.0-beta.59) (2024-10-09)
 
 
