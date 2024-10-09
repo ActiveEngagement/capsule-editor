@@ -193,11 +193,11 @@ function initialize() {
                 '&dark.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
                     background: 'Highlight'
                 },
-                '&light .cm-diagnostic': {
+                '&light .cm-diagnostic, &light.cm-focused .cm-tooltip-autocomplete': {
                     color: 'black',
                     background: '#E9E9E9'
                 },
-                '&dark .cm-diagnostic': {
+                '&dark .cm-diagnostic, &dark.cm-focused .cm-tooltip-autocomplete': {
                     color: 'white',
                     background: '#202020'
                 },
