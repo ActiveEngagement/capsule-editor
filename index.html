@@ -22,14 +22,12 @@
             <option>basic-dark</option>
         </select>
 
-        <button v-if="selection" @click="$refs.editor.setSelection(selection), $refs.editor.focus()">Resume Selection</button>
-
         <editor
             ref="editor"
             v-model:filename="filename"
             v-model:content="content"
-            :toolbar="false"
             :theme="currentTheme"
+            :toolbar="false"
             :save-button="false"
             :ruleset="{
                 'spec-char-escape': false
@@ -58,7 +56,7 @@ const content = `<div>
             'basic-dark': basicDark
         }
 
-        const theme = ref('basic-light');
+        const theme = ref('basic-dark');
 
         const vue = createApp({
             components: {

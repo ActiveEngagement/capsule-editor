@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import { history, historyKeymap, indentWithTab } from '@codemirror/commands';
+import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
+import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
-import { indentUnit } from '@codemirror/language';
+import { bracketMatching, defaultHighlightStyle, foldGutter, foldKeymap, indentOnInput, indentUnit, syntaxHighlighting } from '@codemirror/language';
+import { lintKeymap } from '@codemirror/lint';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
-import { Compartment, EditorSelection, Extension } from '@codemirror/state';
-import { EditorView, ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
+import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
+import { EditorView, ViewPlugin, crosshairCursor, drawSelection, dropCursor, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
 import type { Hint } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
-import { materialDark } from 'cm6-theme-material-dark';
-import { basicSetup, } from 'codemirror';
+import { basicDark } from 'cm6-theme-basic-dark';
 import { onMounted, ref, watch } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
@@ -35,7 +36,7 @@ const props = withDefaults(defineProps<{
     indent: '    ',
     ruleset: undefined,
     saveButton: true,
-    theme: () => materialDark,
+    theme: () => basicDark,
     title: undefined,
     toolbar: true
 });
@@ -57,33 +58,6 @@ const themeConfig = new Compartment();
 const currentContent = ref(props.content);
 const errors = ref<Hint[]>();
 const defaultTheme = EditorView.theme({
-    '&': {
-        width: '100%',
-        height: '100%',
-    },
-    '&.cm-focused': {
-        outline: 'none'
-    },
-    '.cm-editor': {
-        'padding-bottom': '4em'
-    },
-    '.cm-panels.cm-panels-bottom': {
-        border: 'none !important'
-    },
-    '.cm-gutter-error': {
-        display: 'flex',
-        height: '100%',
-        alignItems: 'center',
-    },
-    '.cm-gutter-error > div': {
-        width: '8px',
-        height: '8px',
-        background: 'red',
-        borderRadius: '100%',
-    },
-    // ':focus .cm-activeLine': {
-    //     backgroundColor: 'transparent'
-    // }
 });
 
 let view: EditorView;
@@ -120,13 +94,8 @@ function defineExtensions() {
         themeConfig.of([ props.theme ]),
         footerPlugin,
         EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
-        lineNumbers(),
         indentUnit.of(props.indent),
         search(),
-        history(),
-        keymap.of(historyKeymap),
-        highlightSelectionMatches(),
-        keymap.of(searchKeymap),
         keymap.of([ indentWithTab  ]),
         keymap.of([
             {
@@ -177,7 +146,74 @@ function initialize() {
     return new EditorView({
         doc: currentContent.value,
         extensions: [
-            basicSetup,
+            lineNumbers(),
+            highlightActiveLineGutter(),
+            highlightSpecialChars(),
+            highlightSelectionMatches(),
+            history(),
+            foldGutter(),
+            drawSelection(),
+            dropCursor(),
+            EditorState.allowMultipleSelections.of(true),
+            indentOnInput(),
+            syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+            bracketMatching(),
+            closeBrackets(),
+            autocompletion(),
+            rectangularSelection(),
+            crosshairCursor(),
+            EditorView.baseTheme({
+                '&': {
+                    width: '100%',
+                    height: '100%',
+                },
+                '&.cm-focused': {
+                    outline: 'none'
+                },
+                '.cm-editor': {
+                    'padding-bottom': '4em'
+                },
+                '.cm-panels.cm-panels-bottom': {
+                    border: 'none !important'
+                },
+                '.cm-gutter-error': {
+                    display: 'flex',
+                    height: '100%',
+                    alignItems: 'center',
+                },
+                '.cm-gutter-error > div': {
+                    width: '8px',
+                    height: '8px',
+                    background: 'red',
+                    borderRadius: '100%',
+                },
+                '.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
+                    background: 'Highlight'
+                },
+                '&dark.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
+                    background: 'Highlight'
+                },
+                '&light .cm-diagnostic': {
+                    color: 'black',
+                    background: '#E9E9E9'
+                },
+                '&dark .cm-diagnostic': {
+                    color: 'white',
+                    background: '#202020'
+                },
+                '&.cm-focused .cm-matchingBracket': {
+                    background: 'none !important'
+                },
+            }),
+            keymap.of([
+                ...closeBracketsKeymap,
+                ...defaultKeymap,
+                ...searchKeymap,
+                ...historyKeymap,
+                ...foldKeymap,
+                ...completionKeymap,
+                ...lintKeymap
+            ]),
             ...defineExtensions(),
         ],
         parent: wrapperRef.value
