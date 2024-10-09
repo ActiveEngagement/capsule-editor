@@ -1,3 +1,11 @@
+# [2.0.0-beta.59](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.58...v2.0.0-beta.59) (2024-10-09)
+
+
+### Bug Fixes
+
+* added ability to add extensions and define the indent size ([eb84328](https://github.com/ActiveEngagement/capsule-editor/commit/eb843281f4b56006d274642af67b10bfe8e98312))
+* updated theme colors for focussed selections ([18f3bde](https://github.com/ActiveEngagement/capsule-editor/commit/18f3bde1133fdcb7a34f7fe6ff147abf3d0383df))
+
 # [2.0.0-beta.58](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.57...v2.0.0-beta.58) (2024-09-18)
 
 
