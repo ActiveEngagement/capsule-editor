@@ -1,3 +1,10 @@
+# [2.0.0-beta.61](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.60...v2.0.0-beta.61) (2024-10-09)
+
+
+### Bug Fixes
+
+* add auto closing html tags ([3bcf554](https://github.com/ActiveEngagement/capsule-editor/commit/3bcf554c9c3078be589aa8ee648c855a6296aee7))
+
 # [2.0.0-beta.60](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.59...v2.0.0-beta.60) (2024-10-09)
 
 
