@@ -88,73 +88,28 @@ function setSelection(selection: EditorSelection) {
     });
 }
 
-function defineExtensions() {
-    return [
-        defaultTheme,
-        themeConfig.of([ props.theme ]),
-        footerPlugin,
-        EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
-        indentUnit.of(props.indent),
-        search(),
-        keymap.of([ indentWithTab  ]),
-        keymap.of([
-            {
-                key: 'Mod-a',
-                run: (view) => {
-                    view.dispatch({
-                        selection: {
-                            anchor: 0,
-                            head: view.state.doc.length
-                        }
-                    });
-
-                    return true;
-                },
-            },
-        ]),
-        html(),
-        props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset)),
-        EditorView.updateListener.of((update) => {
-            if(!update.focusChanged) {
-                return;
-            }
-
-            if(view.hasFocus) {
-                emit('focus');
-            }
-            else {
-                emit('blur');
-            }
-        }),
-        EditorView.lineWrapping,
-        EditorView.updateListener.of(view => {
-            if(view.selectionSet) {
-                emit('selection', view.state.selection);
-            }
-        }),
-        EditorView.updateListener.of(view => {
-            if(view.docChanged && view.state.doc.toString() !== currentContent.value) {
-                currentContent.value = view.state.doc.toString();
-                emit('update:content', currentContent.value);                        
-            }
-        }),
-        ...props.extensions
-    ].filter(value => !!value);
-}
-
 function initialize() {
     return new EditorView({
         doc: currentContent.value,
         extensions: [
+            defaultTheme,
+            themeConfig.of([ props.theme ]),
+            footerPlugin,
+            props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset)),
+            indentUnit.of(props.indent),
             lineNumbers(),
             highlightActiveLineGutter(),
             highlightSpecialChars(),
             highlightSelectionMatches(),
             history(),
+            html({
+                autoCloseTags: true,
+                matchClosingTags: false
+            }),
+            // autoCloseTags,
             foldGutter(),
             drawSelection(),
             dropCursor(),
-            EditorState.allowMultipleSelections.of(true),
             indentOnInput(),
             syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
             bracketMatching(),
@@ -162,6 +117,33 @@ function initialize() {
             autocompletion(),
             rectangularSelection(),
             crosshairCursor(),
+            search(),
+            EditorState.allowMultipleSelections.of(true),
+            EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
+            EditorView.updateListener.of((update) => {
+                if(!update.focusChanged) {
+                    return;
+                }
+
+                if(view.hasFocus) {
+                    emit('focus');
+                }
+                else {
+                    emit('blur');
+                }
+            }),
+            EditorView.lineWrapping,
+            EditorView.updateListener.of(view => {
+                if(view.selectionSet) {
+                    emit('selection', view.state.selection);
+                }
+            }),
+            EditorView.updateListener.of(view => {
+                if(view.docChanged && view.state.doc.toString() !== currentContent.value) {
+                    currentContent.value = view.state.doc.toString();
+                    emit('update:content', currentContent.value);                        
+                }
+            }),
             EditorView.baseTheme({
                 '&': {
                     width: '100%',
@@ -206,16 +188,29 @@ function initialize() {
                 },
             }),
             keymap.of([
+                indentWithTab,
                 ...closeBracketsKeymap,
                 ...defaultKeymap,
                 ...searchKeymap,
                 ...historyKeymap,
                 ...foldKeymap,
                 ...completionKeymap,
-                ...lintKeymap
+                ...lintKeymap,
+                {
+                    key: 'Mod-a',
+                    run: (view) => {
+                        view.dispatch({
+                            selection: {
+                                anchor: 0,
+                                head: view.state.doc.length
+                            }
+                        });
+
+                        return true;
+                    },
+                },
             ]),
-            ...defineExtensions(),
-        ],
+        ].filter(value => !!value),
         parent: wrapperRef.value
     });
 }
