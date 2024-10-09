@@ -51,8 +51,8 @@ dependencies:
     specifier: ^2.0.0-beta.5
     version: 2.0.0-beta.5(vue@3.5.6)
   capsule-lint:
-    specifier: ^0.5.1
-    version: 0.5.1(peggy@3.0.2)
+    specifier: ^0.5.3
+    version: 0.5.3(peggy@3.0.2)
   cm6-theme-material-dark:
     specifier: ^0.2.0
     version: 0.2.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)(@lezer/highlight@1.2.1)
@@ -1873,8 +1873,8 @@ packages:
     resolution: {integrity: sha512-GacvNTTuATm26qC74pt+ad1fW15mlQ/zuTzzY1ZoIzECTP8HURDfF43kNxPgf7H1jmelCBQTTbBNxdSXOA7Bqg==}
     dev: true
 
-  /capsule-lint@0.5.1(peggy@3.0.2):
-    resolution: {integrity: sha512-WYZefB75oVEhUaVx0w07VOYFoDwwDOi3E4VcNSGVnGX16FDVSXfWtpTHz4ENbW/cwLqJGydHJDaiuMvn5qstUg==}
+  /capsule-lint@0.5.3(peggy@3.0.2):
+    resolution: {integrity: sha512-L1kK9NJs6yW8pJJxGjJd1jUDrgzhYCxKewc9JOp50XruyTYJAXZad7oPDQ2pNEHzJ2keuFnCRZUTJF0QoYolhA==}
     hasBin: true
     dependencies:
       htmlhint: 1.1.4

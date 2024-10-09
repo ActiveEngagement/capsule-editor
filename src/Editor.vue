@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
+import { indentUnit } from '@codemirror/language';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, Extension } from '@codemirror/state';
 import { EditorView, ViewPlugin, keymap, lineNumbers } from '@codemirror/view';
@@ -16,8 +17,10 @@ import lint from './plugins/Lint';
 const props = withDefaults(defineProps<{
     content?: string;
     disableFilename?: boolean;
+    extensions?: Extension[];
     filename?: string;
     footer?: boolean;
+    indent?: string;
     ruleset?: CapsuleRuleset;
     saveButton?: boolean; 
     theme?: Extension;
@@ -26,8 +29,10 @@ const props = withDefaults(defineProps<{
 }>(), {
     content: undefined,
     disableFilename: false,
+    extensions: () => [],
     filename: undefined,
     footer: true,
+    indent: '    ',
     ruleset: undefined,
     saveButton: true,
     theme: () => materialDark,
@@ -109,13 +114,14 @@ function setSelection(selection: EditorSelection) {
     });
 }
 
-function extensions() {
+function defineExtensions() {
     return [
         defaultTheme,
         themeConfig.of([ props.theme ]),
         footerPlugin,
         EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
         lineNumbers(),
+        indentUnit.of(props.indent),
         search(),
         history(),
         keymap.of(historyKeymap),
@@ -163,6 +169,7 @@ function extensions() {
                 emit('update:content', currentContent.value);                        
             }
         }),
+        ...props.extensions
     ].filter(value => !!value);
 }
 
@@ -171,7 +178,7 @@ function initialize() {
         doc: currentContent.value,
         extensions: [
             basicSetup,
-            ...extensions(),
+            ...defineExtensions(),
         ],
         parent: wrapperRef.value
     });
