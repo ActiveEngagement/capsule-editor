@@ -1,6 +1,14 @@
 import { syntaxTree } from '@codemirror/language';
+import type { EditorView } from '@codemirror/view';
+import type { SyntaxNode } from '@lezer/common';
 import type { Action } from '../plugins/Lint';
 
+function getTagName(node: SyntaxNode, view: EditorView): string {
+    return view.state.doc.sliceString(
+        node.from, Math.min(node.to, view.state.doc.length)
+    );
+}  
+  
 const actions: Action[] = [{
     name: 'Fix Path',
     validate() {
@@ -13,7 +21,7 @@ const actions: Action[] = [{
             return;
         }
 
-        const [ _, eq, value] = matches;
+        const [ , eq, value] = matches;
 
         const anchor = from + eq.length + (matches.index ?? 0);
 
@@ -37,13 +45,35 @@ const actions: Action[] = [{
     }
 },{
     name: 'Remove Tag',
-    apply(view, from) {
-        const cursor = syntaxTree(view.state).cursor(from);
+    apply(view, from, to) {
+        const tree = syntaxTree(view.state);
+        const node = tree.resolve(to, -1);
 
-        cursor.moveTo(cursor.to);
-        
+        let nearest: SyntaxNode|null = node;
+
+        while(nearest?.parent) {
+            if(nearest.name === 'Element') {
+                break;
+            }
+            
+            nearest = nearest.parent;
+        }
+
+        const nearestOpenTag = nearest.getChild('OpenTag');
+
+        const openTagName = getTagName(nearestOpenTag.getChild('TagName'), view);
+        const closeTagName = nearest.getChild('CloseTag')
+            ? getTagName(nearest.getChild('CloseTag').getChild('TagName'), view)
+            : undefined;
+
         view.dispatch({
-            changes: { from: cursor.from , to: cursor.to, insert: '' }
+            changes: {
+                from: nearest.from,
+                to: openTagName === closeTagName
+                    ? nearest.getChild('CloseTag').to
+                    : nearestOpenTag.to,
+                insert: ''
+            }
         });
     }
 }];

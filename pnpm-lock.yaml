@@ -42,8 +42,8 @@ dependencies:
     specifier: ^3.0.0-beta.26
     version: 3.0.0-beta.26(vue@3.5.13)
   '@vue-interface/btn-dropdown':
-    specifier: ^2.0.0-beta.12
-    version: 2.0.0-beta.12(vue@3.5.13)
+    specifier: ^2.0.0-beta.22
+    version: 2.0.0-beta.22(vue@3.5.13)
   '@vue-interface/slide-deck':
     specifier: ^2.0.0-beta.5
     version: 2.0.0-beta.5(vue@3.5.13)
@@ -1447,26 +1447,24 @@ packages:
       vscode-uri: 3.0.8
     dev: true
 
-  /@vue-interface/btn-dropdown@2.0.0-beta.12(vue@3.5.13):
-    resolution: {integrity: sha512-vZ57IECXSbT0+wQbE7xCv61KAp9uqBfQebYvw7JoYtIOQ6ymZ+ROSkBfbgjyAwhlWJlOoyeu7xS4SFM/Mapx1Q==}
+  /@vue-interface/btn-dropdown@2.0.0-beta.22(vue@3.5.13):
+    resolution: {integrity: sha512-wnN2OeFu7atAdlOcKWpEqbz9CXi1NmLUwaeuN9ffrW0TqwOqUthQArUOAaY+JmyVMdPCFl47NEEPl9JRBJDedA==}
     peerDependencies:
-      vue: ^3.0.0
+      vue: ^3.3.4
     dependencies:
       '@popperjs/core': 2.11.8
       '@vue-interface/btn': 3.0.0-beta.26(vue@3.5.13)
-      '@vue-interface/btn-group': 2.0.0-beta.4(vue@3.5.13)
-      '@vue-interface/dropdown-menu': 2.0.0-beta.8(vue@3.5.13)
+      '@vue-interface/btn-group': 2.0.0-beta.10(vue@3.5.13)
+      '@vue-interface/dropdown-menu': 2.0.0-beta.21(vue@3.5.13)
       vue: 3.5.13(typescript@5.6.3)
     dev: false
 
-  /@vue-interface/btn-group@2.0.0-beta.4(vue@3.5.13):
-    resolution: {integrity: sha512-M1YZ4f3LzByW4R7vfd6/pbeaEtm02AkgdydzxncVRR7peW8XzejF7bw1y96cSZLawOCg6cszm8P6vK6Ux7pYvw==}
+  /@vue-interface/btn-group@2.0.0-beta.10(vue@3.5.13):
+    resolution: {integrity: sha512-fu1H7mmHDZxgbGT675jW1XpPmchw3lwUlMVzpWpjWjy0NHBwHndhI2Ged/bCXjE/AQu3pULfC07d8M8hqB6DNg==}
     peerDependencies:
-      vue: ^3.0.0
+      vue: ^3.3.4
     dependencies:
       '@vue-interface/btn': 3.0.0-beta.26(vue@3.5.13)
-      '@vue-interface/sizeable': 2.0.0-beta.11(vue@3.5.13)
-      '@vue-interface/variant': 2.0.0-beta.2(vue@3.5.13)
       vue: 3.5.13(typescript@5.6.3)
     dev: false
 
@@ -1480,20 +1478,10 @@ packages:
       vue: 3.5.13(typescript@5.6.3)
     dev: false
 
-  /@vue-interface/dropdown-menu@2.0.0-beta.8(vue@3.5.13):
-    resolution: {integrity: sha512-C8SgaEv0ZL4WaX22QRkbcOALsUdlB+pJnDYzVyN2rubgCnduCnBtRQhfGO6tF7j3kKLeYUoK01Opveh5BaPfcQ==}
+  /@vue-interface/dropdown-menu@2.0.0-beta.21(vue@3.5.13):
+    resolution: {integrity: sha512-V11xBg/exVcFOkaGwE5YPrb87tJWFN9BJH3rp+AwnYgGQyafJEvje1mqlyOdnPlH41pbENKAq8/mCMfgTfxbQA==}
     peerDependencies:
-      vue: ^3.0.0
-    dependencies:
-      '@vue-interface/variant': 2.0.0-beta.2(vue@3.5.13)
-      color: 4.2.3
-      vue: 3.5.13(typescript@5.6.3)
-    dev: false
-
-  /@vue-interface/sizeable@2.0.0-beta.11(vue@3.5.13):
-    resolution: {integrity: sha512-om5V5x5EbcGIZZqC7N1fj5RZElkbwujD6S43B6hx1tc7P+04fkmfByC9u2S4mGgCzpSq/1/gheVHL4EP29hU0A==}
-    peerDependencies:
-      vue: ^3.0.0
+      vue: ^3.3.4
     dependencies:
       vue: 3.5.13(typescript@5.6.3)
     dev: false

@@ -1,6 +1,13 @@
 import { syntaxTree } from '@codemirror/language';
+import type { EditorView } from '@codemirror/view';
 import { SyntaxNode } from '@lezer/common';
 import type { Action } from '../plugins/Lint';
+
+function getTagName(node: SyntaxNode, view: EditorView): string {
+    return view.state.doc.sliceString(
+        node.from, Math.min(node.to, view.state.doc.length)
+    );
+}
 
 const actions: Action[] = [{
     name: 'Close Tag',
@@ -13,28 +20,18 @@ const actions: Action[] = [{
         let nearest: SyntaxNode|null = around;
 
         while(nearest?.parent) {
-            if(nearest.name === 'Element' && !nearest.getChild('CloseTag')) {
+            if(nearest.name === 'Element') {
                 break;
             }
-
+            
             nearest = nearest.parent;
         }
-            
-        const tagNode = nearest.firstChild?.getChild('TagName');
-        
-        if(!tagNode) {
-            return;
-        }
-
-        const tagName = view.state.doc.sliceString(
-            tagNode.from, Math.min(tagNode.to, view.state.doc.length)
-        );
 
         view.dispatch({
             changes: {
-                from: nearest.to,
-                to: nearest.to,
-                insert: `</${tagName}>`
+                from: nearest.getChild('CloseTag')?.from ?? view.state.doc.length,
+                to:  nearest.getChild('CloseTag')?.from ?? view.state.doc.length,
+                insert: `</${getTagName(around.parent.getChild('TagName'), view)}>`
             },
         });
     }

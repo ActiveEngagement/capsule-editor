@@ -294,12 +294,12 @@ defineExpose({
             ref="wrapperRef"
             class="cm-wrapper h-full w-full" />
 
-        <editor-footer
+        <EditorFooter
             v-if="footer"
             ref="footerRef"
             v-model="errors"
             :save-button="saveButton"
-            :view="view"
+            :view="() => view"
             @save="emit('save')"
             @goto="onGoto">
             <template #before-save-button>
@@ -323,6 +323,6 @@ defineExpose({
                     :filename="filename"
                     :content="currentContent" />
             </template>
-        </editor-footer>
+        </EditorFooter>
     </div>
 </template>

@@ -11,7 +11,7 @@ import EditorError from './EditorError.vue';
 const props = withDefaults(defineProps<{
     saveButton?: boolean,
     saveButtonLabel?: string,
-    view?: EditorView
+    view?: () => EditorView
 }>(), {
     saveButton: true,
     saveButtonLabel: 'Save',
@@ -89,13 +89,15 @@ function activate(view: EditorView) {
 }
 
 function onClickAction(diagnostic: Diagnostic, action: Action) {
-    if(!props.view) {
+    const view = props.view?.();
+    
+    if(!view) {
         return;
     }
-    
-    action.apply(props.view, diagnostic.from, diagnostic.to);
 
-    forceLinting(props.view);
+    action.apply(view, diagnostic.from, diagnostic.to);
+
+    forceLinting(view);
 }
 
 defineExpose({
