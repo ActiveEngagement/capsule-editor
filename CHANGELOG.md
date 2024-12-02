@@ -1,3 +1,10 @@
+# [2.0.0-beta.63](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.62...v2.0.0-beta.63) (2024-12-02)
+
+
+### Bug Fixes
+
+* fix issues with remove tag and close tag not working properly ([65d4465](https://github.com/ActiveEngagement/capsule-editor/commit/65d4465c39b0dfd214f464e1db1295f745d2f4ab))
+
 # [2.0.0-beta.62](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.61...v2.0.0-beta.62) (2024-11-20)
 
 
