@@ -38,7 +38,7 @@
     "@lezer/common": "^1.2.1",
     "@lezer/highlight": "^1.2.1",
     "@vue-interface/btn": "^3.0.0-beta.26",
-    "@vue-interface/btn-dropdown": "^2.0.0-beta.22",
+    "@vue-interface/btn-dropdown": "^2.0.0-beta.24",
     "@vue-interface/slide-deck": "^2.0.0-beta.5",
     "capsule-lint": "^0.5.4",
     "cm6-theme-basic-dark": "^0.2.0",

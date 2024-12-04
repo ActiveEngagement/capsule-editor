@@ -42,8 +42,8 @@ dependencies:
     specifier: ^3.0.0-beta.26
     version: 3.0.0-beta.26(vue@3.5.13)
   '@vue-interface/btn-dropdown':
-    specifier: ^2.0.0-beta.22
-    version: 2.0.0-beta.22(vue@3.5.13)
+    specifier: ^2.0.0-beta.24
+    version: 2.0.0-beta.24(vue@3.5.13)
   '@vue-interface/slide-deck':
     specifier: ^2.0.0-beta.5
     version: 2.0.0-beta.5(vue@3.5.13)
@@ -1447,8 +1447,8 @@ packages:
       vscode-uri: 3.0.8
     dev: true
 
-  /@vue-interface/btn-dropdown@2.0.0-beta.22(vue@3.5.13):
-    resolution: {integrity: sha512-wnN2OeFu7atAdlOcKWpEqbz9CXi1NmLUwaeuN9ffrW0TqwOqUthQArUOAaY+JmyVMdPCFl47NEEPl9JRBJDedA==}
+  /@vue-interface/btn-dropdown@2.0.0-beta.24(vue@3.5.13):
+    resolution: {integrity: sha512-fhBnlCeIgQEtBjPLuiGr1/MrNTlTiKZ1O+WPJNUz4dn1Q2+wyoZUzTZDl2K8ulkXF4FeZmgG/fMnNUXrSCR0Zw==}
     peerDependencies:
       vue: ^3.3.4
     dependencies:
