@@ -1,3 +1,10 @@
+# [2.0.0-beta.64](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.63...v2.0.0-beta.64) (2024-12-04)
+
+
+### Bug Fixes
+
+* fixed some minor JS errors with btn-dropdown ([3cf4295](https://github.com/ActiveEngagement/capsule-editor/commit/3cf42952c62d3fba7f9870c0da4a0a51ee2c4971))
+
 # [2.0.0-beta.63](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.62...v2.0.0-beta.63) (2024-12-02)
 
 
