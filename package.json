@@ -11,9 +11,9 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/capsule-editor.js",
-      "require": "./dist/capsule-editor.umd.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/capsule-editor.umd.cjs"
     },
     "./dist/style.css": "./dist/style.css"
   },
@@ -52,7 +52,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^10.0.6",
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue": "^6.0.0",
     "@vue/compiler-sfc": "^3.5.17",
     "@vue/eslint-config-typescript": "^13.0.0",
     "autoprefixer": "^10.4.21",
@@ -70,7 +70,7 @@
     "tailwindcss": "^3.4.17",
     "thememirror": "^2.0.1",
     "typescript": "^5.8.3",
-    "vite": "^5.4.19",
+    "vite": "^7.0.4",
     "vue": "^3.5.17",
     "vue-tsc": "^2.2.12"
   }
