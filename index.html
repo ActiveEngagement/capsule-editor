@@ -16,75 +16,11 @@
 </head>
 
 <body>
-    <div id="app" class="h-full flex flex-col overflow-hidden">
-        <select v-model="theme">
-            <option>basic-light</option>
-            <option>basic-dark</option>
-        </select>
-
-        <editor
-            ref="editor"
-            v-model:filename="filename"
-            v-model:content="content"
-            :theme="currentTheme"
-            :toolbar="false"
-            :save-button="false"
-            :ruleset="{
-                'spec-char-escape': false
-            }"
-            class="h-full"
-            @selection="value => selection = value"
-            @focus="onFocus"
-            @blur="onBlur" />
-    </div>
-
+    <div id="app"></div>
+        
     <script type="module">
-        import './index.css';
-        import { basicLight } from 'cm6-theme-basic-light';
-        import { basicDark } from 'cm6-theme-basic-dark';
-        import { createApp, ref } from 'vue/dist/vue.esm-bundler.js';
-        import { Editor } from './index.ts';
-
-        // import 'animate.css';
-
-const content = `<div><a href="{{test}}">test</div>`;
-
-        const themes = {
-            'basic-light': basicLight,
-            'basic-dark': basicDark
-        }
-
-        const theme = ref('basic-dark');
-
-        const vue = createApp({
-            components: {
-                Editor
-            },
-            computed: {
-                content: () => content,
-                currentTheme: () => {
-                    return themes[theme.value];
-                }
-            },
-            methods: {
-                onFocus() {
-                    console.log('focus')
-                },
-                onBlur() {
-                    console.log('blur')
-                }
-            },
-            setup() {
-                return {
-                    theme,
-                    filename: ref('test.html'),
-                    content: ref(content),
-                    selection: ref(undefined)
-                }
-            }
-        });
-
-        vue.mount('#app')
+        import './demo/index.css';
+        import './demo/index';         
     </script>
 </body>
 
