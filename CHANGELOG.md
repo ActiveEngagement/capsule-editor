@@ -1,3 +1,10 @@
+# [2.0.0-beta.66](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.65...v2.0.0-beta.66) (2025-07-16)
+
+
+### Bug Fixes
+
+* fix entity replace with greater than symbols ([39dc5d4](https://github.com/ActiveEngagement/capsule-editor/commit/39dc5d4cd151c86b4359ec711f96173896bd74d9))
+
 # [2.0.0-beta.65](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.64...v2.0.0-beta.65) (2025-07-16)
 
 
