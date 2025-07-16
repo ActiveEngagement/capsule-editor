@@ -13,7 +13,7 @@ const actions: Action[] = [{
             
         const map: Record<string,string> = {
             '<': '&lt;',
-            '>': '&rt;',
+            '>': '&gt;',
             '&': '&amp;'
         };
 
