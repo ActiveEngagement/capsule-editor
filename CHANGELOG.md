@@ -1,3 +1,10 @@
+# [2.0.0-beta.65](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.64...v2.0.0-beta.65) (2025-07-16)
+
+
+### Bug Fixes
+
+* fix issue with closing tag pairs ([ae4f517](https://github.com/ActiveEngagement/capsule-editor/commit/ae4f517132d94e2896ac2e6e163d79c65f8dc9ac))
+
 # [2.0.0-beta.64](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.63...v2.0.0-beta.64) (2024-12-04)
 
 
