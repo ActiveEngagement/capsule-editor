@@ -27,15 +27,32 @@ const actions: Action[] = [{
             nearest = nearest.parent;
         }
 
+        if(!nearest || nearest.name !== 'Element') {
+            return;
+        }
+
+        let insertPosition = nearest.to;
+
+        const closeTag = nearest.getChild('CloseTag');
+
+        if(closeTag) {
+            insertPosition = closeTag.from;
+        }
+
+        const openTag = nearest.getChild('OpenTag');
+
+        if(!openTag) {
+            return;
+        }
+
         view.dispatch({
             changes: {
-                from: nearest.getChild('CloseTag')?.from ?? view.state.doc.length,
-                to:  nearest.getChild('CloseTag')?.from ?? view.state.doc.length,
+                from: insertPosition,
+                to: insertPosition,
                 insert: `</${getTagName(around.parent.getChild('TagName'), view)}>`
             },
         });
     }
-}
-];
+}];
 
 export default actions;
