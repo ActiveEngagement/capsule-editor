@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue';
+import tailwindcss from '@tailwindcss/vite';
 import { pascalCase } from 'change-case';
 import path from 'path';
 import { defineConfig } from 'vite';
@@ -38,6 +39,7 @@ export default ({ command }) => defineConfig({
         }
     },
     plugins: [
-        vue()
+        vue(),
+        tailwindcss()
     ],
 });

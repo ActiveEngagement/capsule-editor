@@ -2,7 +2,6 @@
 import { Action, Diagnostic, forceLinting } from '@codemirror/lint';
 import { EditorView } from '@codemirror/view';
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
-import { Btn } from '@vue-interface/btn';
 import { BtnDropdown } from '@vue-interface/btn-dropdown';
 import { Rule } from 'capsule-lint';
 import { Ref, computed, ref } from 'vue';
@@ -114,23 +113,21 @@ defineExpose({
             v-if="hasLinted"
             class="flex justify-between items-center w-full px-2 py-[.33rem]">
             <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
-                <div class="flex-shrink-0">
+                <div class="shrink-0">
                     <div
                         v-if="diagnostics?.length"
                         class="flex items-center justify-center gap-2">
-                        <btn
-                            class="btn-sm btn-secondary"
-                            type="button"
+                        <button
+                            class="btn btn-secondary btn-sm"
                             @click="goto(index - 1)">
                             <ChevronLeftIcon class="w-4 h-4" />
-                        </btn> 
-                        <span class="font-mono text-center  min-w-[6rem]">{{ index + 1 }} of {{ diagnostics.length }}</span>
-                        <btn
-                            class="btn-sm btn-secondary"
-                            type="button"
+                        </button> 
+                        <span class="font-mono text-center min-w-24">{{ index + 1 }} of {{ diagnostics.length }}</span>
+                        <button
+                            class="btn btn-secondary btn-sm"
                             @click="goto(index + 1)">
                             <ChevronRightIcon class="w-4 h-4" />
-                        </btn>
+                        </button>
                     </div>
                 </div>
                 <button
@@ -145,34 +142,32 @@ defineExpose({
                     :key="index"
                     :error="currentDiagnostic" />
             </div>
-            <div class="editor-footer-action flex-shrink-0">
+            <div class="editor-footer-action shrink-0">
                 <slot name="before-save-button" />
 
                 <slot name="action-button">
                     <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
                         <template v-if="currentDiagnostic.actions.length === 1">
-                            <btn
-                                type="button"
-                                class="btn-secondary btn-sm flex items-center gap-2"
+                            <button
+                                class="btn btn-secondary btn-sm"
                                 @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
                                 {{ currentDiagnostic.actions[0].name }}
-                            </btn>
+                            </button>
                         </template>
                         <template v-else>
                             <div>
                                 <BtnDropdown
                                     type="button"
                                     label="Fix Errors"
-                                    button-class="btn-sm btn-primary"
+                                    size="btn-group-sm"
+                                    variant="btn-primary"
                                     dropup>
-                                    <button
+                                    <a
                                         v-for="(action, i) in currentDiagnostic.actions"
                                         :key="`${currentDiagnostic.rule.id}-${i}`"
-                                        type="button"
-                                        variant="light"
                                         @click="onClickAction(currentDiagnostic, action)">
                                         {{ action.name }}
-                                    </button>
+                                    </a>
                                 </BtnDropdown>
                             </div>
                         </template>
@@ -186,7 +181,7 @@ defineExpose({
                     <btn
                         v-if="saveButton && !diagnostics.length"
                         type="button"
-                        class="btn-primary"
+                        class="btn btn-primary"
                         @click="emit('save')">
                         {{ saveButtonLabel }}
                     </btn>

@@ -18,7 +18,7 @@ const url = computed(() => {
         <a
             :href="url"
             target="_blank"
-            class="btn btn-sm btn-link ml-1 mr-3">
+            class="btn btn-sm ml-1 mr-3">
             <ArrowTopRightOnSquareIcon class="w-4 h-4" />
         </a>
     </code>    
