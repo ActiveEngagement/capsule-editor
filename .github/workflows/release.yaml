@@ -5,35 +5,40 @@ on:
       - master
 
 permissions:
-  contents: read
+  id-token: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
-          node-version: "22"
-      - uses: pnpm/action-setup@v4
+          node-version: 22
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+      - name: Upgrade NPM to Latest
+        run: npm install -g npm@latest
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       - name: Build for Distribution
         run: pnpm build
-      - name: Create Release PR or Publish
+      - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish
+          publish: pnpm changeset publish --access public --provenance
           version: pnpm changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
