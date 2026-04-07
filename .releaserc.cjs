@@ -9,10 +9,15 @@ module.exports = {
             prerelease: true,
         },
     ],
-    plugins: [
-        '@semantic-release/commit-analyzer',
-        '@semantic-release/release-notes-generator',
-        ["@semantic-release/npm", { "provenance": true }],
+    verifyConditions: [
+        '@semantic-release/changelog',
+        '@semantic-release/git',
+        ['@semantic-release/github', { successComment: false, failTitle: false }],
+    ],
+    analyzeCommits: ['@semantic-release/commit-analyzer'],
+    generateNotes: ['@semantic-release/release-notes-generator'],
+    prepare: [
+        ['@semantic-release/npm', { provenance: true }],
         '@semantic-release/changelog',
         [
             '@semantic-release/git',
@@ -21,12 +26,15 @@ module.exports = {
                 message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             },
         ],
-        [
-            '@semantic-release/github',
-            {
-              "successComment": false,
-              "failTitle": false
-            }          
-        ],
+    ],
+    publish: [
+        ['@semantic-release/npm', { provenance: true }],
+        ['@semantic-release/github', { successComment: false, failTitle: false }],
+    ],
+    success: [
+        ['@semantic-release/github', { successComment: false, failTitle: false }],
+    ],
+    fail: [
+        ['@semantic-release/github', { successComment: false, failTitle: false }],
     ],
 };
