@@ -1,3 +1,17 @@
+# [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
+
+
+### Features
+
+* enable OIDC provenance for npm publish ([21d9f6a](https://github.com/ActiveEngagement/capsule-editor/commit/21d9f6a19efa48acc9c2798df51a370fa7d18087))
+
+
+### BREAKING CHANGES
+
+* upgrade to Tailwind CSS v4 and semantic-release v25
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
 # [2.0.0-beta.68](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.67...v2.0.0-beta.68) (2026-04-07)
 
 
