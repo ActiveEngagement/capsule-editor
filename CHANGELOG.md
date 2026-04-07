@@ -1,3 +1,10 @@
+# [2.0.0-beta.68](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.67...v2.0.0-beta.68) (2026-04-07)
+
+
+### Bug Fixes
+
+* remove registry-url and enable provenance for OIDC publish ([3cef350](https://github.com/ActiveEngagement/capsule-editor/commit/3cef350db141d403c184b742a9f34309203b883a))
+
 # [2.0.0-beta.67](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.66...v2.0.0-beta.67) (2026-04-07)
 
 
