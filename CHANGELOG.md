@@ -1,3 +1,23 @@
+# [2.0.0-beta.67](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.66...v2.0.0-beta.67) (2026-04-07)
+
+
+### Bug Fixes
+
+* add packageManager field for pnpm/action-setup@v4 ([56559ee](https://github.com/ActiveEngagement/capsule-editor/commit/56559eeb919ab6ed7dfdafcf445b2332fb3f2ca0))
+* consolidate release workflows for npm trusted publisher OIDC ([e803337](https://github.com/ActiveEngagement/capsule-editor/commit/e803337c9053e738458fea253b93dba1ed95e9cc))
+
+
+### Features
+
+* restructure release pipeline for npm trusted publisher OIDC ([82ec97c](https://github.com/ActiveEngagement/capsule-editor/commit/82ec97c01682af2ff8cbb32a3bb96172191bc807))
+
+
+### BREAKING CHANGES
+
+* upgraded to Tailwind CSS v4 with new configuration format
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
 # [2.0.0-beta.66](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.65...v2.0.0-beta.66) (2025-07-16)
 
 
