@@ -5,32 +5,28 @@ on:
       - master
 
 permissions:
-  id-token: write
-  contents: write
-  pull-requests: write
-
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: false
+  contents: read
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-      - name: Setup Node
-        uses: actions/setup-node@v6
+          node-version: "lts/*"
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 22
-          cache: pnpm
-          registry-url: "https://registry.npmjs.org"
+          version: 8
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - name: Build for Distribution
         run: pnpm build
       - name: Create Release Pull Request or Publish
@@ -40,3 +36,4 @@ jobs:
           version: pnpm changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
