@@ -2,7 +2,7 @@ import type { Action as LintAction } from '@codemirror/lint';
 import { Diagnostic, lintGutter, linter } from '@codemirror/lint';
 import { StateEffect } from '@codemirror/state';
 import { EditorView, showPanel } from '@codemirror/view';
-import { lint, type CapsuleRuleset, type Hint } from 'capsule-lint';
+import { lint, type CapsuleRuleset, type Hint, type LintOptions } from 'capsule-lint';
 import EditorFooter from 'src/EditorFooter.vue';
 import actions from '../actions';
 
@@ -12,12 +12,12 @@ export type Action = LintAction & {
 
 const setDiagnosticsEffect = StateEffect.define<Diagnostic[]>();
 
-export default function(footer: typeof EditorFooter, ruleset?: CapsuleRuleset) {
+export default function(footer: typeof EditorFooter, ruleset?: CapsuleRuleset, options?: LintOptions) {
     return [
         linter(view => {
             const { doc } = view.state.toJSON();
-                
-            const diagnostics = lint(doc, ruleset).map((error: Hint) => {
+
+            const diagnostics = lint(doc, ruleset, options).map((error: Hint) => {
                 const pos = view.state.doc.line(error.line);
                 const from  = Math.min(doc.length, pos.from - 1 + error.col);
                 const to = Math.min(doc.length, from + error.raw.length);
