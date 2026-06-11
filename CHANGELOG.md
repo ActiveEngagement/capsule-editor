@@ -1,5 +1,16 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.0
+
+### Minor Changes
+
+- [#11](https://github.com/ActiveEngagement/capsule-editor/pull/11) [`24eb296`](https://github.com/ActiveEngagement/capsule-editor/commit/24eb2964c143e8d352fb28c8fd9ba96e52ff8b1a) Thanks [@actengage](https://github.com/actengage)! - Add plainText prop for plain-text email editing mode
+
+  - New `plainText` prop on `<Editor>` disables HTML linting and syntax highlighting when `true`
+  - Passes `{ htmlLinting: false }` to capsule-lint so FreeMarker errors still surface but HTML-specific errors (spec-char-escape, tag-pair, etc.) are suppressed
+  - Skips the CodeMirror HTML language extension in plain-text mode to avoid HTML-specific autocomplete and folding
+  - Bumps `capsule-lint` peer dependency requirement to `^0.6.0`
+
 ## 3.0.0
 
 ### Major Changes
