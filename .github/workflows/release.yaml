@@ -36,7 +36,7 @@ jobs:
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          publish: bash -c 'pnpm config set //registry.npmjs.org/:_authToken $NODE_AUTH_TOKEN && pnpm changeset publish'
+          publish: pnpm changeset publish
           version: pnpm changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
