@@ -22,8 +22,9 @@ const props = withDefaults(defineProps<{
     filename?: string;
     footer?: boolean;
     indent?: string;
+    plainText?: boolean;
     ruleset?: CapsuleRuleset;
-    saveButton?: boolean; 
+    saveButton?: boolean;
     theme?: Extension;
     title?: string;
     toolbar?: boolean;
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<{
     filename: undefined,
     footer: true,
     indent: '    ',
+    plainText: false,
     ruleset: undefined,
     saveButton: true,
     theme: () => basicDark,
@@ -95,14 +97,14 @@ function initialize() {
             defaultTheme,
             themeConfig.of([ props.theme ]),
             footerPlugin,
-            props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset)),
+            props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset), { htmlLinting: !props.plainText }),
             indentUnit.of(props.indent),
             lineNumbers(),
             highlightActiveLineGutter(),
             highlightSpecialChars(),
             highlightSelectionMatches(),
             history(),
-            html({
+            !props.plainText && html({
                 autoCloseTags: true,
                 matchClosingTags: false
             }),
