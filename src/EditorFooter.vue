@@ -111,7 +111,7 @@ defineExpose({
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
         <div
             v-if="hasLinted"
-            class="flex justify-between items-center w-full px-2 py-[.33rem]">
+            class="flex justify-between items-center w-full px-2 py-2">
             <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
                 <div class="shrink-0">
                     <div
@@ -178,13 +178,13 @@ defineExpose({
                     name="save-button"
                     :diagnostics="diagnostics"
                     :save-button-label="diagnostics">
-                    <btn
+                    <button
                         v-if="saveButton && !diagnostics.length"
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-primary"
                         @click="emit('save')">
                         {{ saveButtonLabel }}
-                    </btn>
+                    </button>
                 </slot>
 
                 <slot
