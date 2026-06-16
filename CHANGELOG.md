@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.1
+
+### Patch Changes
+
+- [`1b522b7`](https://github.com/ActiveEngagement/capsule-editor/commit/1b522b7c86861b768da9bdc799cf42c91f5e95fd) Thanks [@Andrew-Knt](https://github.com/Andrew-Knt)! - add more padding-y to EditorFooter
+
 ## 3.1.0
 
 ### Minor Changes
