@@ -178,13 +178,13 @@ defineExpose({
                     name="save-button"
                     :diagnostics="diagnostics"
                     :save-button-label="diagnostics">
-                    <btn
+                    <button
                         v-if="saveButton && !diagnostics.length"
                         type="button"
                         class="btn btn-primary"
                         @click="emit('save')">
                         {{ saveButtonLabel }}
-                    </btn>
+                    </button>
                 </slot>
 
                 <slot
