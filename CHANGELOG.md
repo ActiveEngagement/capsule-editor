@@ -1,5 +1,13 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.2
+
+### Patch Changes
+
+- [#14](https://github.com/ActiveEngagement/capsule-editor/pull/14) [`760a466`](https://github.com/ActiveEngagement/capsule-editor/commit/760a466f7cdee919ecae8a1ccc50246a66dc2d6d) Thanks [@actengage](https://github.com/actengage)! - Fix unresolvable `<btn>` component in EditorFooter
+
+  The save button in `EditorFooter` used `<btn>` which is not a registered Vue component, causing a `[Vue warn]: Failed to resolve component: btn` console warning. Changed to the native `<button>` element.
+
 ## 3.1.1
 
 ### Patch Changes
