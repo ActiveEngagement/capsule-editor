@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.3
+
+### Patch Changes
+
+- [#16](https://github.com/ActiveEngagement/capsule-editor/pull/16) [`732aac0`](https://github.com/ActiveEngagement/capsule-editor/commit/732aac0865d684abc8ccce58b9f4619017dd6677) Thanks [@actengage](https://github.com/actengage)! - Bump `capsule-lint` peer dependency to `^0.6.3`.
+
 ## 3.1.2
 
 ### Patch Changes
