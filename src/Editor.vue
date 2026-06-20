@@ -96,6 +96,10 @@ function initialize() {
         extensions: [
             defaultTheme,
             themeConfig.of([ props.theme ]),
+            // Consumer-supplied extensions take precedence over the editor's
+            // defaults, so they can reconfigure built-ins (e.g. search panel
+            // placement) rather than only append to them.
+            ...props.extensions,
             footerPlugin,
             props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset), { htmlLinting: !props.plainText }),
             indentUnit.of(props.indent),
