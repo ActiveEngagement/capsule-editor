@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.4
+
+### Patch Changes
+
+- [#18](https://github.com/ActiveEngagement/capsule-editor/pull/18) [`bc2fdd3`](https://github.com/ActiveEngagement/capsule-editor/commit/bc2fdd3385538fe29292a11b672f9c8706546299) Thanks [@actengage](https://github.com/actengage)! - Honor the `extensions` prop. It was declared but never applied to the editor's `EditorView` config, so consumer-supplied extensions were silently ignored. They're now spread into the config with precedence over the editor's defaults, allowing built-ins to be reconfigured (e.g. docking the search panel to the top via `search({ top: true })`).
+
 ## 3.1.3
 
 ### Patch Changes
