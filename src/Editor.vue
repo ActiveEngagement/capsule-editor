@@ -274,7 +274,7 @@ defineExpose({
 
 <template>
     <div class="capsule-editor">
-        <editor-toolbar
+        <EditorToolbar
             v-if="toolbar"
             ref="toolbarRef"
             :disable-filename="disableFilename"
@@ -294,7 +294,7 @@ defineExpose({
                     :filename="filename"
                     :content="currentContent" />
             </template>
-        </editor-toolbar>
+        </EditorToolbar>
 
         <div
             ref="wrapperRef"

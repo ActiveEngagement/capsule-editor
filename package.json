@@ -59,6 +59,7 @@
     "@tailwindcss/vite": "4.2.2",
     "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "^6.0.5",
+    "@vue-interface/eslint-config": "2.0.1",
     "@vue/compiler-sfc": "^3.5.31",
     "@vue/eslint-config-typescript": "^14.7.0",
     "autoprefixer": "^10.4.27",

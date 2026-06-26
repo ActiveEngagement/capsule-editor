@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-    'goto': [Diagnostic, Diagnostic|undefined]
+    'goto': [Diagnostic, Diagnostic | undefined]
     'update:modelValue': [Ref<Diagnostic[]>]
     'save': []
 }>();
@@ -38,17 +38,19 @@ function goto(index: number) {
     }
 
     const lastDiagnostic = currentDiagnostic.value;
-            
-    currentDiagnostic.value = diagnostics.value[index] as Diagnostic & { rule: any };   
+
+    currentDiagnostic.value = diagnostics.value[index] as Diagnostic & { rule: Rule };
 
     emit('goto', currentDiagnostic.value, lastDiagnostic);
 }
 
-function compare(a: any, b: any) {
+type RuleDiagnostic = Diagnostic & { rule: Rule };
+
+function compare(a: RuleDiagnostic | undefined, b: RuleDiagnostic | undefined) {
     return (!!a && !!b)
-                && a.from === b.from
-                && a.to === b.to
-                && a.rule.id === b.rule.id;
+        && a.from === b.from
+        && a.to === b.to
+        && a.rule.id === b.rule.id;
 }
 
 function update(values: Diagnostic[]) {
@@ -56,12 +58,12 @@ function update(values: Diagnostic[]) {
     hasLinted.value = true;
 
     if(!currentDiagnostic.value) {
-        currentDiagnostic.value = diagnostics.value[index.value] as Diagnostic & { rule: any };
+        currentDiagnostic.value = diagnostics.value[index.value] as RuleDiagnostic;
     }
 
     emit('update:modelValue', diagnostics);
 }
-        
+
 function activate(view: EditorView) {
     const { from, to } = view.state.selection.main;
 
@@ -74,22 +76,22 @@ function activate(view: EditorView) {
     });
 
     const match = diagnostics.value.find((diagnostic: Diagnostic) => {
-        return compare(diagnostic, currentDiagnostic.value);
+        return compare(diagnostic as RuleDiagnostic, currentDiagnostic.value);
     });
 
     if(active.length) {
         const max = Math.max(0, currentDiagnostic.value ? active.indexOf(currentDiagnostic.value) : 0);
-            
-        currentDiagnostic.value = active[max] as Diagnostic & { rule: any };
+
+        currentDiagnostic.value = active[max] as RuleDiagnostic;
     }
     else {
-        currentDiagnostic.value = (match || diagnostics.value[index.value]) as Diagnostic & { rule: any };
+        currentDiagnostic.value = (match || diagnostics.value[index.value]) as RuleDiagnostic;
     }
 }
 
 function onClickAction(diagnostic: Diagnostic, action: Action) {
     const view = props.view?.();
-    
+
     if(!view) {
         return;
     }
@@ -111,7 +113,7 @@ defineExpose({
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
         <div
             v-if="hasLinted"
-            class="flex justify-between items-center w-full px-2 py-2">
+            class="flex justify-between items-center w-full px-2 py-[.33rem]">
             <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
                 <div class="shrink-0">
                     <div
@@ -121,8 +123,8 @@ defineExpose({
                             class="btn btn-secondary btn-sm"
                             @click="goto(index - 1)">
                             <ChevronLeftIcon class="w-4 h-4" />
-                        </button> 
-                        <span class="font-mono text-center min-w-24">{{ index + 1 }} of {{ diagnostics.length }}</span>
+                        </button>
+                        <span class="font-mono text-center px-2 min-w-18">{{ index + 1 }} of {{ diagnostics.length }}</span>
                         <button
                             class="btn btn-secondary btn-sm"
                             @click="goto(index + 1)">
@@ -134,8 +136,7 @@ defineExpose({
                     v-if="currentDiagnostic"
                     type="button"
                     @click="goto(index)">
-                    <ExclamationTriangleIcon
-                        class="w-6 h-6" />
+                    <ExclamationTriangleIcon class="w-6 h-6" />
                 </button>
                 <EditorError
                     v-if="currentDiagnostic"
