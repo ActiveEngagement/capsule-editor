@@ -7,6 +7,10 @@ const base00 = '#2E3235',
     base01 = '#DDDDDD',
     base02 = '#B9D2FF',
     base03 = '#b0b0b0',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    base04 = '#d0d0d0',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    base05 = '#e0e0e0',
     base06 = '#808080',
     base07 = '#000000',
     base08 = '#A54543',

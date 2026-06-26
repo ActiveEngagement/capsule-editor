@@ -11,7 +11,9 @@ const base00 = '#2e3440', // black
     base03 = '#4c566a'; // grey
 
 // Snow Storm
-const base05 = '#e5e9f0', // off white
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const base04 = '#d8dee9', // grey
+    base05 = '#e5e9f0', // off white
     base06 = '#eceff4'; // white
 
 // Frost
