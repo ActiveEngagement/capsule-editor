@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.5
+
+### Patch Changes
+
+- [#20](https://github.com/ActiveEngagement/capsule-editor/pull/20) [`b592327`](https://github.com/ActiveEngagement/capsule-editor/commit/b5923272af7937c870504a182f3003fc9b263922) Thanks [@actengage](https://github.com/actengage)! - Add editor action for `no-closing-void-tags` lint rule introduced in capsule-lint v0.6.4. Simple void elements (`br`, `hr`, `wbr`) offer a "Replace with Opening Tag" action; attribute-bearing void elements (`img`, `input`, `meta`, `link`, etc.) offer a "Remove Tag" action.
+
 ## 3.1.4
 
 ### Patch Changes
