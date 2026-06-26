@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.1.6
+
+### Patch Changes
+
+- [#22](https://github.com/ActiveEngagement/capsule-editor/pull/22) [`73ac496`](https://github.com/ActiveEngagement/capsule-editor/commit/73ac49602d492df18d5689793019025645741ddd) Thanks [@actengage](https://github.com/actengage)! - Tighten footer padding and counter width in EditorFooter.
+
 ## 3.1.5
 
 ### Patch Changes
