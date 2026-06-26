@@ -30,21 +30,23 @@ const hasLinted = ref(false);
 const index = computed(() => Math.max(0, currentDiagnostic.value ? diagnostics.value.indexOf(currentDiagnostic.value) : 0));
 
 function goto(index: number) {
-    if (index < 0) {
+    if(index < 0) {
         index = diagnostics.value.length - 1;
     }
-    else if (index > diagnostics.value.length - 1) {
+    else if(index > diagnostics.value.length - 1) {
         index = 0;
     }
 
     const lastDiagnostic = currentDiagnostic.value;
 
-    currentDiagnostic.value = diagnostics.value[index] as Diagnostic & { rule: any };
+    currentDiagnostic.value = diagnostics.value[index] as Diagnostic & { rule: Rule };
 
     emit('goto', currentDiagnostic.value, lastDiagnostic);
 }
 
-function compare(a: any, b: any) {
+type RuleDiagnostic = Diagnostic & { rule: Rule };
+
+function compare(a: RuleDiagnostic | undefined, b: RuleDiagnostic | undefined) {
     return (!!a && !!b)
         && a.from === b.from
         && a.to === b.to
@@ -55,18 +57,18 @@ function update(values: Diagnostic[]) {
     diagnostics.value = values;
     hasLinted.value = true;
 
-    if (!currentDiagnostic.value) {
-        currentDiagnostic.value = diagnostics.value[index.value] as Diagnostic & { rule: any };
+    if(!currentDiagnostic.value) {
+        currentDiagnostic.value = diagnostics.value[index.value] as RuleDiagnostic;
     }
 
-    emit('update:modelValue', diagnostics);
+    emit('update:modelValue', diagnostics.value);
 }
 
 function activate(view: EditorView) {
     const { from, to } = view.state.selection.main;
 
     const active = diagnostics.value.filter((diagnostic: Diagnostic) => {
-        if (from === to) {
+        if(from === to) {
             return diagnostic.from <= from && diagnostic.to >= to;
         }
 
@@ -77,20 +79,20 @@ function activate(view: EditorView) {
         return compare(diagnostic, currentDiagnostic.value);
     });
 
-    if (active.length) {
+    if(active.length) {
         const max = Math.max(0, currentDiagnostic.value ? active.indexOf(currentDiagnostic.value) : 0);
 
-        currentDiagnostic.value = active[max] as Diagnostic & { rule: any };
+        currentDiagnostic.value = active[max] as RuleDiagnostic;
     }
     else {
-        currentDiagnostic.value = (match || diagnostics.value[index.value]) as Diagnostic & { rule: any };
+        currentDiagnostic.value = (match || diagnostics.value[index.value]) as RuleDiagnostic;
     }
 }
 
 function onClickAction(diagnostic: Diagnostic, action: Action) {
     const view = props.view?.();
 
-    if (!view) {
+    if(!view) {
         return;
     }
 
@@ -106,25 +108,40 @@ defineExpose({
 </script>
 
 <template>
-    <footer v-show="saveButton || diagnostics.length"
+    <footer
+        v-show="saveButton || diagnostics.length"
         class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
-        <div v-if="hasLinted" class="flex justify-between items-center w-full px-2 py-[.33rem]">
+        <div
+            v-if="hasLinted"
+            class="flex justify-between items-center w-full px-2 py-[.33rem]">
             <div class="flex items-center w-full overflow-hidden no-scrollbars relative gap-4">
                 <div class="shrink-0">
-                    <div v-if="diagnostics?.length" class="flex items-center justify-center gap-2">
-                        <button class="btn btn-secondary btn-sm" @click="goto(index - 1)">
+                    <div
+                        v-if="diagnostics?.length"
+                        class="flex items-center justify-center gap-2">
+                        <button
+                            class="btn btn-secondary btn-sm"
+                            @click="goto(index - 1)">
                             <ChevronLeftIcon class="w-4 h-4" />
                         </button>
                         <span class="font-mono text-center px-2 min-w-18">{{ index + 1 }} of {{ diagnostics.length }}</span>
-                        <button class="btn btn-secondary btn-sm" @click="goto(index + 1)">
+                        <button
+                            class="btn btn-secondary btn-sm"
+                            @click="goto(index + 1)">
                             <ChevronRightIcon class="w-4 h-4" />
                         </button>
                     </div>
                 </div>
-                <button v-if="currentDiagnostic" type="button" @click="goto(index)">
+                <button
+                    v-if="currentDiagnostic"
+                    type="button"
+                    @click="goto(index)">
                     <ExclamationTriangleIcon class="w-6 h-6" />
                 </button>
-                <EditorError v-if="currentDiagnostic" :key="index" :error="currentDiagnostic" />
+                <EditorError
+                    v-if="currentDiagnostic"
+                    :key="index"
+                    :error="currentDiagnostic" />
             </div>
             <div class="editor-footer-action shrink-0">
                 <slot name="before-save-button" />
@@ -132,16 +149,22 @@ defineExpose({
                 <slot name="action-button">
                     <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
                         <template v-if="currentDiagnostic.actions.length === 1">
-                            <button class="btn btn-secondary btn-sm"
+                            <button
+                                class="btn btn-secondary btn-sm"
                                 @click="onClickAction(currentDiagnostic, currentDiagnostic.actions[0])">
                                 {{ currentDiagnostic.actions[0].name }}
                             </button>
                         </template>
                         <template v-else>
                             <div>
-                                <BtnDropdown type="button" label="Fix Errors" size="btn-group-sm" variant="btn-primary"
+                                <BtnDropdown
+                                    type="button"
+                                    label="Fix Errors"
+                                    size="btn-group-sm"
+                                    variant="btn-primary"
                                     dropup>
-                                    <a v-for="(action, i) in currentDiagnostic.actions"
+                                    <a
+                                        v-for="(action, i) in currentDiagnostic.actions"
                                         :key="`${currentDiagnostic.rule.id}-${i}`"
                                         @click="onClickAction(currentDiagnostic, action)">
                                         {{ action.name }}
@@ -152,14 +175,22 @@ defineExpose({
                     </template>
                 </slot>
 
-                <slot name="save-button" :diagnostics="diagnostics" :save-button-label="diagnostics">
-                    <button v-if="saveButton && !diagnostics.length" type="button" class="btn btn-sm btn-primary"
+                <slot
+                    name="save-button"
+                    :diagnostics="diagnostics"
+                    :save-button-label="diagnostics">
+                    <button
+                        v-if="saveButton && !diagnostics.length"
+                        type="button"
+                        class="btn btn-sm btn-primary"
                         @click="emit('save')">
                         {{ saveButtonLabel }}
                     </button>
                 </slot>
 
-                <slot name="after-save-button" :diagnostics="diagnostics" />
+                <slot
+                    name="after-save-button"
+                    :diagnostics="diagnostics" />
             </div>
         </div>
     </footer>
