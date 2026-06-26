@@ -1,6 +1,7 @@
 import attrNoDuplicate from './attr-no-duplication';
 import htmlValidChildren from './html-valid-children';
 import invalidAttributeChar from './invalid-attribute-char';
+import noClosingVoidTags from './no-closing-void-tags';
 import noEntitiesInAttributes from './no-entities-in-attributes';
 import specCharEscape from './spec-char-escape';
 import srcNotEmpty from './src-not-empty';
@@ -11,6 +12,7 @@ export default {
     'attr-no-duplication': attrNoDuplicate,
     'html-valid-children': htmlValidChildren,
     'invalid-attribute-char': invalidAttributeChar,
+    'no-closing-void-tags': noClosingVoidTags,
     'no-enties-in-attributes': noEntitiesInAttributes,
     'spec-char-escape': specCharEscape,
     'src-not-empty': srcNotEmpty,
