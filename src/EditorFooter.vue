@@ -61,7 +61,7 @@ function update(values: Diagnostic[]) {
         currentDiagnostic.value = diagnostics.value[index.value] as RuleDiagnostic;
     }
 
-    emit('update:modelValue', diagnostics.value);
+    emit('update:modelValue', diagnostics);
 }
 
 function activate(view: EditorView) {
@@ -76,7 +76,7 @@ function activate(view: EditorView) {
     });
 
     const match = diagnostics.value.find((diagnostic: Diagnostic) => {
-        return compare(diagnostic, currentDiagnostic.value);
+        return compare(diagnostic as RuleDiagnostic, currentDiagnostic.value);
     });
 
     if(active.length) {
