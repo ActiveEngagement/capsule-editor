@@ -1,6 +1,6 @@
 {
   "name": "capsule-editor",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "packageManager": "pnpm@11.9.0",
   "files": [
     "src",
