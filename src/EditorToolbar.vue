@@ -10,6 +10,11 @@ const emit = defineEmits<{
     'update:filename': [filename: string]
 }>();
 
+defineSlots<{
+    left(): unknown;
+    right(): unknown;
+}>();
+
 const currentValue = ref<string>(props.filename);
 </script>
 

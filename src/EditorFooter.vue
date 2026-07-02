@@ -4,7 +4,7 @@ import { EditorView } from '@codemirror/view';
 import { ChevronLeftIcon, ChevronRightIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
 import { BtnDropdown } from '@vue-interface/btn-dropdown';
 import { Rule } from 'capsule-lint';
-import { Ref, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import EditorError from './EditorError.vue';
 
 const props = withDefaults(defineProps<{
@@ -19,8 +19,20 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
     'goto': [Diagnostic, Diagnostic | undefined]
-    'update:modelValue': [Ref<Diagnostic[]>]
+    'update:modelValue': [Diagnostic[]]
     'save': []
+}>();
+
+type RuleDiagnostic = Diagnostic & { rule: Rule };
+
+defineSlots<{
+    'before-save-button'(): unknown;
+    'action-button'(props: {
+        currentDiagnostic: RuleDiagnostic | undefined;
+        onClickAction: (diagnostic: Diagnostic, action: Action) => void;
+    }): unknown;
+    'save-button'(props: { diagnostics: Diagnostic[]; saveButtonLabel: string }): unknown;
+    'after-save-button'(props: { diagnostics: Diagnostic[] }): unknown;
 }>();
 
 const currentDiagnostic = ref<Diagnostic & { rule: Rule }>();
@@ -44,8 +56,6 @@ function goto(index: number) {
     emit('goto', currentDiagnostic.value, lastDiagnostic);
 }
 
-type RuleDiagnostic = Diagnostic & { rule: Rule };
-
 function compare(a: RuleDiagnostic | undefined, b: RuleDiagnostic | undefined) {
     return (!!a && !!b)
         && a.from === b.from
@@ -61,7 +71,7 @@ function update(values: Diagnostic[]) {
         currentDiagnostic.value = diagnostics.value[index.value] as RuleDiagnostic;
     }
 
-    emit('update:modelValue', diagnostics);
+    emit('update:modelValue', diagnostics.value);
 }
 
 function activate(view: EditorView) {
@@ -146,7 +156,10 @@ defineExpose({
             <div class="editor-footer-action shrink-0">
                 <slot name="before-save-button" />
 
-                <slot name="action-button">
+                <slot
+                    name="action-button"
+                    :current-diagnostic="currentDiagnostic"
+                    :on-click-action="onClickAction">
                     <template v-if="currentDiagnostic && currentDiagnostic.actions?.length">
                         <template v-if="currentDiagnostic.actions.length === 1">
                             <button
@@ -178,7 +191,7 @@ defineExpose({
                 <slot
                     name="save-button"
                     :diagnostics="diagnostics"
-                    :save-button-label="diagnostics">
+                    :save-button-label="saveButtonLabel">
                     <button
                         v-if="saveButton && !diagnostics.length"
                         type="button"

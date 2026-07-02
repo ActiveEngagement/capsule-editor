@@ -45,7 +45,7 @@ const actions: Action[] = [{
     }
 },{
     name: 'Remove Tag',
-    apply(view, from, to) {
+    apply(view, _from, to) {
         const tree = syntaxTree(view.state);
         const node = tree.resolve(to, -1);
 
@@ -74,6 +74,27 @@ const actions: Action[] = [{
                     : nearestOpenTag.to,
                 insert: ''
             }
+        });
+    }
+}, {
+    name: 'Make Unsubscribe Link',
+    validate(hint) {
+        return /%[^%\s]+%/.test(hint.raw);
+    },
+    apply(view, from, to) {
+        const matches = view.state.doc.slice(from, to).toString().match(/(=(?:\s+)?['"])(.+)?['"]/);
+
+        if(!matches) {
+            return;
+        }
+
+        const [ , eq, value] = matches;
+
+        const valueFrom = from + (matches.index ?? 0) + eq.length;
+        const valueTo = valueFrom + (value ? value.length : 0);
+
+        view.dispatch({
+            changes: { from: valueFrom, to: valueTo, insert: '${Gears.unsubscribe()}' }
         });
     }
 }];
