@@ -2,7 +2,7 @@ allowBuilds:
   esbuild: true
   vue-demi: true
 minimumReleaseAgeExclude:
-  - capsule-lint@0.6.4
+  - capsule-lint@0.7.0 || 0.7.1
 overrides:
   brace-expansion: ">=5.0.5"
   lodash: ">=4.18.0"

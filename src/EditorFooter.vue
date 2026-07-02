@@ -120,7 +120,7 @@ defineExpose({
 <template>
     <footer
         v-show="saveButton || diagnostics.length"
-        class="transition-all relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
+        class="transition-colors relative flex items-center text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800">
         <div
             v-if="hasLinted"
             class="flex justify-between items-center w-full px-2 py-[.33rem]">

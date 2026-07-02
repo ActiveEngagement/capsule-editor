@@ -1,0 +1,71 @@
+<#-- FreeMarker (FTL) syntax highlighting examples -->
+<#-- This is a multi-line comment.
+     Both lines should render in the comment color. -->
+
+<#-- ============ Interpolations ============ -->
+${Gears.unsubscribe()}
+${user.name}
+${user.name!"Friend"}
+${product.price?string.currency}
+${(cart.total + shipping) * taxRate}
+${"Hello, " + firstName + "!"}
+#{deprecatedNumeric}
+
+<#-- ============ Assignments ============ -->
+<#assign greeting = "Welcome back">
+<#assign items = ["one", "two", "three"]>
+<#assign config = {"color": "red", "size": 10}>
+
+<#-- ============ Conditionals ============ -->
+<#if user.isSubscribed>
+    You are subscribed.
+<#elseif user.isPending>
+    Your subscription is pending.
+<#else>
+    <a href="${signupUrl}">Subscribe now</a>
+</#if>
+
+<#-- Comparisons: prefer gt/lt or parentheses over a bare > inside a tag -->
+<#if cart.total gt 100>Free shipping!</#if>
+<#if (score > threshold)>Passed</#if>
+
+<#-- ============ Loops ============ -->
+<#list products as product>
+    <li>${product?index + 1}. ${product.title} — ${product.price}</li>
+<#else>
+    <li>No products available.</li>
+</#list>
+
+<ul>
+<#list ["red", "green", "blue"] as color>
+    <li style="color: ${color}">${color?capitalize}</li>
+</#list>
+</ul>
+
+<#-- ============ Built-ins ============ -->
+${name?upper_case}
+${description?truncate(120)}
+${date?string["yyyy-MM-dd"]}
+${items?size}
+
+<#-- ============ Macros & user directives ============ -->
+<#macro button label href color="blue">
+    <a class="btn btn-${color}" href="${href}">${label}</a>
+</#macro>
+
+<@button label="Donate" href="${donateUrl}" color="green" />
+<@button label="Learn more" href="/about" />
+
+<#-- ============ Includes & imports ============ -->
+<#include "header.ftl">
+<#import "/lib/utils.ftl" as utils>
+${utils.formatCurrency(amount)}
+
+<#-- ============ Escaping & switch ============ -->
+<#switch plan>
+    <#case "pro">Pro plan<#break>
+    <#case "team">Team plan<#break>
+    <#default>Free plan
+</#switch>
+
+<p>Thanks, ${firstName!"there"}. ${Gears.unsubscribe()}</p>
