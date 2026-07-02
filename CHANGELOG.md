@@ -1,5 +1,20 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.2.0
+
+### Minor Changes
+
+- [#25](https://github.com/ActiveEngagement/capsule-editor/pull/25) [`12962c8`](https://github.com/ActiveEngagement/capsule-editor/commit/12962c8e1bd036aa560b9e036cb9fd0c334ee30f) Thanks [@actengage](https://github.com/actengage)! - Expose every child slot at the top level of `<Editor>` and type all component slots with `defineSlots`.
+
+  - All `EditorToolbar` and `EditorFooter` slots can now be overridden directly from `<Editor>` — including the new footer `action-button` slot — each forwarding its child slot props merged with the editor context (`errors`, `filename`, `content`). Child slot defaults (e.g. the built-in Save button and "Fix Errors" UI) are preserved when a slot is not overridden.
+  - The footer `action-button` slot now receives `currentDiagnostic` and `onClickAction` props, so consumers can fully replace the fix-actions UI while reusing the built-in click behavior.
+  - Add a "Make Unsubscribe Link" fix action for the `valid-path-format` rule that replaces a `%…%` placeholder `href` value with `${Gears.unsubscribe()}`.
+  - Fix the footer `save-button` slot binding the wrong value to `save-button-label`, and emit the diagnostics array (not a `Ref`) from `update:modelValue`.
+
+### Patch Changes
+
+- [#24](https://github.com/ActiveEngagement/capsule-editor/pull/24) [`cbed869`](https://github.com/ActiveEngagement/capsule-editor/commit/cbed869d8a913141e5ea345f4c55c5baaef1e4d8) Thanks [@actengage](https://github.com/actengage)! - Tighten @codemirror peer dependency minimums (state ^6.7.0, view ^6.43.3, lint ^6.9.7) to prevent pnpm from resolving multiple instances of the same package, which caused "Unrecognized extension value" instanceof errors at runtime.
+
 ## 3.1.6
 
 ### Patch Changes
