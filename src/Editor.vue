@@ -10,9 +10,10 @@ import { EditorView, ViewPlugin, crosshairCursor, drawSelection, dropCursor, hig
 import type { Hint, Rule } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { basicDark } from 'cm6-theme-basic-dark';
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
+import freemarker from './plugins/Freemarker';
 import lint from './plugins/Lint';
 
 const props = withDefaults(defineProps<{
@@ -92,11 +93,26 @@ const footerPlugin = ViewPlugin.fromClass(class {
     attrs = { style: 'padding-bottom: 0' };
 
     update() {
-        const footer = wrapperRef.value.querySelector<HTMLDivElement>('footer');
+        const footer = wrapperRef.value?.querySelector<HTMLDivElement>('footer');
+
+        if(!footer) {
+            return;
+        }
+
         const height = getComputedStyle(footer).height;
 
+        // Only rebuild `attrs` when the measured height actually changes.
+        // Reassigning a new object on every update churns the
+        // contentAttributes facet, which rewrites the content's padding-bottom,
+        // which changes geometry and triggers another update — a feedback loop
+        // that thrashes layout (forcing a synchronous reflow via
+        // getComputedStyle each pass). Keeping the same object once the height
+        // settles lets the cycle terminate.
+        if(height === this.height) {
+            return;
+        }
+
         this.height = height;
-        
         this.attrs = {
             style: `padding-bottom: ${height}`
         };
@@ -135,6 +151,9 @@ function initialize() {
                 autoCloseTags: true,
                 matchClosingTags: false
             }),
+            // FreeMarker constructs are embedded in the HTML, so highlight them
+            // on top of the HTML grammar whenever we're not in plain-text mode.
+            !props.plainText && freemarker(),
             // autoCloseTags,
             foldGutter(),
             drawSelection(),
@@ -284,6 +303,17 @@ watch(errors, (value, oldValue) => {
 
 onMounted(() => {
     view = initialize();
+});
+
+// Tear the EditorView down when the component unmounts. Without this, every
+// EditorView leaks the window `scroll`/`resize` listeners, ResizeObserver,
+// IntersectionObserver and DOM MutationObserver it registers on creation — they
+// are only removed in view.destroy(). Left alive, each orphaned view keeps
+// running its scroll/measure handlers on every page scroll (O(views ever
+// created)), so scrolling, repaints and tab switches get progressively slower,
+// and an orphaned view can crash in the lint gutter while measuring stale DOM.
+onBeforeUnmount(() => {
+    view?.destroy();
 });
 
 defineExpose({
