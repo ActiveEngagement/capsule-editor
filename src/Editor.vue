@@ -3,11 +3,11 @@ import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } 
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
 import { html } from '@codemirror/lang-html';
 import { bracketMatching, defaultHighlightStyle, foldGutter, foldKeymap, indentOnInput, indentUnit, syntaxHighlighting } from '@codemirror/language';
-import { lintKeymap } from '@codemirror/lint';
+import { lintKeymap, type Action, type Diagnostic } from '@codemirror/lint';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
 import { EditorView, ViewPlugin, crosshairCursor, drawSelection, dropCursor, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
-import type { Hint } from 'capsule-lint';
+import type { Hint, Rule } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { basicDark } from 'cm6-theme-basic-dark';
 import { onMounted, ref, watch } from 'vue';
@@ -51,6 +51,29 @@ const emit = defineEmits<{
     'selection': [selection: EditorSelection],
     'update:content': [content: string],
     'update:filename': [content: string],
+}>();
+
+type EditorSlotProps = {
+    errors: Hint[] | undefined;
+    filename: string | undefined;
+    content: string | undefined;
+};
+
+type RuleDiagnostic = Diagnostic & { rule: Rule };
+
+// Every child slot is re-exposed at the top level, merging the editor context
+// (errors/filename/content) with the props the child slot provides, so a
+// consumer of <Editor> can override any of them without reaching into children.
+defineSlots<{
+    'toolbar-left'(props: EditorSlotProps): unknown;
+    'toolbar-right'(props: EditorSlotProps): unknown;
+    'before-save-button'(props: EditorSlotProps): unknown;
+    'action-button'(props: EditorSlotProps & {
+        currentDiagnostic: RuleDiagnostic | undefined;
+        onClickAction: (diagnostic: Diagnostic, action: Action) => void;
+    }): unknown;
+    'save-button'(props: EditorSlotProps & { diagnostics: Diagnostic[]; saveButtonLabel: string }): unknown;
+    'after-save-button'(props: EditorSlotProps & { diagnostics: Diagnostic[] }): unknown;
 }>();
 
 const wrapperRef = ref<HTMLDivElement>();
@@ -280,14 +303,18 @@ defineExpose({
             :disable-filename="disableFilename"
             :filename="filename"
             @update:filename="value => $emit('update:filename', value)">
-            <template #left>
+            <template
+                v-if="$slots['toolbar-left']"
+                #left>
                 <slot
                     name="toolbar-left"
                     :errors="errors"
                     :filename="filename"
                     :content="currentContent" />
             </template>
-            <template #right>
+            <template
+                v-if="$slots['toolbar-right']"
+                #right>
                 <slot
                     name="toolbar-right"
                     :errors="errors"
@@ -308,23 +335,41 @@ defineExpose({
             :view="() => view"
             @save="emit('save')"
             @goto="onGoto">
-            <template #before-save-button>
+            <template
+                v-if="$slots['before-save-button']"
+                #before-save-button>
                 <slot
                     name="before-save-button"
                     :errors="errors"
                     :filename="filename"
                     :content="currentContent" />
             </template>
-            <template #save-button>
+            <template
+                v-if="$slots['action-button']"
+                #action-button="actionProps">
                 <slot
-                    name="save-button"
+                    name="action-button"
+                    v-bind="actionProps"
                     :errors="errors"
                     :filename="filename"
                     :content="currentContent" />
             </template>
-            <template #after-save-button>
+            <template
+                v-if="$slots['save-button']"
+                #save-button="saveProps">
+                <slot
+                    name="save-button"
+                    v-bind="saveProps"
+                    :errors="errors"
+                    :filename="filename"
+                    :content="currentContent" />
+            </template>
+            <template
+                v-if="$slots['after-save-button']"
+                #after-save-button="afterProps">
                 <slot
                     name="after-save-button"
+                    v-bind="afterProps"
                     :errors="errors"
                     :filename="filename"
                     :content="currentContent" />
