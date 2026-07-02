@@ -1,5 +1,18 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.3.0
+
+### Minor Changes
+
+- [#27](https://github.com/ActiveEngagement/capsule-editor/pull/27) [`5b7a8c1`](https://github.com/ActiveEngagement/capsule-editor/commit/5b7a8c145bdb87c7ac3745598a54e9b1d86890b5) Thanks [@actengage](https://github.com/actengage)! - Add FreeMarker (FTL) syntax highlighting.
+
+  FreeMarker constructs embedded in the HTML — `${...}`/`#{...}` interpolations, `<#...>`/`</#...>` directives, `<@...>` macro calls, and `<#-- --#>` comments — are now highlighted on top of the HTML grammar (enabled automatically unless `plainText` is set). Colors track the active light/dark theme. Requires `capsule-lint@^0.7.1`, whose grammar now recognizes these constructs so they no longer produce spurious lint errors.
+
+  Also includes two editor fixes:
+
+  - Guard the footer-height plugin so it only rebuilds its content attributes when the measured height actually changes, avoiding a layout feedback loop that forced a synchronous reflow on every update.
+  - Destroy the `EditorView` on unmount so it no longer leaks its scroll/resize listeners and observers (which degraded scroll/repaint performance and could crash the lint gutter while measuring stale DOM).
+
 ## 3.2.0
 
 ### Minor Changes
