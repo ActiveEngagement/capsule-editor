@@ -6,7 +6,7 @@ import { bracketMatching, defaultHighlightStyle, foldGutter, foldKeymap, indentO
 import { lintKeymap, type Action, type Diagnostic } from '@codemirror/lint';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { Compartment, EditorSelection, EditorState, Extension } from '@codemirror/state';
-import { EditorView, ViewPlugin, crosshairCursor, drawSelection, dropCursor, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
+import { EditorView, crosshairCursor, drawSelection, dropCursor, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
 import type { Hint, Rule } from 'capsule-lint';
 import { defaultConfig, type CapsuleRuleset } from 'capsule-lint';
 import { basicDark } from 'cm6-theme-basic-dark';
@@ -88,36 +88,35 @@ const defaultTheme = EditorView.theme({
 
 let view: EditorView;
 
-const footerPlugin = ViewPlugin.fromClass(class {
-    height = '0px';
-    attrs = { style: 'padding-bottom: 0' };
+// Reserve space for the docked footer by padding the content past it. The
+// height is tracked by a ResizeObserver on the footer element, which fires
+// only when the footer actually changes size (diagnostics appearing or
+// clearing) — the previous ViewPlugin called getComputedStyle on every editor
+// update, forcing a synchronous reflow in the middle of each update cycle.
+let footerAttrs = { style: 'padding-bottom: 0px' };
+let footerResizeObserver: ResizeObserver | undefined;
 
-    update() {
-        const footer = wrapperRef.value?.querySelector<HTMLDivElement>('footer');
+function observeFooterHeight() {
+    const el = footerRef.value?.$el as HTMLElement | undefined;
 
-        if(!footer) {
-            return;
-        }
-
-        const height = getComputedStyle(footer).height;
-
-        // Only rebuild `attrs` when the measured height actually changes.
-        // Reassigning a new object on every update churns the
-        // contentAttributes facet, which rewrites the content's padding-bottom,
-        // which changes geometry and triggers another update — a feedback loop
-        // that thrashes layout (forcing a synchronous reflow via
-        // getComputedStyle each pass). Keeping the same object once the height
-        // settles lets the cycle terminate.
-        if(height === this.height) {
-            return;
-        }
-
-        this.height = height;
-        this.attrs = {
-            style: `padding-bottom: ${height}`
-        };
+    if(!el || typeof ResizeObserver === 'undefined') {
+        return;
     }
-});
+
+    footerResizeObserver = new ResizeObserver(entries => {
+        const entry = entries[entries.length - 1];
+        const height = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+        const style = `padding-bottom: ${height}px`;
+
+        if(style !== footerAttrs.style) {
+            footerAttrs = { style };
+            // An empty transaction makes the view re-read contentAttributes.
+            view.dispatch({});
+        }
+    });
+
+    footerResizeObserver.observe(el);
+}
 
 function focus() {
     view.focus();
@@ -139,7 +138,6 @@ function initialize() {
             // defaults, so they can reconfigure built-ins (e.g. search panel
             // placement) rather than only append to them.
             ...props.extensions,
-            footerPlugin,
             props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset), { htmlLinting: !props.plainText }),
             indentUnit.of(props.indent),
             lineNumbers(),
@@ -167,7 +165,7 @@ function initialize() {
             crosshairCursor(),
             search(),
             EditorState.allowMultipleSelections.of(true),
-            EditorView.contentAttributes.of(view => view.plugin(footerPlugin)?.attrs || null),
+            EditorView.contentAttributes.of(() => footerAttrs),
             EditorView.updateListener.of((update) => {
                 if(!update.focusChanged) {
                     return;
@@ -303,6 +301,7 @@ watch(errors, (value, oldValue) => {
 
 onMounted(() => {
     view = initialize();
+    observeFooterHeight();
 });
 
 // Tear the EditorView down when the component unmounts. Without this, every
@@ -313,6 +312,7 @@ onMounted(() => {
 // created)), so scrolling, repaints and tab switches get progressively slower,
 // and an orphaned view can crash in the lint gutter while measuring stale DOM.
 onBeforeUnmount(() => {
+    footerResizeObserver?.disconnect();
     view?.destroy();
 });
 
