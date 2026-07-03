@@ -55,8 +55,8 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8(vue@3.5.39(typescript@5.9.3))
       capsule-lint:
-        specifier: ^0.7.1
-        version: 0.7.1
+        specifier: ^0.7.2
+        version: 0.7.2
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.6.0
@@ -1112,8 +1112,8 @@ packages:
   caniuse-lite@1.0.30001800:
     resolution: {integrity: sha512-MMHtuAz9Ys840zAY5F4k6fV5GaivZ9sPk+nz0mY+GYVzRBnYkN0mpqkSR92oWRQ19yQWo4HvBV/FnC16AJX8MA==}
 
-  capsule-lint@0.7.1:
-    resolution: {integrity: sha512-eyJjKZZyZv8JrarTrnjRoc8qQJFC6AydtNj6nz2Z79GKw+11j1uLP68GfJRIBQ7MYx4N8YMmlL7UADLhq898YA==}
+  capsule-lint@0.7.2:
+    resolution: {integrity: sha512-fKHcy+3dqw3S+ywwgE4NOUKfZe3IMHBHHAOK8DeNcNkalFDQOliVFCWQ50yn23eYfZrnlRPsM9tbMFIZYFphaw==}
     hasBin: true
 
   chalk@4.1.2:
@@ -3404,7 +3404,7 @@ snapshots:
 
   caniuse-lite@1.0.30001800: {}
 
-  capsule-lint@0.7.1:
+  capsule-lint@0.7.2:
     dependencies:
       htmlhint: 1.9.2
 
