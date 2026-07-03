@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.4.0
+
+### Minor Changes
+
+- [`4ec4b93`](https://github.com/ActiveEngagement/capsule-editor/commit/4ec4b93e2b97ea8e541e42e58149106ab74c6cfe) - Updated capsule-lint to 0.8.0
+
 ## 3.3.1
 
 ### Patch Changes
