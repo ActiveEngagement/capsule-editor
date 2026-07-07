@@ -79,7 +79,7 @@ const actions: Action[] = [{
 }, {
     name: 'Make Unsubscribe Link',
     validate(hint) {
-        return /%[^%\s]+%/.test(hint.raw);
+        return /%[^%\s]+%/.test(hint.raw) || /\{\{[^{}\s]+\}\}/.test(hint.raw);
     },
     apply(view, from, to) {
         const matches = view.state.doc.slice(from, to).toString().match(/(=(?:\s+)?['"])(.+)?['"]/);
