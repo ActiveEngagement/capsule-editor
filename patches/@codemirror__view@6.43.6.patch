@@ -1,0 +1,80 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 0b15b00a098c25d9b0225b085a8c9b97f910c5b2..2b2bfc240c77e79d0d7ac7d809f3b08fa4ad699d 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -11674,16 +11674,30 @@ class GutterElement {
+                 let next = this.markers[iOld++];
+                 if (next.toDOM) {
+                     next.destroy(domPos);
+-                    let after = domPos.nextSibling;
+-                    domPos.remove();
+-                    domPos = after;
++                    // PATCH (capsule-editor): this.markers can claim more toDOM
++                    // children than this.dom actually still has (seen after a
++                    // large, non-contiguous viewport jump reused this element for
++                    // a different line) — domPos then runs out before the loop
++                    // expects it to, and dereferencing it null crashed. CodeMirror
++                    // itself has no try/catch here, so the crash permanently
++                    // disables the whole gutter plugin for the view's lifetime.
++                    // Stop touching the DOM once we've run out of real children
++                    // instead of throwing.
++                    if (domPos) {
++                        let after = domPos.nextSibling;
++                        domPos.remove();
++                        domPos = after;
++                    }
+                 }
+             }
+             if (!marker)
+                 break;
+             if (marker.toDOM) {
+-                if (matched)
+-                    domPos = domPos.nextSibling;
++                if (matched) {
++                    // PATCH (capsule-editor): see above.
++                    if (domPos)
++                        domPos = domPos.nextSibling;
++                }
+                 else
+                     this.dom.insertBefore(marker.toDOM(view), domPos);
+             }
+diff --git a/dist/index.js b/dist/index.js
+index 3ca4e269d01618630861692010691802d3eda383..0a68b9245f9be5ad7572d99e84fc1920cd6504d9 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -11669,16 +11669,30 @@ class GutterElement {
+                 let next = this.markers[iOld++];
+                 if (next.toDOM) {
+                     next.destroy(domPos);
+-                    let after = domPos.nextSibling;
+-                    domPos.remove();
+-                    domPos = after;
++                    // PATCH (capsule-editor): this.markers can claim more toDOM
++                    // children than this.dom actually still has (seen after a
++                    // large, non-contiguous viewport jump reused this element for
++                    // a different line) — domPos then runs out before the loop
++                    // expects it to, and dereferencing it null crashed. CodeMirror
++                    // itself has no try/catch here, so the crash permanently
++                    // disables the whole gutter plugin for the view's lifetime.
++                    // Stop touching the DOM once we've run out of real children
++                    // instead of throwing.
++                    if (domPos) {
++                        let after = domPos.nextSibling;
++                        domPos.remove();
++                        domPos = after;
++                    }
+                 }
+             }
+             if (!marker)
+                 break;
+             if (marker.toDOM) {
+-                if (matched)
+-                    domPos = domPos.nextSibling;
++                if (matched) {
++                    // PATCH (capsule-editor): see above.
++                    if (domPos)
++                        domPos = domPos.nextSibling;
++                }
+                 else
+                     this.dom.insertBefore(marker.toDOM(view), domPos);
+             }

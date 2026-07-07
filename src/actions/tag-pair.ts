@@ -14,7 +14,7 @@ const actions: Action[] = [{
     validate(hint) {
         return !hint.message.startsWith('Tag must be paired, no start tag');
     },
-    apply(view, from, to) {
+    apply(view, _from, to) {
         const around: SyntaxNode = syntaxTree(view.state).resolveInner(to, -1);
 
         let nearest: SyntaxNode|null = around;
@@ -52,6 +52,14 @@ const actions: Action[] = [{
                 insert: `</${getTagName(around.parent.getChild('TagName'), view)}>`
             },
         });
+    }
+}, {
+    name: 'Remove Closing Tag',
+    validate(hint) {
+        return hint.message.startsWith('Tag must be paired, no start tag');
+    },
+    apply(view, from, to) {
+        view.dispatch({ changes: { from, to, insert: '' } });
     }
 }];
 

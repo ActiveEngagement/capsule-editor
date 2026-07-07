@@ -89,6 +89,41 @@ const defaultTheme = EditorView.theme({
 
 let view: EditorView;
 
+// @codemirror/view's gutter plugin keeps a pool of DOM elements it reuses
+// across updates, indexed by render order rather than line number. A large,
+// non-contiguous jump in the visible viewport — exactly what happens when
+// onGoto scrolls from wherever the cursor was to a diagnostic elsewhere in a
+// large document — can land that pool in a state where a reused element's
+// bookkeeping no longer matches its actual DOM children, and the gutter's
+// internal diff throws (observed: "TypeError: null is not an object
+// (evaluating 'domPos.nextSibling')" inside its marker-sync code). CodeMirror
+// catches that itself, but its only recovery is to permanently deactivate the
+// crashed plugin — so every gutter (line numbers, fold, lint) disappears for
+// the rest of that EditorView's life, with no supported way to reactivate it.
+// Rebuilding the view is the only way back: a fresh gutter's element pool
+// starts empty, so its first render only ever creates elements — the reuse
+// path that throws can't run until some *later* jump.
+let recovering = false;
+
+function recoverFromCrash() {
+    if(recovering) {
+        return;
+    }
+
+    recovering = true;
+
+    // Deferred: this fires from deep inside the crashing dispatch() call, and
+    // a view can't be destroyed and replaced from within its own update cycle.
+    queueMicrotask(() => {
+        const selection = view.state.selection;
+
+        view.destroy();
+        view = initialize();
+        view.dispatch({ selection, scrollIntoView: true });
+        recovering = false;
+    });
+}
+
 // Reserve space for the docked footer by padding the content past it. The
 // height is tracked by a ResizeObserver on the footer element, which fires
 // only when the footer actually changes size (diagnostics appearing or
@@ -141,6 +176,7 @@ function initialize() {
             ...props.extensions,
             props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset), { htmlLinting: !props.plainText }),
             indentUnit.of(props.indent),
+            EditorView.exceptionSink.of(recoverFromCrash),
             activeDiagnosticHighlight(),
             lineNumbers(),
             highlightActiveLineGutter(),
