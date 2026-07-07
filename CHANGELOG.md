@@ -1,5 +1,11 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.5.0
+
+### Minor Changes
+
+- [#32](https://github.com/ActiveEngagement/capsule-editor/pull/32) [`64d41cb`](https://github.com/ActiveEngagement/capsule-editor/commit/64d41cbf2a88c23de64070b5b6ae4981398f2f95) Thanks [@actengage](https://github.com/actengage)! - Navigating to a diagnostic from the editor footer no longer selects its literal text — that selection was tripping `highlightSelectionMatches()`, which lit up every other occurrence of the same text in the document (e.g. every other `</strong>`) as if they were all flagged. The current diagnostic is now marked with its own distinct highlight, and bracket-matching's highlight on the adjacent tag is suppressed while it's shown so nothing else competes for attention.
+
 ## 3.4.0
 
 ### Minor Changes
