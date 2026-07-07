@@ -13,6 +13,7 @@ import { basicDark } from 'cm6-theme-basic-dark';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import EditorFooter from './EditorFooter.vue';
 import EditorToolbar from './EditorToolbar.vue';
+import activeDiagnosticHighlight, { setActiveDiagnostic } from './plugins/ActiveDiagnostic';
 import freemarker from './plugins/Freemarker';
 import lint from './plugins/Lint';
 
@@ -140,6 +141,7 @@ function initialize() {
             ...props.extensions,
             props.footer && lint(footerRef.value, Object.assign({}, defaultConfig, props.ruleset), { htmlLinting: !props.plainText }),
             indentUnit.of(props.indent),
+            activeDiagnosticHighlight(),
             lineNumbers(),
             highlightActiveLineGutter(),
             highlightSpecialChars(),
@@ -262,14 +264,18 @@ function initialize() {
 }
 
 function onGoto({ from, to }: { from: number, to:number }) {
-    view.dispatch({ 
-        selection: EditorSelection.create([
-            EditorSelection.range(from, to),
-            EditorSelection.cursor(from)
-        ]),
+    view.dispatch({
+        // An empty cursor rather than a range covering the diagnostic's text —
+        // selecting that text triggers highlightSelectionMatches(), which lights
+        // up every other occurrence of the same string in the document (e.g.
+        // every other `</strong>`) as if they were all flagged. The diagnostic
+        // itself is marked via setActiveDiagnostic instead (see
+        // plugins/ActiveDiagnostic).
+        selection: EditorSelection.cursor(from),
+        effects: setActiveDiagnostic.of({ from, to }),
         scrollIntoView: true
     });
-    
+
     view.focus();
 }
 
