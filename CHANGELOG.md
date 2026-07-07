@@ -1,5 +1,15 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.6.0
+
+### Minor Changes
+
+- [#34](https://github.com/ActiveEngagement/capsule-editor/pull/34) [`00bea54`](https://github.com/ActiveEngagement/capsule-editor/commit/00bea54db6229c3abab1d77756929ca1adec4a15) Thanks [@actengage](https://github.com/actengage)! - Added a "Remove Closing Tag" quick-fix for the `tag-pair` rule's "no start tag" diagnostic, letting you delete an orphaned closing tag (e.g. a stray `</strong>`) directly from the lint action menu instead of having to find and remove it by hand.
+
+### Patch Changes
+
+- [#34](https://github.com/ActiveEngagement/capsule-editor/pull/34) [`00bea54`](https://github.com/ActiveEngagement/capsule-editor/commit/00bea54db6229c3abab1d77756929ca1adec4a15) Thanks [@actengage](https://github.com/actengage)! - Fixed a crash where jumping to a diagnostic far away in a large document could throw inside CodeMirror's gutter plugin (`domPos.nextSibling` on `null`), permanently disabling all gutters (line numbers, fold, lint) for the rest of that editor's life. The editor now detects the crash and transparently rebuilds the view, and a patch to `@codemirror/view` stops the gutter's internal DOM diff from throwing when its element pool runs out of real children.
+
 ## 3.5.0
 
 ### Minor Changes
