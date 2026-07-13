@@ -1,5 +1,15 @@
 # [2.0.0-beta.69](https://github.com/ActiveEngagement/capsule-editor/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2026-04-07)
 
+## 3.6.1
+
+### Patch Changes
+
+- [#36](https://github.com/ActiveEngagement/capsule-editor/pull/36) [`4087640`](https://github.com/ActiveEngagement/capsule-editor/commit/4087640a8dffc2c45eda9ce627a16b52d1f39bd2) Thanks [@actengage](https://github.com/actengage)! - Widen the `capsule-lint` peer dependency to `^0.9.0`. capsule-lint 0.9.0
+  validates inline `style` attributes and `<style>` blocks with PostCSS; the API
+  the editor consumes (`lint`/`parse`) is unchanged, but the `^0.8.0` range
+  excludes 0.9.0 under the 0.x caret rule, producing an unmet-peer warning for
+  consumers on the new lint.
+
 ## 3.6.0
 
 ### Minor Changes
